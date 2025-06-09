@@ -1,0 +1,996 @@
+{
+  "Bhutan": {
+    "value": 50.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "South Sudan": {
+    "value": 25.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Comoros": {
+    "value": 31.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Central African Republic": {
+    "value": 13.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Afghanistan": {
+    "value": 383.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Guinea-Bissau": {
+    "value": 187.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Benin": {
+    "value": 406.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Congo": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Burkina Faso": {
+    "value": 377.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Angola": {
+    "value": 10.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Chad": {
+    "value": 291.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Cambodia": {
+    "value": 10886.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "C\u00f4te d'Ivoire": {
+    "value": 1884.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Burundi": {
+    "value": 241.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Argentina": {
+    "value": 1190.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Cameroon": {
+    "value": 311.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Australia": {
+    "value": 67.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Gambia": {
+    "value": 22.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Brazil": {
+    "value": 10369.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Azerbaijan": {
+    "value": 11.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Belize": {
+    "value": 14.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Haiti": {
+    "value": 186.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Bangladesh": {
+    "value": 54586.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Gabon": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Democratic Republic of the Congo": {
+    "value": 1379.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "El Salvador": {
+    "value": 28.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Guinea": {
+    "value": 2599.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Sudan": {
+    "value": 32.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Bolivia (Plurinational State of)": {
+    "value": 600.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Liberia": {
+    "value": 269.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Bulgaria": {
+    "value": 71.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Ghana": {
+    "value": 925.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Guyana": {
+    "value": 682.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "China, Taiwan Province of": {
+    "value": 1791.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Chile": {
+    "value": 175.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Costa Rica": {
+    "value": 157.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Colombia": {
+    "value": 3012.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "China, mainland": {
+    "value": 209614.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Dominican Republic": {
+    "value": 919.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Cuba": {
+    "value": 392.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Fiji": {
+    "value": 6.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Lao People's Democratic Republic": {
+    "value": 3535.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Eswatini": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Ecuador": {
+    "value": 1100.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "India": {
+    "value": 174717.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Ethiopia": {
+    "value": 171.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "China": {
+    "value": 211405.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "France": {
+    "value": 83.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Iraq": {
+    "value": 575.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Egypt": {
+    "value": 4804.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Iran (Islamic Republic of)": {
+    "value": 1993.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Indonesia": {
+    "value": 54604.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Malaysia": {
+    "value": 2353.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Mauritania": {
+    "value": 255.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Honduras": {
+    "value": 57.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Greece": {
+    "value": 221.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Timor-Leste": {
+    "value": 80.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Papua New Guinea": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Nicaragua": {
+    "value": 468.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Hungary": {
+    "value": 11.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Guatemala": {
+    "value": 23.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Japan": {
+    "value": 10527.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Philippines": {
+    "value": 18815.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Kazakhstan": {
+    "value": 561.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Mali": {
+    "value": 3196.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Kyrgyzstan": {
+    "value": 41.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Italy": {
+    "value": 1493.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Malawi": {
+    "value": 133.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Madagascar": {
+    "value": 4231.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Panama": {
+    "value": 372.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Sierra Leone": {
+    "value": 947.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Mexico": {
+    "value": 245.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Morocco": {
+    "value": 65.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Niger": {
+    "value": 122.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Somalia": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Togo": {
+    "value": 147.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Myanmar": {
+    "value": 26270.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Solomon Islands": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Paraguay": {
+    "value": 1069.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Mozambique": {
+    "value": 180.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "North Macedonia": {
+    "value": 21.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Kenya": {
+    "value": 161.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Nigeria": {
+    "value": 8435.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Senegal": {
+    "value": 1156.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Suriname": {
+    "value": 274.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Peru": {
+    "value": 3191.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Rwanda": {
+    "value": 132.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Sri Lanka": {
+    "value": 4592.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Pakistan": {
+    "value": 11120.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Republic of Korea": {
+    "value": 5016.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Turkmenistan": {
+    "value": 85.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Nepal": {
+    "value": 5610.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Portugal": {
+    "value": 162.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Romania": {
+    "value": 40.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Russian Federation": {
+    "value": 1099.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "South Africa": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Thailand": {
+    "value": 28618.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Viet Nam": {
+    "value": 43495.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Zimbabwe": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Tajikistan": {
+    "value": 106.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "United Republic of Tanzania": {
+    "value": 3475.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Spain": {
+    "value": 779.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Uruguay": {
+    "value": 1200.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Uzbekistan": {
+    "value": 315.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Trinidad and Tobago": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "T\u00fcrkiye": {
+    "value": 1000.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Uganda": {
+    "value": 166.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "United States of America": {
+    "value": 8396.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Ukraine": {
+    "value": 55.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Venezuela (Bolivarian Republic of)": {
+    "value": 517.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Zambia": {
+    "value": 30.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Northern America": {
+    "value": 8396.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "South America": {
+    "value": 23379.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Central Asia": {
+    "value": 1108.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Middle Africa": {
+    "value": 2006.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Northern Africa": {
+    "value": 4901.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Caribbean": {
+    "value": 1498.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Australia and New Zealand": {
+    "value": 67.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "World": {
+    "value": 749713.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Eastern Europe": {
+    "value": 1275.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Africa": {
+    "value": 36815.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Eastern Africa": {
+    "value": 8976.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Western Europe": {
+    "value": 83.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Southern Africa": {
+    "value": 4.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Western Africa": {
+    "value": 20928.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Americas": {
+    "value": 34637.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Central America": {
+    "value": 1364.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Asia": {
+    "value": 674152.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Melanesia": {
+    "value": 9.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Eastern Asia": {
+    "value": 229752.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Southern Asia": {
+    "value": 253051.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "South-eastern Asia": {
+    "value": 188655.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Western Asia": {
+    "value": 1586.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Europe": {
+    "value": 4032.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Southern Europe": {
+    "value": 2675.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Oceania": {
+    "value": 76.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "European Union (27)": {
+    "value": 2858.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Small Island Developing States": {
+    "value": 2776.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Least Developed Countries": {
+    "value": 121760.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Land Locked Developing Countries": {
+    "value": 17283.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Low Income Food Deficit Countries": {
+    "value": 30569.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Net Food Importing Developing Countries": {
+    "value": 149542.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2019,
+    "element": "Production"
+  }
+}

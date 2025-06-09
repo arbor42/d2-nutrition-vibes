@@ -1,0 +1,940 @@
+{
+  "Democratic People's Republic of Korea": {
+    "value": 29.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Turkmenistan": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Afghanistan": {
+    "value": 49.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Tajikistan": {
+    "value": 6.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Guinea-Bissau": {
+    "value": 151.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Libya": {
+    "value": 30.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Mongolia": {
+    "value": 5.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Liberia": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Albania": {
+    "value": 13.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Uzbekistan": {
+    "value": 76.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Georgia": {
+    "value": 24.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Jordan": {
+    "value": 4.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Armenia": {
+    "value": 4.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Montenegro": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Iraq": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Kyrgyzstan": {
+    "value": 17.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Gambia": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Maldives": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "North Macedonia": {
+    "value": 7.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Israel": {
+    "value": 10.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Angola": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Argentina": {
+    "value": 19.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Azerbaijan": {
+    "value": 70.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Bosnia and Herzegovina": {
+    "value": 8.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Sierra Leone": {
+    "value": 9.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Eswatini": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Togo": {
+    "value": 11.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Algeria": {
+    "value": 57.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Tunisia": {
+    "value": 70.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Croatia": {
+    "value": 5.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Chile": {
+    "value": 214.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Benin": {
+    "value": 134.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Belarus": {
+    "value": 20.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Viet Nam": {
+    "value": 321.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Iran (Islamic Republic of)": {
+    "value": 669.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Bulgaria": {
+    "value": 8.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Papua New Guinea": {
+    "value": 6.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "United Arab Emirates": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Syrian Arab Republic": {
+    "value": 172.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "El Salvador": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Republic of Moldova": {
+    "value": 20.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Slovenia": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "T\u00fcrkiye": {
+    "value": 1136.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Malaysia": {
+    "value": 17.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Serbia": {
+    "value": 15.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Burkina Faso": {
+    "value": 137.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Dominican Republic": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Greece": {
+    "value": 139.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Lebanon": {
+    "value": 44.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Poland": {
+    "value": 15.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Malawi": {
+    "value": 6.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Austria": {
+    "value": 6.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Yemen": {
+    "value": 10.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Romania": {
+    "value": 57.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Hungary": {
+    "value": 11.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "France": {
+    "value": 62.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Switzerland": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Cambodia": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Portugal": {
+    "value": 53.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Italy": {
+    "value": 284.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Bolivia (Plurinational State of)": {
+    "value": 118.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Madagascar": {
+    "value": 17.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Zimbabwe": {
+    "value": 7.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Myanmar": {
+    "value": 135.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Mali": {
+    "value": 169.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Ghana": {
+    "value": 129.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Mozambique": {
+    "value": 130.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Australia": {
+    "value": 222.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Morocco": {
+    "value": 130.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "China, Taiwan Province of": {
+    "value": 103.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Cameroon": {
+    "value": 51.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Honduras": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Bangladesh": {
+    "value": 219.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Kazakhstan": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "C\u00f4te d'Ivoire": {
+    "value": 814.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Ukraine": {
+    "value": 127.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Germany": {
+    "value": 18.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Republic of Korea": {
+    "value": 73.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Senegal": {
+    "value": 11.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Philippines": {
+    "value": 237.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Ethiopia": {
+    "value": 56.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Spain": {
+    "value": 560.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "South Africa": {
+    "value": 52.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Thailand": {
+    "value": 70.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "United States of America": {
+    "value": 2957.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Nigeria": {
+    "value": 267.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Peru": {
+    "value": 12.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "India": {
+    "value": 1650.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Brazil": {
+    "value": 186.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Guatemala": {
+    "value": 36.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Russian Federation": {
+    "value": 43.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Mexico": {
+    "value": 293.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "China, mainland": {
+    "value": 4545.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Sri Lanka": {
+    "value": 120.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Central Asia": {
+    "value": 103.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Japan": {
+    "value": 17.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Northern America": {
+    "value": 2957.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Pakistan": {
+    "value": 39.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Colombia": {
+    "value": 5.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Indonesia": {
+    "value": 404.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Egypt": {
+    "value": 27.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "United Republic of Tanzania": {
+    "value": 347.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Melanesia": {
+    "value": 6.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Australia and New Zealand": {
+    "value": 222.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Nepal": {
+    "value": 22.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Western Europe": {
+    "value": 90.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Kenya": {
+    "value": 41.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Eastern Europe": {
+    "value": 302.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Middle Africa": {
+    "value": 53.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "China": {
+    "value": 4648.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Southern Africa": {
+    "value": 53.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Southern Europe": {
+    "value": 1086.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Caribbean": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Oceania": {
+    "value": 228.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "South America": {
+    "value": 553.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Northern Africa": {
+    "value": 315.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "South-eastern Asia": {
+    "value": 1188.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Western Africa": {
+    "value": 1839.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Eastern Asia": {
+    "value": 4772.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Eastern Africa": {
+    "value": 604.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Central America": {
+    "value": 331.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Western Asia": {
+    "value": 1483.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Europe": {
+    "value": 1478.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Southern Asia": {
+    "value": 2771.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Small Island Developing States": {
+    "value": 160.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "European Union (27)": {
+    "value": 1221.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Least Developed Countries": {
+    "value": 1628.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Africa": {
+    "value": 2863.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Low Income Food Deficit Countries": {
+    "value": 1664.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Land Locked Developing Countries": {
+    "value": 775.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Americas": {
+    "value": 3842.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Asia": {
+    "value": 10317.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "Net Food Importing Developing Countries": {
+    "value": 2898.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  },
+  "World": {
+    "value": 18728.0,
+    "unit": "1000 t",
+    "item": "Nuts and products",
+    "year": 2018,
+    "element": "Production"
+  }
+}

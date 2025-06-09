@@ -1,0 +1,1493 @@
+{
+  "Democratic People's Republic of Korea": {
+    "value": 3614.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Turkmenistan": {
+    "value": 939.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Timor-Leste": {
+    "value": 27.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Kiribati": {
+    "value": 6.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Comoros": {
+    "value": 5.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Lesotho": {
+    "value": 31.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Djibouti": {
+    "value": 32.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Sao Tome and Principe": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Guinea-Bissau": {
+    "value": 32.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Chad": {
+    "value": 102.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Tajikistan": {
+    "value": 1664.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Micronesia": {
+    "value": 6.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Afghanistan": {
+    "value": 1576.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Mauritania": {
+    "value": 6.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Saint Kitts and Nevis": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Liberia": {
+    "value": 104.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Somalia": {
+    "value": 103.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Albania": {
+    "value": 869.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Mongolia": {
+    "value": 60.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Solomon Islands": {
+    "value": 8.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Dominica": {
+    "value": 6.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Libya": {
+    "value": 911.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Vanuatu": {
+    "value": 12.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Grenada": {
+    "value": 5.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Suriname": {
+    "value": 15.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Saint Vincent and the Grenadines": {
+    "value": 6.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Iceland": {
+    "value": 5.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "French Polynesia": {
+    "value": 7.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Cabo Verde": {
+    "value": 43.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Montenegro": {
+    "value": 33.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Georgia": {
+    "value": 217.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Armenia": {
+    "value": 840.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Maldives": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Seychelles": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Finland": {
+    "value": 252.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Central African Republic": {
+    "value": 85.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Lao People's Democratic Republic": {
+    "value": 1073.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Sierra Leone": {
+    "value": 306.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Samoa": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Haiti": {
+    "value": 171.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Kuwait": {
+    "value": 336.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Bosnia and Herzegovina": {
+    "value": 747.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Uzbekistan": {
+    "value": 7534.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Kyrgyzstan": {
+    "value": 974.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Saint Lucia": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Gambia": {
+    "value": 11.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Guyana": {
+    "value": 87.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "North Macedonia": {
+    "value": 770.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Estonia": {
+    "value": 74.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Bahamas": {
+    "value": 30.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Lithuania": {
+    "value": 202.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Belarus": {
+    "value": 2366.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Latvia": {
+    "value": 151.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Republic of Moldova": {
+    "value": 454.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Gabon": {
+    "value": 43.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Antigua and Barbuda": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Belgium": {
+    "value": 2554.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Azerbaijan": {
+    "value": 1657.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Eswatini": {
+    "value": 12.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Luxembourg": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Cuba": {
+    "value": 2193.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Jordan": {
+    "value": 1626.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Chile": {
+    "value": 2010.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Oman": {
+    "value": 334.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Ireland": {
+    "value": 205.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "New Caledonia": {
+    "value": 10.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Barbados": {
+    "value": 10.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Czechia": {
+    "value": 161.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Croatia": {
+    "value": 219.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Bulgaria": {
+    "value": 504.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Congo": {
+    "value": 139.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Iraq": {
+    "value": 3541.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Belize": {
+    "value": 12.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Paraguay": {
+    "value": 309.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Algeria": {
+    "value": 5356.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Niger": {
+    "value": 901.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Guinea": {
+    "value": 566.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Angola": {
+    "value": 707.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Jamaica": {
+    "value": 206.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Slovakia": {
+    "value": 271.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Slovenia": {
+    "value": 61.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Namibia": {
+    "value": 60.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Uruguay": {
+    "value": 172.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Tunisia": {
+    "value": 2995.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Argentina": {
+    "value": 3301.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Togo": {
+    "value": 144.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Serbia": {
+    "value": 1368.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "China, Hong Kong SAR": {
+    "value": 35.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Papua New Guinea": {
+    "value": 511.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Portugal": {
+    "value": 2846.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Poland": {
+    "value": 5152.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Norway": {
+    "value": 170.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Dominican Republic": {
+    "value": 512.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Romania": {
+    "value": 3877.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Burundi": {
+    "value": 431.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Denmark": {
+    "value": 283.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Viet Nam": {
+    "value": 8653.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Ukraine": {
+    "value": 8949.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Mauritius": {
+    "value": 73.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Saudi Arabia": {
+    "value": 2254.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Netherlands (Kingdom of the)": {
+    "value": 4998.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Iran (Islamic Republic of)": {
+    "value": 19152.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Israel": {
+    "value": 1651.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Rwanda": {
+    "value": 649.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Malta": {
+    "value": 82.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "El Salvador": {
+    "value": 149.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Malawi": {
+    "value": 464.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Panama": {
+    "value": 135.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Benin": {
+    "value": 302.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Austria": {
+    "value": 591.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Switzerland": {
+    "value": 364.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Nicaragua": {
+    "value": 49.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Lebanon": {
+    "value": 991.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Burkina Faso": {
+    "value": 271.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "New Zealand": {
+    "value": 911.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Hungary": {
+    "value": 1171.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Greece": {
+    "value": 3508.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Yemen": {
+    "value": 870.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Syrian Arab Republic": {
+    "value": 3021.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Trinidad and Tobago": {
+    "value": 13.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "France": {
+    "value": 5467.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Bolivia (Plurinational State of)": {
+    "value": 354.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Fiji": {
+    "value": 24.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Zambia": {
+    "value": 420.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Sweden": {
+    "value": 325.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Polynesia": {
+    "value": 8.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "United Kingdom of Great Britain and Northern Ireland": {
+    "value": 2680.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "United Arab Emirates": {
+    "value": 246.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Democratic Republic of the Congo": {
+    "value": 595.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Mali": {
+    "value": 1657.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "T\u00fcrkiye": {
+    "value": 26048.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Kazakhstan": {
+    "value": 3699.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Canada": {
+    "value": 2214.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Madagascar": {
+    "value": 433.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Germany": {
+    "value": 3351.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Mozambique": {
+    "value": 450.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Ecuador": {
+    "value": 512.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Cyprus": {
+    "value": 119.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Russian Federation": {
+    "value": 13283.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Botswana": {
+    "value": 41.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Malaysia": {
+    "value": 1084.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Morocco": {
+    "value": 5440.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Zimbabwe": {
+    "value": 212.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Australia": {
+    "value": 2158.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Myanmar": {
+    "value": 4735.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "China, Taiwan Province of": {
+    "value": 2606.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Ghana": {
+    "value": 630.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Venezuela (Bolivarian Republic of)": {
+    "value": 1839.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Senegal": {
+    "value": 750.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "South Africa": {
+    "value": 2760.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Ethiopia": {
+    "value": 1604.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Bangladesh": {
+    "value": 3690.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Italy": {
+    "value": 14591.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Honduras": {
+    "value": 664.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Costa Rica": {
+    "value": 468.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Cambodia": {
+    "value": 544.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Cameroon": {
+    "value": 2127.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "C\u00f4te d'Ivoire": {
+    "value": 643.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Philippines": {
+    "value": 6085.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Spain": {
+    "value": 13018.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Uganda": {
+    "value": 1087.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Republic of Korea": {
+    "value": 10188.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Peru": {
+    "value": 2948.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Pakistan": {
+    "value": 5318.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Nigeria": {
+    "value": 12091.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Egypt": {
+    "value": 19513.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Sri Lanka": {
+    "value": 734.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "United States of America": {
+    "value": 36535.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "India": {
+    "value": 100653.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Thailand": {
+    "value": 3834.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Japan": {
+    "value": 11686.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Central Asia": {
+    "value": 14810.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Guatemala": {
+    "value": 1555.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Mexico": {
+    "value": 12803.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Brazil": {
+    "value": 11338.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "United Republic of Tanzania": {
+    "value": 2039.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Northern America": {
+    "value": 38748.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "China, mainland": {
+    "value": 528806.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Colombia": {
+    "value": 1782.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Australia and New Zealand": {
+    "value": 3070.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Kenya": {
+    "value": 2430.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Nepal": {
+    "value": 3084.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Indonesia": {
+    "value": 9874.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Melanesia": {
+    "value": 564.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Western Europe": {
+    "value": 17326.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Northern Europe": {
+    "value": 4348.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Eastern Europe": {
+    "value": 36188.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Southern Africa": {
+    "value": 2903.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Middle Africa": {
+    "value": 3799.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Caribbean": {
+    "value": 3159.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Northern Africa": {
+    "value": 34215.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "China": {
+    "value": 531447.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Southern Europe": {
+    "value": 38113.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Western Africa": {
+    "value": 18458.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "South America": {
+    "value": 24668.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Oceania": {
+    "value": 3648.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Eastern Africa": {
+    "value": 10434.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Southern Asia": {
+    "value": 134211.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Central America": {
+    "value": 15834.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "South-eastern Asia": {
+    "value": 35910.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Small Island Developing States": {
+    "value": 4038.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Eastern Asia": {
+    "value": 556996.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Western Asia": {
+    "value": 44194.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Europe": {
+    "value": 95976.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "European Union (27)": {
+    "value": 64037.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Least Developed Countries": {
+    "value": 30073.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Land Locked Developing Countries": {
+    "value": 32955.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Africa": {
+    "value": 69809.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Low Income Food Deficit Countries": {
+    "value": 40595.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Americas": {
+    "value": 82409.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Net Food Importing Developing Countries": {
+    "value": 77624.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "Asia": {
+    "value": 786120.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  },
+  "World": {
+    "value": 1037963.0,
+    "unit": "1000 t",
+    "item": "Vegetables",
+    "year": 2010,
+    "element": "Production"
+  }
+}

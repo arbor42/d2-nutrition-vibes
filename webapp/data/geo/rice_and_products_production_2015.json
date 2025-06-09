@@ -1,0 +1,996 @@
+{
+  "Democratic People's Republic of Korea": {
+    "value": 1946.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Comoros": {
+    "value": 31.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Central African Republic": {
+    "value": 10.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Afghanistan": {
+    "value": 410.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Guinea-Bissau": {
+    "value": 170.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Benin": {
+    "value": 204.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Congo": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Burkina Faso": {
+    "value": 325.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Angola": {
+    "value": 45.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Chad": {
+    "value": 243.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Cambodia": {
+    "value": 9335.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "C\u00f4te d'Ivoire": {
+    "value": 2153.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Burundi": {
+    "value": 39.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Argentina": {
+    "value": 1558.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Cameroon": {
+    "value": 278.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Australia": {
+    "value": 690.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Gambia": {
+    "value": 70.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Brazil": {
+    "value": 12301.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Azerbaijan": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Belize": {
+    "value": 13.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Haiti": {
+    "value": 132.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Bangladesh": {
+    "value": 51805.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Gabon": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Democratic Republic of the Congo": {
+    "value": 1022.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "El Salvador": {
+    "value": 39.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Guinea": {
+    "value": 2047.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Sudan": {
+    "value": 32.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Bolivia (Plurinational State of)": {
+    "value": 527.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Liberia": {
+    "value": 296.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Bulgaria": {
+    "value": 68.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Ghana": {
+    "value": 641.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Guyana": {
+    "value": 688.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "China, Taiwan Province of": {
+    "value": 1582.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Chile": {
+    "value": 164.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Costa Rica": {
+    "value": 196.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Colombia": {
+    "value": 2489.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "China, mainland": {
+    "value": 212142.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Dominican Republic": {
+    "value": 824.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Cuba": {
+    "value": 418.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Fiji": {
+    "value": 6.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Lao People's Democratic Republic": {
+    "value": 4102.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Eswatini": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Ecuador": {
+    "value": 1653.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "India": {
+    "value": 156540.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Ethiopia": {
+    "value": 140.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "China": {
+    "value": 213724.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "France": {
+    "value": 81.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Iraq": {
+    "value": 109.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Egypt": {
+    "value": 4818.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Iran (Islamic Republic of)": {
+    "value": 2348.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Indonesia": {
+    "value": 61031.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Malaysia": {
+    "value": 2741.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Mauritania": {
+    "value": 223.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Honduras": {
+    "value": 69.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Greece": {
+    "value": 264.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Timor-Leste": {
+    "value": 72.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Papua New Guinea": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Nicaragua": {
+    "value": 365.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Hungary": {
+    "value": 9.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Guatemala": {
+    "value": 33.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Japan": {
+    "value": 9986.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Mauritius": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Philippines": {
+    "value": 18150.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Kazakhstan": {
+    "value": 422.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Mali": {
+    "value": 2331.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Kyrgyzstan": {
+    "value": 30.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Italy": {
+    "value": 1518.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Malawi": {
+    "value": 111.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Madagascar": {
+    "value": 3722.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Panama": {
+    "value": 282.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Sierra Leone": {
+    "value": 872.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Mexico": {
+    "value": 236.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Morocco": {
+    "value": 63.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Niger": {
+    "value": 91.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Somalia": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Togo": {
+    "value": 141.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Myanmar": {
+    "value": 26210.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Solomon Islands": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Paraguay": {
+    "value": 858.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Mozambique": {
+    "value": 128.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "North Macedonia": {
+    "value": 31.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Kenya": {
+    "value": 116.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Nigeria": {
+    "value": 6256.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Senegal": {
+    "value": 906.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Suriname": {
+    "value": 268.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Peru": {
+    "value": 3151.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Rwanda": {
+    "value": 97.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Sri Lanka": {
+    "value": 4819.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Pakistan": {
+    "value": 10202.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Republic of Korea": {
+    "value": 5771.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Turkmenistan": {
+    "value": 130.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Nepal": {
+    "value": 4789.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Portugal": {
+    "value": 185.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Romania": {
+    "value": 50.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Russian Federation": {
+    "value": 1110.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "South Africa": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Thailand": {
+    "value": 27702.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Viet Nam": {
+    "value": 45091.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Zimbabwe": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Tajikistan": {
+    "value": 86.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "United Republic of Tanzania": {
+    "value": 1937.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Spain": {
+    "value": 847.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Uruguay": {
+    "value": 1396.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Uzbekistan": {
+    "value": 426.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Trinidad and Tobago": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "T\u00fcrkiye": {
+    "value": 920.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Uganda": {
+    "value": 238.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "United States of America": {
+    "value": 8725.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Ukraine": {
+    "value": 63.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Venezuela (Bolivarian Republic of)": {
+    "value": 802.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Zambia": {
+    "value": 26.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Northern America": {
+    "value": 8725.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "South America": {
+    "value": 25855.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Central Asia": {
+    "value": 1094.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Middle Africa": {
+    "value": 1602.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Northern Africa": {
+    "value": 4914.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Caribbean": {
+    "value": 1376.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Australia and New Zealand": {
+    "value": 690.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "World": {
+    "value": 730850.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Eastern Europe": {
+    "value": 1299.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Africa": {
+    "value": 29837.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Eastern Africa": {
+    "value": 6590.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Western Europe": {
+    "value": 81.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Southern Africa": {
+    "value": 4.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Western Africa": {
+    "value": 16728.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Americas": {
+    "value": 37188.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Central America": {
+    "value": 1233.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Asia": {
+    "value": 658899.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Melanesia": {
+    "value": 10.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Eastern Asia": {
+    "value": 231427.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Southern Asia": {
+    "value": 230913.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "South-eastern Asia": {
+    "value": 194434.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Western Asia": {
+    "value": 1032.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Europe": {
+    "value": 4224.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Southern Europe": {
+    "value": 2844.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Oceania": {
+    "value": 700.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "European Union (27)": {
+    "value": 3022.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Small Island Developing States": {
+    "value": 2628.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Least Developed Countries": {
+    "value": 112359.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Land Locked Developing Countries": {
+    "value": 15467.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Low Income Food Deficit Countries": {
+    "value": 24011.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  },
+  "Net Food Importing Developing Countries": {
+    "value": 139840.0,
+    "unit": "1000 t",
+    "item": "Rice and products",
+    "year": 2015,
+    "element": "Production"
+  }
+}

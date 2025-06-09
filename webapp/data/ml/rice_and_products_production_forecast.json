@@ -1,0 +1,477 @@
+{
+  "China": {
+    "historical_data": [
+      {
+        "year": 2010,
+        "value": 197212.0
+      },
+      {
+        "year": 2011,
+        "value": 202667.0
+      },
+      {
+        "year": 2012,
+        "value": 205936.0
+      },
+      {
+        "year": 2013,
+        "value": 205202.0
+      },
+      {
+        "year": 2014,
+        "value": 208240.0
+      },
+      {
+        "year": 2015,
+        "value": 213724.0
+      },
+      {
+        "year": 2016,
+        "value": 212682.0
+      },
+      {
+        "year": 2017,
+        "value": 214430.0
+      },
+      {
+        "year": 2018,
+        "value": 214079.0
+      },
+      {
+        "year": 2019,
+        "value": 211405.0
+      },
+      {
+        "year": 2020,
+        "value": 213611.0
+      },
+      {
+        "year": 2021,
+        "value": 214404.0
+      },
+      {
+        "year": 2022,
+        "value": 210071.0
+      }
+    ],
+    "predictions": [
+      {
+        "year": 2023,
+        "predicted_value": 217109.92307692417,
+        "confidence": 0.8
+      },
+      {
+        "year": 2024,
+        "predicted_value": 218195.263736265,
+        "confidence": 0.8
+      },
+      {
+        "year": 2025,
+        "predicted_value": 219280.6043956054,
+        "confidence": 0.8
+      },
+      {
+        "year": 2026,
+        "predicted_value": 220365.94505494623,
+        "confidence": 0.8
+      },
+      {
+        "year": 2027,
+        "predicted_value": 221451.28571428708,
+        "confidence": 0.8
+      },
+      {
+        "year": 2028,
+        "predicted_value": 222536.62637362746,
+        "confidence": 0.8
+      },
+      {
+        "year": 2029,
+        "predicted_value": 223621.9670329683,
+        "confidence": 0.8
+      }
+    ],
+    "model_type": "linear_regression",
+    "item": "Rice and products"
+  },
+  "United States of America": {
+    "historical_data": [
+      {
+        "year": 2010,
+        "value": 11027.0
+      },
+      {
+        "year": 2011,
+        "value": 8389.0
+      },
+      {
+        "year": 2012,
+        "value": 9051.0
+      },
+      {
+        "year": 2013,
+        "value": 8613.0
+      },
+      {
+        "year": 2014,
+        "value": 10080.0
+      },
+      {
+        "year": 2015,
+        "value": 8725.0
+      },
+      {
+        "year": 2016,
+        "value": 10167.0
+      },
+      {
+        "year": 2017,
+        "value": 8084.0
+      },
+      {
+        "year": 2018,
+        "value": 10153.0
+      },
+      {
+        "year": 2019,
+        "value": 8396.0
+      },
+      {
+        "year": 2020,
+        "value": 10320.0
+      },
+      {
+        "year": 2021,
+        "value": 8690.0
+      },
+      {
+        "year": 2022,
+        "value": 7274.0
+      }
+    ],
+    "predictions": [
+      {
+        "year": 2023,
+        "predicted_value": 8494.42307692286,
+        "confidence": 0.8
+      },
+      {
+        "year": 2024,
+        "predicted_value": 8400.560439560213,
+        "confidence": 0.8
+      },
+      {
+        "year": 2025,
+        "predicted_value": 8306.697802197566,
+        "confidence": 0.8
+      },
+      {
+        "year": 2026,
+        "predicted_value": 8212.83516483492,
+        "confidence": 0.8
+      },
+      {
+        "year": 2027,
+        "predicted_value": 8118.972527472244,
+        "confidence": 0.8
+      },
+      {
+        "year": 2028,
+        "predicted_value": 8025.1098901095975,
+        "confidence": 0.8
+      },
+      {
+        "year": 2029,
+        "predicted_value": 7931.247252746951,
+        "confidence": 0.8
+      }
+    ],
+    "model_type": "linear_regression",
+    "item": "Rice and products"
+  },
+  "India": {
+    "historical_data": [
+      {
+        "year": 2010,
+        "value": 143963.0
+      },
+      {
+        "year": 2011,
+        "value": 157900.0
+      },
+      {
+        "year": 2012,
+        "value": 157800.0
+      },
+      {
+        "year": 2013,
+        "value": 159200.0
+      },
+      {
+        "year": 2014,
+        "value": 157200.0
+      },
+      {
+        "year": 2015,
+        "value": 156540.0
+      },
+      {
+        "year": 2016,
+        "value": 163700.0
+      },
+      {
+        "year": 2017,
+        "value": 168500.0
+      },
+      {
+        "year": 2018,
+        "value": 174717.0
+      },
+      {
+        "year": 2019,
+        "value": 174717.0
+      },
+      {
+        "year": 2020,
+        "value": 186500.0
+      },
+      {
+        "year": 2021,
+        "value": 194200.0
+      },
+      {
+        "year": 2022,
+        "value": 196246.0
+      }
+    ],
+    "predictions": [
+      {
+        "year": 2023,
+        "predicted_value": 195611.88461538497,
+        "confidence": 0.8
+      },
+      {
+        "year": 2024,
+        "predicted_value": 199477.50549450517,
+        "confidence": 0.8
+      },
+      {
+        "year": 2025,
+        "predicted_value": 203343.12637362536,
+        "confidence": 0.8
+      },
+      {
+        "year": 2026,
+        "predicted_value": 207208.74725274649,
+        "confidence": 0.8
+      },
+      {
+        "year": 2027,
+        "predicted_value": 211074.36813186668,
+        "confidence": 0.8
+      },
+      {
+        "year": 2028,
+        "predicted_value": 214939.98901098687,
+        "confidence": 0.8
+      },
+      {
+        "year": 2029,
+        "predicted_value": 218805.609890108,
+        "confidence": 0.8
+      }
+    ],
+    "model_type": "linear_regression",
+    "item": "Rice and products"
+  },
+  "Russian Federation": {
+    "historical_data": [
+      {
+        "year": 2010,
+        "value": 1061.0
+      },
+      {
+        "year": 2011,
+        "value": 1056.0
+      },
+      {
+        "year": 2012,
+        "value": 1052.0
+      },
+      {
+        "year": 2013,
+        "value": 935.0
+      },
+      {
+        "year": 2014,
+        "value": 1049.0
+      },
+      {
+        "year": 2015,
+        "value": 1110.0
+      },
+      {
+        "year": 2016,
+        "value": 1081.0
+      },
+      {
+        "year": 2017,
+        "value": 987.0
+      },
+      {
+        "year": 2018,
+        "value": 1038.0
+      },
+      {
+        "year": 2019,
+        "value": 1099.0
+      },
+      {
+        "year": 2020,
+        "value": 1142.0
+      },
+      {
+        "year": 2021,
+        "value": 1076.0
+      },
+      {
+        "year": 2022,
+        "value": 920.0
+      }
+    ],
+    "predictions": [
+      {
+        "year": 2023,
+        "predicted_value": 1045.1153846153848,
+        "confidence": 0.8
+      },
+      {
+        "year": 2024,
+        "predicted_value": 1044.901098901099,
+        "confidence": 0.8
+      },
+      {
+        "year": 2025,
+        "predicted_value": 1044.6868131868134,
+        "confidence": 0.8
+      },
+      {
+        "year": 2026,
+        "predicted_value": 1044.4725274725279,
+        "confidence": 0.8
+      },
+      {
+        "year": 2027,
+        "predicted_value": 1044.258241758242,
+        "confidence": 0.8
+      },
+      {
+        "year": 2028,
+        "predicted_value": 1044.0439560439565,
+        "confidence": 0.8
+      },
+      {
+        "year": 2029,
+        "predicted_value": 1043.829670329671,
+        "confidence": 0.8
+      }
+    ],
+    "model_type": "linear_regression",
+    "item": "Rice and products"
+  },
+  "France": {
+    "historical_data": [
+      {
+        "year": 2010,
+        "value": 120.0
+      },
+      {
+        "year": 2011,
+        "value": 130.0
+      },
+      {
+        "year": 2012,
+        "value": 124.0
+      },
+      {
+        "year": 2013,
+        "value": 81.0
+      },
+      {
+        "year": 2014,
+        "value": 83.0
+      },
+      {
+        "year": 2015,
+        "value": 81.0
+      },
+      {
+        "year": 2016,
+        "value": 80.0
+      },
+      {
+        "year": 2017,
+        "value": 93.0
+      },
+      {
+        "year": 2018,
+        "value": 73.0
+      },
+      {
+        "year": 2019,
+        "value": 83.0
+      },
+      {
+        "year": 2020,
+        "value": 76.0
+      },
+      {
+        "year": 2021,
+        "value": 62.0
+      },
+      {
+        "year": 2022,
+        "value": 64.0
+      }
+    ],
+    "predictions": [
+      {
+        "year": 2023,
+        "predicted_value": 55.0,
+        "confidence": 0.8
+      },
+      {
+        "year": 2024,
+        "predicted_value": 50.21978021978066,
+        "confidence": 0.8
+      },
+      {
+        "year": 2025,
+        "predicted_value": 45.43956043956132,
+        "confidence": 0.8
+      },
+      {
+        "year": 2026,
+        "predicted_value": 40.65934065934198,
+        "confidence": 0.8
+      },
+      {
+        "year": 2027,
+        "predicted_value": 35.87912087912264,
+        "confidence": 0.8
+      },
+      {
+        "year": 2028,
+        "predicted_value": 31.098901098903298,
+        "confidence": 0.8
+      },
+      {
+        "year": 2029,
+        "predicted_value": 26.318681318683957,
+        "confidence": 0.8
+      }
+    ],
+    "model_type": "linear_regression",
+    "item": "Rice and products"
+  }
+}

@@ -1,0 +1,758 @@
+{
+  "Micronesia (Federated States of)": {
+    "value": 9.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Tonga": {
+    "value": 7.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Bhutan": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "South Sudan": {
+    "value": 1500.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Comoros": {
+    "value": 57.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Timor-Leste": {
+    "value": 18.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Liberia": {
+    "value": 630.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Solomon Islands": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Micronesia": {
+    "value": 9.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Sao Tome and Principe": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "French Polynesia": {
+    "value": 4.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Cabo Verde": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Saint Vincent and the Grenadines": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Lao People's Democratic Republic": {
+    "value": 3710.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Bahamas": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Suriname": {
+    "value": 5.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Congo": {
+    "value": 1600.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Somalia": {
+    "value": 97.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Barbados": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Gabon": {
+    "value": 312.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Guyana": {
+    "value": 75.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Cuba": {
+    "value": 665.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Haiti": {
+    "value": 638.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Chad": {
+    "value": 295.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Guinea-Bissau": {
+    "value": 49.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Mauritius": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Saint Lucia": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Central African Republic": {
+    "value": 1062.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Dominican Republic": {
+    "value": 168.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Costa Rica": {
+    "value": 98.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Malaysia": {
+    "value": 31.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Polynesia": {
+    "value": 11.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Paraguay": {
+    "value": 3384.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Fiji": {
+    "value": 86.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Trinidad and Tobago": {
+    "value": 4.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Panama": {
+    "value": 31.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Papua New Guinea": {
+    "value": 158.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Guinea": {
+    "value": 2743.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Viet Nam": {
+    "value": 10566.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Cambodia": {
+    "value": 13600.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Nicaragua": {
+    "value": 267.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Gambia": {
+    "value": 12.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Jamaica": {
+    "value": 24.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Argentina": {
+    "value": 200.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Benin": {
+    "value": 4219.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Philippines": {
+    "value": 2560.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "El Salvador": {
+    "value": 41.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Burundi": {
+    "value": 2495.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Angola": {
+    "value": 9867.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Belize": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Venezuela (Bolivarian Republic of)": {
+    "value": 408.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Togo": {
+    "value": 1204.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "New Caledonia": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Sierra Leone": {
+    "value": 3048.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Burkina Faso": {
+    "value": 17.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Brazil": {
+    "value": 18221.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Ecuador": {
+    "value": 96.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "China, Taiwan Province of": {
+    "value": 6.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Myanmar": {
+    "value": 326.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Democratic Republic of the Congo": {
+    "value": 45673.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Indonesia": {
+    "value": 15731.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Cameroon": {
+    "value": 5904.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Madagascar": {
+    "value": 2440.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Thailand": {
+    "value": 35094.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Niger": {
+    "value": 374.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "C\u00f4te d'Ivoire": {
+    "value": 6302.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "India": {
+    "value": 6941.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Colombia": {
+    "value": 984.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Peru": {
+    "value": 1341.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Ghana": {
+    "value": 24997.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Guatemala": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Malawi": {
+    "value": 6101.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Honduras": {
+    "value": 26.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Mexico": {
+    "value": 27.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Bolivia (Plurinational State of)": {
+    "value": 212.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Nigeria": {
+    "value": 58238.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Mali": {
+    "value": 121.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Mozambique": {
+    "value": 6218.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Senegal": {
+    "value": 1329.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Rwanda": {
+    "value": 1320.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Sri Lanka": {
+    "value": 314.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "United Republic of Tanzania": {
+    "value": 6150.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Uganda": {
+    "value": 2258.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Zambia": {
+    "value": 3800.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "China, mainland": {
+    "value": 5031.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Zimbabwe": {
+    "value": 267.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Kenya": {
+    "value": 712.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Melanesia": {
+    "value": 248.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "China": {
+    "value": 5037.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Caribbean": {
+    "value": 1502.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Middle Africa": {
+    "value": 64715.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "South America": {
+    "value": 24926.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "South-eastern Asia": {
+    "value": 81636.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Southern Asia": {
+    "value": 7256.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Western Africa": {
+    "value": 103285.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Small Island Developing States": {
+    "value": 1980.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Central America": {
+    "value": 493.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Eastern Africa": {
+    "value": 33417.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Eastern Asia": {
+    "value": 5037.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Oceania": {
+    "value": 268.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Least Developed Countries": {
+    "value": 121376.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Americas": {
+    "value": 26921.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Africa": {
+    "value": 201418.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Asia": {
+    "value": 93929.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Low Income Food Deficit Countries": {
+    "value": 98803.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "World": {
+    "value": 322536.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Net Food Importing Developing Countries": {
+    "value": 131706.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Land Locked Developing Countries": {
+    "value": 26916.0,
+    "unit": "1000 t",
+    "item": "Cassava and products",
+    "year": 2021,
+    "element": "Production"
+  }
+}

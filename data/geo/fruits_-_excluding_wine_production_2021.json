@@ -1,0 +1,1535 @@
+{
+  "Micronesia (Federated States of)": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Tuvalu": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Tonga": {
+    "value": 8.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Bhutan": {
+    "value": 26.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Qatar": {
+    "value": 30.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "South Sudan": {
+    "value": 466.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Bahrain": {
+    "value": 21.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Turkmenistan": {
+    "value": 490.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Timor-Leste": {
+    "value": 19.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Kiribati": {
+    "value": 9.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Lesotho": {
+    "value": 15.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Comoros": {
+    "value": 84.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Djibouti": {
+    "value": 5.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Sao Tome and Principe": {
+    "value": 52.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Guinea-Bissau": {
+    "value": 113.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Chad": {
+    "value": 128.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Micronesia": {
+    "value": 12.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Afghanistan": {
+    "value": 1957.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Tajikistan": {
+    "value": 660.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Liberia": {
+    "value": 213.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Mauritania": {
+    "value": 25.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Somalia": {
+    "value": 218.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Saint Kitts and Nevis": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Sudan": {
+    "value": 3228.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Mongolia": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Albania": {
+    "value": 548.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Solomon Islands": {
+    "value": 27.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Vanuatu": {
+    "value": 23.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Dominica": {
+    "value": 55.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Libya": {
+    "value": 429.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Suriname": {
+    "value": 50.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Grenada": {
+    "value": 18.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Saint Vincent and the Grenadines": {
+    "value": 74.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Montenegro": {
+    "value": 48.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Cabo Verde": {
+    "value": 6.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "French Polynesia": {
+    "value": 16.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Gambia": {
+    "value": 10.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Georgia": {
+    "value": 536.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Central African Republic": {
+    "value": 311.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Armenia": {
+    "value": 583.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Lao People's Democratic Republic": {
+    "value": 995.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Seychelles": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Sierra Leone": {
+    "value": 278.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Maldives": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Finland": {
+    "value": 29.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Samoa": {
+    "value": 46.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Kuwait": {
+    "value": 146.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Haiti": {
+    "value": 1410.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Bosnia and Herzegovina": {
+    "value": 339.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Guyana": {
+    "value": 289.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Uzbekistan": {
+    "value": 4780.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Kyrgyzstan": {
+    "value": 240.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Saint Lucia": {
+    "value": 17.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Estonia": {
+    "value": 5.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "North Macedonia": {
+    "value": 444.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Gabon": {
+    "value": 391.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Bahamas": {
+    "value": 49.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Eswatini": {
+    "value": 166.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Latvia": {
+    "value": 16.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Belarus": {
+    "value": 806.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Lithuania": {
+    "value": 53.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Republic of Moldova": {
+    "value": 1357.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "New Caledonia": {
+    "value": 11.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Luxembourg": {
+    "value": 15.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Belgium": {
+    "value": 674.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Azerbaijan": {
+    "value": 1296.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Antigua and Barbuda": {
+    "value": 8.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Jordan": {
+    "value": 399.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Chile": {
+    "value": 6633.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Oman": {
+    "value": 438.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Cuba": {
+    "value": 1513.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Ireland": {
+    "value": 24.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Guinea": {
+    "value": 1547.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Croatia": {
+    "value": 239.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Paraguay": {
+    "value": 632.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Congo": {
+    "value": 274.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Barbados": {
+    "value": 6.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Czechia": {
+    "value": 232.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Algeria": {
+    "value": 4813.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Bulgaria": {
+    "value": 432.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Iraq": {
+    "value": 1573.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Angola": {
+    "value": 5867.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Belize": {
+    "value": 176.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Niger": {
+    "value": 516.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Uruguay": {
+    "value": 484.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Namibia": {
+    "value": 67.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Togo": {
+    "value": 67.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Slovenia": {
+    "value": 114.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Slovakia": {
+    "value": 84.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Jamaica": {
+    "value": 369.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Argentina": {
+    "value": 7481.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Tunisia": {
+    "value": 2016.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Papua New Guinea": {
+    "value": 2474.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Burundi": {
+    "value": 1418.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Viet Nam": {
+    "value": 10520.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Serbia": {
+    "value": 1681.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Norway": {
+    "value": 33.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Poland": {
+    "value": 5344.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Portugal": {
+    "value": 2288.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Romania": {
+    "value": 2632.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "China, Hong Kong SAR": {
+    "value": 5.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Burkina Faso": {
+    "value": 1322.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Denmark": {
+    "value": 77.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Dominican Republic": {
+    "value": 5166.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Saudi Arabia": {
+    "value": 2226.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "New Zealand": {
+    "value": 1801.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Iran (Islamic Republic of)": {
+    "value": 15382.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Ukraine": {
+    "value": 2436.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Rwanda": {
+    "value": 3259.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Benin": {
+    "value": 601.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Panama": {
+    "value": 1084.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Israel": {
+    "value": 1360.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "El Salvador": {
+    "value": 275.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Trinidad and Tobago": {
+    "value": 74.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Netherlands (Kingdom of the)": {
+    "value": 863.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Mauritius": {
+    "value": 23.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Malawi": {
+    "value": 3530.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Nicaragua": {
+    "value": 601.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Austria": {
+    "value": 626.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Switzerland": {
+    "value": 358.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Malta": {
+    "value": 6.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Lebanon": {
+    "value": 999.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Yemen": {
+    "value": 1049.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Bolivia (Plurinational State of)": {
+    "value": 1473.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Syrian Arab Republic": {
+    "value": 1883.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "France": {
+    "value": 7685.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Zambia": {
+    "value": 128.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Greece": {
+    "value": 3806.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Hungary": {
+    "value": 1200.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Fiji": {
+    "value": 36.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Sweden": {
+    "value": 52.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Democratic Republic of the Congo": {
+    "value": 6722.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Mali": {
+    "value": 2120.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "United Kingdom of Great Britain and Northern Ireland": {
+    "value": 650.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Polynesia": {
+    "value": 71.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Madagascar": {
+    "value": 1286.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Mozambique": {
+    "value": 823.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "United Arab Emirates": {
+    "value": 410.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "T\u00fcrkiye": {
+    "value": 20085.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Canada": {
+    "value": 844.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Germany": {
+    "value": 2529.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Ecuador": {
+    "value": 8429.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Kazakhstan": {
+    "value": 439.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Malaysia": {
+    "value": 1520.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Russian Federation": {
+    "value": 4704.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Zimbabwe": {
+    "value": 361.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Myanmar": {
+    "value": 2594.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Australia": {
+    "value": 3757.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Botswana": {
+    "value": 10.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Morocco": {
+    "value": 5377.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Cyprus": {
+    "value": 104.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "China, Taiwan Province of": {
+    "value": 2498.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Ghana": {
+    "value": 6438.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Venezuela (Bolivarian Republic of)": {
+    "value": 2910.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Senegal": {
+    "value": 302.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "C\u00f4te d'Ivoire": {
+    "value": 3087.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Ethiopia": {
+    "value": 1972.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "South Africa": {
+    "value": 8081.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Bangladesh": {
+    "value": 4967.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Cameroon": {
+    "value": 6047.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Italy": {
+    "value": 16121.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Cambodia": {
+    "value": 643.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Honduras": {
+    "value": 943.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Costa Rica": {
+    "value": 6326.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Philippines": {
+    "value": 16531.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Uganda": {
+    "value": 11245.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Republic of Korea": {
+    "value": 2346.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Spain": {
+    "value": 17489.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Peru": {
+    "value": 7658.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Pakistan": {
+    "value": 7333.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Nigeria": {
+    "value": 16306.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Sri Lanka": {
+    "value": 1155.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "United States of America": {
+    "value": 20838.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Egypt": {
+    "value": 12932.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "India": {
+    "value": 103254.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Thailand": {
+    "value": 11011.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Japan": {
+    "value": 2511.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Mexico": {
+    "value": 22101.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Guatemala": {
+    "value": 6317.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Central Asia": {
+    "value": 6608.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "United Republic of Tanzania": {
+    "value": 5635.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Brazil": {
+    "value": 38564.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "China, mainland": {
+    "value": 184481.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Northern America": {
+    "value": 21682.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Australia and New Zealand": {
+    "value": 5558.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Colombia": {
+    "value": 11232.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Kenya": {
+    "value": 4033.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Nepal": {
+    "value": 1698.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Indonesia": {
+    "value": 23126.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Melanesia": {
+    "value": 2570.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Western Europe": {
+    "value": 12749.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Northern Europe": {
+    "value": 938.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Eastern Europe": {
+    "value": 19225.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Southern Africa": {
+    "value": 8339.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Middle Africa": {
+    "value": 19792.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Caribbean": {
+    "value": 8760.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "China": {
+    "value": 186984.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Northern Africa": {
+    "value": 28795.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Western Africa": {
+    "value": 32951.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "South America": {
+    "value": 85834.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Southern Europe": {
+    "value": 43122.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Oceania": {
+    "value": 8211.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Eastern Africa": {
+    "value": 34488.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "South-eastern Asia": {
+    "value": 66959.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Southern Asia": {
+    "value": 135775.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Central America": {
+    "value": 37823.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Eastern Asia": {
+    "value": 193487.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Small Island Developing States": {
+    "value": 12229.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Western Asia": {
+    "value": 33273.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Europe": {
+    "value": 76035.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "European Union (27)": {
+    "value": 62735.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Least Developed Countries": {
+    "value": 68876.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Land Locked Developing Countries": {
+    "value": 44038.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Africa": {
+    "value": 124364.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Low Income Food Deficit Countries": {
+    "value": 74141.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Americas": {
+    "value": 154098.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Net Food Importing Developing Countries": {
+    "value": 125035.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Asia": {
+    "value": 436102.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  },
+  "World": {
+    "value": 798810.0,
+    "unit": "1000 t",
+    "item": "Fruits - Excluding Wine",
+    "year": 2021,
+    "element": "Production"
+  }
+}

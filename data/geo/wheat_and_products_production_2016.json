@@ -1,0 +1,1066 @@
+{
+  "Democratic People's Republic of Korea": {
+    "value": 39.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Afghanistan": {
+    "value": 4555.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Angola": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Albania": {
+    "value": 275.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Algeria": {
+    "value": 2440.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Argentina": {
+    "value": 11333.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Armenia": {
+    "value": 350.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Australia": {
+    "value": 22284.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Austria": {
+    "value": 1970.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Azerbaijan": {
+    "value": 1800.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Bangladesh": {
+    "value": 1355.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Belarus": {
+    "value": 2340.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Chad": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Belgium": {
+    "value": 1400.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Bolivia (Plurinational State of)": {
+    "value": 329.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Bosnia and Herzegovina": {
+    "value": 307.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Burundi": {
+    "value": 8.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Brazil": {
+    "value": 6838.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Bulgaria": {
+    "value": 5665.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Cameroon": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Canada": {
+    "value": 32226.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Chile": {
+    "value": 1732.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Democratic Republic of the Congo": {
+    "value": 11.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "China, mainland": {
+    "value": 134150.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "China, Taiwan Province of": {
+    "value": 28.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Colombia": {
+    "value": 14.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "China": {
+    "value": 134178.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Croatia": {
+    "value": 969.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Denmark": {
+    "value": 4202.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Czechia": {
+    "value": 5473.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Ecuador": {
+    "value": 7.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Eswatini": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Cyprus": {
+    "value": 7.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Ethiopia": {
+    "value": 4538.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Estonia": {
+    "value": 456.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Finland": {
+    "value": 824.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "France": {
+    "value": 29353.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Georgia": {
+    "value": 127.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Egypt": {
+    "value": 9344.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Germany": {
+    "value": 24578.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Greece": {
+    "value": 1564.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Sudan": {
+    "value": 516.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Iraq": {
+    "value": 3053.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "India": {
+    "value": 92428.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Iran (Islamic Republic of)": {
+    "value": 14609.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Hungary": {
+    "value": 5603.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Guatemala": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Israel": {
+    "value": 168.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Honduras": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Ireland": {
+    "value": 648.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Japan": {
+    "value": 792.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Jordan": {
+    "value": 31.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Italy": {
+    "value": 8136.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Kazakhstan": {
+    "value": 14985.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Libya": {
+    "value": 200.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Indonesia": {
+    "value": 67.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Kyrgyzstan": {
+    "value": 662.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Mauritania": {
+    "value": 8.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Lebanon": {
+    "value": 132.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Lesotho": {
+    "value": 5.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Latvia": {
+    "value": 2062.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Madagascar": {
+    "value": 5.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Kenya": {
+    "value": 215.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Malawi": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Lithuania": {
+    "value": 3844.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Malaysia": {
+    "value": 23.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Luxembourg": {
+    "value": 70.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Mongolia": {
+    "value": 467.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Mali": {
+    "value": 40.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Mexico": {
+    "value": 3938.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Montenegro": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Mozambique": {
+    "value": 17.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Morocco": {
+    "value": 2731.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Myanmar": {
+    "value": 103.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Namibia": {
+    "value": 10.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Malta": {
+    "value": 11.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "New Zealand": {
+    "value": 459.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Netherlands (Kingdom of the)": {
+    "value": 1016.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Niger": {
+    "value": 8.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Nigeria": {
+    "value": 60.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "North Macedonia": {
+    "value": 308.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Norway": {
+    "value": 309.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Oman": {
+    "value": 4.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Pakistan": {
+    "value": 25656.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Somalia": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Nepal": {
+    "value": 1746.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Paraguay": {
+    "value": 1144.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Peru": {
+    "value": 191.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Poland": {
+    "value": 10889.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Portugal": {
+    "value": 90.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Saudi Arabia": {
+    "value": 619.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Republic of Korea": {
+    "value": 59.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Republic of Moldova": {
+    "value": 1293.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Romania": {
+    "value": 8432.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Russian Federation": {
+    "value": 73346.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Rwanda": {
+    "value": 10.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Serbia": {
+    "value": 2885.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Slovakia": {
+    "value": 2434.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "South Africa": {
+    "value": 1968.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Turkmenistan": {
+    "value": 1605.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Slovenia": {
+    "value": 163.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Syrian Arab Republic": {
+    "value": 1732.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Spain": {
+    "value": 7901.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Switzerland": {
+    "value": 387.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Tajikistan": {
+    "value": 917.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Sweden": {
+    "value": 2835.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Thailand": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Tunisia": {
+    "value": 927.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "T\u00fcrkiye": {
+    "value": 20600.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Zimbabwe": {
+    "value": 42.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Uganda": {
+    "value": 22.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Ukraine": {
+    "value": 26099.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "United Republic of Tanzania": {
+    "value": 76.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "United States of America": {
+    "value": 62928.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Uruguay": {
+    "value": 1191.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Yemen": {
+    "value": 96.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "United Kingdom of Great Britain and Northern Ireland": {
+    "value": 14470.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Uzbekistan": {
+    "value": 6936.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Trinidad and Tobago": {
+    "value": 20.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Viet Nam": {
+    "value": 18.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Zambia": {
+    "value": 160.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Northern America": {
+    "value": 95155.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "South America": {
+    "value": 22778.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Central Asia": {
+    "value": 25105.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "World": {
+    "value": 750569.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Africa": {
+    "value": 23368.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Eastern Africa": {
+    "value": 5094.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Middle Africa": {
+    "value": 16.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Northern Africa": {
+    "value": 16158.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Southern Africa": {
+    "value": 1983.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Western Africa": {
+    "value": 116.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Americas": {
+    "value": 121893.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Central America": {
+    "value": 3940.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Eastern Europe": {
+    "value": 141574.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Caribbean": {
+    "value": 20.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Australia and New Zealand": {
+    "value": 22744.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Asia": {
+    "value": 329954.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Western Europe": {
+    "value": 58775.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Eastern Asia": {
+    "value": 135534.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Southern Asia": {
+    "value": 140349.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Northern Europe": {
+    "value": 29649.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "South-eastern Asia": {
+    "value": 212.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Western Asia": {
+    "value": 28755.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Europe": {
+    "value": 252609.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Southern Europe": {
+    "value": 22610.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Oceania": {
+    "value": 22744.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "European Union (27)": {
+    "value": 130596.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Least Developed Countries": {
+    "value": 13284.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Land Locked Developing Countries": {
+    "value": 41933.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Small Island Developing States": {
+    "value": 20.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Low Income Food Deficit Countries": {
+    "value": 22208.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  },
+  "Net Food Importing Developing Countries": {
+    "value": 52878.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2016,
+    "element": "Production"
+  }
+}

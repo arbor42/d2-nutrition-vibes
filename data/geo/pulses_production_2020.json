@@ -1,0 +1,1332 @@
+{
+  "Bhutan": {
+    "value": 4.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "South Sudan": {
+    "value": 35.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Comoros": {
+    "value": 13.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Turkmenistan": {
+    "value": 18.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Djibouti": {
+    "value": 16.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Tajikistan": {
+    "value": 58.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Timor-Leste": {
+    "value": 10.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Solomon Islands": {
+    "value": 7.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Afghanistan": {
+    "value": 40.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Libya": {
+    "value": 7.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Guinea-Bissau": {
+    "value": 4.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Somalia": {
+    "value": 27.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Mongolia": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Albania": {
+    "value": 29.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Uzbekistan": {
+    "value": 84.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Cabo Verde": {
+    "value": 6.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Mauritania": {
+    "value": 52.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Saint Vincent and the Grenadines": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Lesotho": {
+    "value": 4.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Liberia": {
+    "value": 4.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Armenia": {
+    "value": 4.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Jordan": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Sudan": {
+    "value": 511.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Central African Republic": {
+    "value": 50.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Paraguay": {
+    "value": 90.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Israel": {
+    "value": 7.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "North Macedonia": {
+    "value": 20.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Iraq": {
+    "value": 9.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Chad": {
+    "value": 199.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Montenegro": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Argentina": {
+    "value": 1058.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Kyrgyzstan": {
+    "value": 196.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Bosnia and Herzegovina": {
+    "value": 23.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Georgia": {
+    "value": 5.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Barbados": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Finland": {
+    "value": 78.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Gambia": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Estonia": {
+    "value": 120.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Algeria": {
+    "value": 115.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Luxembourg": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Eswatini": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Croatia": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Angola": {
+    "value": 373.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Azerbaijan": {
+    "value": 21.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Tunisia": {
+    "value": 100.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Ireland": {
+    "value": 60.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Chile": {
+    "value": 41.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Sierra Leone": {
+    "value": 80.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Togo": {
+    "value": 237.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Guyana": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "China, Hong Kong SAR": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Bulgaria": {
+    "value": 44.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Benin": {
+    "value": 185.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Syrian Arab Republic": {
+    "value": 324.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Czechia": {
+    "value": 92.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Congo": {
+    "value": 11.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Trinidad and Tobago": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Latvia": {
+    "value": 137.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Iran (Islamic Republic of)": {
+    "value": 462.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Lithuania": {
+    "value": 392.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Guinea": {
+    "value": 57.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Belgium": {
+    "value": 25.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Republic of Moldova": {
+    "value": 29.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Slovenia": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "T\u00fcrkiye": {
+    "value": 1297.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Viet Nam": {
+    "value": 299.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Greece": {
+    "value": 182.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Slovakia": {
+    "value": 25.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Uruguay": {
+    "value": 7.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Belarus": {
+    "value": 366.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "United Kingdom of Great Britain and Northern Ireland": {
+    "value": 880.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Saudi Arabia": {
+    "value": 15.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Papua New Guinea": {
+    "value": 4.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Dominican Republic": {
+    "value": 81.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Lao People's Democratic Republic": {
+    "value": 8.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "El Salvador": {
+    "value": 86.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Malawi": {
+    "value": 788.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Niger": {
+    "value": 2727.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Serbia": {
+    "value": 55.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Burundi": {
+    "value": 477.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Austria": {
+    "value": 45.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Lebanon": {
+    "value": 13.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Poland": {
+    "value": 657.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Haiti": {
+    "value": 185.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Belize": {
+    "value": 10.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Jamaica": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Burkina Faso": {
+    "value": 796.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Romania": {
+    "value": 122.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Norway": {
+    "value": 42.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Fiji": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Hungary": {
+    "value": 27.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Cuba": {
+    "value": 65.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Yemen": {
+    "value": 129.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "France": {
+    "value": 919.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Netherlands (Kingdom of the)": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Switzerland": {
+    "value": 14.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Denmark": {
+    "value": 110.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Nicaragua": {
+    "value": 211.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Panama": {
+    "value": 7.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Canada": {
+    "value": 8395.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Italy": {
+    "value": 237.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Cambodia": {
+    "value": 79.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Bolivia (Plurinational State of)": {
+    "value": 132.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Madagascar": {
+    "value": 129.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Ecuador": {
+    "value": 18.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Cyprus": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Portugal": {
+    "value": 14.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Myanmar": {
+    "value": 3607.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Zambia": {
+    "value": 98.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Australia": {
+    "value": 1967.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Namibia": {
+    "value": 22.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Morocco": {
+    "value": 218.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Zimbabwe": {
+    "value": 41.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "New Zealand": {
+    "value": 26.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Sweden": {
+    "value": 134.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Costa Rica": {
+    "value": 5.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Mozambique": {
+    "value": 701.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Mali": {
+    "value": 493.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Rwanda": {
+    "value": 453.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Botswana": {
+    "value": 21.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Democratic Republic of the Congo": {
+    "value": 368.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Ghana": {
+    "value": 425.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Kazakhstan": {
+    "value": 356.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Bangladesh": {
+    "value": 469.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Cameroon": {
+    "value": 593.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Germany": {
+    "value": 717.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Honduras": {
+    "value": 128.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Republic of Korea": {
+    "value": 18.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Ukraine": {
+    "value": 614.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "China, Taiwan Province of": {
+    "value": 13.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "C\u00f4te d'Ivoire": {
+    "value": 53.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Philippines": {
+    "value": 69.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Ethiopia": {
+    "value": 2991.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "South Africa": {
+    "value": 83.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Spain": {
+    "value": 572.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Venezuela (Bolivarian Republic of)": {
+    "value": 120.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Peru": {
+    "value": 258.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Senegal": {
+    "value": 254.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "United States of America": {
+    "value": 3307.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Thailand": {
+    "value": 210.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "India": {
+    "value": 23320.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Guatemala": {
+    "value": 187.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Brazil": {
+    "value": 3055.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Mexico": {
+    "value": 1341.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Nigeria": {
+    "value": 3712.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "China, mainland": {
+    "value": 5071.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Russian Federation": {
+    "value": 3477.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Uganda": {
+    "value": 835.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Central Asia": {
+    "value": 712.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Japan": {
+    "value": 103.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Northern America": {
+    "value": 11702.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Sri Lanka": {
+    "value": 20.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Egypt": {
+    "value": 275.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Colombia": {
+    "value": 173.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Pakistan": {
+    "value": 747.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Indonesia": {
+    "value": 222.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "United Republic of Tanzania": {
+    "value": 1848.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Australia and New Zealand": {
+    "value": 1993.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Nepal": {
+    "value": 417.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Melanesia": {
+    "value": 13.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Western Europe": {
+    "value": 1723.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Northern Europe": {
+    "value": 1954.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Kenya": {
+    "value": 1283.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Eastern Europe": {
+    "value": 5453.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Middle Africa": {
+    "value": 1594.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "China": {
+    "value": 5085.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Southern Africa": {
+    "value": 133.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Southern Europe": {
+    "value": 1139.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Caribbean": {
+    "value": 337.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Oceania": {
+    "value": 2006.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Northern Africa": {
+    "value": 1228.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "South America": {
+    "value": 4953.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "South-eastern Asia": {
+    "value": 4506.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Western Africa": {
+    "value": 9088.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Europe": {
+    "value": 10269.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Eastern Asia": {
+    "value": 5535.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Western Asia": {
+    "value": 1839.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Small Island Developing States": {
+    "value": 395.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Eastern Africa": {
+    "value": 9734.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Central America": {
+    "value": 1975.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Southern Asia": {
+    "value": 25478.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "European Union (27)": {
+    "value": 4718.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Least Developed Countries": {
+    "value": 19757.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Africa": {
+    "value": 21777.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Low Income Food Deficit Countries": {
+    "value": 18219.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Land Locked Developing Countries": {
+    "value": 11489.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Americas": {
+    "value": 18968.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Asia": {
+    "value": 38069.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "Net Food Importing Developing Countries": {
+    "value": 23253.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  },
+  "World": {
+    "value": 91089.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2020,
+    "element": "Production"
+  }
+}

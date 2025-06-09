@@ -1,0 +1,1059 @@
+{
+  "Bhutan": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Afghanistan": {
+    "value": 4890.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Angola": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Albania": {
+    "value": 233.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Algeria": {
+    "value": 3877.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Argentina": {
+    "value": 19485.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Armenia": {
+    "value": 113.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Australia": {
+    "value": 17606.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Austria": {
+    "value": 1664.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Azerbaijan": {
+    "value": 2114.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Bangladesh": {
+    "value": 1024.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Belarus": {
+    "value": 2309.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Chad": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Bolivia (Plurinational State of)": {
+    "value": 237.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Belgium": {
+    "value": 1902.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Bosnia and Herzegovina": {
+    "value": 265.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Brazil": {
+    "value": 5594.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Burundi": {
+    "value": 5.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Bulgaria": {
+    "value": 6321.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Cameroon": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Canada": {
+    "value": 32726.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Chile": {
+    "value": 1400.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Democratic Republic of the Congo": {
+    "value": 10.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "China, mainland": {
+    "value": 134484.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "China, Taiwan Province of": {
+    "value": 29.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Colombia": {
+    "value": 6.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "China": {
+    "value": 134514.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Croatia": {
+    "value": 803.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Denmark": {
+    "value": 4642.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Czechia": {
+    "value": 4832.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Ecuador": {
+    "value": 5.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Eswatini": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Ethiopia": {
+    "value": 5315.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Cyprus": {
+    "value": 29.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Estonia": {
+    "value": 847.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Finland": {
+    "value": 914.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "France": {
+    "value": 40636.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Georgia": {
+    "value": 101.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Egypt": {
+    "value": 8574.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Germany": {
+    "value": 23590.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Greece": {
+    "value": 982.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Sudan": {
+    "value": 726.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "India": {
+    "value": 103798.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Iraq": {
+    "value": 4343.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Hungary": {
+    "value": 5378.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Iran (Islamic Republic of)": {
+    "value": 14519.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Israel": {
+    "value": 85.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Honduras": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Japan": {
+    "value": 1038.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Ireland": {
+    "value": 595.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Jordan": {
+    "value": 26.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Kazakhstan": {
+    "value": 11452.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Italy": {
+    "value": 6785.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Libya": {
+    "value": 140.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Kyrgyzstan": {
+    "value": 601.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Indonesia": {
+    "value": 59.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Mauritania": {
+    "value": 9.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Lesotho": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Lebanon": {
+    "value": 142.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Latvia": {
+    "value": 2371.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Madagascar": {
+    "value": 5.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Malawi": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Kenya": {
+    "value": 367.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Lithuania": {
+    "value": 3844.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Malaysia": {
+    "value": 24.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Luxembourg": {
+    "value": 82.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Mongolia": {
+    "value": 411.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Mali": {
+    "value": 8.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Mexico": {
+    "value": 3345.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Montenegro": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Mozambique": {
+    "value": 18.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Morocco": {
+    "value": 4025.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Myanmar": {
+    "value": 111.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Namibia": {
+    "value": 6.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "New Zealand": {
+    "value": 398.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Netherlands (Kingdom of the)": {
+    "value": 1252.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Niger": {
+    "value": 5.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Nigeria": {
+    "value": 60.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "North Macedonia": {
+    "value": 241.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Norway": {
+    "value": 450.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Oman": {
+    "value": 4.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Pakistan": {
+    "value": 24374.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Somalia": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Nepal": {
+    "value": 2015.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Paraguay": {
+    "value": 1358.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Peru": {
+    "value": 188.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Poland": {
+    "value": 10845.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Portugal": {
+    "value": 77.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Saudi Arabia": {
+    "value": 555.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Republic of Korea": {
+    "value": 34.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Republic of Moldova": {
+    "value": 1147.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Romania": {
+    "value": 10298.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Russian Federation": {
+    "value": 74453.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Rwanda": {
+    "value": 16.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Serbia": {
+    "value": 2535.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Slovakia": {
+    "value": 1939.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "South Africa": {
+    "value": 1597.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Slovenia": {
+    "value": 140.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Turkmenistan": {
+    "value": 1654.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Syrian Arab Republic": {
+    "value": 3095.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Spain": {
+    "value": 6079.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Switzerland": {
+    "value": 496.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Tajikistan": {
+    "value": 837.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Thailand": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Sweden": {
+    "value": 3477.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Tunisia": {
+    "value": 1455.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "T\u00fcrkiye": {
+    "value": 19000.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Uganda": {
+    "value": 24.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Zimbabwe": {
+    "value": 95.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Ukraine": {
+    "value": 28370.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "United Republic of Tanzania": {
+    "value": 63.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "United States of America": {
+    "value": 52685.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Uruguay": {
+    "value": 728.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Uzbekistan": {
+    "value": 6095.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "United Kingdom of Great Britain and Northern Ireland": {
+    "value": 16305.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Yemen": {
+    "value": 100.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Trinidad and Tobago": {
+    "value": 24.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Venezuela (Bolivarian Republic of)": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Viet Nam": {
+    "value": 24.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Zambia": {
+    "value": 152.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Northern America": {
+    "value": 85410.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "South America": {
+    "value": 29001.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "World": {
+    "value": 766755.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Central Asia": {
+    "value": 20639.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Africa": {
+    "value": 26561.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Eastern Africa": {
+    "value": 6061.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Middle Africa": {
+    "value": 15.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Northern Africa": {
+    "value": 18797.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Southern Africa": {
+    "value": 1606.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Western Africa": {
+    "value": 82.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Americas": {
+    "value": 117782.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Central America": {
+    "value": 3346.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Eastern Europe": {
+    "value": 145892.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Caribbean": {
+    "value": 24.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Australia and New Zealand": {
+    "value": 18004.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Asia": {
+    "value": 337306.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Western Europe": {
+    "value": 69623.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Eastern Asia": {
+    "value": 136084.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Southern Asia": {
+    "value": 150622.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Northern Europe": {
+    "value": 33445.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "South-eastern Asia": {
+    "value": 219.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Western Asia": {
+    "value": 29742.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Europe": {
+    "value": 267102.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Southern Europe": {
+    "value": 18142.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Oceania": {
+    "value": 18004.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "European Union (27)": {
+    "value": 140326.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Least Developed Countries": {
+    "value": 14504.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Land Locked Developing Countries": {
+    "value": 38792.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Small Island Developing States": {
+    "value": 25.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Low Income Food Deficit Countries": {
+    "value": 24392.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  },
+  "Net Food Importing Developing Countries": {
+    "value": 53959.0,
+    "unit": "1000 t",
+    "item": "Wheat and products",
+    "year": 2019,
+    "element": "Production"
+  }
+}

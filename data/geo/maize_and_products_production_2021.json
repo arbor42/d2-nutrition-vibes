@@ -1,0 +1,1283 @@
+{
+  "Bhutan": {
+    "value": 31.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Qatar": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "South Sudan": {
+    "value": 175.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Comoros": {
+    "value": 19.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Central African Republic": {
+    "value": 208.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Guinea-Bissau": {
+    "value": 17.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Gambia": {
+    "value": 28.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Sudan": {
+    "value": 23.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Bahamas": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Haiti": {
+    "value": 200.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Guinea": {
+    "value": 798.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Chad": {
+    "value": 365.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Afghanistan": {
+    "value": 264.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Timor-Leste": {
+    "value": 56.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Argentina": {
+    "value": 60526.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Gabon": {
+    "value": 45.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Burkina Faso": {
+    "value": 1854.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Angola": {
+    "value": 2970.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Benin": {
+    "value": 1628.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Sao Tome and Principe": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Cuba": {
+    "value": 239.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Congo": {
+    "value": 13.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Burundi": {
+    "value": 280.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "C\u00f4te d'Ivoire": {
+    "value": 1140.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Botswana": {
+    "value": 67.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Albania": {
+    "value": 414.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Bosnia and Herzegovina": {
+    "value": 893.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Armenia": {
+    "value": 6.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Algeria": {
+    "value": 18.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Namibia": {
+    "value": 78.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Belize": {
+    "value": 109.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Belarus": {
+    "value": 1148.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Ghana": {
+    "value": 3203.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Cameroon": {
+    "value": 2100.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Democratic Republic of the Congo": {
+    "value": 2243.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Kuwait": {
+    "value": 23.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "El Salvador": {
+    "value": 837.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Austria": {
+    "value": 2435.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Cambodia": {
+    "value": 699.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Eswatini": {
+    "value": 100.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Canada": {
+    "value": 14611.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Guyana": {
+    "value": 4.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Croatia": {
+    "value": 2242.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Somalia": {
+    "value": 75.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Vanuatu": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Lesotho": {
+    "value": 89.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Bangladesh": {
+    "value": 4116.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Bolivia (Plurinational State of)": {
+    "value": 1250.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Australia": {
+    "value": 306.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Brazil": {
+    "value": 88272.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Fiji": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Azerbaijan": {
+    "value": 279.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Costa Rica": {
+    "value": 13.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Libya": {
+    "value": 4.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Mauritania": {
+    "value": 12.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Dominican Republic": {
+    "value": 55.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Georgia": {
+    "value": 233.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Belgium": {
+    "value": 450.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Denmark": {
+    "value": 45.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Papua New Guinea": {
+    "value": 13.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Lao People's Democratic Republic": {
+    "value": 535.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Lebanon": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "China, Taiwan Province of": {
+    "value": 210.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Bulgaria": {
+    "value": 3427.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Mali": {
+    "value": 3603.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Israel": {
+    "value": 68.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Nicaragua": {
+    "value": 376.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Indonesia": {
+    "value": 17017.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Panama": {
+    "value": 135.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Paraguay": {
+    "value": 4088.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Ethiopia": {
+    "value": 10751.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Czechia": {
+    "value": 988.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Montenegro": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Jamaica": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "United Arab Emirates": {
+    "value": 23.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Malawi": {
+    "value": 4581.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Niger": {
+    "value": 6.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Chile": {
+    "value": 794.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Malaysia": {
+    "value": 75.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "New Caledonia": {
+    "value": 7.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Iraq": {
+    "value": 374.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Togo": {
+    "value": 929.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Viet Nam": {
+    "value": 4446.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "China, mainland": {
+    "value": 272552.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Madagascar": {
+    "value": 232.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Mauritius": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Colombia": {
+    "value": 1551.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Honduras": {
+    "value": 674.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Philippines": {
+    "value": 8300.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Ecuador": {
+    "value": 1699.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Sierra Leone": {
+    "value": 23.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Oman": {
+    "value": 16.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Nigeria": {
+    "value": 12744.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "India": {
+    "value": 31647.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Germany": {
+    "value": 4462.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "North Macedonia": {
+    "value": 134.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Mozambique": {
+    "value": 1824.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Iran (Islamic Republic of)": {
+    "value": 320.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Lithuania": {
+    "value": 105.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Saint Vincent and the Grenadines": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "France": {
+    "value": 15358.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Turkmenistan": {
+    "value": 12.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Myanmar": {
+    "value": 2274.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Republic of Moldova": {
+    "value": 2793.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Greece": {
+    "value": 1350.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Rwanda": {
+    "value": 483.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Senegal": {
+    "value": 755.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Kyrgyzstan": {
+    "value": 691.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Hungary": {
+    "value": 6425.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Kazakhstan": {
+    "value": 1130.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Netherlands (Kingdom of the)": {
+    "value": 171.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "China": {
+    "value": 272762.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Egypt": {
+    "value": 8036.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Sri Lanka": {
+    "value": 472.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Saudi Arabia": {
+    "value": 59.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Serbia": {
+    "value": 6027.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Slovakia": {
+    "value": 1579.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Yemen": {
+    "value": 94.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Guatemala": {
+    "value": 2061.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Morocco": {
+    "value": 49.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "T\u00fcrkiye": {
+    "value": 6750.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Mexico": {
+    "value": 27503.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Italy": {
+    "value": 6080.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Syrian Arab Republic": {
+    "value": 310.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "New Zealand": {
+    "value": 209.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Poland": {
+    "value": 7322.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Switzerland": {
+    "value": 98.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Portugal": {
+    "value": 752.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Sweden": {
+    "value": 15.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Slovenia": {
+    "value": 389.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Venezuela (Bolivarian Republic of)": {
+    "value": 1511.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Tajikistan": {
+    "value": 340.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Peru": {
+    "value": 1583.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Kenya": {
+    "value": 3303.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Pakistan": {
+    "value": 9525.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Uganda": {
+    "value": 6165.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Republic of Korea": {
+    "value": 95.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "South Africa": {
+    "value": 16951.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Romania": {
+    "value": 14821.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Russian Federation": {
+    "value": 15238.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Thailand": {
+    "value": 4848.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Uruguay": {
+    "value": 770.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Zimbabwe": {
+    "value": 1470.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Trinidad and Tobago": {
+    "value": 5.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "United Republic of Tanzania": {
+    "value": 7039.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Uzbekistan": {
+    "value": 590.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Nepal": {
+    "value": 2998.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Zambia": {
+    "value": 3620.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Spain": {
+    "value": 4598.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Ukraine": {
+    "value": 42110.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "United States of America": {
+    "value": 382893.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Northern America": {
+    "value": 397503.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "South America": {
+    "value": 162048.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Melanesia": {
+    "value": 22.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Central Asia": {
+    "value": 2762.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Australia and New Zealand": {
+    "value": 515.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Caribbean": {
+    "value": 503.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Northern Europe": {
+    "value": 165.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Middle Africa": {
+    "value": 7945.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Eastern Europe": {
+    "value": 95850.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Western Europe": {
+    "value": 22976.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Eastern Africa": {
+    "value": 40018.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Northern Africa": {
+    "value": 8130.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Central America": {
+    "value": 31708.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Southern Africa": {
+    "value": 17286.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "World": {
+    "value": 1208076.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Africa": {
+    "value": 100118.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Western Africa": {
+    "value": 26739.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Small Island Developing States": {
+    "value": 732.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "South-eastern Asia": {
+    "value": 38251.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Americas": {
+    "value": 591762.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Southern Asia": {
+    "value": 49374.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Eastern Asia": {
+    "value": 275157.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Asia": {
+    "value": 373786.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Western Asia": {
+    "value": 8242.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Europe": {
+    "value": 141873.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Southern Europe": {
+    "value": 22883.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Oceania": {
+    "value": 537.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "European Union (27)": {
+    "value": 73015.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Least Developed Countries": {
+    "value": 62032.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Land Locked Developing Countries": {
+    "value": 48957.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Low Income Food Deficit Countries": {
+    "value": 59253.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Net Food Importing Developing Countries": {
+    "value": 89785.0,
+    "unit": "1000 t",
+    "item": "Maize and products",
+    "year": 2021,
+    "element": "Production"
+  }
+}

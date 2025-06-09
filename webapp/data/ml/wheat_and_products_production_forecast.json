@@ -1,0 +1,572 @@
+{
+  "China": {
+    "historical_data": [
+      {
+        "year": 2010,
+        "value": 115934.0
+      },
+      {
+        "year": 2011,
+        "value": 118200.0
+      },
+      {
+        "year": 2012,
+        "value": 121794.0
+      },
+      {
+        "year": 2013,
+        "value": 122666.0
+      },
+      {
+        "year": 2014,
+        "value": 127206.0
+      },
+      {
+        "year": 2015,
+        "value": 133714.0
+      },
+      {
+        "year": 2016,
+        "value": 134178.0
+      },
+      {
+        "year": 2017,
+        "value": 135222.0
+      },
+      {
+        "year": 2018,
+        "value": 132378.0
+      },
+      {
+        "year": 2019,
+        "value": 134514.0
+      },
+      {
+        "year": 2020,
+        "value": 135182.0
+      },
+      {
+        "year": 2021,
+        "value": 138096.0
+      },
+      {
+        "year": 2022,
+        "value": 138757.0
+      }
+    ],
+    "predictions": [
+      {
+        "year": 2023,
+        "predicted_value": 142809.53846153896,
+        "confidence": 0.8
+      },
+      {
+        "year": 2024,
+        "predicted_value": 144663.19780219812,
+        "confidence": 0.8
+      },
+      {
+        "year": 2025,
+        "predicted_value": 146516.85714285728,
+        "confidence": 0.8
+      },
+      {
+        "year": 2026,
+        "predicted_value": 148370.51648351643,
+        "confidence": 0.8
+      },
+      {
+        "year": 2027,
+        "predicted_value": 150224.1758241756,
+        "confidence": 0.8
+      },
+      {
+        "year": 2028,
+        "predicted_value": 152077.83516483475,
+        "confidence": 0.8
+      },
+      {
+        "year": 2029,
+        "predicted_value": 153931.4945054939,
+        "confidence": 0.8
+      }
+    ],
+    "model_type": "linear_regression",
+    "item": "Wheat and products"
+  },
+  "United States of America": {
+    "historical_data": [
+      {
+        "year": 2010,
+        "value": 60164.0
+      },
+      {
+        "year": 2011,
+        "value": 54486.0
+      },
+      {
+        "year": 2012,
+        "value": 61762.0
+      },
+      {
+        "year": 2013,
+        "value": 58052.0
+      },
+      {
+        "year": 2014,
+        "value": 55234.0
+      },
+      {
+        "year": 2015,
+        "value": 55933.0
+      },
+      {
+        "year": 2016,
+        "value": 62928.0
+      },
+      {
+        "year": 2017,
+        "value": 47479.0
+      },
+      {
+        "year": 2018,
+        "value": 51410.0
+      },
+      {
+        "year": 2019,
+        "value": 52685.0
+      },
+      {
+        "year": 2020,
+        "value": 49878.0
+      },
+      {
+        "year": 2021,
+        "value": 44906.0
+      },
+      {
+        "year": 2022,
+        "value": 45012.0
+      }
+    ],
+    "predictions": [
+      {
+        "year": 2023,
+        "predicted_value": 45434.88461538404,
+        "confidence": 0.8
+      },
+      {
+        "year": 2024,
+        "predicted_value": 44234.054945054464,
+        "confidence": 0.8
+      },
+      {
+        "year": 2025,
+        "predicted_value": 43033.225274724886,
+        "confidence": 0.8
+      },
+      {
+        "year": 2026,
+        "predicted_value": 41832.39560439531,
+        "confidence": 0.8
+      },
+      {
+        "year": 2027,
+        "predicted_value": 40631.56593406573,
+        "confidence": 0.8
+      },
+      {
+        "year": 2028,
+        "predicted_value": 39430.73626373615,
+        "confidence": 0.8
+      },
+      {
+        "year": 2029,
+        "predicted_value": 38229.90659340704,
+        "confidence": 0.8
+      }
+    ],
+    "model_type": "linear_regression",
+    "item": "Wheat and products"
+  },
+  "India": {
+    "historical_data": [
+      {
+        "year": 2010,
+        "value": 80956.0
+      },
+      {
+        "year": 2011,
+        "value": 87031.0
+      },
+      {
+        "year": 2012,
+        "value": 95008.0
+      },
+      {
+        "year": 2013,
+        "value": 93640.0
+      },
+      {
+        "year": 2014,
+        "value": 95983.0
+      },
+      {
+        "year": 2015,
+        "value": 86664.0
+      },
+      {
+        "year": 2016,
+        "value": 92428.0
+      },
+      {
+        "year": 2017,
+        "value": 98636.0
+      },
+      {
+        "year": 2018,
+        "value": 100046.0
+      },
+      {
+        "year": 2019,
+        "value": 103798.0
+      },
+      {
+        "year": 2020,
+        "value": 107996.0
+      },
+      {
+        "year": 2021,
+        "value": 110244.0
+      },
+      {
+        "year": 2022,
+        "value": 108472.0
+      }
+    ],
+    "predictions": [
+      {
+        "year": 2023,
+        "predicted_value": 111749.57692307886,
+        "confidence": 0.8
+      },
+      {
+        "year": 2024,
+        "predicted_value": 113857.73626373801,
+        "confidence": 0.8
+      },
+      {
+        "year": 2025,
+        "predicted_value": 115965.89560439717,
+        "confidence": 0.8
+      },
+      {
+        "year": 2026,
+        "predicted_value": 118074.05494505633,
+        "confidence": 0.8
+      },
+      {
+        "year": 2027,
+        "predicted_value": 120182.21428571548,
+        "confidence": 0.8
+      },
+      {
+        "year": 2028,
+        "predicted_value": 122290.37362637464,
+        "confidence": 0.8
+      },
+      {
+        "year": 2029,
+        "predicted_value": 124398.5329670338,
+        "confidence": 0.8
+      }
+    ],
+    "model_type": "linear_regression",
+    "item": "Wheat and products"
+  },
+  "Russian Federation": {
+    "historical_data": [
+      {
+        "year": 2010,
+        "value": 41508.0
+      },
+      {
+        "year": 2011,
+        "value": 56240.0
+      },
+      {
+        "year": 2012,
+        "value": 37720.0
+      },
+      {
+        "year": 2013,
+        "value": 52091.0
+      },
+      {
+        "year": 2014,
+        "value": 59711.0
+      },
+      {
+        "year": 2015,
+        "value": 61786.0
+      },
+      {
+        "year": 2016,
+        "value": 73346.0
+      },
+      {
+        "year": 2017,
+        "value": 86003.0
+      },
+      {
+        "year": 2018,
+        "value": 72136.0
+      },
+      {
+        "year": 2019,
+        "value": 74453.0
+      },
+      {
+        "year": 2020,
+        "value": 85899.0
+      },
+      {
+        "year": 2021,
+        "value": 76064.0
+      },
+      {
+        "year": 2022,
+        "value": 104242.0
+      }
+    ],
+    "predictions": [
+      {
+        "year": 2023,
+        "predicted_value": 97953.5,
+        "confidence": 0.8
+      },
+      {
+        "year": 2024,
+        "predicted_value": 102263.35164835118,
+        "confidence": 0.8
+      },
+      {
+        "year": 2025,
+        "predicted_value": 106573.20329670236,
+        "confidence": 0.8
+      },
+      {
+        "year": 2026,
+        "predicted_value": 110883.0549450554,
+        "confidence": 0.8
+      },
+      {
+        "year": 2027,
+        "predicted_value": 115192.90659340657,
+        "confidence": 0.8
+      },
+      {
+        "year": 2028,
+        "predicted_value": 119502.75824175775,
+        "confidence": 0.8
+      },
+      {
+        "year": 2029,
+        "predicted_value": 123812.60989010893,
+        "confidence": 0.8
+      }
+    ],
+    "model_type": "linear_regression",
+    "item": "Wheat and products"
+  },
+  "France": {
+    "historical_data": [
+      {
+        "year": 2010,
+        "value": 38223.0
+      },
+      {
+        "year": 2011,
+        "value": 36025.0
+      },
+      {
+        "year": 2012,
+        "value": 37919.0
+      },
+      {
+        "year": 2013,
+        "value": 38685.0
+      },
+      {
+        "year": 2014,
+        "value": 38984.0
+      },
+      {
+        "year": 2015,
+        "value": 42786.0
+      },
+      {
+        "year": 2016,
+        "value": 29353.0
+      },
+      {
+        "year": 2017,
+        "value": 38710.0
+      },
+      {
+        "year": 2018,
+        "value": 35832.0
+      },
+      {
+        "year": 2019,
+        "value": 40636.0
+      },
+      {
+        "year": 2020,
+        "value": 30179.0
+      },
+      {
+        "year": 2021,
+        "value": 36597.0
+      },
+      {
+        "year": 2022,
+        "value": 34670.0
+      }
+    ],
+    "predictions": [
+      {
+        "year": 2023,
+        "predicted_value": 34740.49999999977,
+        "confidence": 0.8
+      },
+      {
+        "year": 2024,
+        "predicted_value": 34444.09890109871,
+        "confidence": 0.8
+      },
+      {
+        "year": 2025,
+        "predicted_value": 34147.697802197654,
+        "confidence": 0.8
+      },
+      {
+        "year": 2026,
+        "predicted_value": 33851.2967032966,
+        "confidence": 0.8
+      },
+      {
+        "year": 2027,
+        "predicted_value": 33554.89560439554,
+        "confidence": 0.8
+      },
+      {
+        "year": 2028,
+        "predicted_value": 33258.494505494484,
+        "confidence": 0.8
+      },
+      {
+        "year": 2029,
+        "predicted_value": 32962.09340659343,
+        "confidence": 0.8
+      }
+    ],
+    "model_type": "linear_regression",
+    "item": "Wheat and products"
+  },
+  "Germany": {
+    "historical_data": [
+      {
+        "year": 2010,
+        "value": 24197.0
+      },
+      {
+        "year": 2011,
+        "value": 22866.0
+      },
+      {
+        "year": 2012,
+        "value": 22494.0
+      },
+      {
+        "year": 2013,
+        "value": 25105.0
+      },
+      {
+        "year": 2014,
+        "value": 27890.0
+      },
+      {
+        "year": 2015,
+        "value": 26659.0
+      },
+      {
+        "year": 2016,
+        "value": 24578.0
+      },
+      {
+        "year": 2017,
+        "value": 24587.0
+      },
+      {
+        "year": 2018,
+        "value": 20355.0
+      },
+      {
+        "year": 2019,
+        "value": 23590.0
+      },
+      {
+        "year": 2020,
+        "value": 22233.0
+      },
+      {
+        "year": 2021,
+        "value": 21535.0
+      },
+      {
+        "year": 2022,
+        "value": 22610.0
+      }
+    ],
+    "predictions": [
+      {
+        "year": 2023,
+        "predicted_value": 22249.615384615434,
+        "confidence": 0.8
+      },
+      {
+        "year": 2024,
+        "predicted_value": 22035.83516483527,
+        "confidence": 0.8
+      },
+      {
+        "year": 2025,
+        "predicted_value": 21822.054945055046,
+        "confidence": 0.8
+      },
+      {
+        "year": 2026,
+        "predicted_value": 21608.27472527488,
+        "confidence": 0.8
+      },
+      {
+        "year": 2027,
+        "predicted_value": 21394.494505494717,
+        "confidence": 0.8
+      },
+      {
+        "year": 2028,
+        "predicted_value": 21180.714285714494,
+        "confidence": 0.8
+      },
+      {
+        "year": 2029,
+        "predicted_value": 20966.93406593433,
+        "confidence": 0.8
+      }
+    ],
+    "model_type": "linear_regression",
+    "item": "Wheat and products"
+  }
+}

@@ -1,0 +1,1332 @@
+{
+  "Democratic People's Republic of Korea": {
+    "value": 310.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Comoros": {
+    "value": 14.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Turkmenistan": {
+    "value": 12.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Djibouti": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Tajikistan": {
+    "value": 64.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Timor-Leste": {
+    "value": 11.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Solomon Islands": {
+    "value": 7.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Afghanistan": {
+    "value": 60.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Libya": {
+    "value": 7.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Guinea-Bissau": {
+    "value": 4.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Mongolia": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Somalia": {
+    "value": 25.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Albania": {
+    "value": 31.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Uzbekistan": {
+    "value": 62.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Cabo Verde": {
+    "value": 6.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Mauritania": {
+    "value": 50.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Saint Vincent and the Grenadines": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Lesotho": {
+    "value": 4.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Liberia": {
+    "value": 4.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Armenia": {
+    "value": 5.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Grenada": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Jordan": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Sudan": {
+    "value": 338.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Central African Republic": {
+    "value": 37.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Paraguay": {
+    "value": 75.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Israel": {
+    "value": 51.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "North Macedonia": {
+    "value": 22.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Iraq": {
+    "value": 19.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Chad": {
+    "value": 149.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Montenegro": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Argentina": {
+    "value": 284.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Kyrgyzstan": {
+    "value": 85.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Bosnia and Herzegovina": {
+    "value": 23.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Georgia": {
+    "value": 11.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Barbados": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Finland": {
+    "value": 11.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Gambia": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Estonia": {
+    "value": 31.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Algeria": {
+    "value": 96.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Luxembourg": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Eswatini": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Croatia": {
+    "value": 4.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Azerbaijan": {
+    "value": 25.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Angola": {
+    "value": 332.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Tunisia": {
+    "value": 116.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Ireland": {
+    "value": 19.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Chile": {
+    "value": 63.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Sierra Leone": {
+    "value": 78.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Malta": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Togo": {
+    "value": 119.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "China, Hong Kong SAR": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Bulgaria": {
+    "value": 9.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Benin": {
+    "value": 147.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Syrian Arab Republic": {
+    "value": 232.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Congo": {
+    "value": 11.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Czechia": {
+    "value": 40.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Trinidad and Tobago": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Latvia": {
+    "value": 16.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Iran (Islamic Republic of)": {
+    "value": 505.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Lithuania": {
+    "value": 96.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Guinea": {
+    "value": 58.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Belgium": {
+    "value": 5.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Republic of Moldova": {
+    "value": 25.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Slovenia": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "T\u00fcrkiye": {
+    "value": 1257.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Viet Nam": {
+    "value": 302.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Greece": {
+    "value": 53.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Slovakia": {
+    "value": 9.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Uruguay": {
+    "value": 7.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Belarus": {
+    "value": 367.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "United Kingdom of Great Britain and Northern Ireland": {
+    "value": 496.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Saudi Arabia": {
+    "value": 14.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Papua New Guinea": {
+    "value": 4.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Dominican Republic": {
+    "value": 81.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Lao People's Democratic Republic": {
+    "value": 12.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "El Salvador": {
+    "value": 118.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Malawi": {
+    "value": 622.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Niger": {
+    "value": 1855.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Serbia": {
+    "value": 57.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Burundi": {
+    "value": 256.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Austria": {
+    "value": 44.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Lebanon": {
+    "value": 10.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Poland": {
+    "value": 398.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Haiti": {
+    "value": 230.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Belize": {
+    "value": 12.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Jamaica": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Burkina Faso": {
+    "value": 674.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Norway": {
+    "value": 31.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Romania": {
+    "value": 74.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Fiji": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Hungary": {
+    "value": 47.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Cuba": {
+    "value": 130.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Yemen": {
+    "value": 101.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "France": {
+    "value": 828.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Netherlands (Kingdom of the)": {
+    "value": 10.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Switzerland": {
+    "value": 14.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Denmark": {
+    "value": 25.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Nicaragua": {
+    "value": 185.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Panama": {
+    "value": 11.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Canada": {
+    "value": 6702.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Italy": {
+    "value": 145.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Cambodia": {
+    "value": 74.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Bolivia (Plurinational State of)": {
+    "value": 103.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Madagascar": {
+    "value": 122.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Ecuador": {
+    "value": 18.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Cyprus": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Portugal": {
+    "value": 6.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Myanmar": {
+    "value": 5728.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Zambia": {
+    "value": 32.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Australia": {
+    "value": 2233.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Namibia": {
+    "value": 19.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Morocco": {
+    "value": 354.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Zimbabwe": {
+    "value": 55.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "New Zealand": {
+    "value": 27.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Sweden": {
+    "value": 43.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Costa Rica": {
+    "value": 16.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Mozambique": {
+    "value": 585.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Mali": {
+    "value": 296.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Rwanda": {
+    "value": 466.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Botswana": {
+    "value": 4.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Democratic Republic of the Congo": {
+    "value": 369.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Ghana": {
+    "value": 426.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Kazakhstan": {
+    "value": 74.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Bangladesh": {
+    "value": 268.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Cameroon": {
+    "value": 558.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Germany": {
+    "value": 235.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Honduras": {
+    "value": 104.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Republic of Korea": {
+    "value": 19.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Ukraine": {
+    "value": 392.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "China, Taiwan Province of": {
+    "value": 12.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "C\u00f4te d'Ivoire": {
+    "value": 51.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Philippines": {
+    "value": 68.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Ethiopia": {
+    "value": 2923.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "South Africa": {
+    "value": 83.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Spain": {
+    "value": 433.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Venezuela (Bolivarian Republic of)": {
+    "value": 17.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Peru": {
+    "value": 268.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Senegal": {
+    "value": 41.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "United States of America": {
+    "value": 2241.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Thailand": {
+    "value": 213.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "India": {
+    "value": 18944.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Guatemala": {
+    "value": 278.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Brazil": {
+    "value": 2904.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Mexico": {
+    "value": 1658.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Nigeria": {
+    "value": 4695.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "China, mainland": {
+    "value": 4161.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Russian Federation": {
+    "value": 2227.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Uganda": {
+    "value": 990.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Central Asia": {
+    "value": 297.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Japan": {
+    "value": 132.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Northern America": {
+    "value": 8943.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Sri Lanka": {
+    "value": 21.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Egypt": {
+    "value": 268.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Colombia": {
+    "value": 205.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Pakistan": {
+    "value": 1044.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Indonesia": {
+    "value": 209.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "United Republic of Tanzania": {
+    "value": 1907.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Australia and New Zealand": {
+    "value": 2260.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Nepal": {
+    "value": 324.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Melanesia": {
+    "value": 13.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Western Europe": {
+    "value": 1138.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Northern Europe": {
+    "value": 768.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Kenya": {
+    "value": 1088.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Eastern Europe": {
+    "value": 3589.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Middle Africa": {
+    "value": 1456.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "China": {
+    "value": 4174.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Southern Africa": {
+    "value": 112.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Southern Europe": {
+    "value": 779.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Caribbean": {
+    "value": 449.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Oceania": {
+    "value": 2273.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Northern Africa": {
+    "value": 1179.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "South America": {
+    "value": 3946.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "South-eastern Asia": {
+    "value": 6617.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Western Africa": {
+    "value": 8506.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Europe": {
+    "value": 6273.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Eastern Asia": {
+    "value": 4636.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Western Asia": {
+    "value": 1737.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Small Island Developing States": {
+    "value": 509.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Eastern Africa": {
+    "value": 9086.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Central America": {
+    "value": 2380.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Southern Asia": {
+    "value": 21166.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "European Union (27)": {
+    "value": 2587.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Least Developed Countries": {
+    "value": 19317.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Africa": {
+    "value": 20340.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Low Income Food Deficit Countries": {
+    "value": 15500.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Land Locked Developing Countries": {
+    "value": 9315.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Americas": {
+    "value": 15719.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Asia": {
+    "value": 34453.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "Net Food Importing Developing Countries": {
+    "value": 23013.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  },
+  "World": {
+    "value": 79057.0,
+    "unit": "1000 t",
+    "item": "Pulses",
+    "year": 2013,
+    "element": "Production"
+  }
+}

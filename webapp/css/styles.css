@@ -1,0 +1,815 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f5;
+}
+
+.container {
+    /* Maximale Breite und horizontale Zentrierung */
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+
+    /* Grid-Layout für Hauptstruktur */
+    display: grid;
+    grid-template-areas:
+        "header"
+        "nav"
+        "main";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr;
+
+    /* Volle Höhe, damit Footer (optional) unten klebt */
+    min-height: 100vh;
+
+    row-gap: 2rem;
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, #2c3e50, #3498db);
+    color: white;
+    padding: 2rem 0;
+    text-align: center;
+    margin-bottom: 0;
+
+    /* Position im Grid */
+    grid-area: header;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+header p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* Navigation */
+.navigation {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 0;
+    flex-wrap: wrap;
+
+    /* Position im Grid */
+    grid-area: nav;
+}
+
+.nav-btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    background: #ecf0f1;
+    color: #2c3e50;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+    background: #bdc3c7;
+    transform: translateY(-2px);
+}
+
+.nav-btn.active {
+    background: #3498db;
+    color: white;
+}
+
+/* Sections */
+.section {
+    display: none;
+    background: white;
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.section.active {
+    display: block;
+}
+
+.section h2 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.control-group label {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.control-group select,
+.control-group input {
+    padding: 0.5rem;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.control-group select[multiple] {
+    height: 120px;
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+#trends-card {
+    grid-column: 1 / -1;
+}
+
+.card {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border-left: 5px solid;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+#overview-card { border-color: #3498db; }
+#trends-card { border-color: #9b59b6; }
+#political-card { border-color: #e74c3c; }
+#climate-card { border-color: #f39c12; }
+
+.card h3 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+}
+
+#overview-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.stat-item h4 {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.stat-item p {
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: #2c3e50;
+}
+
+.stat-item .stat-text {
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+.event-item, .climate-item {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.event-item {
+    background-color: #e74c3c10;
+    border-left: 4px solid #e74c3c;
+}
+.climate-item {
+    background-color: #f39c1210;
+    border-left: 4px solid #f39c12;
+}
+
+.event-item:last-child, .climate-item:last-child {
+    margin-bottom: 0;
+}
+
+.event-item h5, .climate-item h5 {
+    margin: 0 0 5px 0;
+    font-size: 1.1rem;
+}
+
+.event-item p, .climate-item p {
+    margin: 0 0 5px 0;
+    font-size: 0.95em;
+}
+
+.event-item small, .climate-item small {
+    font-size: 0.85em;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+.severity-hoch {
+    color: #c0392b;
+    font-weight: bold;
+}
+
+.severity-mittel {
+    color: #d68910;
+    font-weight: bold;
+}
+
+/* Map Container */
+.map-container {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#world-map {
+    width: 100%;
+    height: 100%;
+}
+
+.legend {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.legend-color {
+    width: 20px;
+    height: 15px;
+    margin-right: 8px;
+    border: 1px solid #ccc;
+}
+
+/* Tooltip */
+.tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    pointer-events: none;
+    font-size: 0.9rem;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip.visible {
+    opacity: 1;
+}
+
+/* Charts */
+.chart-container {
+    width: 100%;
+    height: 400px;
+    margin: 1rem 0;
+}
+
+#timeseries-chart,
+#simulation-results,
+#ml-chart,
+#process-mining-chart {
+    width: 100%;
+    height: 500px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+#structural-analysis-chart {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 2rem;
+    height: auto;
+}
+
+/* ML Info */
+.ml-info {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.ml-info h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+/* Country paths in map */
+.country {
+    stroke: #fff;
+    stroke-width: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.country:hover {
+    stroke: #2c3e50;
+    stroke-width: 2px;
+}
+
+/* Color scales for choropleth */
+.q0-9 { fill: #f7fbff; }
+.q1-9 { fill: #deebf7; }
+.q2-9 { fill: #c6dbef; }
+.q3-9 { fill: #9ecae1; }
+.q4-9 { fill: #6baed6; }
+.q5-9 { fill: #4292c6; }
+.q6-9 { fill: #2171b5; }
+.q7-9 { fill: #08519c; }
+.q8-9 { fill: #08306b; }
+
+/* No data */
+.no-data {
+    fill: #ccc;
+    stroke: #999;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 10px;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .navigation {
+        gap: 0.5rem;
+    }
+    
+    .nav-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .controls {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .map-container {
+        height: 400px;
+    }
+}
+
+/* Loading states */
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    font-size: 1.2rem;
+    color: #7f8c8d;
+}
+
+.loading::after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border: 2px solid #3498db;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 10px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Error states */
+.error {
+    background: #e74c3c;
+    color: white;
+    padding: 1rem;
+    border-radius: 5px;
+    margin: 1rem 0;
+}
+
+/* Success states */
+.success {
+    background: #27ae60;
+    color: white;
+    padding: 1rem;
+    border-radius: 5px;
+    margin: 1rem 0;
+}
+
+/* --- Zeitreihenanalyse Card Style --- */
+#timeseries.section {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 6px 24px rgba(44, 62, 80, 0.10);
+    padding: 2.5rem 2.5rem 2rem 2.5rem;
+    margin-bottom: 2.5rem;
+    border-left: 6px solid #3498db;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#timeseries .controls {
+    background: #f4f8fb;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 2.2rem;
+    box-shadow: 0 2px 8px rgba(52, 152, 219, 0.07);
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+#timeseries .control-group label {
+    color: #2980b9;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+}
+
+#timeseries .control-group select,
+#timeseries .control-group input {
+    border: 1.5px solid #b2cbe4;
+    background: #fafdff;
+    border-radius: 6px;
+    font-size: 1.08rem;
+    padding: 0.55rem 0.7rem;
+    transition: border 0.2s;
+}
+#timeseries .control-group select:focus,
+#timeseries .control-group input:focus {
+    border: 1.5px solid #3498db;
+    outline: none;
+}
+
+#timeseries-chart {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(52, 152, 219, 0.08);
+    padding: 1.5rem 1.5rem 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    min-height: 420px;
+    position: relative;
+    margin-top: 1.5rem;
+}
+
+#timeseries-chart svg {
+    background: transparent;
+    border-radius: 8px;
+}
+
+#timeseries-chart .legend {
+    position: absolute;
+    top: 18px;
+    right: 24px;
+    background: rgba(255,255,255,0.97);
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(44,62,80,0.07);
+    padding: 10px 18px;
+    font-size: 1rem;
+    z-index: 2;
+}
+
+#timeseries-chart .legend-item {
+    margin-bottom: 7px;
+}
+#timeseries-chart .legend-item:last-child {
+    margin-bottom: 0;
+}
+
+#timeseries-chart .legend-item rect {
+    rx: 3;
+    ry: 3;
+}
+
+#timeseries-chart .legend-item text {
+    font-size: 1rem;
+    fill: #2c3e50;
+}
+
+#timeseries-chart .error {
+    margin: 2rem auto;
+    max-width: 400px;
+    font-size: 1.1rem;
+}
+
+#timeseries-chart .tooltip {
+    font-size: 1.05rem;
+    padding: 12px 16px;
+    border-radius: 7px;
+    background: rgba(44,62,80,0.93);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.13);
+}
+
+#timeseries-chart .d3-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    fill: #2c3e50;
+    text-shadow: 0 1px 2px #fff;
+}
+
+@media (max-width: 900px) {
+    #timeseries.section {
+        padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+    }
+    #timeseries .controls {
+        flex-direction: column;
+        gap: 1.2rem;
+        padding: 1rem;
+    }
+    #timeseries-chart {
+        padding: 0.7rem 0.2rem 0.7rem 0.2rem;
+    }
+}
+
+/* --- Zeitreihenanalyse HTML-Legende unterhalb des Diagramms --- */
+.ts-legend-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+    margin-bottom: 6px;
+}
+.ts-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    background: none;
+    align-items: center;
+    justify-content: center;
+}
+.ts-legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    color: #2c3e50;
+    font-weight: 500;
+    gap: 5px;
+    line-height: 1.2;
+}
+.ts-legend-color {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    margin-right: 3px;
+    border: 1.2px solid #b2cbe4;
+}
+@media (max-width: 700px) {
+    .ts-legend {
+        gap: 6px;
+    }
+    .ts-legend-item {
+        font-size: 0.92rem;
+    }
+    .ts-legend-color {
+        width: 11px;
+        height: 11px;
+    }
+}
+
+/* --- Simulation HTML-Legende und Linienarten-Legende --- */
+.ts-legend-lines {
+    margin-top: 2px;
+    gap: 22px;
+}
+.ts-legend-line-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.98rem;
+    color: #444;
+    gap: 6px;
+}
+.ts-legend-line {
+    display: inline-block;
+    width: 28px;
+    height: 4px;
+    margin-right: 3px;
+    border-radius: 2px;
+}
+.ts-legend-hist {
+    background: #333;
+}
+.ts-legend-prog {
+    background: repeating-linear-gradient(90deg, #333, #333 7px, #fff 7px, #fff 12px);
+    border-bottom: 2px dashed #333;
+    height: 4px;
+}
+
+#simulation-results,
+#simulation-results svg,
+#simulation-results.chart-container {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 0;
+    box-sizing: border-box;
+}
+#simulation-results {
+    /* keine feste Höhe, wächst mit Inhalt */
+    overflow: visible;
+}
+
+main {
+    grid-area: main;
+}
+
+/* ML-Prognosen Diagramm responsiv und HTML-Legende */
+#ml-chart {
+    height: auto !important;
+    padding: 1.5rem;
+}
+#ml-chart svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 1rem;
+    margin-top: 1.5rem;
+}
+
+.ml-legend-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.ml-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #2c3e50;
+}
+
+.ml-legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    display: inline-block;
+}
+
+/* --- Strukturanalyse Korrelations-Grid --- */
+#structural-analysis-chart .correlation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 2rem;
+}
+
+#structural-analysis-chart .correlation-chart-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#structural-analysis-chart .correlation-chart-wrapper h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+/* --- Process Mining Stil --- */
+#process-mining.section {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 6px 24px rgba(44, 62, 80, 0.10);
+    padding: 2.5rem 2.5rem 2rem 2.5rem;
+    margin-bottom: 2.5rem;
+    border-left: 6px solid #27ae60; /* grünlicher Akzent passend zu Prozess-Farbe */
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#process-mining .controls {
+    background: #f4f8fb;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 2.2rem;
+    box-shadow: 0 2px 8px rgba(39, 174, 96, 0.07);
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+#process-mining .control-group label {
+    color: #27ae60;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+}
+
+#process-mining .control-group select,
+#process-mining .control-group input {
+    border: 1.5px solid #b2cbe4;
+    background: #fafdff;
+    border-radius: 6px;
+    font-size: 1.08rem;
+    padding: 0.55rem 0.7rem;
+    transition: border 0.2s;
+}
+#process-mining .control-group select:focus,
+#process-mining .control-group input:focus {
+    border: 1.5px solid #27ae60;
+    outline: none;
+}
+
+#process-mining-chart {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(39, 174, 96, 0.08);
+    padding: 1.5rem 1.5rem 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    min-height: 420px;
+    position: relative;
+    margin-top: 1.5rem;
+    overflow: visible;
+}
+
+#process-mining-chart svg {
+    background: transparent;
+    border-radius: 8px;
+}
+
+/* Export Button */
+.export-btn {
+    background: #2c3e50;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+}
+.export-btn:hover {
+    background: #1a242f;
+}
+
+.export-select {
+    border: 1px solid #bdc3c7;
+    border-radius: 6px;
+    padding: 0.55rem 0.4rem;
+    font-size: 0.95rem;
+}
+
+.export-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+

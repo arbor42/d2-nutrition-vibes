@@ -821,3 +821,169 @@ html, body {
     }
 }
 
+/* Spezifisches Layout für Filter-Panel */
+#panel-filter .controls {
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+#panel-filter .control-group select,
+#panel-filter .control-group input,
+#panel-filter input[type=range] {
+    width: 100%;
+}
+
+#panel-filter .control-group label {
+    margin-bottom: 0.25rem;
+}
+
+/* --- Filter-Panel Feinschliff ------------------------------------ */
+#panel-filter .filter-header {
+    display: flex;
+    align-items: center; /* Icon und Text auf gleicher Höhe */
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+#panel-filter .filter-header .material-icons {
+    font-size: 1.5rem;
+    color: var(--color-dark);
+}
+
+/* Alle Controls im Filter-Panel volle Breite */
+#panel-filter .control-group {
+    width: 100%;
+}
+
+/* Slider Styling */
+#panel-filter input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: #dfe4ea;
+    outline: none;
+    cursor: pointer;
+}
+/* WebKit Thumb */
+#panel-filter input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    border: none;
+    box-shadow: 0 0 2px rgba(0,0,0,0.4);
+    transition: transform 0.2s;
+}
+#panel-filter input[type=range]::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+}
+/* Firefox Thumb & Track */
+#panel-filter input[type=range]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    border: none;
+}
+#panel-filter input[type=range]::-moz-range-track {
+    height: 6px;
+    border-radius: 3px;
+    background: #dfe4ea;
+}
+
+/* --- Timeseries-Panel Feinschliff ------------------------------------ */
+#panel-timeseries .controls {
+    flex-direction: column;
+    gap: 1.5rem;
+}
+#panel-timeseries .control-group {
+    width: 100%;
+}
+#panel-timeseries .control-group select,
+#panel-timeseries .control-group input {
+    width: 100%;
+}
+
+/* Export-Container im Timeseries-Panel */
+#panel-timeseries .export-container {
+    width: 100%;
+    justify-content: flex-end; /* Button rechts, aber kein Overflow */
+}
+#panel-timeseries .export-select {
+    max-width: 120px; /* Verhindert zu breite Selectbox */
+}
+#panel-timeseries .export-btn {
+    white-space: nowrap;
+}
+
+/* --- Simulation-Panel Feinschliff ------------------------------------ */
+#panel-simulation .controls {
+    flex-direction: column;
+    gap: 1.5rem;
+}
+#panel-simulation .control-group {
+    width: 100%;
+}
+#panel-simulation .control-group select,
+#panel-simulation .control-group input {
+    width: 100%;
+}
+#panel-simulation input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: #dfe4ea;
+    outline: none;
+    cursor: pointer;
+}
+#panel-simulation input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    border: none;
+    box-shadow: 0 0 2px rgba(0,0,0,0.4);
+    transition: transform 0.2s;
+}
+#panel-simulation input[type=range]::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+}
+#panel-simulation input[type=range]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    border: none;
+}
+#panel-simulation input[type=range]::-moz-range-track {
+    height: 6px;
+    border-radius: 3px;
+    background: #dfe4ea;
+}
+
+/* --- Process-Mining-Panel Feinschliff ------------------------------- */
+#panel-process .controls {
+    flex-direction: column;
+    gap: 1.5rem;
+}
+#panel-process .control-group {
+    width: 100%;
+}
+#panel-process .control-group select,
+#panel-process .control-group input {
+    width: 100%;
+}
+#panel-process .export-container {
+    width: 100%;
+    justify-content: flex-end;
+}
+#panel-process .export-select {
+    max-width: 120px;
+}
+#panel-process .export-btn {
+    white-space: nowrap;
+}
+

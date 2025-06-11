@@ -4,6 +4,7 @@ window.Panels = {
         console.log('Panels module initialisiert');
         this.initNav();
         this.initCountryList();
+        this.initCloseButtons();
     },
 
     initNav() {
@@ -95,6 +96,20 @@ window.Panels = {
             panel.classList.remove('open');
         });
         localStorage.removeItem('activePanel');
+    },
+
+    initCloseButtons() {
+        const panels = document.querySelectorAll('#side-panels .panel');
+        panels.forEach(panel => {
+            if (!panel.querySelector('.panel-close')) {
+                const btn = document.createElement('button');
+                btn.className = 'panel-close';
+                btn.setAttribute('aria-label', 'Schließen');
+                btn.innerHTML = '<i class="material-icons">close</i>';
+                btn.addEventListener('click', () => this.closePanel());
+                panel.appendChild(btn);
+            }
+        });
     }
 };
 

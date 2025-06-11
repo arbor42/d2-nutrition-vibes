@@ -13,6 +13,7 @@ window.WorldMap = {
     width: null,
     height: null,
     globalValues: [],
+    activeFilters: [], // Array für aktive Filter-Bereiche
 
     async init() {
         if (this.initialized) return;
@@ -152,10 +153,26 @@ window.WorldMap = {
         const yearDisplay = document.getElementById('year-display');
         
         if (yearSlider) {
-            yearSlider.addEventListener('input', FAOUtils.debounce((e) => {
+            // Force green slider styling
+            this.forceSliderStyling(yearSlider);
+            
+            // Slider-Container und Tooltip erstellen
+            this.setupSliderTooltip(yearSlider);
+            
+            // Initiale Fortschrittsberechnung
+            this.updateSliderProgress(yearSlider);
+            
+            // Live-Update für Display (ohne Debounce)
+            yearSlider.addEventListener('input', (e) => {
                 if (yearDisplay) yearDisplay.textContent = e.target.value;
+                this.updateSliderProgress(e.target);
+                this.updateSliderTooltip(e.target);
+            });
+            
+            // Debounced Update für Karte
+            yearSlider.addEventListener('input', FAOUtils.debounce((e) => {
                 this.updateMap();
-            }, 300)); // Debounce with 300ms delay
+            }, 300));
         }
 
         // Metric selector
@@ -251,7 +268,9 @@ window.WorldMap = {
 
             // Jahresdaten extrahieren
             this.currentData = this.extractYearData(timeseriesData, year);
-            this.updateMapColors();
+            
+            // Filter bei Datenänderung zurücksetzen
+            this.resetLegendFilter();
         } catch (error) {
             console.error('Fehler beim Laden der Kartendaten (Timeseries):', error);
             this.currentData = {}; // Sicherstellen, dass currentData definiert ist
@@ -380,7 +399,7 @@ window.WorldMap = {
             const item = legend.append('div')
                 .attr('class', 'legend-item')
                 .style('cursor', 'pointer')
-                .on('click', () => this.applyLegendFilter(min, max));
+                .on('click', () => this.toggleLegendFilter(min, max, item));
 
             item.append('div')
                 .attr('class', 'legend-color')
@@ -390,6 +409,53 @@ window.WorldMap = {
                 .text(`${FAOUtils.formatNumber(min)} - ${FAOUtils.formatNumber(max)}`);
         }
         console.log("WorldMap.updateLegend: Legend HTML should now be created in #map-legend.");
+    },
+
+    toggleLegendFilter(min, max, item) {
+        // Prüfen, ob dieser Filter bereits aktiv ist
+        const filterIndex = this.activeFilters.findIndex(f => f.min === min && f.max === max);
+        
+        if (filterIndex !== -1) {
+            // Filter ist aktiv -> entfernen
+            this.activeFilters.splice(filterIndex, 1);
+            item.classed('legend-item-active', false);
+        } else {
+            // Filter ist nicht aktiv -> hinzufügen
+            this.activeFilters.push({ min, max });
+            item.classed('legend-item-active', true);
+        }
+        
+        this.applyActiveFilters();
+    },
+
+    applyActiveFilters() {
+        if (!this.currentData) return;
+        
+        if (this.activeFilters.length === 0) {
+            // Keine Filter aktiv -> alle Länder normal anzeigen
+            this.updateMapColors();
+            return;
+        }
+        
+        // Filter anwenden
+        this.g.selectAll('.country')
+            .attr('fill', d => {
+                const countryName = this.getCountryName(d);
+                const mappedName = CountryMapping.normalizeCountryNameForMapping(countryName);
+                const dataEntry = this.currentData[mappedName] || this.currentData[countryName];
+                
+                if (dataEntry && dataEntry.value != null && !isNaN(dataEntry.value)) {
+                    // Prüfen, ob der Wert in einem der aktiven Filter-Bereiche liegt
+                    const inActiveFilter = this.activeFilters.some(filter => 
+                        dataEntry.value >= filter.min && dataEntry.value <= filter.max
+                    );
+                    
+                    if (inActiveFilter) {
+                        return this.colorScale(dataEntry.value);
+                    }
+                }
+                return '#ccc'; // Nicht in aktivem Filter -> grau
+            });
     },
 
     applyLegendFilter(min, max) {
@@ -407,7 +473,101 @@ window.WorldMap = {
             });
     },
 
+    updateSliderProgress(slider) {
+        const min = parseFloat(slider.min);
+        const max = parseFloat(slider.max);
+        const value = parseFloat(slider.value);
+        const progress = ((value - min) / (max - min)) * 100;
+        slider.style.setProperty('--range-progress', `${progress}%`);
+    },
+
+    setupSliderTooltip(slider) {
+        // Wrapper für Slider erstellen falls nicht vorhanden
+        if (!slider.parentElement.classList.contains('slider-container')) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'slider-container';
+            slider.parentNode.insertBefore(wrapper, slider);
+            wrapper.appendChild(slider);
+        }
+
+        // Tooltip erstellen
+        const tooltip = document.createElement('div');
+        tooltip.className = 'slider-tooltip';
+        tooltip.textContent = slider.value;
+        slider.parentElement.appendChild(tooltip);
+
+        // Event Listeners für Tooltip
+        slider.addEventListener('mouseenter', () => {
+            tooltip.classList.add('visible');
+            this.updateSliderTooltip(slider);
+        });
+
+        slider.addEventListener('mouseleave', () => {
+            tooltip.classList.remove('visible');
+        });
+
+        slider.addEventListener('mousemove', (e) => {
+            this.updateSliderTooltip(slider, e);
+        });
+
+        // Update tooltip on input change (keyboard, programmatic)
+        slider.addEventListener('input', () => {
+            if (tooltip.classList.contains('visible')) {
+                this.updateSliderTooltip(slider);
+            }
+        });
+
+        // Show tooltip while interacting via keyboard
+        slider.addEventListener('focus', () => {
+            tooltip.classList.add('visible');
+            this.updateSliderTooltip(slider);
+        });
+
+        slider.addEventListener('blur', () => {
+            tooltip.classList.remove('visible');
+        });
+
+        // Initial position
+        this.updateSliderTooltip(slider);
+    },
+
+    updateSliderTooltip(slider, event = null) {
+        const tooltip = slider.parentElement.querySelector('.slider-tooltip');
+        if (!tooltip) return;
+
+        // Tooltip-Text aktualisieren
+        tooltip.textContent = slider.value;
+
+        // Position basierend auf Slider-Fortschritt berechnen
+        const min = parseFloat(slider.min);
+        const max = parseFloat(slider.max);
+        const value = parseFloat(slider.value);
+        const progress = ((value - min) / (max - min)) * 100;
+        
+        // Slider-Dimensionen für präzise Positionierung
+        const sliderRect = slider.getBoundingClientRect();
+        const thumbWidth = 20; // Approximate thumb width
+        const trackPadding = thumbWidth / 2;
+        
+        // Berechne die tatsächliche Position des Slider-Thumbs
+        const trackWidth = sliderRect.width - thumbWidth;
+        const thumbPosition = (progress / 100) * trackWidth + trackPadding;
+        const leftPercentage = (thumbPosition / sliderRect.width) * 100;
+
+        // Position setzen (begrenzt auf 5% bis 95% um Overflow zu vermeiden)
+        const clampedPosition = Math.max(5, Math.min(95, leftPercentage));
+        tooltip.style.left = `${clampedPosition}%`;
+    },
+
     resetLegendFilter() {
+        // Alle aktiven Filter entfernen
+        this.activeFilters = [];
+        
+        // Alle Legend-Items als inaktiv markieren
+        d3.select('#map-legend').selectAll('.legend-item')
+            .classed('legend-item-active', false);
+        
+        // Karte auf normale Farben zurücksetzen
         this.updateMapColors();
     },
 
@@ -496,6 +656,25 @@ window.WorldMap = {
         this.svg.transition()
             .duration(750)
             .call(this.zoom.transform, d3.zoomIdentity.translate(translate[0], translate[1]).scale(scale));
-    }
+    },
+
+    // Force green slider styling programmatically
+    forceSliderStyling(slider) {
+        // Add CSS classes and inline styles to ensure green styling
+        slider.style.background = 'linear-gradient(90deg, #e9ecef 0%, #dee2e6 100%)';
+        slider.style.borderRadius = '20px';
+        slider.style.height = '8px';
+        slider.style.webkitAppearance = 'none';
+        slider.style.mozAppearance = 'none';
+        slider.style.appearance = 'none';
+        slider.style.outline = 'none';
+        slider.style.cursor = 'pointer';
+        
+        // Force update of slider progress
+        this.updateSliderProgress(slider);
+        
+        // Add a class for additional styling
+        slider.classList.add('green-slider');
+    },
 };
 

@@ -21,20 +21,122 @@ window.Simulation = {
         const yearsSlider = document.getElementById('sim-years');
         const yearsDisplay = document.getElementById('sim-years-display');
 
-        // Initial Anzeige der Jahre
+        // Initial Anzeige der Jahre und Fortschritt
         if (yearsDisplay) {
             yearsDisplay.textContent = yearsSlider.value;
         }
+        
+        // Force green slider styling
+        this.forceSliderStyling(yearsSlider);
+        
+        // Slider-Tooltip setup
+        this.setupSliderTooltip(yearsSlider);
+        
+        // Initiale Fortschrittsberechnung für Simulation Slider
+        this.updateSliderProgress(yearsSlider);
 
         scenarioSelect.addEventListener('change', (e) => {
             this.currentScenario = e.target.value;
             this.runSimulation();
         });
 
+        // Live-Update für Display (ohne Debounce)
         yearsSlider.addEventListener('input', (e) => {
             yearsDisplay.textContent = e.target.value;
-            this.runSimulation();
+            this.updateSliderProgress(e.target);
+            this.updateSliderTooltip(e.target);
         });
+
+        // Debounced Update für Simulation
+        yearsSlider.addEventListener('input', FAOUtils.debounce((e) => {
+            this.runSimulation();
+        }, 300));
+    },
+
+    updateSliderProgress(slider) {
+        const min = parseFloat(slider.min);
+        const max = parseFloat(slider.max);
+        const value = parseFloat(slider.value);
+        const progress = ((value - min) / (max - min)) * 100;
+        slider.style.setProperty('--range-progress', `${progress}%`);
+    },
+
+    setupSliderTooltip(slider) {
+        // Wrapper für Slider erstellen falls nicht vorhanden
+        if (!slider.parentElement.classList.contains('slider-container')) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'slider-container';
+            slider.parentNode.insertBefore(wrapper, slider);
+            wrapper.appendChild(slider);
+        }
+
+        // Tooltip erstellen
+        const tooltip = document.createElement('div');
+        tooltip.className = 'slider-tooltip';
+        tooltip.textContent = slider.value;
+        slider.parentElement.appendChild(tooltip);
+
+        // Event Listeners für Tooltip
+        slider.addEventListener('mouseenter', () => {
+            tooltip.classList.add('visible');
+            this.updateSliderTooltip(slider);
+        });
+
+        slider.addEventListener('mouseleave', () => {
+            tooltip.classList.remove('visible');
+        });
+
+        slider.addEventListener('mousemove', (e) => {
+            this.updateSliderTooltip(slider, e);
+        });
+
+        // Update tooltip on input change (keyboard, programmatic)
+        slider.addEventListener('input', () => {
+            if (tooltip.classList.contains('visible')) {
+                this.updateSliderTooltip(slider);
+            }
+        });
+
+        // Show tooltip while interacting via keyboard
+        slider.addEventListener('focus', () => {
+            tooltip.classList.add('visible');
+            this.updateSliderTooltip(slider);
+        });
+
+        slider.addEventListener('blur', () => {
+            tooltip.classList.remove('visible');
+        });
+
+        // Initial position
+        this.updateSliderTooltip(slider);
+    },
+
+    updateSliderTooltip(slider, event = null) {
+        const tooltip = slider.parentElement.querySelector('.slider-tooltip');
+        if (!tooltip) return;
+
+        // Tooltip-Text aktualisieren
+        tooltip.textContent = slider.value;
+
+        // Position basierend auf Slider-Fortschritt berechnen
+        const min = parseFloat(slider.min);
+        const max = parseFloat(slider.max);
+        const value = parseFloat(slider.value);
+        const progress = ((value - min) / (max - min)) * 100;
+        
+        // Slider-Dimensionen für präzise Positionierung
+        const sliderRect = slider.getBoundingClientRect();
+        const thumbWidth = 20; // Approximate thumb width
+        const trackPadding = thumbWidth / 2;
+        
+        // Berechne die tatsächliche Position des Slider-Thumbs
+        const trackWidth = sliderRect.width - thumbWidth;
+        const thumbPosition = (progress / 100) * trackWidth + trackPadding;
+        const leftPercentage = (thumbPosition / sliderRect.width) * 100;
+
+        // Position setzen (begrenzt auf 5% bis 95% um Overflow zu vermeiden)
+        const clampedPosition = Math.max(5, Math.min(95, leftPercentage));
+        tooltip.style.left = `${clampedPosition}%`;
     },
 
     async runSimulation() {
@@ -352,6 +454,25 @@ window.Simulation = {
         }
 
         container.appendChild(summaryDiv);
+    },
+
+    // Force green slider styling programmatically
+    forceSliderStyling(slider) {
+        // Add CSS classes and inline styles to ensure green styling
+        slider.style.background = 'linear-gradient(90deg, #e9ecef 0%, #dee2e6 100%)';
+        slider.style.borderRadius = '20px';
+        slider.style.height = '8px';
+        slider.style.webkitAppearance = 'none';
+        slider.style.mozAppearance = 'none';
+        slider.style.appearance = 'none';
+        slider.style.outline = 'none';
+        slider.style.cursor = 'pointer';
+        
+        // Force update of slider progress
+        this.updateSliderProgress(slider);
+        
+        // Add a class for additional styling
+        slider.classList.add('green-slider');
     },
 
     getScenarioDisplayName(scenario) {

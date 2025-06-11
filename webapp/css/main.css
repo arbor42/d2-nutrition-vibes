@@ -30,6 +30,35 @@
     box-sizing: border-box;
 }
 
+/* ===== ADDITIONAL SLIDER RESETS ===== */
+/* Complete reset for all browser-specific slider styles */
+input[type="range"] {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+}
+
+input[type="range"]::-webkit-slider-track {
+    -webkit-appearance: none !important;
+    background: transparent !important;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+    -webkit-appearance: none !important;
+    background: transparent !important;
+}
+
+input[type="range"]::-moz-range-track {
+    -moz-appearance: none !important;
+    background: transparent !important;
+}
+
+input[type="range"]::-ms-track {
+    background: transparent !important;
+    border-color: transparent !important;
+    color: transparent !important;
+}
+
 body {
     font-family: var(--font-family-base);
     line-height: 1.6;
@@ -192,6 +221,7 @@ input[type="range"] {
     font-family: inherit;
     background: white;
     transition: border-color var(--transition-fast);
+    width: 100%;
 }
 
 select:focus,
@@ -210,25 +240,184 @@ select {
 }
 
 input[type="range"] {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
     padding: 0;
-    height: 6px;
-    background: #e9ecef;
+    height: 8px;
+    background: linear-gradient(90deg, #e9ecef 0%, #dee2e6 100%);
     cursor: pointer;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    position: relative;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    transition: all var(--transition-fast);
 }
 
-input[type="range"]::-webkit-slider-thumb {
-    appearance: none;
-    width: 18px;
-    height: 18px;
-    background: var(--color-primary);
+/* Browser-spezifische Resets */
+input[type="range"]::-webkit-slider-runnable-track {
+    -webkit-appearance: none !important;
+    background: transparent;
     border: none;
-    border-radius: 50%;
+}
+
+input[type="range"]::-moz-range-track {
+    -moz-appearance: none !important;
+    background: transparent;
+    border: none;
+}
+
+input[type="range"]:hover {
+    background: linear-gradient(90deg, #dee2e6 0%, #ced4da 100%);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.15), 0 0 0 3px rgba(39, 174, 96, 0.1);
+}
+
+input[type="range"]:focus {
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.15), 0 0 0 4px rgba(39, 174, 96, 0.2);
+}
+
+/* Webkit browsers (Chrome, Safari, Edge) */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, #1e8449 100%) !important;
+    border: 3px solid white !important;
+    border-radius: 50% !important;
     cursor: pointer;
-    transition: transform var(--transition-fast);
+    transition: all var(--transition-fast);
+    box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3), 0 0 0 0 rgba(39, 174, 96, 0.1);
+    position: relative;
 }
 
 input[type="range"]::-webkit-slider-thumb:hover {
-    transform: scale(1.1);
+    transform: scale(1.15) !important;
+    background: linear-gradient(135deg, #1e8449 0%, var(--color-primary) 100%) !important;
+    box-shadow: 0 4px 16px rgba(39, 174, 96, 0.4), 0 0 0 6px rgba(39, 174, 96, 0.15);
+}
+
+input[type="range"]::-webkit-slider-thumb:active {
+    transform: scale(1.05) !important;
+    box-shadow: 0 2px 8px rgba(39, 174, 96, 0.5), 0 0 0 8px rgba(39, 174, 96, 0.2);
+}
+
+/* Firefox */
+input[type="range"]::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, #1e8449 100%) !important;
+    border: 3px solid white !important;
+    border-radius: 50% !important;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3);
+    -moz-appearance: none !important;
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+    transform: scale(1.15) !important;
+    background: linear-gradient(135deg, #1e8449 0%, var(--color-primary) 100%) !important;
+    box-shadow: 0 4px 16px rgba(39, 174, 96, 0.4);
+}
+
+input[type="range"]::-moz-range-track {
+    height: 8px;
+    background: linear-gradient(90deg, #e9ecef 0%, #dee2e6 100%);
+    border-radius: 20px;
+    border: none;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+
+input[type="range"]::-moz-range-progress {
+    height: 6px;
+    background: var(--color-primary);
+    border-radius: 20px;
+    border: none;
+}
+
+/* ===== ENHANCED SLIDER STYLES ===== */
+
+/* Jahr-Display Styling */
+#year-display, #sim-years-display {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--color-primary) 0%, #1e8449 100%);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    min-width: 50px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(39, 174, 96, 0.2);
+    transition: all var(--transition-fast);
+    margin-left: 8px;
+}
+
+/* Slider Container Enhancement */
+.control-group:has(input[type="range"]) {
+    position: relative;
+    padding: 8px 0;
+}
+
+.control-group:has(input[type="range"]) label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+/* Progress Fill Effect für Range Slider */
+input[type="range"] {
+    background-image: linear-gradient(
+        90deg,
+        var(--color-primary) 0%,
+        var(--color-primary) var(--range-progress, 0%),
+        #e9ecef var(--range-progress, 0%),
+        #e9ecef 100%
+    );
+}
+
+/* Ticks/Marks für den Slider */
+.range-wrapper {
+    position: relative;
+    margin: 8px 0;
+}
+
+.range-ticks {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    padding: 0 12px;
+}
+
+.range-tick {
+    font-size: 0.7rem;
+    color: #868e96;
+    position: relative;
+}
+
+.range-tick:before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 6px;
+    background: #ced4da;
+}
+
+/* Hover effects für Labels */
+.control-group:has(input[type="range"]:hover) label {
+    color: var(--color-primary);
+}
+
+.control-group:has(input[type="range"]:hover) #year-display,
+.control-group:has(input[type="range"]:hover) #sim-years-display {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
 }
 
 /* ===== ZOOM CONTROLS ===== */
@@ -329,6 +518,15 @@ input[type="range"]::-webkit-slider-thumb:hover {
 
 .legend-item:hover {
     background: rgba(0, 0, 0, 0.05);
+}
+
+.legend-item-active {
+    background: rgba(39, 174, 96, 0.1) !important;
+    border: 1px solid var(--color-primary);
+}
+
+.legend-item-active:hover {
+    background: rgba(39, 174, 96, 0.15) !important;
 }
 
 .legend-color {
@@ -637,6 +835,27 @@ input[type="range"]::-webkit-slider-thumb:hover {
         right: 16px;
         min-width: 160px;
     }
+    
+    /* Enhanced mobile slider styles */
+    input[type="range"] {
+        height: 10px;
+    }
+    
+    input[type="range"]::-webkit-slider-thumb {
+        width: 28px;
+        height: 28px;
+        border-width: 4px;
+    }
+    
+    #year-display, #sim-years-display {
+        font-size: 0.9rem;
+        padding: 6px 14px;
+        min-width: 60px;
+    }
+    
+    .control-group:has(input[type="range"]) {
+        padding: 12px 0;
+    }
 }
 
 /* ===== ANIMATIONS ===== */
@@ -708,4 +927,257 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .panel-backdrop.open {
     opacity: 1;
     visibility: visible;
+}
+
+/* ===== ADVANCED SLIDER ANIMATIONS ===== */
+
+/* Animated pulse effect for active sliders */
+input[type="range"]:active {
+    animation: slider-pulse 0.3s ease-in-out;
+}
+
+@keyframes slider-pulse {
+    0% { box-shadow: inset 0 1px 3px rgba(0,0,0,0.15), 0 0 0 0 rgba(39, 174, 96, 0.3); }
+    50% { box-shadow: inset 0 1px 3px rgba(0,0,0,0.15), 0 0 0 8px rgba(39, 174, 96, 0.1); }
+    100% { box-shadow: inset 0 1px 3px rgba(0,0,0,0.15), 0 0 0 0 rgba(39, 174, 96, 0.3); }
+}
+
+/* Enhanced tooltip for year display */
+#year-display:after, #sim-years-display:after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 6px 6px 0 6px;
+    border-color: #1e8449 transparent transparent transparent;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.control-group:has(input[type="range"]:hover) #year-display:after,
+.control-group:has(input[type="range"]:hover) #sim-years-display:after {
+    opacity: 1;
+}
+
+/* Smooth track gradient animation */
+input[type="range"]:focus {
+    background-image: linear-gradient(
+        90deg,
+        var(--color-primary) 0%,
+        #1e8449 var(--range-progress, 0%),
+        #e9ecef var(--range-progress, 0%),
+        #e9ecef 100%
+    );
+}
+
+/* Glow effect for focused sliders */
+input[type="range"]:focus::-webkit-slider-thumb {
+    background: linear-gradient(135deg, var(--color-primary) 0%, #1e8449 100%);
+    box-shadow: 
+        0 0 0 4px rgba(39, 174, 96, 0.2),
+        0 4px 16px rgba(39, 174, 96, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Value bubble tooltip */
+.slider-tooltip {
+    position: absolute;
+    top: -40px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, #1e8449 100%);
+    color: white;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s ease-out;
+    transform: translateX(-50%);
+    box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3);
+}
+
+.slider-tooltip.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-2px);
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
+}
+
+.slider-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #1e8449;
+}
+
+/* Enhanced tooltip animation when slider is active */
+input[type="range"]:active + .slider-tooltip.visible {
+    background: linear-gradient(135deg, #1e8449 0%, var(--color-primary) 100%);
+    transform: translateX(-50%) translateY(-4px);
+    box-shadow: 0 6px 16px rgba(39, 174, 96, 0.5);
+}
+
+/* Container für Slider mit Tooltip */
+.slider-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+/* Custom scrollbar for range containers */
+.control-group::-webkit-scrollbar {
+    width: 4px;
+}
+
+.control-group::-webkit-scrollbar-track {
+    background: #f1f3f4;
+    border-radius: 2px;
+}
+
+.control-group::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+    border-radius: 2px;
+}
+
+.control-group::-webkit-scrollbar-thumb:hover {
+    background: #1e8449;
+}
+
+/* ===== FORCE GREEN SLIDER THUMBS ===== */
+/* Extremely specific selectors to override any browser defaults */
+#year-slider::-webkit-slider-thumb,
+#sim-years::-webkit-slider-thumb,
+input[id*="slider"]::-webkit-slider-thumb,
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    width: 24px !important;
+    height: 24px !important;
+    background: linear-gradient(135deg, var(--color-primary) 0%, #1e8449 100%) !important;
+    border: 3px solid white !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    transition: all var(--transition-fast) !important;
+    box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3), 0 0 0 0 rgba(39, 174, 96, 0.1) !important;
+    position: relative !important;
+}
+
+#year-slider::-webkit-slider-thumb:hover,
+#sim-years::-webkit-slider-thumb:hover,
+input[id*="slider"]::-webkit-slider-thumb:hover,
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.15) !important;
+    background: linear-gradient(135deg, #1e8449 0%, var(--color-primary) 100%) !important;
+    box-shadow: 0 4px 16px rgba(39, 174, 96, 0.4), 0 0 0 6px rgba(39, 174, 96, 0.15) !important;
+}
+
+#year-slider::-webkit-slider-thumb:active,
+#sim-years::-webkit-slider-thumb:active,
+input[id*="slider"]::-webkit-slider-thumb:active,
+input[type="range"]::-webkit-slider-thumb:active {
+    transform: scale(1.05) !important;
+    box-shadow: 0 2px 8px rgba(39, 174, 96, 0.5), 0 0 0 8px rgba(39, 174, 96, 0.2) !important;
+}
+
+/* Firefox specific overrides */
+#year-slider::-moz-range-thumb,
+#sim-years::-moz-range-thumb,
+input[id*="slider"]::-moz-range-thumb,
+input[type="range"]::-moz-range-thumb {
+    width: 24px !important;
+    height: 24px !important;
+    background: linear-gradient(135deg, var(--color-primary) 0%, #1e8449 100%) !important;
+    border: 3px solid white !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    transition: all var(--transition-fast) !important;
+    box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3) !important;
+    -moz-appearance: none !important;
+}
+
+/* Green slider class for programmatic styling */
+.green-slider::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    width: 24px !important;
+    height: 24px !important;
+    background: linear-gradient(135deg, var(--color-primary) 0%, #1e8449 100%) !important;
+    border: 3px solid white !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    transition: all var(--transition-fast) !important;
+    box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3) !important;
+}
+
+.green-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.15) !important;
+    background: linear-gradient(135deg, #1e8449 0%, var(--color-primary) 100%) !important;
+    box-shadow: 0 4px 16px rgba(39, 174, 96, 0.4), 0 0 0 6px rgba(39, 174, 96, 0.15) !important;
+}
+
+.green-slider::-moz-range-thumb {
+    width: 24px !important;
+    height: 24px !important;
+    background: linear-gradient(135deg, var(--color-primary) 0%, #1e8449 100%) !important;
+    border: 3px solid white !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    transition: all var(--transition-fast) !important;
+    box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3) !important;
+    -moz-appearance: none !important;
+}
+
+/* ===== ABSOLUTE FINAL SLIDER OVERRIDE ===== */
+/* This should override ANY browser default styling */
+* input[type="range"]::-webkit-slider-thumb,
+*:not(input) + input[type="range"]::-webkit-slider-thumb,
+html input[type="range"]::-webkit-slider-thumb,
+body input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    width: 24px !important;
+    height: 24px !important;
+    background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%) !important;
+    border: 3px solid white !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3) !important;
+    position: relative !important;
+    z-index: 999 !important;
+}
+
+* input[type="range"]::-moz-range-thumb,
+*:not(input) + input[type="range"]::-moz-range-thumb,
+html input[type="range"]::-moz-range-thumb,
+body input[type="range"]::-moz-range-thumb {
+    width: 24px !important;
+    height: 24px !important;
+    background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%) !important;
+    border: 3px solid white !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3) !important;
+    -moz-appearance: none !important;
+}
+
+/* Force override for any inline styles */
+input[type="range"] {
+    background: linear-gradient(90deg, #e9ecef 0%, #dee2e6 100%) !important;
+    border-radius: 20px !important;
+    height: 8px !important;
+    border: none !important;
+    outline: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
 }

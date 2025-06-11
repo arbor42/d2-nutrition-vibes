@@ -12,20 +12,17 @@ window.WorldMap = {
     zoom: null,
     width: null,
     height: null,
+    globalValues: [],
 
     async init() {
         if (this.initialized) return;
         console.log('WorldMap.init() gestartet');
+        FAOUtils.showLoading('world-map');
         try {
-            FAOUtils.showLoading('world-map');
-            console.log('Lade Welt-Daten...');
             await this.loadWorldData();
-            console.log('Setup Map...');
             this.setupMap();
-            console.log('Setup Controls...');
             this.setupControls();
             FAOExport.attachExport('export-btn-worldmap','export-format-worldmap','world-map');
-            console.log('Lade initiale Daten...');
             await this.loadInitialData();
             this.initialized = true;
             console.log('WorldMap.init() erfolgreich beendet');
@@ -39,6 +36,11 @@ window.WorldMap = {
         try {
             // Verwende die vom Nutzer bereitgestellte GeoJSON-Datei
             this.worldData = await FAOUtils.loadData('data/geo/geo.json');
+            if (!this.worldData || !this.worldData.features) {
+                console.error('loadWorldData(): geo.json geladen, aber es ist kein valides GeoJSON-Objekt mit Features.', this.worldData);
+                FAOUtils.showError('world-map', 'Ungültige Geodaten geladen.');
+                throw new Error('Ungültige Geodaten');
+            }
             console.log('Weltkarten-Daten geladen:', this.worldData.features.length, 'Länder');
         } catch (error) {
             console.error('Fehler beim Laden der Weltkarten-Daten:', error);
@@ -53,10 +55,17 @@ window.WorldMap = {
             console.error('setupMap(): Container #world-map nicht gefunden!');
             return;
         }
-        container.innerHTML = '';
-        console.log('setupMap(): SVG wird erstellt');
+        container.innerHTML = ''; // Vorherigen Inhalt (z.B. Ladeindikator) entfernen
+        
         const width = container.clientWidth;
         const height = container.clientHeight;
+
+        if (width === 0 || height === 0) {
+            console.error(`setupMap(): Kartencontainer #world-map hat keine validen Dimensionen: Breite=${width}, Höhe=${height}. Die Karte kann nicht gezeichnet werden.`);
+            FAOUtils.showError('world-map', 'Kartencontainer hat keine Größe.');
+            return;
+        }
+        console.log(`setupMap(): SVG wird erstellt mit Dimensionen: Breite=${width}, Höhe=${height}`);
 
         // Speichere Abmessungen für Zoom-Features
         this.width = width;
@@ -99,7 +108,14 @@ window.WorldMap = {
     },
 
     drawCountries() {
-        this.g.selectAll('.country')
+        if (!this.worldData || !this.worldData.features || this.worldData.features.length === 0) {
+            console.error('drawCountries(): Keine Features in worldData zum Zeichnen vorhanden.');
+            FAOUtils.showError('world-map', 'Keine Länderdaten zum Zeichnen.');
+            return;
+        }
+        console.log(`drawCountries(): Zeichne ${this.worldData.features.length} Länder.`);
+
+        const paths = this.g.selectAll('.country')
             .data(this.worldData.features)
             .enter()
             .append('path')
@@ -108,7 +124,7 @@ window.WorldMap = {
             .attr('fill', '#ccc')
             .attr('stroke', '#333')
             .attr('stroke-width', 0.5)
-            .attr('vector-effect', 'non-scaling-stroke')
+            .attr('vector-effect', 'non-scaling-stroke') // Verhindert, dass der Stroke beim Zoomen dicker wird
             .on('mouseover', (event, d) => {
                 d3.select(event.currentTarget).classed('country-hover', true);
                 this.showTooltip(event, d);
@@ -118,6 +134,12 @@ window.WorldMap = {
                 this.hideTooltip();
             })
             .on('click', (event, d) => this.onCountryClick(event, d));
+
+        if (paths.empty()) {
+            console.error('drawCountries(): Es wurden keine Pfad-Elemente zum SVG hinzugefügt.');
+        } else {
+            console.log(`drawCountries(): ${paths.size()} Pfad-Elemente erfolgreich zum SVG hinzugefügt.`);
+        }
     },
 
     setupControls() {
@@ -130,10 +152,10 @@ window.WorldMap = {
         const yearDisplay = document.getElementById('year-display');
         
         if (yearSlider) {
-            yearSlider.addEventListener('input', (e) => {
+            yearSlider.addEventListener('input', FAOUtils.debounce((e) => {
                 if (yearDisplay) yearDisplay.textContent = e.target.value;
                 this.updateMap();
-            });
+            }, 300)); // Debounce with 300ms delay
         }
 
         // Metric selector
@@ -205,21 +227,40 @@ window.WorldMap = {
 
         console.log(`updateMap(): ${product}, ${year}, ${metric}`);
 
-        // Jahr-Anzeige synchronisieren
+        // Jahr-Anzeige synchronisieren, falls vorhanden
         const yearDisplay = document.getElementById('year-display');
         if (yearDisplay) yearDisplay.textContent = year;
 
+        FAOUtils.showLoading('world-map-overlay'); // Ladeindikator für die Karte selbst
+
         try {
-            // Immer Timeseries verwenden (Variante A)
+            // Timeseries laden
             const timeseriesUrl = `data/timeseries/${product}_${metric}.json`;
             const timeseriesData = await FAOUtils.loadData(timeseriesUrl);
 
+            // Globale Werte für konsistente Skala ermitteln
+            const allValues = [];
+            Object.values(timeseriesData).forEach(countryArr => {
+                countryArr.forEach(d => {
+                    if (d.value !== null && d.value !== undefined && !isNaN(d.value)) {
+                        allValues.push(d.value);
+                    }
+                });
+            });
+            this.globalValues = allValues;
+
+            // Jahresdaten extrahieren
             this.currentData = this.extractYearData(timeseriesData, year);
             this.updateMapColors();
         } catch (error) {
             console.error('Fehler beim Laden der Kartendaten (Timeseries):', error);
-            this.currentData = {};
-            this.updateMapColors();
+            this.currentData = {}; // Sicherstellen, dass currentData definiert ist
+            this.updateMapColors(); // Karte ggf. leeren
+            FAOUtils.showError('world-map-overlay', 'Fehler beim Laden der Daten für die Karte.');
+        } finally {
+            // Ladeindikator entfernen, egal ob Erfolg oder Fehler
+            const overlay = document.getElementById('world-map-overlay');
+            if (overlay) overlay.innerHTML = ''; 
         }
     },
 
@@ -247,16 +288,15 @@ window.WorldMap = {
             return;
         }
 
-        // Werte für Farbberechnung extrahieren
-        const values = Object.values(this.currentData)
-            .map(d => d.value)
-            .filter(v => v !== null && v !== undefined && !isNaN(v));
+        // Verwende globale Werte, falls vorhanden, ansonsten aktuelle
+        const baseValues = (this.globalValues && this.globalValues.length) ? this.globalValues : Object.values(this.currentData).map(d=>d.value);
+        const values = baseValues.filter(v => v !== null && v !== undefined && !isNaN(v));
 
         if (values.length === 0) {
             // Keine Daten verfügbar, alle Länder grau anzeigen
-            this.svg.selectAll('.country')
+            this.g.selectAll('.country')
                 .attr('fill', '#ccc');
-            this.updateLegend([]);
+            this.updateLegend([]); // Leere Legende
             return;
         }
 
@@ -285,8 +325,14 @@ window.WorldMap = {
 
     getCountryName(feature) {
         // Try different property names for country identification
+        // Bevorzugt 'name', dann 'NAME', etc.
         return feature.properties.name || 
                feature.properties.NAME || 
+               feature.properties.ADMIN || 
+               feature.properties.admin ||
+               feature.properties.sovereignt || // Tippfehler in manchen GeoJSONs
+               feature.properties.sov_a3 ||
+               feature.properties.adm0_a3 ||
                feature.properties.country || 
                feature.properties.COUNTRY ||
                'Unknown';
@@ -294,14 +340,26 @@ window.WorldMap = {
 
     updateLegend(values) {
         const legendContainer = document.getElementById('map-legend');
-        legendContainer.innerHTML = '';
+        if (!legendContainer) {
+            console.error("WorldMap.updateLegend: Legend container #map-legend not found!");
+            return;
+        }
+        legendContainer.innerHTML = ''; // Clear previous legend
 
-        if (values.length === 0) {
-            legendContainer.innerHTML = '<p>Keine Daten verfügbar</p>';
+        if (!this.colorScale || typeof this.colorScale.quantiles !== 'function' || typeof this.colorScale.range !== 'function') {
+            console.error("WorldMap.updateLegend: Color scale is not properly initialized or not a D3 scale. Cannot create legend.", this.colorScale);
+            legendContainer.innerHTML = '<p>Farbskala nicht initialisiert.</p>';
             return;
         }
 
-        const legend = d3.select('#map-legend');
+        if (!values || values.length === 0) {
+            console.warn("WorldMap.updateLegend: No data values provided for legend. Displaying 'Keine Daten für Legende verfügbar'.");
+            legendContainer.innerHTML = '<p>Keine Daten für Legende verfügbar</p>';
+            return;
+        }
+        console.log(`WorldMap.updateLegend: Creating legend with ${values.length} values.`);
+
+        const legend = d3.select(legendContainer); // Use the already fetched container
         // Überschrift und Reset-Button
         legend.append('h4')
             .text('Legende')
@@ -316,7 +374,9 @@ window.WorldMap = {
 
         for (let i = 0; i < range.length; i++) {
             const min = i === 0 ? d3.min(values) : quantiles[i - 1];
-            const max = quantiles[i] || d3.max(values);
+            // Sicherstellen, dass max einen sinnvollen Wert hat, auch für die letzte Kategorie
+            const max = (i < quantiles.length) ? quantiles[i] : d3.max(values);
+            
             const item = legend.append('div')
                 .attr('class', 'legend-item')
                 .style('cursor', 'pointer')
@@ -329,6 +389,7 @@ window.WorldMap = {
             item.append('span')
                 .text(`${FAOUtils.formatNumber(min)} - ${FAOUtils.formatNumber(max)}`);
         }
+        console.log("WorldMap.updateLegend: Legend HTML should now be created in #map-legend.");
     },
 
     applyLegendFilter(min, max) {
@@ -354,6 +415,7 @@ window.WorldMap = {
         if (!this.currentData) return;
         const countryName = this.getCountryName(d);
         const mappedName = CountryMapping.normalizeCountryNameForMapping(countryName);
+        // Fallback, falls mappedName nicht in currentData ist, versuche countryName direkt
         const dataEntry = this.currentData[mappedName] || this.currentData[countryName];
 
         // Header
@@ -366,7 +428,9 @@ window.WorldMap = {
         content += `<div class="tooltip-value">Wert: ${value}</div>`;
 
         // Add political events if available
-        const year = parseInt(document.getElementById('year-slider').value);
+        const yearSlider = document.getElementById('year-slider');
+        if (!yearSlider) return; // Sicherstellen, dass der Slider existiert
+        const year = parseInt(yearSlider.value);
         const events = FAOUtils.getPoliticalEvents(year);
         if (events.length > 0) {
             content += `<div class="tooltip-events"><strong>Ereignisse ${year}:</strong><ul>`;
@@ -403,11 +467,17 @@ window.WorldMap = {
         const value = (dataEntry.value != null && !isNaN(dataEntry.value))
             ? FAOUtils.formatNumber(dataEntry.value) : 'Keine Daten';
         const unit = dataEntry.unit || '';
-        const popup = document.getElementById('panel-country-info');
-        if (popup) {
-            popup.querySelector('.popup-title').textContent = countryName;
-            popup.querySelector('.popup-text').textContent = `Wert: ${value} ${unit}`;
-            popup.querySelector('.popup-avatar').textContent = countryName.charAt(0) || '';
+        const panel = document.getElementById('panel-country-info');
+        if (panel) {
+            const countryNameEl = panel.querySelector('.country-name');
+            const countryStatsEl = panel.querySelector('.country-stats');
+            const avatarEl = panel.querySelector('.country-avatar');
+            
+            if (countryNameEl) countryNameEl.textContent = countryName;
+            if (countryStatsEl) countryStatsEl.textContent = `Wert: ${value} ${unit}`;
+            if (avatarEl) {
+                avatarEl.textContent = countryName.charAt(0).toUpperCase();
+            }
         }
     },
 

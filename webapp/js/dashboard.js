@@ -12,15 +12,16 @@ window.Dashboard = {
             this.loadClimateImpacts();
             this.initialized = true;
         } catch (error) {
-            console.error('Fehler beim Initialisieren des Dashboards:', error);
+            console.error('Fehler beim Laden der Dashboard-Daten:', error);
             FAOUtils.showError('overview-stats', 'Fehler beim Laden der Dashboard-Daten');
         }
     },
 
     async loadOverviewStats() {
-        const container = document.getElementById('panel-overview-stats');
+        const container = document.getElementById('overview-stats');
         if (!container) return;
-        FAOUtils.showLoading('panel-overview-stats');
+        
+        FAOUtils.showLoading('overview-stats');
 
         try {
             // Load metadata for overview
@@ -49,8 +50,8 @@ window.Dashboard = {
         }
     },
 
-    async loadGlobalTrends() {
-        const container = document.getElementById('panel-global-trends');
+    async    loadGlobalTrends() {
+        const container = document.getElementById('global-trends');
         if (!container) return;
         FAOUtils.showLoading('panel-global-trends');
 
@@ -156,7 +157,7 @@ window.Dashboard = {
     },
 
     loadPoliticalEvents() {
-        const container = document.getElementById('panel-political-events');
+        const container = document.getElementById('political-events');
         if (!container) return;
         
         const currentYear = new Date().getFullYear();
@@ -187,7 +188,7 @@ window.Dashboard = {
     },
 
     loadClimateImpacts() {
-        const container = document.getElementById('panel-climate-impacts');
+        const container = document.getElementById('climate-impacts');
         if (!container) return;
         
         const climateData = [

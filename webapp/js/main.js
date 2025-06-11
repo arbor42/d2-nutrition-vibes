@@ -1,121 +1,69 @@
-// Main application controller
+// Simplified Main Application Controller
 class FAOApp {
     constructor() {
-        this.currentSection = 'dashboard';
         this.data = {};
         this.init();
     }
 
     async init() {
-        this.setupNavigation();
-        await this.loadMetadata();
-        this.initializeSections();
-    }
-
-    setupNavigation() {
-        const navButtons = document.querySelectorAll('.nav-btn');
-        navButtons.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const section = e.target.dataset.section;
-                this.showSection(section);
-            });
-        });
-    }
-
-    showSection(sectionName) {
-        // Hide all sections
-        document.querySelectorAll('.section').forEach(section => {
-            section.classList.remove('active');
-        });
-
-        // Remove active class from all nav buttons
-        document.querySelectorAll('.nav-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-
-        // Show selected section
-        const targetSection = document.getElementById(sectionName);
-        if (targetSection) {
-            targetSection.classList.add('active');
+        try {
+            await this.loadMetadata();
+            this.initializeModules();
+            console.log('FAO App initialized successfully');
+        } catch (error) {
+            console.error('Error initializing FAO App:', error);
         }
-
-        // Add active class to clicked nav button
-        const targetBtn = document.querySelector(`[data-section="${sectionName}"]`);
-        if (targetBtn) {
-            targetBtn.classList.add('active');
-        }
-
-        this.currentSection = sectionName;
-
-        // Initialize section if needed
-        this.initializeSection(sectionName);
     }
 
     async loadMetadata() {
         try {
-            this.data.metadata = await FAOUtils.loadData('data/metadata.json');
-            console.log('Metadata geladen:', this.data.metadata);
+            const metadata = await FAOUtils.loadData('data/metadata.json');
+            this.data.metadata = metadata;
         } catch (error) {
-            console.error('Fehler beim Laden der Metadata:', error);
+            console.error('Error loading metadata:', error);
         }
     }
 
-    initializeSections() {
-        const sections = [
-            'dashboard', 
-            'worldmap', 
-            'timeseries', 
-            'simulation', 
-            'ml-predictions', 
-            'structural-analysis', 
-            'process-mining'
+    initializeModules() {
+        // Initialize all modules
+        const modules = [
+            'WorldMap',
+            'Dashboard', 
+            'TimeSeries',
+            'Simulation',
+            'MLPredictions',
+            'StructuralAnalysis',
+            'ProcessMining',
+            'Export'
         ];
-        sections.forEach(section => this.initializeSection(section));
+
+        modules.forEach(moduleName => {
+            if (window[moduleName] && typeof window[moduleName].init === 'function') {
+                try {
+                    window[moduleName].init();
+                    console.log(`${moduleName} module initialized`);
+                } catch (error) {
+                    console.error(`Error initializing ${moduleName}:`, error);
+                }
+            }
+        });
     }
 
-    initializeSection(sectionName) {
-        switch (sectionName) {
-            case 'dashboard':
-                if (window.Dashboard) {
-                    window.Dashboard.init();
-                }
-                break;
-            case 'worldmap':
-                if (window.WorldMap) {
-                    window.WorldMap.init();
-                }
-                break;
-            case 'timeseries':
-                if (window.TimeSeries) {
-                    window.TimeSeries.init();
-                }
-                break;
-            case 'simulation':
-                if (window.Simulation) {
-                    window.Simulation.init();
-                }
-                break;
-            case 'ml-predictions':
-                if (window.MLPredictions) {
-                    window.MLPredictions.init();
-                }
-                break;
-            case 'structural-analysis':
-                if (window.StructuralAnalysis) {
-                    window.StructuralAnalysis.init();
-                }
-                break;
-            case 'process-mining':
-                if (window.ProcessMining) {
-                    window.ProcessMining.init();
-                }
-                break;
-        }
+    // Public API methods
+    getMetadata() {
+        return this.data.metadata;
+    }
+
+    getData(key) {
+        return this.data[key];
+    }
+
+    setData(key, value) {
+        this.data[key] = value;
     }
 }
 
-// Initialize app when DOM is loaded
+// Initialize app when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    window.faoApp = new FAOApp();
+    window.FAOApp = new FAOApp();
 });
-

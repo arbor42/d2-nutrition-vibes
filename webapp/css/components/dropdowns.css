@@ -1,0 +1,108 @@
+/*
+ * Drop-Down Komponentenstil v1.0
+ * Einheitliches, modernes Design für alle <select>-Elemente in Panels
+ * Styling ist responsiv und verwendet CI-Farben aus :root in styles.css
+ */
+
+/* Basis-Stil für alle Dropdowns innerhalb der Anwendung */
+#side-panels .panel select,
+.filter-body select,
+.controls select {
+  /* Entfernt systemabhängige Stylingreste */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  padding: 0.65rem 2.5rem 0.65rem 1rem;
+  border: 1px solid #bdc3c7;
+  border-radius: 8px;
+  background-color: #fff;
+  font-family: var(--font-family-base);
+  font-size: 0.95rem;
+  line-height: 1.3;
+  color: var(--color-text);
+  cursor: pointer;
+
+  /* eingebettetes SVG-Icon für den Pfeil */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24' fill='%23333333'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px 16px;
+
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover- & Fokuszustände */
+#side-panels .panel select:hover,
+.filter-body select:hover,
+.controls select:hover {
+  border-color: var(--color-secondary);
+}
+
+#side-panels .panel select:focus,
+.filter-body select:focus,
+.controls select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.35);
+}
+
+/* Mehrfachauswahl – kein Pfeil & anderes Padding */
+.panel select[multiple],
+.controls select[multiple] {
+  background-image: none;
+  padding-right: 1rem;
+  min-height: 6rem;
+  cursor: default;
+}
+
+/* Deaktivierte Dropdowns */
+select:disabled,
+.export-select:disabled {
+  background-color: #f4f4f4;
+  color: #999;
+  cursor: not-allowed;
+}
+
+/* Kleine Bildschirme: Schrift verkleinern */
+@media (max-width: 768px) {
+  .panel select,
+  .controls select,
+  .filter-body select,
+  .export-select {
+    font-size: 0.85rem;
+  }
+}
+
+.export-container .export-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  padding: 0.65rem 2.5rem 0.65rem 1rem;
+  border: 1px solid #bdc3c7;
+  border-radius: 8px;
+  background-color: #fff;
+  font-family: var(--font-family-base);
+  font-size: 0.95rem;
+  line-height: 1.3;
+  color: var(--color-text);
+  cursor: pointer;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24' fill='%23333333'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px 16px;
+
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.export-container .export-select:hover {
+  border-color: var(--color-secondary);
+}
+
+.export-container .export-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.35);
+} 

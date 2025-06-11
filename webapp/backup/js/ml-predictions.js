@@ -43,8 +43,7 @@ window.MLPredictions = {
         container.innerHTML = '';
 
         const margin = { top: 50, right: 100, bottom: 60, left: 90 };
-        const containerWidth = container.getBoundingClientRect().width || 800;
-        const width = Math.max(300, containerWidth - margin.left - margin.right);
+        const width = container.clientWidth - margin.left - margin.right;
         const height = 400 - margin.top - margin.bottom;
 
         const svg = d3.select('#ml-chart')

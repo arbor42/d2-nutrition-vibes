@@ -7,105 +7,160 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="css/components/panels.css?v=1.0">
     <title>FAO Lebensmitteldaten-Analyse</title>
     <link rel="stylesheet" href="css/styles.css?v=1.2">
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://d3js.org/topojson.v3.min.js"></script>
 </head>
 <body>
-    <!-- Worldmap Section -->
-    <section id="worldmap" class="section active">
-        <div class="map-container">
-            <div class="zoom-controls">
-                <button class="zoom-btn zoom-in" aria-label="Vergrößern"><i class="material-icons">add</i></button>
-                <button class="zoom-btn zoom-out" aria-label="Verkleinern"><i class="material-icons">remove</i></button>
-                <button class="zoom-btn zoom-reset" aria-label="Zoom zurücksetzen"><i class="material-icons">refresh</i></button>
-            </div>
-            <div class="panel-nav">
-                <button data-panel="filter" aria-label="Filter"><i class="material-icons">filter_list</i></button>
-                <button data-panel="dashboard" aria-label="Dashboard"><i class="material-icons">dashboard</i></button>
-                <button data-panel="timeseries" aria-label="Zeitreihen"><i class="material-icons">timeline</i></button>
-                <button data-panel="simulation" aria-label="Simulation"><i class="material-icons">show_chart</i></button>
-                <button data-panel="ml" aria-label="ML Prognosen"><i class="material-icons">memory</i></button>
-                <button data-panel="structural" aria-label="Strukturanalyse"><i class="material-icons">analytics</i></button>
-                <button data-panel="process" aria-label="Process Mining"><i class="material-icons">device_hub</i></button>
-                <button data-panel="country-list" aria-label="Länder-Liste"><i class="material-icons">list</i></button>
-            </div>
-            <div id="world-map"></div>
-            <div class="legend" id="map-legend"></div>
-        </div>
-        <div class="tooltip" id="map-tooltip"></div>
-        <div id="side-panels">
-            <div id="panel-dashboard" class="panel panel-wide closed">
-                <h3>Dashboard</h3>
+    <div class="container">
+        <header>
+            <h1>FAO Lebensmitteldaten-Analyse</h1>
+            <p>Interaktive Analyse der globalen Ernährungssicherheit (2010-2022)</p>
+        </header>
+
+        <nav class="navigation">
+            <button class="nav-btn active" data-section="dashboard" aria-label="Dashboard">Dashboard</button>
+            <button class="nav-btn" data-section="worldmap" aria-label="Weltkarte">Weltkarte</button>
+            <button class="nav-btn" data-section="timeseries" aria-label="Zeitreihen">Zeitreihen</button>
+            <button class="nav-btn" data-section="simulation" aria-label="Simulation">Simulation</button>
+            <button class="nav-btn" data-section="ml-predictions" aria-label="ML-Prognosen">ML-Prognosen</button>
+            <button class="nav-btn" data-section="structural-analysis" aria-label="Strukturanalyse">Strukturanalyse</button>
+            <button class="nav-btn" data-section="process-mining" aria-label="Process Mining">Process Mining</button>
+        </nav>
+
+        <main>
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section active">
+                <h2>Dashboard</h2>
                 <div class="dashboard-grid">
-                    <div id="panel-overview-card" class="card">
+                    <div id="overview-card" class="card">
                         <h3>Übersicht</h3>
-                        <div id="panel-overview-stats"></div>
+                        <div id="overview-stats"></div>
                     </div>
-                    <div id="panel-trends-card" class="card">
+                    <div id="trends-card" class="card">
                         <h3>Globale Trends</h3>
-                        <div id="panel-global-trends"></div>
+                        <div id="global-trends"></div>
                     </div>
-                    <div id="panel-political-card" class="card">
+                    <div id="political-card" class="card">
                         <h3>Politische Ereignisse</h3>
-                        <div id="panel-political-events"></div>
+                        <div id="political-events"></div>
                     </div>
-                    <div id="panel-climate-card" class="card">
+                    <div id="climate-card" class="card">
                         <h3>Klimaauswirkungen</h3>
-                        <div id="panel-climate-impacts"></div>
+                        <div id="climate-impacts"></div>
                     </div>
                 </div>
-            </div>
-            <div class="highlight-ribbon panel closed">
-                <div class="highlight-header">
-                    <i class="material-icons">flag</i>
-                    <span>Highlights</span>
-                </div>
-                <ul class="highlight-list">
-                    <li><button data-highlight="tour"><i class="material-icons">all_inclusive</i> gesamte Tour</button></li>
-                    <li><button data-highlight="ukraine"><i class="material-icons">flight_takeoff</i> Auswirkungen des Ukraine-Kriegs</button></li>
-                    <li><button data-highlight="climate"><i class="material-icons">cloud</i> Klimabedingte Schwankungen</button></li>
-                    <li><button data-highlight="pandemic"><i class="material-icons">local_hospital</i> Pandemiebedingte Lagerbewegungen</button></li>
-                    <li><button data-highlight="feed"><i class="material-icons">pets</i> Zunahme von Tierfutteranteilen</button></li>
-                </ul>
-            </div>
-            <div id="panel-filter" class="filter-panel panel closed">
-                <div class="filter-header">
-                    <i class="material-icons">filter_list</i>
-                    <span>Filter</span>
-                </div>
-                <div class="filter-body controls">
+            </section>
+
+            <!-- Worldmap Section -->
+            <section id="worldmap" class="section">
+                <h2>Interaktive Weltkarte</h2>
+                <div class="controls">
                     <div class="control-group">
                         <label for="product-select">Produkt:</label>
                         <select id="product-select">
                             <option value="wheat_and_products">Weizen und Produkte</option>
                             <option value="rice_and_products">Reis und Produkte</option>
                             <option value="maize_and_products">Mais und Produkte</option>
-                        </select>
-                    </div>
-                    <div class="control-group">
-                        <label for="metric-select">Metrik:</label>
-                        <select id="metric-select">
-                            <option value="production">Produktion (t)</option>
-                            <option value="food_supply_quantity_kg_capita_yr">Versorgungsmenge (kg/Kopf/Jahr)</option>
-                            <option value="food_supply_kcal_capita_day">Versorgung (kcal/Kopf/Tag)</option>
+                            <option value="meat_total">Fleisch (gesamt)</option>
+                            <option value="milk_-_excluding_butter">Milch (ohne Butter)</option>
+                            <option value="fruits_-_excluding_wine">Früchte (ohne Wein)</option>
+                            <option value="vegetables">Gemüse</option>
+                            <option value="sugar_and_sweeteners">Zucker & Süßstoffe</option>
+                            <option value="pulses">Hülsenfrüchte</option>
+                            <option value="potatoes_and_products">Kartoffeln und Produkte</option>
+                            <option value="cassava_and_products">Cassava und Produkte</option>
+                            <option value="nuts_and_products">Nüsse und Produkte</option>
                         </select>
                     </div>
                     <div class="control-group">
                         <label for="year-slider">Jahr: <span id="year-display">2010</span></label>
-                        <input type="range" id="year-slider" min="2010" max="2022" value="2010" step="1" />
+                        <input type="range" id="year-slider" min="2010" max="2022" value="2010" step="1">
+                    </div>
+                    <div class="control-group">
+                        <label for="metric-select">Metrik:</label>
+                        <select id="metric-select">
+                            <option value="production">Produktion</option>
+                            <option value="food_supply_quantity_kg_capita_yr">Versorgung (kg/Kopf/Jahr)</option>
+                            <option value="food_supply_kcal_capita_day">Versorgung (kcal/Kopf/Tag)</option>
+                        </select>
                     </div>
                 </div>
-            </div>
-            <div id="panel-country-info" class="popup-card panel closed">
-                <div class="popup-avatar">M</div>
-                <h3 class="popup-title">Algerien</h3>
-                <p class="popup-text">Top 1 Produzent: 1.000.000.000</p>
-            </div>
-            <div id="panel-timeseries" class="panel panel-wide closed">
-                <h3>Zeitreihenanalyse</h3>
+                <div class="export-container">
+                    <select id="export-format-worldmap" class="export-select" aria-label="Export-Format">
+                        <option value="svg">SVG</option>
+                        <option value="png">PNG</option>
+                    </select>
+                    <button id="export-btn-worldmap" class="export-btn" aria-label="Karte exportieren">Export</button>
+                </div>
+                <div class="map-container">
+                    <div class="zoom-controls">
+                        <button class="zoom-btn zoom-in" aria-label="Vergrößern"><i class="material-icons">add</i></button>
+                        <button class="zoom-btn zoom-out" aria-label="Verkleinern"><i class="material-icons">remove</i></button>
+                    </div>
+                    <div id="world-map"></div>
+                    <div class="legend" id="map-legend"></div>
+                </div>
+                <div class="tooltip" id="map-tooltip"></div>
+                <div class="highlight-ribbon closed">
+                    <div class="highlight-header">
+                        <i class="material-icons">flag</i>
+                        <span>Highlights</span>
+                    </div>
+                    <ul class="highlight-list">
+                        <li><button data-highlight="tour"><i class="material-icons">all_inclusive</i> gesamte Tour</button></li>
+                        <li><button data-highlight="ukraine"><i class="material-icons">flight_takeoff</i> Auswirkungen des Ukraine-Kriegs</button></li>
+                        <li><button data-highlight="climate"><i class="material-icons">cloud</i> Klimabedingte Schwankungen</button></li>
+                        <li><button data-highlight="pandemic"><i class="material-icons">local_hospital</i> Pandemiebedingte Lagerbewegungen</button></li>
+                        <li><button data-highlight="feed"><i class="material-icons">pets</i> Zunahme von Tierfutteranteilen</button></li>
+                    </ul>
+                </div>
+                <div class="filter-panel closed">
+                    <div class="filter-header">
+                        <i class="material-icons">filter_list</i>
+                        <span>Filter</span>
+                    </div>
+                    <div class="filter-body">
+                        <div class="filter-field">
+                            <label for="filter-product">Lebensmittel</label>
+                            <select id="filter-product" multiple>
+                                <option value="rice">Reis</option>
+                                <option value="wheat">Weizen</option>
+                                <option value="maize">Mais</option>
+                            </select>
+                        </div>
+                        <div class="filter-field">
+                            <label for="filter-action">Aktion</label>
+                            <select id="filter-action" multiple>
+                                <option value="production">Produktion</option>
+                            </select>
+                        </div>
+                        <div class="filter-field">
+                            <label for="filter-country">Land</label>
+                            <select id="filter-country" multiple>
+                                <!-- Dynamisch gefüllt -->
+                            </select>
+                        </div>
+                        <div class="filter-field">
+                            <label>Jahr</label>
+                            <div class="year-range">
+                                <input type="range" id="filter-year-min" min="2010" max="2022" value="2010">
+                                <input type="range" id="filter-year-max" min="2010" max="2022" value="2022">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="popup-card closed">
+                    <div class="popup-avatar">M</div>
+                    <h3 class="popup-title">Algerien</h3>
+                    <p class="popup-text">Top 1 Produzent: 1.000.000.000</p>
+                </div>
+            </section>
+
+            <!-- Timeseries Section -->
+            <section id="timeseries" class="section">
+                <h2>Zeitreihenanalyse</h2>
                 <div class="controls">
                     <div class="control-group">
                         <label for="ts-product-select">Produkt:</label>
@@ -135,9 +190,11 @@
                     <button id="export-btn-timeseries" class="export-btn" aria-label="Diagramm exportieren">Export</button>
                 </div>
                 <div id="timeseries-chart"></div>
-            </div>
-            <div id="panel-simulation" class="panel panel-wide closed">
-                <h3>Zukunftssimulation</h3>
+            </section>
+
+            <!-- Simulation Section -->
+            <section id="simulation" class="section">
+                <h2>Zukunftssimulation</h2>
                 <div class="controls">
                     <div class="control-group">
                         <label for="sim-scenario">Szenario:</label>
@@ -155,9 +212,11 @@
                     </div>
                 </div>
                 <div id="simulation-results"></div>
-            </div>
-            <div id="panel-ml" class="panel panel-wide closed">
-                <h3>Machine Learning Prognosen</h3>
+            </section>
+
+            <!-- ML Predictions Section -->
+            <section id="ml-predictions" class="section">
+                <h2>Machine Learning Prognosen</h2>
                 <div class="controls">
                     <div class="control-group">
                         <label for="ml-product-select">Produkt:</label>
@@ -180,9 +239,11 @@
                     <h3>Modell-Information</h3>
                     <div id="ml-model-info"></div>
                 </div>
-            </div>
-            <div id="panel-structural" class="panel panel-wide closed">
-                <h3>Strukturanalyse</h3>
+            </section>
+
+            <!-- Structural Analysis Section -->
+            <section id="structural-analysis" class="section">
+                <h2>Strukturanalyse</h2>
                 <div class="controls">
                     <div class="control-group">
                         <label for="struct-analysis-type">Analyse-Typ:</label>
@@ -201,9 +262,11 @@
                     <button id="export-btn-struct" class="export-btn" aria-label="Strukturanalyse exportieren">Export</button>
                 </div>
                 <div id="structural-analysis-chart"></div>
-            </div>
-            <div id="panel-process" class="panel panel-wide closed">
-                <h3>Process Mining</h3>
+            </section>
+
+            <!-- Process Mining Section -->
+            <section id="process-mining" class="section">
+                <h2>Process Mining</h2>
                 <div class="controls">
                     <div class="control-group">
                         <label for="process-type">Prozess-Typ:</label>
@@ -238,14 +301,9 @@
                     <button id="export-btn-process" class="export-btn" aria-label="Diagramm exportieren">Export</button>
                 </div>
                 <div id="process-mining-chart"></div>
-            </div>
-            <div id="panel-country-list" class="panel panel-country-list closed">
-                <h3>Länder-Liste</h3>
-                <input type="text" id="country-list-search" placeholder="Land suchen..." />
-                <ul id="country-list-container"></ul>
-            </div>
-        </div>
-    </section>
+            </section>
+        </main>
+    </div>
 
     <script src="js/utils.js?v=1.2"></script>
     <script src="js/country-mapping.js?v=1.2"></script>
@@ -258,7 +316,6 @@
     <script src="js/structural-analysis.js?v=1.2"></script>
     <script src="js/export.js?v=1.2"></script>
     <script src="js/process-mining.js?v=1.2"></script>
-    <script src="js/components/panels.js?v=1.0"></script>
 </body>
 </html>
 

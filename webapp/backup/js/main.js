@@ -61,16 +61,8 @@ class FAOApp {
     }
 
     initializeSections() {
-        const sections = [
-            'dashboard', 
-            'worldmap', 
-            'timeseries', 
-            'simulation', 
-            'ml-predictions', 
-            'structural-analysis', 
-            'process-mining'
-        ];
-        sections.forEach(section => this.initializeSection(section));
+        // Initialize dashboard by default
+        this.initializeSection('dashboard');
     }
 
     initializeSection(sectionName) {

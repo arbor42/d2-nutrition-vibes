@@ -7,7 +7,7 @@ window.ProcessMining = {
         
         try {
             this.setupControls();
-            // await this.performProcessMining(); // Removed to prevent rendering in hidden panel
+            await this.performProcessMining();
             this.initialized = true;
         } catch (error) {
             console.error('Fehler beim Initialisieren des Process Mining:', error);

@@ -7,7 +7,7 @@ window.Dashboard = {
         
         try {
             await this.loadOverviewStats();
-            // await this.loadGlobalTrends(); // Removed to prevent rendering in hidden panel
+            await this.loadGlobalTrends();
             this.loadPoliticalEvents();
             this.loadClimateImpacts();
             this.initialized = true;
@@ -18,9 +18,8 @@ window.Dashboard = {
     },
 
     async loadOverviewStats() {
-        const container = document.getElementById('panel-overview-stats');
-        if (!container) return;
-        FAOUtils.showLoading('panel-overview-stats');
+        const container = document.getElementById('overview-stats');
+        FAOUtils.showLoading('overview-stats');
 
         try {
             // Load metadata for overview
@@ -50,9 +49,8 @@ window.Dashboard = {
     },
 
     async loadGlobalTrends() {
-        const container = document.getElementById('panel-global-trends');
-        if (!container) return;
-        FAOUtils.showLoading('panel-global-trends');
+        const container = document.getElementById('global-trends');
+        FAOUtils.showLoading('global-trends');
 
         try {
             // Load wheat production data for global trends
@@ -156,8 +154,7 @@ window.Dashboard = {
     },
 
     loadPoliticalEvents() {
-        const container = document.getElementById('panel-political-events');
-        if (!container) return;
+        const container = document.getElementById('political-events');
         
         const currentYear = new Date().getFullYear();
         const recentEvents = [];
@@ -187,8 +184,7 @@ window.Dashboard = {
     },
 
     loadClimateImpacts() {
-        const container = document.getElementById('panel-climate-impacts');
-        if (!container) return;
+        const container = document.getElementById('climate-impacts');
         
         const climateData = [
             {

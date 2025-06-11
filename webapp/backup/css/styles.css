@@ -1,15 +1,13 @@
 /* Farbvariablen und Theme */
 :root {
-  /* Neue CI-Farben in Grüntönen */
-  --color-primary: #27ae60;      /* Hauptgrün */
-  --color-secondary: #7AA53D;    /* helleres Grün */
-  --color-highlight: #a9d18e;    /* Highlight (Pastell-Grün) */
-  --color-accent: #1e8449;       /* dunkler Akzent */
-  --color-dark: #145A32;         /* sehr dunkles Grün */
-  --color-water: #e8f5e9;        /* sehr helles Grün als Flächenhintergrund */
+  --color-primary: #993E29;
+  --color-secondary: #EAAA02;
+  --color-highlight: #7AA53D;
+  --color-accent: #C68345;
+  --color-dark: #844928;
+  --color-water: #cdeaf2;
   --color-text: #333333;
   --font-family-base: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-  --panel-width: 300px;
 }
 
 /* Typografie */
@@ -35,21 +33,40 @@ body {
     font-family: var(--font-family-base);
     line-height: 1.6;
     color: var(--color-text);
-    background-color: var(--color-water);
+    background-color: #f5f5f5;
 }
 
 .container {
-    width: 100%;
-    height: 100%;
+    /* Maximale Breite und horizontale Zentrierung */
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+
+    /* Grid-Layout für Hauptstruktur */
+    display: grid;
+    grid-template-areas:
+        "header"
+        "nav"
+        "main";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr;
+
+    /* Volle Höhe, damit Footer (optional) unten klebt */
+    min-height: 100vh;
+
+    row-gap: 2rem;
 }
 
 /* Header */
 header {
-    background: linear-gradient(135deg, var(--color-dark), var(--color-primary));
+    background: linear-gradient(135deg, #2c3e50, #3498db);
     color: white;
     padding: 2rem 0;
     text-align: center;
     margin-bottom: 0;
+
+    /* Position im Grid */
+    grid-area: header;
 }
 
 header h1 {
@@ -69,6 +86,9 @@ header p {
     gap: 1rem;
     margin-bottom: 0;
     flex-wrap: wrap;
+
+    /* Position im Grid */
+    grid-area: nav;
 }
 
 .nav-btn {
@@ -88,14 +108,18 @@ header p {
 }
 
 .nav-btn.active {
-    background: var(--color-primary);
+    background: #3498db;
     color: white;
 }
 
 /* Sections */
 .section {
-    width: 100%;
-    height: 100%;
+    display: none;
+    background: white;
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .section.active {
@@ -160,12 +184,15 @@ header p {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-#overview-card,
-#trends-card,
-#political-card,
-#climate-card {
-  border-color: var(--color-primary);
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
+
+#overview-card { border-color: #3498db; }
+#trends-card { border-color: #9b59b6; }
+#political-card { border-color: #e74c3c; }
+#climate-card { border-color: #f39c12; }
 
 .card h3 {
     color: #2c3e50;
@@ -191,6 +218,11 @@ header p {
     font-size: 1.8rem;
     font-weight: 300;
     color: #2c3e50;
+}
+
+.stat-item .stat-text {
+    font-size: 1.1rem;
+    font-weight: 400;
 }
 
 .event-item, .climate-item {
@@ -240,21 +272,19 @@ header p {
 
 /* Map Container */
 .map-container {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    margin: 0 !important;
+    position: relative;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    height: 600px;
+    background-color: var(--color-water);
+    border: none;
+    border-radius: 0;
+    overflow: hidden;
 }
 
 #world-map {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--color-water);
 }
 
 .legend {
@@ -283,45 +313,19 @@ header p {
 /* Tooltip */
 .tooltip {
     position: absolute;
-    background: var(--color-dark);
-    color: #fff;
-    padding: 12px 16px;
-    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
     pointer-events: none;
-    font-size: 1rem;
-    line-height: 1.4;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    font-size: 0.9rem;
     z-index: 1000;
     opacity: 0;
-    transition: opacity 0.2s;
+    transition: opacity 0.3s;
 }
 
 .tooltip.visible {
     opacity: 1;
-}
-
-/* Tooltip Inhalte */
-.tooltip strong {
-    display: block;
-    font-size: 1.1rem;
-    margin-bottom: 6px;
-}
-.tooltip .tooltip-value {
-    font-weight: 600;
-}
-.tooltip .tooltip-events {
-    margin-top: 8px;
-}
-.tooltip .tooltip-events strong {
-    display: block;
-    margin-bottom: 4px;
-}
-.tooltip .tooltip-events ul {
-    margin: 0;
-    padding-left: 16px;
-}
-.tooltip .tooltip-events li {
-    margin-bottom: 2px;
 }
 
 /* Charts */
@@ -365,21 +369,14 @@ header p {
 /* Country paths in map */
 .country {
     stroke: #fff;
-    stroke-width: 0.4px;
-    vector-effect: non-scaling-stroke;
+    stroke-width: 0.5px;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .country:hover {
-    stroke: var(--color-dark);
-    stroke-width: 0.8px;
-}
-
-/* Hervorhebung bei Hover */
-.country-hover {
-    stroke: var(--color-dark) !important;
-    stroke-width: 1.2px !important;
+    stroke: #2c3e50;
+    stroke-width: 2px;
 }
 
 /* Color scales for choropleth */
@@ -446,7 +443,7 @@ header p {
     content: '';
     width: 20px;
     height: 20px;
-    border: 2px solid var(--color-primary);
+    border: 2px solid #3498db;
     border-top: 2px solid transparent;
     border-radius: 50%;
     animation: spin 1s linear infinite;
@@ -474,6 +471,133 @@ header p {
     padding: 1rem;
     border-radius: 5px;
     margin: 1rem 0;
+}
+
+/* --- Zeitreihenanalyse Card Style --- */
+#timeseries.section {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 6px 24px rgba(44, 62, 80, 0.10);
+    padding: 2.5rem 2.5rem 2rem 2.5rem;
+    margin-bottom: 2.5rem;
+    border-left: 6px solid #3498db;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#timeseries .controls {
+    background: #f4f8fb;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 2.2rem;
+    box-shadow: 0 2px 8px rgba(52, 152, 219, 0.07);
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+#timeseries .control-group label {
+    color: #2980b9;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+}
+
+#timeseries .control-group select,
+#timeseries .control-group input {
+    border: 1.5px solid #b2cbe4;
+    background: #fafdff;
+    border-radius: 6px;
+    font-size: 1.08rem;
+    padding: 0.55rem 0.7rem;
+    transition: border 0.2s;
+}
+#timeseries .control-group select:focus,
+#timeseries .control-group input:focus {
+    border: 1.5px solid #3498db;
+    outline: none;
+}
+
+#timeseries-chart {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(52, 152, 219, 0.08);
+    padding: 1.5rem 1.5rem 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    min-height: 420px;
+    position: relative;
+    margin-top: 1.5rem;
+}
+
+#timeseries-chart svg {
+    background: transparent;
+    border-radius: 8px;
+}
+
+#timeseries-chart .legend {
+    position: absolute;
+    top: 18px;
+    right: 24px;
+    background: rgba(255,255,255,0.97);
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(44,62,80,0.07);
+    padding: 10px 18px;
+    font-size: 1rem;
+    z-index: 2;
+}
+
+#timeseries-chart .legend-item {
+    margin-bottom: 7px;
+}
+#timeseries-chart .legend-item:last-child {
+    margin-bottom: 0;
+}
+
+#timeseries-chart .legend-item rect {
+    rx: 3;
+    ry: 3;
+}
+
+#timeseries-chart .legend-item text {
+    font-size: 1rem;
+    fill: #2c3e50;
+}
+
+#timeseries-chart .error {
+    margin: 2rem auto;
+    max-width: 400px;
+    font-size: 1.1rem;
+}
+
+#timeseries-chart .tooltip {
+    font-size: 1.05rem;
+    padding: 12px 16px;
+    border-radius: 7px;
+    background: rgba(44,62,80,0.93);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.13);
+}
+
+#timeseries-chart .d3-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    fill: #2c3e50;
+    text-shadow: 0 1px 2px #fff;
+}
+
+@media (max-width: 900px) {
+    #timeseries.section {
+        padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+    }
+    #timeseries .controls {
+        flex-direction: column;
+        gap: 1.2rem;
+        padding: 1rem;
+    }
+    #timeseries-chart {
+        padding: 0.7rem 0.2rem 0.7rem 0.2rem;
+    }
 }
 
 /* --- Zeitreihenanalyse HTML-Legende unterhalb des Diagramms --- */
@@ -565,8 +689,7 @@ header p {
 }
 
 main {
-    width: 100%;
-    height: 100%;
+    grid-area: main;
 }
 
 /* ML-Prognosen Diagramm responsiv und HTML-Legende */
@@ -689,7 +812,7 @@ main {
 
 /* Export Button */
 .export-btn {
-    background: var(--color-dark);
+    background: #2c3e50;
     color: #fff;
     border: none;
     padding: 0.6rem 1.2rem;
@@ -699,7 +822,7 @@ main {
     transition: background 0.2s;
 }
 .export-btn:hover {
-    background: #0e3f20;
+    background: #1a242f;
 }
 
 .export-select {
@@ -719,8 +842,8 @@ main {
 /* Zoom Controls */
 .zoom-controls {
     position: absolute;
-    bottom: 20px;
-    left: 20px;
+    top: 10px;
+    left: 10px;
     display: flex;
     flex-direction: column;
     background: white;
@@ -754,70 +877,209 @@ main {
     line-height: 1;
 }
 
-/* Reset-Button in Legende */
-#map-legend .legend-reset {
-    background: none;
-    border: none;
-    color: var(--color-primary);
-    cursor: pointer;
+/* Highlight Ribbon */
+.highlight-ribbon {
+    position: absolute;
+    top: 120px;
+    left: 20px;
+    width: 220px;
+    background: var(--color-highlight);
+    color: #fff;
+    border-radius: 0 0 8px 8px;
+    padding-top: 40px;
+    z-index: 12;
+    transition: transform 0.3s ease;
+    transform: translateX(0);
+}
+.highlight-ribbon.closed {
+    transform: translateX(-200px);
+}
+.highlight-ribbon::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 20px 20px 0 20px;
+    border-style: solid;
+    border-color: var(--color-highlight) transparent transparent transparent;
+}
+.highlight-ribbon .highlight-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: #fff;
+    color: var(--color-highlight);
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
     font-weight: 600;
-    margin-bottom: 8px;
+    cursor: pointer;
+}
+.highlight-ribbon .highlight-header i {
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+.highlight-ribbon .highlight-list {
+    list-style: none;
+    margin: 0;
     padding: 0;
 }
-#map-legend .legend-reset:hover {
-    text-decoration: underline;
-}
-
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-}
-
-.panel-nav {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: auto;
-  pointer-events: none;
-}
-
-.panel-nav button {
-  pointer-events: auto;
-}
-
-#side-panels {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  z-index: 100;
-}
-
-.map-controls {
-    position: absolute;
-    top: 70px; /* unterhalb der Panel-Navigation */
-    left: 72px; /* Abstand, damit es nicht unter den Panel-Icons liegt */
-    z-index: 90; /* über der Karte, aber unter Side-Panels */
+.highlight-ribbon .highlight-list button {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #fff;
+    text-align: left;
+    padding: 10px 12px;
     display: flex;
-    gap: 1.2rem;
-    padding: 8px 12px;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    align-items: flex-end;
+    align-items: center;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.highlight-ribbon .highlight-list button i {
+    margin-right: 8px;
+    font-size: 1rem;
+}
+.highlight-ribbon .highlight-list button:hover {
+    background: rgba(255,255,255,0.2);
 }
 
+/* Filter-Panel (rechte Sidebar) */
+.filter-panel {
+    position: absolute;
+    top: 120px;
+    right: 20px;
+    width: 250px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    z-index: 12;
+    transition: transform 0.3s ease;
+    transform: translateX(0);
+}
+.filter-panel.closed {
+    transform: translateX(270px);
+}
+.filter-header {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 12px;
+    background: var(--color-secondary);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px 8px 0 0;
+}
+.filter-header i {
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+.filter-body {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.filter-field label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--color-text);
+}
+.filter-field select,
+.filter-field input[type="range"] {
+    width: 100%;
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.filter-field select option:checked {
+    background-color: var(--color-accent);
+    color: #fff;
+}
+.year-range {
+    display: flex;
+    gap: 6px;
+}
+
+/* Pop-Up-Karte (unten rechts) */
+.popup-card {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 220px;
+    background: var(--color-highlight);
+    color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    padding: 16px;
+    z-index: 12;
+    overflow: hidden;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.popup-card.closed {
+    transform: translateY(200px);
+    opacity: 0;
+}
+.popup-avatar {
+    position: absolute;
+    top: -16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--color-dark);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+    font-weight: bold;
+    cursor: pointer;
+}
+.popup-title {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+.popup-text {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+/* Mobile Overlay Sidebars */
 @media (max-width: 768px) {
-    .map-controls {
-        flex-direction: column;
-        top: 80px;
-        right: 16px;
-        left: auto;
-    }
+  .highlight-ribbon {
+    width: calc(100% - 20px);
+    left: 10px;
+    top: auto;
+    bottom: 150px;
+    transform: translateY(0);
+    border-radius: 8px 8px 0 0;
+  }
+  .highlight-ribbon.closed {
+    transform: translateY(100%);
+  }
+  .highlight-ribbon::after {
+    display: none;
+  }
+  .filter-panel {
+    width: calc(100% - 20px);
+    left: 10px;
+    right: auto;
+    top: auto;
+    bottom: 0;
+    transform: translateY(0);
+    border-radius: 8px 8px 0 0;
+  }
+  .filter-panel.closed {
+    transform: translateY(100%);
+  }
 }
 

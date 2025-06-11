@@ -21,11 +21,6 @@ window.Simulation = {
         const yearsSlider = document.getElementById('sim-years');
         const yearsDisplay = document.getElementById('sim-years-display');
 
-        // Initial Anzeige der Jahre
-        if (yearsDisplay) {
-            yearsDisplay.textContent = yearsSlider.value;
-        }
-
         scenarioSelect.addEventListener('change', (e) => {
             this.currentScenario = e.target.value;
             this.runSimulation();
@@ -163,9 +158,7 @@ window.Simulation = {
 
         // Create chart
         const margin = { top: 20, right: 80, bottom: 40, left: 80 };
-        // Fallback-Breite, falls Panel beim ersten Aufruf noch verborgen ist
-        const containerWidth = container.getBoundingClientRect().width || 800;
-        const width = containerWidth - margin.left - margin.right;
+        const width = container.clientWidth - margin.left - margin.right;
         const height = 400 - margin.top - margin.bottom;
 
         const svg = d3.select('#simulation-results')

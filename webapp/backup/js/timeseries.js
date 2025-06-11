@@ -19,46 +19,32 @@ window.TimeSeries = {
     },
 
     setupControls() {
-        // Event listeners will be attached when the panel is visible/interacted with.
-        // For now, we ensure the elements are checked for existence before use.
         const productSelect = document.getElementById('ts-product-select');
-        if (productSelect) {
-            productSelect.addEventListener('change', () => this.updateChart());
-        }
         const countriesSelect = document.getElementById('ts-countries-select');
-        if (countriesSelect) {
-            countriesSelect.addEventListener('change', () => this.updateChart());
-            // Set default selections
-            const defaultCountries = ['China', 'United States of America', 'India'];
-            Array.from(countriesSelect.options).forEach(option => {
-                if (defaultCountries.includes(option.value)) {
-                    option.selected = true;
-                }
-            });
-        }
+
+        productSelect.addEventListener('change', () => this.updateChart());
+        countriesSelect.addEventListener('change', () => this.updateChart());
+
+        // Set default selections
+        const defaultCountries = ['China', 'United States of America', 'India'];
+        Array.from(countriesSelect.options).forEach(option => {
+            if (defaultCountries.includes(option.value)) {
+                option.selected = true;
+            }
+        });
     },
 
     async loadInitialData() {
-        // Don't render chart on initial load, wait for panel to open.
-        // await this.updateChart(); 
+        await this.updateChart();
     },
 
     async updateChart() {
-        const productSelect = document.getElementById('ts-product-select');
-        const countriesSelect = document.getElementById('ts-countries-select');
-        const chartContainer = document.getElementById('timeseries-chart');
-
-        if (!productSelect || !countriesSelect || !chartContainer) {
-            console.warn('Timeseries chart controls or container not found. Chart will not be updated.');
-            return;
-        }
-
-        const product = productSelect.value;
-        const selectedCountries = Array.from(countriesSelect.selectedOptions)
+        const product = document.getElementById('ts-product-select').value;
+        const selectedCountries = Array.from(document.getElementById('ts-countries-select').selectedOptions)
             .map(option => option.value);
 
         if (selectedCountries.length === 0) {
-            chartContainer.innerHTML = 
+            document.getElementById('timeseries-chart').innerHTML = 
                 '<div class="error">Bitte wählen Sie mindestens ein Land aus.</div>';
             return;
         }

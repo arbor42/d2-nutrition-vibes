@@ -19,33 +19,15 @@ function formatNumber(value, unit = '') {
     }
 }
 
-// Globale Farbpalette (angepasst an CI)
-const COLOR_RANGE = ['#e8f5e9', '#c8e6c9', '#a5d6a7', '#7cb342', '#66bb6a', '#43a047', '#1b5e20'];
-
 // Create color scale for choropleth maps
 function createColorScale(data, colorScheme = 'Blues') {
     const values = data.filter(d => d !== null && !isNaN(d));
     if (values.length === 0) return d3.scaleOrdinal(['#ccc']);
     
-    // Falls ein Array übergeben wurde, direkt als Range verwenden
-    if (Array.isArray(colorScheme)) {
-        return d3.scaleQuantile()
-            .domain(values)
-            .range(colorScheme);
-    }
-    
-    // Vordefinierte Strings behandeln
-    if (colorScheme === 'Custom') {
-        return d3.scaleQuantile()
-            .domain(values)
-            .range(COLOR_RANGE);
-    }
-
-    // Fallback auf SchemeBlues (Standardverhalten)
     const extent = d3.extent(values);
     const quantiles = d3.scaleQuantile()
         .domain(values)
-        .range(d3[`scheme${colorScheme}`] ? d3[`scheme${colorScheme}`][9] : d3.schemeBlues[9]);
+        .range(d3.schemeBlues[9]);
     
     return quantiles;
 }
@@ -237,7 +219,6 @@ window.FAOUtils = {
     hideTooltip,
     createLegend,
     getPoliticalEvents,
-    getClimateEvents,
-    COLOR_RANGE // Palette exportieren
+    getClimateEvents
 };
 

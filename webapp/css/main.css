@@ -310,6 +310,57 @@ input[type="range"]::-webkit-slider-thumb:hover {
     z-index: 50;
 }
 
+#map-legend h4 {
+    margin: 0 0 12px 0;
+    font-size: 1rem;
+    color: var(--color-dark);
+    font-weight: 600;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    padding: 4px;
+    border-radius: var(--radius-small);
+    transition: var(--transition-fast);
+}
+
+.legend-item:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.legend-color {
+    width: 20px;
+    height: 16px;
+    border-radius: 2px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+}
+
+.legend-item span {
+    font-size: 0.85rem;
+    color: var(--color-text);
+    line-height: 1.2;
+}
+
+.legend-reset {
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: var(--radius-small);
+    font-size: 0.8rem;
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: var(--transition-fast);
+}
+
+.legend-reset:hover {
+    background: #1e8449;
+}
+
 /* ===== PANELS ===== */
 .panels-container {
     position: fixed;

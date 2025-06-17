@@ -1,0 +1,18 @@
+{
+  "files": {
+    "metadata": "metadata.json",
+    "timeseries": "timeseries.json",
+    "rankings": "production_rankings.json",
+    "trade": "trade_balance.json",
+    "summary": "summary.json",
+    "network": "network.json"
+  },
+  "description": "FAO food data processed for d3.js visualization",
+  "usage": {
+    "timeseries": "Use for line charts showing trends over time",
+    "rankings": "Use for bar charts showing top producers",
+    "trade": "Use for trade balance visualizations",
+    "summary": "Use for overview dashboards",
+    "network": "Use for network/flow diagrams"
+  }
+}

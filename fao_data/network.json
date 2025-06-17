@@ -1,0 +1,2550 @@
+{
+  "nodes": [
+    {
+      "id": "India",
+      "index": 0,
+      "total_trade_volume": 198358.0,
+      "type": "country"
+    },
+    {
+      "id": "Iraq",
+      "index": 1,
+      "total_trade_volume": 36188.0,
+      "type": "country"
+    },
+    {
+      "id": "South Africa",
+      "index": 2,
+      "total_trade_volume": 48970.0,
+      "type": "country"
+    },
+    {
+      "id": "Thailand",
+      "index": 3,
+      "total_trade_volume": 184550.0,
+      "type": "country"
+    },
+    {
+      "id": "Uruguay",
+      "index": 4,
+      "total_trade_volume": 19570.0,
+      "type": "country"
+    },
+    {
+      "id": "Estonia",
+      "index": 5,
+      "total_trade_volume": 4644.0,
+      "type": "country"
+    },
+    {
+      "id": "Northern Africa",
+      "index": 6,
+      "total_trade_volume": 190222.0,
+      "type": "country"
+    },
+    {
+      "id": "Dominican Republic",
+      "index": 7,
+      "total_trade_volume": 10813.0,
+      "type": "country"
+    },
+    {
+      "id": "Saudi Arabia",
+      "index": 8,
+      "total_trade_volume": 70240.0,
+      "type": "country"
+    },
+    {
+      "id": "Burundi",
+      "index": 9,
+      "total_trade_volume": 161.0,
+      "type": "country"
+    },
+    {
+      "id": "Venezuela (Bolivarian Republic of)",
+      "index": 10,
+      "total_trade_volume": 8227.0,
+      "type": "country"
+    },
+    {
+      "id": "Middle Africa",
+      "index": 11,
+      "total_trade_volume": 32489.0,
+      "type": "country"
+    },
+    {
+      "id": "Lesotho",
+      "index": 12,
+      "total_trade_volume": 575.0,
+      "type": "country"
+    },
+    {
+      "id": "Maldives",
+      "index": 13,
+      "total_trade_volume": 440.0,
+      "type": "country"
+    },
+    {
+      "id": "Europe",
+      "index": 14,
+      "total_trade_volume": 2521493.0,
+      "type": "country"
+    },
+    {
+      "id": "Guatemala",
+      "index": 15,
+      "total_trade_volume": 27419.0,
+      "type": "country"
+    },
+    {
+      "id": "Mongolia",
+      "index": 16,
+      "total_trade_volume": 1431.0,
+      "type": "country"
+    },
+    {
+      "id": "China, Hong Kong SAR",
+      "index": 17,
+      "total_trade_volume": 18597.0,
+      "type": "country"
+    },
+    {
+      "id": "Serbia",
+      "index": 18,
+      "total_trade_volume": 12290.0,
+      "type": "country"
+    },
+    {
+      "id": "Sudan",
+      "index": 19,
+      "total_trade_volume": 11539.0,
+      "type": "country"
+    },
+    {
+      "id": "Bangladesh",
+      "index": 20,
+      "total_trade_volume": 49374.0,
+      "type": "country"
+    },
+    {
+      "id": "Austria",
+      "index": 21,
+      "total_trade_volume": 45411.0,
+      "type": "country"
+    },
+    {
+      "id": "Pakistan",
+      "index": 22,
+      "total_trade_volume": 42707.0,
+      "type": "country"
+    },
+    {
+      "id": "Zambia",
+      "index": 23,
+      "total_trade_volume": 4557.0,
+      "type": "country"
+    },
+    {
+      "id": "Qatar",
+      "index": 24,
+      "total_trade_volume": 6127.0,
+      "type": "country"
+    },
+    {
+      "id": "Bahamas",
+      "index": 25,
+      "total_trade_volume": 116.0,
+      "type": "country"
+    },
+    {
+      "id": "Melanesia",
+      "index": 26,
+      "total_trade_volume": 6935.0,
+      "type": "country"
+    },
+    {
+      "id": "Fiji",
+      "index": 27,
+      "total_trade_volume": 676.0,
+      "type": "country"
+    },
+    {
+      "id": "Bosnia and Herzegovina",
+      "index": 28,
+      "total_trade_volume": 3825.0,
+      "type": "country"
+    },
+    {
+      "id": "Congo",
+      "index": 29,
+      "total_trade_volume": 1544.0,
+      "type": "country"
+    },
+    {
+      "id": "Ecuador",
+      "index": 30,
+      "total_trade_volume": 24658.0,
+      "type": "country"
+    },
+    {
+      "id": "Kazakhstan",
+      "index": 31,
+      "total_trade_volume": 40638.0,
+      "type": "country"
+    },
+    {
+      "id": "Panama",
+      "index": 32,
+      "total_trade_volume": 3944.0,
+      "type": "country"
+    },
+    {
+      "id": "Bolivia (Plurinational State of)",
+      "index": 33,
+      "total_trade_volume": 3969.0,
+      "type": "country"
+    },
+    {
+      "id": "Timor-Leste",
+      "index": 34,
+      "total_trade_volume": 1151.0,
+      "type": "country"
+    },
+    {
+      "id": "Türkiye",
+      "index": 35,
+      "total_trade_volume": 147224.0,
+      "type": "country"
+    },
+    {
+      "id": "Senegal",
+      "index": 36,
+      "total_trade_volume": 11316.0,
+      "type": "country"
+    },
+    {
+      "id": "Americas",
+      "index": 37,
+      "total_trade_volume": 1936002.0,
+      "type": "country"
+    },
+    {
+      "id": "Kiribati",
+      "index": 38,
+      "total_trade_volume": 308.0,
+      "type": "country"
+    },
+    {
+      "id": "Mauritius",
+      "index": 39,
+      "total_trade_volume": 3162.0,
+      "type": "country"
+    },
+    {
+      "id": "Eastern Asia",
+      "index": 40,
+      "total_trade_volume": 939251.0,
+      "type": "country"
+    },
+    {
+      "id": "Luxembourg",
+      "index": 41,
+      "total_trade_volume": 4628.0,
+      "type": "country"
+    },
+    {
+      "id": "Cambodia",
+      "index": 42,
+      "total_trade_volume": 7054.0,
+      "type": "country"
+    },
+    {
+      "id": "Mexico",
+      "index": 43,
+      "total_trade_volume": 139931.0,
+      "type": "country"
+    },
+    {
+      "id": "Canada",
+      "index": 44,
+      "total_trade_volume": 184971.0,
+      "type": "country"
+    },
+    {
+      "id": "Japan",
+      "index": 45,
+      "total_trade_volume": 125178.0,
+      "type": "country"
+    },
+    {
+      "id": "Cameroon",
+      "index": 46,
+      "total_trade_volume": 6994.0,
+      "type": "country"
+    },
+    {
+      "id": "Syrian Arab Republic",
+      "index": 47,
+      "total_trade_volume": 9360.0,
+      "type": "country"
+    },
+    {
+      "id": "Oman",
+      "index": 48,
+      "total_trade_volume": 13195.0,
+      "type": "country"
+    },
+    {
+      "id": "Nigeria",
+      "index": 49,
+      "total_trade_volume": 22436.0,
+      "type": "country"
+    },
+    {
+      "id": "Norway",
+      "index": 50,
+      "total_trade_volume": 23186.0,
+      "type": "country"
+    },
+    {
+      "id": "Caribbean",
+      "index": 51,
+      "total_trade_volume": 32401.0,
+      "type": "country"
+    },
+    {
+      "id": "Bhutan",
+      "index": 52,
+      "total_trade_volume": 347.0,
+      "type": "country"
+    },
+    {
+      "id": "Kenya",
+      "index": 53,
+      "total_trade_volume": 14593.0,
+      "type": "country"
+    },
+    {
+      "id": "France",
+      "index": 54,
+      "total_trade_volume": 219142.0,
+      "type": "country"
+    },
+    {
+      "id": "Uganda",
+      "index": 55,
+      "total_trade_volume": 5870.0,
+      "type": "country"
+    },
+    {
+      "id": "Armenia",
+      "index": 56,
+      "total_trade_volume": 1984.0,
+      "type": "country"
+    },
+    {
+      "id": "Croatia",
+      "index": 57,
+      "total_trade_volume": 13372.0,
+      "type": "country"
+    },
+    {
+      "id": "Low Income Food Deficit Countries",
+      "index": 58,
+      "total_trade_volume": 279231.0,
+      "type": "country"
+    },
+    {
+      "id": "Mali",
+      "index": 59,
+      "total_trade_volume": 2335.0,
+      "type": "country"
+    },
+    {
+      "id": "Slovakia",
+      "index": 60,
+      "total_trade_volume": 22054.0,
+      "type": "country"
+    },
+    {
+      "id": "Jamaica",
+      "index": 61,
+      "total_trade_volume": 2337.0,
+      "type": "country"
+    },
+    {
+      "id": "Iceland",
+      "index": 62,
+      "total_trade_volume": 2033.0,
+      "type": "country"
+    },
+    {
+      "id": "Poland",
+      "index": 63,
+      "total_trade_volume": 111321.0,
+      "type": "country"
+    },
+    {
+      "id": "Turkmenistan",
+      "index": 64,
+      "total_trade_volume": 943.0,
+      "type": "country"
+    },
+    {
+      "id": "Kuwait",
+      "index": 65,
+      "total_trade_volume": 8163.0,
+      "type": "country"
+    },
+    {
+      "id": "South Sudan",
+      "index": 66,
+      "total_trade_volume": 299.0,
+      "type": "country"
+    },
+    {
+      "id": "Ireland",
+      "index": 67,
+      "total_trade_volume": 36432.0,
+      "type": "country"
+    },
+    {
+      "id": "Oceania",
+      "index": 68,
+      "total_trade_volume": 189475.0,
+      "type": "country"
+    },
+    {
+      "id": "Bahrain",
+      "index": 69,
+      "total_trade_volume": 3531.0,
+      "type": "country"
+    },
+    {
+      "id": "Czechia",
+      "index": 70,
+      "total_trade_volume": 35872.0,
+      "type": "country"
+    },
+    {
+      "id": "Honduras",
+      "index": 71,
+      "total_trade_volume": 12420.0,
+      "type": "country"
+    },
+    {
+      "id": "Lebanon",
+      "index": 72,
+      "total_trade_volume": 5313.0,
+      "type": "country"
+    },
+    {
+      "id": "Colombia",
+      "index": 73,
+      "total_trade_volume": 36105.0,
+      "type": "country"
+    },
+    {
+      "id": "Myanmar",
+      "index": 74,
+      "total_trade_volume": 19298.0,
+      "type": "country"
+    },
+    {
+      "id": "Germany",
+      "index": 75,
+      "total_trade_volume": 306421.0,
+      "type": "country"
+    },
+    {
+      "id": "Eastern Africa",
+      "index": 76,
+      "total_trade_volume": 98724.0,
+      "type": "country"
+    },
+    {
+      "id": "Net Food Importing Developing Countries",
+      "index": 77,
+      "total_trade_volume": 677061.0,
+      "type": "country"
+    },
+    {
+      "id": "Cyprus",
+      "index": 78,
+      "total_trade_volume": 2705.0,
+      "type": "country"
+    },
+    {
+      "id": "Azerbaijan",
+      "index": 79,
+      "total_trade_volume": 6198.0,
+      "type": "country"
+    },
+    {
+      "id": "Mauritania",
+      "index": 80,
+      "total_trade_volume": 6159.0,
+      "type": "country"
+    },
+    {
+      "id": "Zimbabwe",
+      "index": 81,
+      "total_trade_volume": 2276.0,
+      "type": "country"
+    },
+    {
+      "id": "Angola",
+      "index": 82,
+      "total_trade_volume": 6396.0,
+      "type": "country"
+    },
+    {
+      "id": "Chad",
+      "index": 83,
+      "total_trade_volume": 417.0,
+      "type": "country"
+    },
+    {
+      "id": "Latvia",
+      "index": 84,
+      "total_trade_volume": 16695.0,
+      "type": "country"
+    },
+    {
+      "id": "Australia",
+      "index": 85,
+      "total_trade_volume": 141391.0,
+      "type": "country"
+    },
+    {
+      "id": "Uzbekistan",
+      "index": 86,
+      "total_trade_volume": 21738.0,
+      "type": "country"
+    },
+    {
+      "id": "Nepal",
+      "index": 87,
+      "total_trade_volume": 7917.0,
+      "type": "country"
+    },
+    {
+      "id": "Paraguay",
+      "index": 88,
+      "total_trade_volume": 19950.0,
+      "type": "country"
+    },
+    {
+      "id": "Small Island Developing States",
+      "index": 89,
+      "total_trade_volume": 57237.0,
+      "type": "country"
+    },
+    {
+      "id": "United Republic of Tanzania",
+      "index": 90,
+      "total_trade_volume": 8907.0,
+      "type": "country"
+    },
+    {
+      "id": "Burkina Faso",
+      "index": 91,
+      "total_trade_volume": 4797.0,
+      "type": "country"
+    },
+    {
+      "id": "Asia",
+      "index": 92,
+      "total_trade_volume": 2586805.0,
+      "type": "country"
+    },
+    {
+      "id": "Western Europe",
+      "index": 93,
+      "total_trade_volume": 1100325.0,
+      "type": "country"
+    },
+    {
+      "id": "Spain",
+      "index": 94,
+      "total_trade_volume": 177946.0,
+      "type": "country"
+    },
+    {
+      "id": "Africa",
+      "index": 95,
+      "total_trade_volume": 511584.0,
+      "type": "country"
+    },
+    {
+      "id": "Democratic Republic of the Congo",
+      "index": 96,
+      "total_trade_volume": 12833.0,
+      "type": "country"
+    },
+    {
+      "id": "Malta",
+      "index": 97,
+      "total_trade_volume": 635.0,
+      "type": "country"
+    },
+    {
+      "id": "Egypt",
+      "index": 98,
+      "total_trade_volume": 69928.0,
+      "type": "country"
+    },
+    {
+      "id": "Southern Africa",
+      "index": 99,
+      "total_trade_volume": 62126.0,
+      "type": "country"
+    },
+    {
+      "id": "Sierra Leone",
+      "index": 100,
+      "total_trade_volume": 1966.0,
+      "type": "country"
+    },
+    {
+      "id": "Albania",
+      "index": 101,
+      "total_trade_volume": 1658.0,
+      "type": "country"
+    },
+    {
+      "id": "Greece",
+      "index": 102,
+      "total_trade_volume": 29375.0,
+      "type": "country"
+    },
+    {
+      "id": "Lithuania",
+      "index": 103,
+      "total_trade_volume": 19297.0,
+      "type": "country"
+    },
+    {
+      "id": "Belgium",
+      "index": 104,
+      "total_trade_volume": 181065.0,
+      "type": "country"
+    },
+    {
+      "id": "Eswatini",
+      "index": 105,
+      "total_trade_volume": 1570.0,
+      "type": "country"
+    },
+    {
+      "id": "Australia and New Zealand",
+      "index": 106,
+      "total_trade_volume": 179073.0,
+      "type": "country"
+    },
+    {
+      "id": "Indonesia",
+      "index": 107,
+      "total_trade_volume": 153287.0,
+      "type": "country"
+    },
+    {
+      "id": "United Arab Emirates",
+      "index": 108,
+      "total_trade_volume": 62752.0,
+      "type": "country"
+    },
+    {
+      "id": "Yemen",
+      "index": 109,
+      "total_trade_volume": 14900.0,
+      "type": "country"
+    },
+    {
+      "id": "Morocco",
+      "index": 110,
+      "total_trade_volume": 38973.0,
+      "type": "country"
+    },
+    {
+      "id": "Ghana",
+      "index": 111,
+      "total_trade_volume": 11775.0,
+      "type": "country"
+    },
+    {
+      "id": "Russian Federation",
+      "index": 112,
+      "total_trade_volume": 120729.0,
+      "type": "country"
+    },
+    {
+      "id": "Djibouti",
+      "index": 113,
+      "total_trade_volume": 7679.0,
+      "type": "country"
+    },
+    {
+      "id": "Peru",
+      "index": 114,
+      "total_trade_volume": 36738.0,
+      "type": "country"
+    },
+    {
+      "id": "China, mainland",
+      "index": 115,
+      "total_trade_volume": 655838.0,
+      "type": "country"
+    },
+    {
+      "id": "Viet Nam",
+      "index": 116,
+      "total_trade_volume": 132490.0,
+      "type": "country"
+    },
+    {
+      "id": "Hungary",
+      "index": 117,
+      "total_trade_volume": 37488.0,
+      "type": "country"
+    },
+    {
+      "id": "Belize",
+      "index": 118,
+      "total_trade_volume": 495.0,
+      "type": "country"
+    },
+    {
+      "id": "Belarus",
+      "index": 119,
+      "total_trade_volume": 17184.0,
+      "type": "country"
+    },
+    {
+      "id": "Tajikistan",
+      "index": 120,
+      "total_trade_volume": 3086.0,
+      "type": "country"
+    },
+    {
+      "id": "Gabon",
+      "index": 121,
+      "total_trade_volume": 565.0,
+      "type": "country"
+    },
+    {
+      "id": "Central America",
+      "index": 122,
+      "total_trade_volume": 234938.0,
+      "type": "country"
+    },
+    {
+      "id": "Least Developed Countries",
+      "index": 123,
+      "total_trade_volume": 315227.0,
+      "type": "country"
+    },
+    {
+      "id": "Benin",
+      "index": 124,
+      "total_trade_volume": 7108.0,
+      "type": "country"
+    },
+    {
+      "id": "Jordan",
+      "index": 125,
+      "total_trade_volume": 11368.0,
+      "type": "country"
+    },
+    {
+      "id": "China, Taiwan Province of",
+      "index": 126,
+      "total_trade_volume": 44673.0,
+      "type": "country"
+    },
+    {
+      "id": "Togo",
+      "index": 127,
+      "total_trade_volume": 3771.0,
+      "type": "country"
+    },
+    {
+      "id": "United States of America",
+      "index": 128,
+      "total_trade_volume": 691588.0,
+      "type": "country"
+    },
+    {
+      "id": "World",
+      "index": 129,
+      "total_trade_volume": 7753475.0,
+      "type": "country"
+    },
+    {
+      "id": "Cabo Verde",
+      "index": 130,
+      "total_trade_volume": 130.0,
+      "type": "country"
+    },
+    {
+      "id": "Costa Rica",
+      "index": 131,
+      "total_trade_volume": 20694.0,
+      "type": "country"
+    },
+    {
+      "id": "Eastern Europe",
+      "index": 132,
+      "total_trade_volume": 577166.0,
+      "type": "country"
+    },
+    {
+      "id": "Western Africa",
+      "index": 133,
+      "total_trade_volume": 118075.0,
+      "type": "country"
+    },
+    {
+      "id": "Guinea-Bissau",
+      "index": 134,
+      "total_trade_volume": 266.0,
+      "type": "country"
+    },
+    {
+      "id": "Sweden",
+      "index": 135,
+      "total_trade_volume": 29594.0,
+      "type": "country"
+    },
+    {
+      "id": "Algeria",
+      "index": 136,
+      "total_trade_volume": 41799.0,
+      "type": "country"
+    },
+    {
+      "id": "Comoros",
+      "index": 137,
+      "total_trade_volume": 406.0,
+      "type": "country"
+    },
+    {
+      "id": "Finland",
+      "index": 138,
+      "total_trade_volume": 8651.0,
+      "type": "country"
+    },
+    {
+      "id": "Switzerland",
+      "index": 139,
+      "total_trade_volume": 15744.0,
+      "type": "country"
+    },
+    {
+      "id": "El Salvador",
+      "index": 140,
+      "total_trade_volume": 10565.0,
+      "type": "country"
+    },
+    {
+      "id": "European Union (27)",
+      "index": 141,
+      "total_trade_volume": 2037496.0,
+      "type": "country"
+    },
+    {
+      "id": "Portugal",
+      "index": 142,
+      "total_trade_volume": 42776.0,
+      "type": "country"
+    },
+    {
+      "id": "Micronesia",
+      "index": 143,
+      "total_trade_volume": 640.0,
+      "type": "country"
+    },
+    {
+      "id": "Ethiopia",
+      "index": 144,
+      "total_trade_volume": 12167.0,
+      "type": "country"
+    },
+    {
+      "id": "Iran (Islamic Republic of)",
+      "index": 145,
+      "total_trade_volume": 46741.0,
+      "type": "country"
+    },
+    {
+      "id": "Central Asia",
+      "index": 146,
+      "total_trade_volume": 74388.0,
+      "type": "country"
+    },
+    {
+      "id": "Southern Asia",
+      "index": 147,
+      "total_trade_volume": 381502.0,
+      "type": "country"
+    },
+    {
+      "id": "Afghanistan",
+      "index": 148,
+      "total_trade_volume": 14297.0,
+      "type": "country"
+    },
+    {
+      "id": "Malawi",
+      "index": 149,
+      "total_trade_volume": 382.0,
+      "type": "country"
+    },
+    {
+      "id": "Gambia",
+      "index": 150,
+      "total_trade_volume": 2023.0,
+      "type": "country"
+    },
+    {
+      "id": "Philippines",
+      "index": 151,
+      "total_trade_volume": 74714.0,
+      "type": "country"
+    },
+    {
+      "id": "Denmark",
+      "index": 152,
+      "total_trade_volume": 42938.0,
+      "type": "country"
+    },
+    {
+      "id": "Madagascar",
+      "index": 153,
+      "total_trade_volume": 3205.0,
+      "type": "country"
+    },
+    {
+      "id": "Israel",
+      "index": 154,
+      "total_trade_volume": 20033.0,
+      "type": "country"
+    },
+    {
+      "id": "Polynesia",
+      "index": 155,
+      "total_trade_volume": 114.0,
+      "type": "country"
+    },
+    {
+      "id": "Romania",
+      "index": 156,
+      "total_trade_volume": 62246.0,
+      "type": "country"
+    },
+    {
+      "id": "Argentina",
+      "index": 157,
+      "total_trade_volume": 162282.0,
+      "type": "country"
+    },
+    {
+      "id": "New Zealand",
+      "index": 158,
+      "total_trade_volume": 35154.0,
+      "type": "country"
+    },
+    {
+      "id": "Georgia",
+      "index": 159,
+      "total_trade_volume": 3809.0,
+      "type": "country"
+    },
+    {
+      "id": "Liberia",
+      "index": 160,
+      "total_trade_volume": 1243.0,
+      "type": "country"
+    },
+    {
+      "id": "Sri Lanka",
+      "index": 161,
+      "total_trade_volume": 10100.0,
+      "type": "country"
+    },
+    {
+      "id": "Cuba",
+      "index": 162,
+      "total_trade_volume": 8019.0,
+      "type": "country"
+    },
+    {
+      "id": "Italy",
+      "index": 163,
+      "total_trade_volume": 167274.0,
+      "type": "country"
+    },
+    {
+      "id": "Malaysia",
+      "index": 164,
+      "total_trade_volume": 126888.0,
+      "type": "country"
+    },
+    {
+      "id": "Nicaragua",
+      "index": 165,
+      "total_trade_volume": 6346.0,
+      "type": "country"
+    },
+    {
+      "id": "Guyana",
+      "index": 166,
+      "total_trade_volume": 1214.0,
+      "type": "country"
+    },
+    {
+      "id": "Côte d'Ivoire",
+      "index": 167,
+      "total_trade_volume": 18196.0,
+      "type": "country"
+    },
+    {
+      "id": "Botswana",
+      "index": 168,
+      "total_trade_volume": 4212.0,
+      "type": "country"
+    },
+    {
+      "id": "Slovenia",
+      "index": 169,
+      "total_trade_volume": 10304.0,
+      "type": "country"
+    },
+    {
+      "id": "Trinidad and Tobago",
+      "index": 170,
+      "total_trade_volume": 1426.0,
+      "type": "country"
+    },
+    {
+      "id": "North Macedonia",
+      "index": 171,
+      "total_trade_volume": 1519.0,
+      "type": "country"
+    },
+    {
+      "id": "Southern Europe",
+      "index": 172,
+      "total_trade_volume": 484830.0,
+      "type": "country"
+    },
+    {
+      "id": "China",
+      "index": 173,
+      "total_trade_volume": 725269.0,
+      "type": "country"
+    },
+    {
+      "id": "Republic of Korea",
+      "index": 174,
+      "total_trade_volume": 80148.0,
+      "type": "country"
+    },
+    {
+      "id": "Republic of Moldova",
+      "index": 175,
+      "total_trade_volume": 6903.0,
+      "type": "country"
+    },
+    {
+      "id": "Namibia",
+      "index": 176,
+      "total_trade_volume": 2842.0,
+      "type": "country"
+    },
+    {
+      "id": "Seychelles",
+      "index": 177,
+      "total_trade_volume": 378.0,
+      "type": "country"
+    },
+    {
+      "id": "Land Locked Developing Countries",
+      "index": 178,
+      "total_trade_volume": 231903.0,
+      "type": "country"
+    },
+    {
+      "id": "South America",
+      "index": 179,
+      "total_trade_volume": 781957.0,
+      "type": "country"
+    },
+    {
+      "id": "Somalia",
+      "index": 180,
+      "total_trade_volume": 6625.0,
+      "type": "country"
+    },
+    {
+      "id": "Papua New Guinea",
+      "index": 181,
+      "total_trade_volume": 4335.0,
+      "type": "country"
+    },
+    {
+      "id": "Lao People's Democratic Republic",
+      "index": 182,
+      "total_trade_volume": 12164.0,
+      "type": "country"
+    },
+    {
+      "id": "United Kingdom of Great Britain and Northern Ireland",
+      "index": 183,
+      "total_trade_volume": 144428.0,
+      "type": "country"
+    },
+    {
+      "id": "South-eastern Asia",
+      "index": 184,
+      "total_trade_volume": 725587.0,
+      "type": "country"
+    },
+    {
+      "id": "Rwanda",
+      "index": 185,
+      "total_trade_volume": 3428.0,
+      "type": "country"
+    },
+    {
+      "id": "Western Asia",
+      "index": 186,
+      "total_trade_volume": 455962.0,
+      "type": "country"
+    },
+    {
+      "id": "Haiti",
+      "index": 187,
+      "total_trade_volume": 3031.0,
+      "type": "country"
+    },
+    {
+      "id": "Montenegro",
+      "index": 188,
+      "total_trade_volume": 736.0,
+      "type": "country"
+    },
+    {
+      "id": "Niger",
+      "index": 189,
+      "total_trade_volume": 5073.0,
+      "type": "country"
+    },
+    {
+      "id": "Northern America",
+      "index": 190,
+      "total_trade_volume": 878586.0,
+      "type": "country"
+    },
+    {
+      "id": "Bulgaria",
+      "index": 191,
+      "total_trade_volume": 27141.0,
+      "type": "country"
+    },
+    {
+      "id": "Libya",
+      "index": 192,
+      "total_trade_volume": 7891.0,
+      "type": "country"
+    },
+    {
+      "id": "Mozambique",
+      "index": 193,
+      "total_trade_volume": 9278.0,
+      "type": "country"
+    },
+    {
+      "id": "Brazil",
+      "index": 194,
+      "total_trade_volume": 412130.0,
+      "type": "country"
+    },
+    {
+      "id": "Guinea",
+      "index": 195,
+      "total_trade_volume": 4236.0,
+      "type": "country"
+    },
+    {
+      "id": "Tunisia",
+      "index": 196,
+      "total_trade_volume": 12052.0,
+      "type": "country"
+    },
+    {
+      "id": "Netherlands (Kingdom of the)",
+      "index": 197,
+      "total_trade_volume": 314453.0,
+      "type": "country"
+    },
+    {
+      "id": "Ukraine",
+      "index": 198,
+      "total_trade_volume": 113178.0,
+      "type": "country"
+    },
+    {
+      "id": "Kyrgyzstan",
+      "index": 199,
+      "total_trade_volume": 2225.0,
+      "type": "country"
+    },
+    {
+      "id": "Chile",
+      "index": 200,
+      "total_trade_volume": 37303.0,
+      "type": "country"
+    },
+    {
+      "id": "Northern Europe",
+      "index": 201,
+      "total_trade_volume": 351115.0,
+      "type": "country"
+    }
+  ],
+  "links": [
+    {
+      "source": "World",
+      "target": "Asia",
+      "value": 31763.5,
+      "item": "Cereals - Excluding Beer"
+    },
+    {
+      "source": "World",
+      "target": "Europe",
+      "value": 17899.5,
+      "item": "Cereals - Excluding Beer"
+    },
+    {
+      "source": "World",
+      "target": "European Union (27)",
+      "value": 15795.400000000001,
+      "item": "Cereals - Excluding Beer"
+    },
+    {
+      "source": "World",
+      "target": "Net Food Importing Developing Countries",
+      "value": 13744.900000000001,
+      "item": "Cereals - Excluding Beer"
+    },
+    {
+      "source": "Americas",
+      "target": "World",
+      "value": 24079.300000000003,
+      "item": "Cereals - Excluding Beer"
+    },
+    {
+      "source": "Americas",
+      "target": "Asia",
+      "value": 24079.300000000003,
+      "item": "Cereals - Excluding Beer"
+    },
+    {
+      "source": "Americas",
+      "target": "Europe",
+      "value": 17899.5,
+      "item": "Cereals - Excluding Beer"
+    },
+    {
+      "source": "Americas",
+      "target": "European Union (27)",
+      "value": 15795.400000000001,
+      "item": "Cereals - Excluding Beer"
+    },
+    {
+      "source": "Americas",
+      "target": "Net Food Importing Developing Countries",
+      "value": 13744.900000000001,
+      "item": "Cereals - Excluding Beer"
+    },
+    {
+      "source": "Europe",
+      "target": "World",
+      "value": 21918.7,
+      "item": "Cereals - Excluding Beer"
+    },
+    {
+      "source": "Europe",
+      "target": "Asia",
+      "value": 21918.7,
+      "item": "Cereals - Excluding Beer"
+    },
+    {
+      "source": "Europe",
+      "target": "European Union (27)",
+      "value": 15795.400000000001,
+      "item": "Cereals - Excluding Beer"
+    },
+    {
+      "source": "Europe",
+      "target": "Net Food Importing Developing Countries",
+      "value": 13744.900000000001,
+      "item": "Cereals - Excluding Beer"
+    },
+    {
+      "source": "European Union (27)",
+      "target": "World",
+      "value": 14755.7,
+      "item": "Cereals - Excluding Beer"
+    },
+    {
+      "source": "European Union (27)",
+      "target": "Asia",
+      "value": 14755.7,
+      "item": "Cereals - Excluding Beer"
+    },
+    {
+      "source": "European Union (27)",
+      "target": "Europe",
+      "value": 14755.7,
+      "item": "Cereals - Excluding Beer"
+    },
+    {
+      "source": "European Union (27)",
+      "target": "Net Food Importing Developing Countries",
+      "value": 13744.900000000001,
+      "item": "Cereals - Excluding Beer"
+    },
+    {
+      "source": "Northern America",
+      "target": "World",
+      "value": 12028.0,
+      "item": "Cereals - Excluding Beer"
+    },
+    {
+      "source": "Northern America",
+      "target": "Asia",
+      "value": 12028.0,
+      "item": "Cereals - Excluding Beer"
+    },
+    {
+      "source": "Northern America",
+      "target": "Europe",
+      "value": 12028.0,
+      "item": "Cereals - Excluding Beer"
+    },
+    {
+      "source": "Northern America",
+      "target": "European Union (27)",
+      "value": 12028.0,
+      "item": "Cereals - Excluding Beer"
+    },
+    {
+      "source": "Northern America",
+      "target": "Net Food Importing Developing Countries",
+      "value": 12028.0,
+      "item": "Cereals - Excluding Beer"
+    },
+    {
+      "source": "World",
+      "target": "Asia",
+      "value": 13753.1,
+      "item": "Wheat and products"
+    },
+    {
+      "source": "World",
+      "target": "Europe",
+      "value": 8773.9,
+      "item": "Wheat and products"
+    },
+    {
+      "source": "World",
+      "target": "European Union (27)",
+      "value": 7410.900000000001,
+      "item": "Wheat and products"
+    },
+    {
+      "source": "World",
+      "target": "Net Food Importing Developing Countries",
+      "value": 6336.700000000001,
+      "item": "Wheat and products"
+    },
+    {
+      "source": "Europe",
+      "target": "World",
+      "value": 12125.0,
+      "item": "Wheat and products"
+    },
+    {
+      "source": "Europe",
+      "target": "Asia",
+      "value": 12125.0,
+      "item": "Wheat and products"
+    },
+    {
+      "source": "Europe",
+      "target": "European Union (27)",
+      "value": 7410.900000000001,
+      "item": "Wheat and products"
+    },
+    {
+      "source": "Europe",
+      "target": "Net Food Importing Developing Countries",
+      "value": 6336.700000000001,
+      "item": "Wheat and products"
+    },
+    {
+      "source": "European Union (27)",
+      "target": "World",
+      "value": 8668.7,
+      "item": "Wheat and products"
+    },
+    {
+      "source": "European Union (27)",
+      "target": "Asia",
+      "value": 8668.7,
+      "item": "Wheat and products"
+    },
+    {
+      "source": "European Union (27)",
+      "target": "Europe",
+      "value": 8668.7,
+      "item": "Wheat and products"
+    },
+    {
+      "source": "European Union (27)",
+      "target": "Net Food Importing Developing Countries",
+      "value": 6336.700000000001,
+      "item": "Wheat and products"
+    },
+    {
+      "source": "Americas",
+      "target": "World",
+      "value": 6594.900000000001,
+      "item": "Wheat and products"
+    },
+    {
+      "source": "Americas",
+      "target": "Asia",
+      "value": 6594.900000000001,
+      "item": "Wheat and products"
+    },
+    {
+      "source": "Americas",
+      "target": "Europe",
+      "value": 6594.900000000001,
+      "item": "Wheat and products"
+    },
+    {
+      "source": "Americas",
+      "target": "European Union (27)",
+      "value": 6594.900000000001,
+      "item": "Wheat and products"
+    },
+    {
+      "source": "Americas",
+      "target": "Net Food Importing Developing Countries",
+      "value": 6336.700000000001,
+      "item": "Wheat and products"
+    },
+    {
+      "source": "Eastern Europe",
+      "target": "World",
+      "value": 5373.200000000001,
+      "item": "Wheat and products"
+    },
+    {
+      "source": "Eastern Europe",
+      "target": "Asia",
+      "value": 5373.200000000001,
+      "item": "Wheat and products"
+    },
+    {
+      "source": "Eastern Europe",
+      "target": "Europe",
+      "value": 5373.200000000001,
+      "item": "Wheat and products"
+    },
+    {
+      "source": "Eastern Europe",
+      "target": "European Union (27)",
+      "value": 5373.200000000001,
+      "item": "Wheat and products"
+    },
+    {
+      "source": "Eastern Europe",
+      "target": "Net Food Importing Developing Countries",
+      "value": 5373.200000000001,
+      "item": "Wheat and products"
+    },
+    {
+      "source": "World",
+      "target": "Asia",
+      "value": 3724.9,
+      "item": "Rice and products"
+    },
+    {
+      "source": "World",
+      "target": "Net Food Importing Developing Countries",
+      "value": 3608.3,
+      "item": "Rice and products"
+    },
+    {
+      "source": "World",
+      "target": "Africa",
+      "value": 3052.5,
+      "item": "Rice and products"
+    },
+    {
+      "source": "World",
+      "target": "Least Developed Countries",
+      "value": 2678.6000000000004,
+      "item": "Rice and products"
+    },
+    {
+      "source": "Asia",
+      "target": "World",
+      "value": 6847.1,
+      "item": "Rice and products"
+    },
+    {
+      "source": "Asia",
+      "target": "Net Food Importing Developing Countries",
+      "value": 3608.3,
+      "item": "Rice and products"
+    },
+    {
+      "source": "Asia",
+      "target": "Africa",
+      "value": 3052.5,
+      "item": "Rice and products"
+    },
+    {
+      "source": "Asia",
+      "target": "Least Developed Countries",
+      "value": 2678.6000000000004,
+      "item": "Rice and products"
+    },
+    {
+      "source": "Southern Asia",
+      "target": "World",
+      "value": 3991.2000000000003,
+      "item": "Rice and products"
+    },
+    {
+      "source": "Southern Asia",
+      "target": "Asia",
+      "value": 3724.9,
+      "item": "Rice and products"
+    },
+    {
+      "source": "Southern Asia",
+      "target": "Net Food Importing Developing Countries",
+      "value": 3608.3,
+      "item": "Rice and products"
+    },
+    {
+      "source": "Southern Asia",
+      "target": "Africa",
+      "value": 3052.5,
+      "item": "Rice and products"
+    },
+    {
+      "source": "Southern Asia",
+      "target": "Least Developed Countries",
+      "value": 2678.6000000000004,
+      "item": "Rice and products"
+    },
+    {
+      "source": "India",
+      "target": "World",
+      "value": 3310.7000000000003,
+      "item": "Rice and products"
+    },
+    {
+      "source": "India",
+      "target": "Asia",
+      "value": 3310.7000000000003,
+      "item": "Rice and products"
+    },
+    {
+      "source": "India",
+      "target": "Net Food Importing Developing Countries",
+      "value": 3310.7000000000003,
+      "item": "Rice and products"
+    },
+    {
+      "source": "India",
+      "target": "Africa",
+      "value": 3052.5,
+      "item": "Rice and products"
+    },
+    {
+      "source": "India",
+      "target": "Least Developed Countries",
+      "value": 2678.6000000000004,
+      "item": "Rice and products"
+    },
+    {
+      "source": "South-eastern Asia",
+      "target": "World",
+      "value": 2423.3,
+      "item": "Rice and products"
+    },
+    {
+      "source": "South-eastern Asia",
+      "target": "Asia",
+      "value": 2423.3,
+      "item": "Rice and products"
+    },
+    {
+      "source": "South-eastern Asia",
+      "target": "Net Food Importing Developing Countries",
+      "value": 2423.3,
+      "item": "Rice and products"
+    },
+    {
+      "source": "South-eastern Asia",
+      "target": "Africa",
+      "value": 2423.3,
+      "item": "Rice and products"
+    },
+    {
+      "source": "South-eastern Asia",
+      "target": "Least Developed Countries",
+      "value": 2423.3,
+      "item": "Rice and products"
+    },
+    {
+      "source": "World",
+      "target": "Asia",
+      "value": 2219.0,
+      "item": "Barley and products"
+    },
+    {
+      "source": "World",
+      "target": "Europe",
+      "value": 1358.5,
+      "item": "Barley and products"
+    },
+    {
+      "source": "World",
+      "target": "European Union (27)",
+      "value": 1282.1000000000001,
+      "item": "Barley and products"
+    },
+    {
+      "source": "World",
+      "target": "Western Asia",
+      "value": 901.4000000000001,
+      "item": "Barley and products"
+    },
+    {
+      "source": "Europe",
+      "target": "World",
+      "value": 2440.6,
+      "item": "Barley and products"
+    },
+    {
+      "source": "Europe",
+      "target": "Asia",
+      "value": 2219.0,
+      "item": "Barley and products"
+    },
+    {
+      "source": "Europe",
+      "target": "European Union (27)",
+      "value": 1282.1000000000001,
+      "item": "Barley and products"
+    },
+    {
+      "source": "Europe",
+      "target": "Western Asia",
+      "value": 901.4000000000001,
+      "item": "Barley and products"
+    },
+    {
+      "source": "European Union (27)",
+      "target": "World",
+      "value": 1931.4,
+      "item": "Barley and products"
+    },
+    {
+      "source": "European Union (27)",
+      "target": "Asia",
+      "value": 1931.4,
+      "item": "Barley and products"
+    },
+    {
+      "source": "European Union (27)",
+      "target": "Europe",
+      "value": 1358.5,
+      "item": "Barley and products"
+    },
+    {
+      "source": "European Union (27)",
+      "target": "Western Asia",
+      "value": 901.4000000000001,
+      "item": "Barley and products"
+    },
+    {
+      "source": "Western Europe",
+      "target": "World",
+      "value": 1331.4,
+      "item": "Barley and products"
+    },
+    {
+      "source": "Western Europe",
+      "target": "Asia",
+      "value": 1331.4,
+      "item": "Barley and products"
+    },
+    {
+      "source": "Western Europe",
+      "target": "Europe",
+      "value": 1331.4,
+      "item": "Barley and products"
+    },
+    {
+      "source": "Western Europe",
+      "target": "European Union (27)",
+      "value": 1282.1000000000001,
+      "item": "Barley and products"
+    },
+    {
+      "source": "Western Europe",
+      "target": "Western Asia",
+      "value": 901.4000000000001,
+      "item": "Barley and products"
+    },
+    {
+      "source": "Australia and New Zealand",
+      "target": "World",
+      "value": 913.4000000000001,
+      "item": "Barley and products"
+    },
+    {
+      "source": "Australia and New Zealand",
+      "target": "Asia",
+      "value": 913.4000000000001,
+      "item": "Barley and products"
+    },
+    {
+      "source": "Australia and New Zealand",
+      "target": "Europe",
+      "value": 913.4000000000001,
+      "item": "Barley and products"
+    },
+    {
+      "source": "Australia and New Zealand",
+      "target": "European Union (27)",
+      "value": 913.4000000000001,
+      "item": "Barley and products"
+    },
+    {
+      "source": "Australia and New Zealand",
+      "target": "Western Asia",
+      "value": 901.4000000000001,
+      "item": "Barley and products"
+    },
+    {
+      "source": "World",
+      "target": "Asia",
+      "value": 8244.6,
+      "item": "Starchy Roots"
+    },
+    {
+      "source": "World",
+      "target": "Eastern Asia",
+      "value": 5431.0,
+      "item": "Starchy Roots"
+    },
+    {
+      "source": "World",
+      "target": "China",
+      "value": 5183.200000000001,
+      "item": "Starchy Roots"
+    },
+    {
+      "source": "World",
+      "target": "China, mainland",
+      "value": 4459.400000000001,
+      "item": "Starchy Roots"
+    },
+    {
+      "source": "Asia",
+      "target": "World",
+      "value": 4767.8,
+      "item": "Starchy Roots"
+    },
+    {
+      "source": "Asia",
+      "target": "Eastern Asia",
+      "value": 4767.8,
+      "item": "Starchy Roots"
+    },
+    {
+      "source": "Asia",
+      "target": "China",
+      "value": 4767.8,
+      "item": "Starchy Roots"
+    },
+    {
+      "source": "Asia",
+      "target": "China, mainland",
+      "value": 4459.400000000001,
+      "item": "Starchy Roots"
+    },
+    {
+      "source": "South-eastern Asia",
+      "target": "World",
+      "value": 4343.900000000001,
+      "item": "Starchy Roots"
+    },
+    {
+      "source": "South-eastern Asia",
+      "target": "Asia",
+      "value": 4343.900000000001,
+      "item": "Starchy Roots"
+    },
+    {
+      "source": "South-eastern Asia",
+      "target": "Eastern Asia",
+      "value": 4343.900000000001,
+      "item": "Starchy Roots"
+    },
+    {
+      "source": "South-eastern Asia",
+      "target": "China",
+      "value": 4343.900000000001,
+      "item": "Starchy Roots"
+    },
+    {
+      "source": "South-eastern Asia",
+      "target": "China, mainland",
+      "value": 4343.900000000001,
+      "item": "Starchy Roots"
+    },
+    {
+      "source": "Thailand",
+      "target": "World",
+      "value": 3064.9,
+      "item": "Starchy Roots"
+    },
+    {
+      "source": "Thailand",
+      "target": "Asia",
+      "value": 3064.9,
+      "item": "Starchy Roots"
+    },
+    {
+      "source": "Thailand",
+      "target": "Eastern Asia",
+      "value": 3064.9,
+      "item": "Starchy Roots"
+    },
+    {
+      "source": "Thailand",
+      "target": "China",
+      "value": 3064.9,
+      "item": "Starchy Roots"
+    },
+    {
+      "source": "Thailand",
+      "target": "China, mainland",
+      "value": 3064.9,
+      "item": "Starchy Roots"
+    },
+    {
+      "source": "Europe",
+      "target": "World",
+      "value": 2707.8,
+      "item": "Starchy Roots"
+    },
+    {
+      "source": "Europe",
+      "target": "Asia",
+      "value": 2707.8,
+      "item": "Starchy Roots"
+    },
+    {
+      "source": "Europe",
+      "target": "Eastern Asia",
+      "value": 2707.8,
+      "item": "Starchy Roots"
+    },
+    {
+      "source": "Europe",
+      "target": "China",
+      "value": 2707.8,
+      "item": "Starchy Roots"
+    },
+    {
+      "source": "Europe",
+      "target": "China, mainland",
+      "value": 2707.8,
+      "item": "Starchy Roots"
+    },
+    {
+      "source": "World",
+      "target": "Europe",
+      "value": 2504.0,
+      "item": "Potatoes and products"
+    },
+    {
+      "source": "World",
+      "target": "European Union (27)",
+      "value": 2127.4,
+      "item": "Potatoes and products"
+    },
+    {
+      "source": "World",
+      "target": "Western Europe",
+      "value": 1215.0,
+      "item": "Potatoes and products"
+    },
+    {
+      "source": "World",
+      "target": "Asia",
+      "value": 983.5,
+      "item": "Potatoes and products"
+    },
+    {
+      "source": "Europe",
+      "target": "World",
+      "value": 2671.7000000000003,
+      "item": "Potatoes and products"
+    },
+    {
+      "source": "Europe",
+      "target": "European Union (27)",
+      "value": 2127.4,
+      "item": "Potatoes and products"
+    },
+    {
+      "source": "Europe",
+      "target": "Western Europe",
+      "value": 1215.0,
+      "item": "Potatoes and products"
+    },
+    {
+      "source": "Europe",
+      "target": "Asia",
+      "value": 983.5,
+      "item": "Potatoes and products"
+    },
+    {
+      "source": "European Union (27)",
+      "target": "World",
+      "value": 2586.2000000000003,
+      "item": "Potatoes and products"
+    },
+    {
+      "source": "European Union (27)",
+      "target": "Europe",
+      "value": 2504.0,
+      "item": "Potatoes and products"
+    },
+    {
+      "source": "European Union (27)",
+      "target": "Western Europe",
+      "value": 1215.0,
+      "item": "Potatoes and products"
+    },
+    {
+      "source": "European Union (27)",
+      "target": "Asia",
+      "value": 983.5,
+      "item": "Potatoes and products"
+    },
+    {
+      "source": "Western Europe",
+      "target": "World",
+      "value": 2297.6,
+      "item": "Potatoes and products"
+    },
+    {
+      "source": "Western Europe",
+      "target": "Europe",
+      "value": 2297.6,
+      "item": "Potatoes and products"
+    },
+    {
+      "source": "Western Europe",
+      "target": "European Union (27)",
+      "value": 2127.4,
+      "item": "Potatoes and products"
+    },
+    {
+      "source": "Western Europe",
+      "target": "Asia",
+      "value": 983.5,
+      "item": "Potatoes and products"
+    },
+    {
+      "source": "Netherlands (Kingdom of the)",
+      "target": "World",
+      "value": 733.7,
+      "item": "Potatoes and products"
+    },
+    {
+      "source": "Netherlands (Kingdom of the)",
+      "target": "Europe",
+      "value": 733.7,
+      "item": "Potatoes and products"
+    },
+    {
+      "source": "Netherlands (Kingdom of the)",
+      "target": "European Union (27)",
+      "value": 733.7,
+      "item": "Potatoes and products"
+    },
+    {
+      "source": "Netherlands (Kingdom of the)",
+      "target": "Western Europe",
+      "value": 733.7,
+      "item": "Potatoes and products"
+    },
+    {
+      "source": "Netherlands (Kingdom of the)",
+      "target": "Asia",
+      "value": 733.7,
+      "item": "Potatoes and products"
+    },
+    {
+      "source": "World",
+      "target": "Asia",
+      "value": 10366.1,
+      "item": "Maize and products"
+    },
+    {
+      "source": "World",
+      "target": "Europe",
+      "value": 5412.200000000001,
+      "item": "Maize and products"
+    },
+    {
+      "source": "World",
+      "target": "Eastern Asia",
+      "value": 5218.1,
+      "item": "Maize and products"
+    },
+    {
+      "source": "World",
+      "target": "European Union (27)",
+      "value": 5019.8,
+      "item": "Maize and products"
+    },
+    {
+      "source": "Americas",
+      "target": "World",
+      "value": 14640.0,
+      "item": "Maize and products"
+    },
+    {
+      "source": "Americas",
+      "target": "Asia",
+      "value": 10366.1,
+      "item": "Maize and products"
+    },
+    {
+      "source": "Americas",
+      "target": "Europe",
+      "value": 5412.200000000001,
+      "item": "Maize and products"
+    },
+    {
+      "source": "Americas",
+      "target": "Eastern Asia",
+      "value": 5218.1,
+      "item": "Maize and products"
+    },
+    {
+      "source": "Americas",
+      "target": "European Union (27)",
+      "value": 5019.8,
+      "item": "Maize and products"
+    },
+    {
+      "source": "South America",
+      "target": "World",
+      "value": 8425.9,
+      "item": "Maize and products"
+    },
+    {
+      "source": "South America",
+      "target": "Asia",
+      "value": 8425.9,
+      "item": "Maize and products"
+    },
+    {
+      "source": "South America",
+      "target": "Europe",
+      "value": 5412.200000000001,
+      "item": "Maize and products"
+    },
+    {
+      "source": "South America",
+      "target": "Eastern Asia",
+      "value": 5218.1,
+      "item": "Maize and products"
+    },
+    {
+      "source": "South America",
+      "target": "European Union (27)",
+      "value": 5019.8,
+      "item": "Maize and products"
+    },
+    {
+      "source": "Northern America",
+      "target": "World",
+      "value": 6139.900000000001,
+      "item": "Maize and products"
+    },
+    {
+      "source": "Northern America",
+      "target": "Asia",
+      "value": 6139.900000000001,
+      "item": "Maize and products"
+    },
+    {
+      "source": "Northern America",
+      "target": "Europe",
+      "value": 5412.200000000001,
+      "item": "Maize and products"
+    },
+    {
+      "source": "Northern America",
+      "target": "Eastern Asia",
+      "value": 5218.1,
+      "item": "Maize and products"
+    },
+    {
+      "source": "Northern America",
+      "target": "European Union (27)",
+      "value": 5019.8,
+      "item": "Maize and products"
+    },
+    {
+      "source": "United States of America",
+      "target": "World",
+      "value": 5920.0,
+      "item": "Maize and products"
+    },
+    {
+      "source": "United States of America",
+      "target": "Asia",
+      "value": 5920.0,
+      "item": "Maize and products"
+    },
+    {
+      "source": "United States of America",
+      "target": "Europe",
+      "value": 5412.200000000001,
+      "item": "Maize and products"
+    },
+    {
+      "source": "United States of America",
+      "target": "Eastern Asia",
+      "value": 5218.1,
+      "item": "Maize and products"
+    },
+    {
+      "source": "United States of America",
+      "target": "European Union (27)",
+      "value": 5019.8,
+      "item": "Maize and products"
+    },
+    {
+      "source": "World",
+      "target": "Asia",
+      "value": 4600.0,
+      "item": "Sugar & Sweeteners"
+    },
+    {
+      "source": "World",
+      "target": "Europe",
+      "value": 3202.5,
+      "item": "Sugar & Sweeteners"
+    },
+    {
+      "source": "World",
+      "target": "European Union (27)",
+      "value": 2535.7000000000003,
+      "item": "Sugar & Sweeteners"
+    },
+    {
+      "source": "World",
+      "target": "Net Food Importing Developing Countries",
+      "value": 2089.5,
+      "item": "Sugar & Sweeteners"
+    },
+    {
+      "source": "Americas",
+      "target": "World",
+      "value": 4316.3,
+      "item": "Sugar & Sweeteners"
+    },
+    {
+      "source": "Americas",
+      "target": "Asia",
+      "value": 4316.3,
+      "item": "Sugar & Sweeteners"
+    },
+    {
+      "source": "Americas",
+      "target": "Europe",
+      "value": 3202.5,
+      "item": "Sugar & Sweeteners"
+    },
+    {
+      "source": "Americas",
+      "target": "European Union (27)",
+      "value": 2535.7000000000003,
+      "item": "Sugar & Sweeteners"
+    },
+    {
+      "source": "Americas",
+      "target": "Net Food Importing Developing Countries",
+      "value": 2089.5,
+      "item": "Sugar & Sweeteners"
+    },
+    {
+      "source": "Asia",
+      "target": "World",
+      "value": 3638.7000000000003,
+      "item": "Sugar & Sweeteners"
+    },
+    {
+      "source": "Asia",
+      "target": "Europe",
+      "value": 3202.5,
+      "item": "Sugar & Sweeteners"
+    },
+    {
+      "source": "Asia",
+      "target": "European Union (27)",
+      "value": 2535.7000000000003,
+      "item": "Sugar & Sweeteners"
+    },
+    {
+      "source": "Asia",
+      "target": "Net Food Importing Developing Countries",
+      "value": 2089.5,
+      "item": "Sugar & Sweeteners"
+    },
+    {
+      "source": "South America",
+      "target": "World",
+      "value": 2964.9,
+      "item": "Sugar & Sweeteners"
+    },
+    {
+      "source": "South America",
+      "target": "Asia",
+      "value": 2964.9,
+      "item": "Sugar & Sweeteners"
+    },
+    {
+      "source": "South America",
+      "target": "Europe",
+      "value": 2964.9,
+      "item": "Sugar & Sweeteners"
+    },
+    {
+      "source": "South America",
+      "target": "European Union (27)",
+      "value": 2535.7000000000003,
+      "item": "Sugar & Sweeteners"
+    },
+    {
+      "source": "South America",
+      "target": "Net Food Importing Developing Countries",
+      "value": 2089.5,
+      "item": "Sugar & Sweeteners"
+    },
+    {
+      "source": "Europe",
+      "target": "World",
+      "value": 2815.2000000000003,
+      "item": "Sugar & Sweeteners"
+    },
+    {
+      "source": "Europe",
+      "target": "Asia",
+      "value": 2815.2000000000003,
+      "item": "Sugar & Sweeteners"
+    },
+    {
+      "source": "Europe",
+      "target": "European Union (27)",
+      "value": 2535.7000000000003,
+      "item": "Sugar & Sweeteners"
+    },
+    {
+      "source": "Europe",
+      "target": "Net Food Importing Developing Countries",
+      "value": 2089.5,
+      "item": "Sugar & Sweeteners"
+    },
+    {
+      "source": "World",
+      "target": "Europe",
+      "value": 111.9,
+      "item": "Rye and products"
+    },
+    {
+      "source": "World",
+      "target": "European Union (27)",
+      "value": 109.0,
+      "item": "Rye and products"
+    },
+    {
+      "source": "World",
+      "target": "Western Europe",
+      "value": 60.7,
+      "item": "Rye and products"
+    },
+    {
+      "source": "World",
+      "target": "Germany",
+      "value": 35.5,
+      "item": "Rye and products"
+    },
+    {
+      "source": "Europe",
+      "target": "World",
+      "value": 147.20000000000002,
+      "item": "Rye and products"
+    },
+    {
+      "source": "Europe",
+      "target": "European Union (27)",
+      "value": 109.0,
+      "item": "Rye and products"
+    },
+    {
+      "source": "Europe",
+      "target": "Western Europe",
+      "value": 60.7,
+      "item": "Rye and products"
+    },
+    {
+      "source": "Europe",
+      "target": "Germany",
+      "value": 35.5,
+      "item": "Rye and products"
+    },
+    {
+      "source": "European Union (27)",
+      "target": "World",
+      "value": 113.9,
+      "item": "Rye and products"
+    },
+    {
+      "source": "European Union (27)",
+      "target": "Europe",
+      "value": 111.9,
+      "item": "Rye and products"
+    },
+    {
+      "source": "European Union (27)",
+      "target": "Western Europe",
+      "value": 60.7,
+      "item": "Rye and products"
+    },
+    {
+      "source": "European Union (27)",
+      "target": "Germany",
+      "value": 35.5,
+      "item": "Rye and products"
+    },
+    {
+      "source": "Eastern Europe",
+      "target": "World",
+      "value": 81.9,
+      "item": "Rye and products"
+    },
+    {
+      "source": "Eastern Europe",
+      "target": "Europe",
+      "value": 81.9,
+      "item": "Rye and products"
+    },
+    {
+      "source": "Eastern Europe",
+      "target": "European Union (27)",
+      "value": 81.9,
+      "item": "Rye and products"
+    },
+    {
+      "source": "Eastern Europe",
+      "target": "Western Europe",
+      "value": 60.7,
+      "item": "Rye and products"
+    },
+    {
+      "source": "Eastern Europe",
+      "target": "Germany",
+      "value": 35.5,
+      "item": "Rye and products"
+    },
+    {
+      "source": "Poland",
+      "target": "World",
+      "value": 44.5,
+      "item": "Rye and products"
+    },
+    {
+      "source": "Poland",
+      "target": "Europe",
+      "value": 44.5,
+      "item": "Rye and products"
+    },
+    {
+      "source": "Poland",
+      "target": "European Union (27)",
+      "value": 44.5,
+      "item": "Rye and products"
+    },
+    {
+      "source": "Poland",
+      "target": "Western Europe",
+      "value": 44.5,
+      "item": "Rye and products"
+    },
+    {
+      "source": "Poland",
+      "target": "Germany",
+      "value": 35.5,
+      "item": "Rye and products"
+    },
+    {
+      "source": "World",
+      "target": "Americas",
+      "value": 274.8,
+      "item": "Oats"
+    },
+    {
+      "source": "World",
+      "target": "Northern America",
+      "value": 228.60000000000002,
+      "item": "Oats"
+    },
+    {
+      "source": "World",
+      "target": "United States of America",
+      "value": 224.3,
+      "item": "Oats"
+    },
+    {
+      "source": "World",
+      "target": "Europe",
+      "value": 197.4,
+      "item": "Oats"
+    },
+    {
+      "source": "Americas",
+      "target": "World",
+      "value": 247.0,
+      "item": "Oats"
+    },
+    {
+      "source": "Americas",
+      "target": "Northern America",
+      "value": 228.60000000000002,
+      "item": "Oats"
+    },
+    {
+      "source": "Americas",
+      "target": "United States of America",
+      "value": 224.3,
+      "item": "Oats"
+    },
+    {
+      "source": "Americas",
+      "target": "Europe",
+      "value": 197.4,
+      "item": "Oats"
+    },
+    {
+      "source": "Europe",
+      "target": "World",
+      "value": 235.10000000000002,
+      "item": "Oats"
+    },
+    {
+      "source": "Europe",
+      "target": "Americas",
+      "value": 235.10000000000002,
+      "item": "Oats"
+    },
+    {
+      "source": "Europe",
+      "target": "Northern America",
+      "value": 228.60000000000002,
+      "item": "Oats"
+    },
+    {
+      "source": "Europe",
+      "target": "United States of America",
+      "value": 224.3,
+      "item": "Oats"
+    },
+    {
+      "source": "Northern America",
+      "target": "World",
+      "value": 194.60000000000002,
+      "item": "Oats"
+    },
+    {
+      "source": "Northern America",
+      "target": "Americas",
+      "value": 194.60000000000002,
+      "item": "Oats"
+    },
+    {
+      "source": "Northern America",
+      "target": "United States of America",
+      "value": 194.60000000000002,
+      "item": "Oats"
+    },
+    {
+      "source": "Northern America",
+      "target": "Europe",
+      "value": 194.60000000000002,
+      "item": "Oats"
+    },
+    {
+      "source": "Canada",
+      "target": "World",
+      "value": 182.10000000000002,
+      "item": "Oats"
+    },
+    {
+      "source": "Canada",
+      "target": "Americas",
+      "value": 182.10000000000002,
+      "item": "Oats"
+    },
+    {
+      "source": "Canada",
+      "target": "Northern America",
+      "value": 182.10000000000002,
+      "item": "Oats"
+    },
+    {
+      "source": "Canada",
+      "target": "United States of America",
+      "value": 182.10000000000002,
+      "item": "Oats"
+    },
+    {
+      "source": "Canada",
+      "target": "Europe",
+      "value": 182.10000000000002,
+      "item": "Oats"
+    }
+  ]
+}

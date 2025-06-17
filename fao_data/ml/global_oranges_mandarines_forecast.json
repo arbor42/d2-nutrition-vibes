@@ -1,0 +1,431 @@
+{
+  "scenario": "global_oranges_mandarines",
+  "title": "Globale Oranges, Mandarines Produktion",
+  "unit": "1000 t",
+  "historical_data": [
+    {
+      "year": 2010,
+      "value": 421347.0
+    },
+    {
+      "year": 2011,
+      "value": 446542.0
+    },
+    {
+      "year": 2012,
+      "value": 441082.0
+    },
+    {
+      "year": 2013,
+      "value": 457428.0
+    },
+    {
+      "year": 2014,
+      "value": 466622.0
+    },
+    {
+      "year": 2015,
+      "value": 471157.0
+    },
+    {
+      "year": 2016,
+      "value": 477822.0
+    },
+    {
+      "year": 2017,
+      "value": 483833.0
+    },
+    {
+      "year": 2018,
+      "value": 497033.0
+    },
+    {
+      "year": 2019,
+      "value": 520405.0
+    },
+    {
+      "year": 2020,
+      "value": 526392.0
+    },
+    {
+      "year": 2021,
+      "value": 540300.0
+    },
+    {
+      "year": 2022,
+      "value": 549417.0
+    }
+  ],
+  "forecasts": {
+    "linear": [
+      {
+        "year": 2023,
+        "value": 561310.9918423824,
+        "confidence_lower": 0.0,
+        "confidence_upper": 970018.5743029828,
+        "uncertainty_percent": 86.4065187035716,
+        "years_ahead": 1
+      },
+      {
+        "year": 2024,
+        "value": 559122.8979570398,
+        "confidence_lower": 0.0,
+        "confidence_upper": 967915.7488328523,
+        "uncertainty_percent": 86.55661862262187,
+        "years_ahead": 2
+      },
+      {
+        "year": 2025,
+        "value": 557025.2778741454,
+        "confidence_lower": 0.0,
+        "confidence_upper": 967659.7075120438,
+        "uncertainty_percent": 86.85958662460173,
+        "years_ahead": 3
+      },
+      {
+        "year": 2026,
+        "value": 555018.1315936681,
+        "confidence_lower": 0.0,
+        "confidence_upper": 969492.9643663851,
+        "uncertainty_percent": 87.33885518141562,
+        "years_ahead": 4
+      },
+      {
+        "year": 2027,
+        "value": 553101.4591156084,
+        "confidence_lower": 0.0,
+        "confidence_upper": 973561.673333663,
+        "uncertainty_percent": 88.00932064890564,
+        "years_ahead": 5
+      },
+      {
+        "year": 2028,
+        "value": 551275.2604399661,
+        "confidence_lower": 0.0,
+        "confidence_upper": 979937.5026383819,
+        "uncertainty_percent": 88.87914740236172,
+        "years_ahead": 6
+      },
+      {
+        "year": 2029,
+        "value": 549539.5355667707,
+        "confidence_lower": 0.0,
+        "confidence_upper": 988631.0726114756,
+        "uncertainty_percent": 89.950859640321,
+        "years_ahead": 7
+      },
+      {
+        "year": 2030,
+        "value": 547894.2844959938,
+        "confidence_lower": 0.0,
+        "confidence_upper": 999603.8100740355,
+        "uncertainty_percent": 91.22232503242556,
+        "years_ahead": 8
+      },
+      {
+        "year": 2031,
+        "value": 546339.5072276641,
+        "confidence_lower": 0.0,
+        "confidence_upper": 1012779.6027929266,
+        "uncertainty_percent": 92.68775087602195,
+        "years_ahead": 9
+      },
+      {
+        "year": 2032,
+        "value": 544875.2037617511,
+        "confidence_lower": 0.0,
+        "confidence_upper": 1028056.0251962366,
+        "uncertainty_percent": 94.33866857022166,
+        "years_ahead": 10
+      },
+      {
+        "year": 2033,
+        "value": 543501.3740982863,
+        "confidence_lower": 0.0,
+        "confidence_upper": 1045314.5064777504,
+        "uncertainty_percent": 96.16484486465315,
+        "years_ahead": 11
+      },
+      {
+        "year": 2034,
+        "value": 542218.0182371789,
+        "confidence_lower": 0.0,
+        "confidence_upper": 1064428.911816192,
+        "uncertainty_percent": 98.15506641376365,
+        "years_ahead": 12
+      },
+      {
+        "year": 2035,
+        "value": 541025.1361785491,
+        "confidence_lower": 0.0,
+        "confidence_upper": 1085272.280438193,
+        "uncertainty_percent": 100.29776879719978,
+        "years_ahead": 13
+      }
+    ],
+    "polynomial": [
+      {
+        "year": 2023,
+        "value": 525451.3338441664,
+        "confidence_lower": 0.0,
+        "confidence_upper": 1700107.182453957,
+        "uncertainty_percent": 161.77589368896335,
+        "years_ahead": 1
+      },
+      {
+        "year": 2024,
+        "value": 528512.8843746596,
+        "confidence_lower": 0.0,
+        "confidence_upper": 1710530.6054694136,
+        "uncertainty_percent": 161.8248727742301,
+        "years_ahead": 2
+      },
+      {
+        "year": 2025,
+        "value": 531576.4747869853,
+        "confidence_lower": 0.0,
+        "confidence_upper": 1721502.7816210599,
+        "uncertainty_percent": 161.92428213747655,
+        "years_ahead": 3
+      },
+      {
+        "year": 2026,
+        "value": 534642.1058620984,
+        "confidence_lower": 0.0,
+        "confidence_upper": 1733128.2638951913,
+        "uncertainty_percent": 162.0830313299549,
+        "years_ahead": 4
+      },
+      {
+        "year": 2027,
+        "value": 537709.7783813389,
+        "confidence_lower": 0.0,
+        "confidence_upper": 1745493.7647377173,
+        "uncertainty_percent": 162.30816649756264,
+        "years_ahead": 5
+      },
+      {
+        "year": 2028,
+        "value": 540779.493126433,
+        "confidence_lower": 0.0,
+        "confidence_upper": 1758674.650879589,
+        "uncertainty_percent": 162.60552343729634,
+        "years_ahead": 6
+      },
+      {
+        "year": 2029,
+        "value": 543851.2508794918,
+        "confidence_lower": 0.0,
+        "confidence_upper": 1772737.8546784697,
+        "uncertainty_percent": 162.98002917265316,
+        "years_ahead": 7
+      },
+      {
+        "year": 2030,
+        "value": 546925.0524230126,
+        "confidence_lower": 0.0,
+        "confidence_upper": 1787743.4008427085,
+        "uncertainty_percent": 163.43586684524374,
+        "years_ahead": 8
+      },
+      {
+        "year": 2031,
+        "value": 550000.8985398799,
+        "confidence_lower": 0.0,
+        "confidence_upper": 1803745.2829839648,
+        "uncertainty_percent": 163.976576017646,
+        "years_ahead": 9
+      },
+      {
+        "year": 2032,
+        "value": 553078.7900133614,
+        "confidence_lower": 0.0,
+        "confidence_upper": 1820792.0026402804,
+        "uncertainty_percent": 164.60511915456868,
+        "years_ahead": 10
+      },
+      {
+        "year": 2033,
+        "value": 556158.7276271131,
+        "confidence_lower": 0.0,
+        "confidence_upper": 1838926.9251505178,
+        "uncertainty_percent": 165.3239294649225,
+        "years_ahead": 11
+      },
+      {
+        "year": 2034,
+        "value": 559240.7121651742,
+        "confidence_lower": 0.0,
+        "confidence_upper": 1858188.5365630682,
+        "uncertainty_percent": 166.1349483453061,
+        "years_ahead": 12
+      },
+      {
+        "year": 2035,
+        "value": 562324.7444119715,
+        "confidence_lower": 0.0,
+        "confidence_upper": 1878610.650560935,
+        "uncertainty_percent": 167.03965717580297,
+        "years_ahead": 13
+      }
+    ]
+  },
+  "ensemble_forecasts": [
+    {
+      "year": 2023,
+      "ensemble_mean": 543381.1628432744,
+      "ensemble_std": 17929.828999107995,
+      "model_min": 525451.3338441664,
+      "model_max": 561310.9918423824,
+      "model_agreement": 0.9670032194246685,
+      "years_ahead": 1,
+      "uncertainty_level": "low"
+    },
+    {
+      "year": 2024,
+      "ensemble_mean": 543817.8911658498,
+      "ensemble_std": 15305.00679119007,
+      "model_min": 528512.8843746596,
+      "model_max": 559122.8979570398,
+      "model_agreement": 0.9718563750111663,
+      "years_ahead": 2,
+      "uncertainty_level": "low"
+    },
+    {
+      "year": 2025,
+      "ensemble_mean": 544300.8763305654,
+      "ensemble_std": 12724.401543580054,
+      "model_min": 531576.4747869853,
+      "model_max": 557025.2778741454,
+      "model_agreement": 0.9766224856565319,
+      "years_ahead": 3,
+      "uncertainty_level": "low"
+    },
+    {
+      "year": 2026,
+      "ensemble_mean": 544830.1187278833,
+      "ensemble_std": 10188.012865784869,
+      "model_min": 534642.1058620984,
+      "model_max": 555018.1315936681,
+      "model_agreement": 0.9813005696352237,
+      "years_ahead": 4,
+      "uncertainty_level": "medium"
+    },
+    {
+      "year": 2027,
+      "ensemble_mean": 545405.6187484737,
+      "ensemble_std": 7695.840367134719,
+      "model_min": 537709.7783813389,
+      "model_max": 553101.4591156084,
+      "model_agreement": 0.9858896936470986,
+      "years_ahead": 5,
+      "uncertainty_level": "medium"
+    },
+    {
+      "year": 2028,
+      "ensemble_mean": 546027.3767831996,
+      "ensemble_std": 5247.883656766557,
+      "model_min": 540779.493126433,
+      "model_max": 551275.2604399661,
+      "model_agreement": 0.9903889733740397,
+      "years_ahead": 6,
+      "uncertainty_level": "medium"
+    },
+    {
+      "year": 2029,
+      "ensemble_mean": 546695.3932231313,
+      "ensemble_std": 2844.1423436394543,
+      "model_min": 543851.2508794918,
+      "model_max": 549539.5355667707,
+      "model_agreement": 0.9947975739709981,
+      "years_ahead": 7,
+      "uncertainty_level": "medium"
+    },
+    {
+      "year": 2030,
+      "ensemble_mean": 547409.6684595032,
+      "ensemble_std": 484.61603649059543,
+      "model_min": 546925.0524230126,
+      "model_max": 547894.2844959938,
+      "model_agreement": 0.9991147104912225,
+      "years_ahead": 8,
+      "uncertainty_level": "high"
+    },
+    {
+      "year": 2031,
+      "ensemble_mean": 548170.2028837721,
+      "ensemble_std": 1830.6956561079132,
+      "model_min": 546339.5072276641,
+      "model_max": 550000.8985398799,
+      "model_agreement": 0.9966603517548435,
+      "years_ahead": 9,
+      "uncertainty_level": "high"
+    },
+    {
+      "year": 2032,
+      "ensemble_mean": 548976.9968875563,
+      "ensemble_std": 4101.793125805154,
+      "model_min": 544875.2037617511,
+      "model_max": 553078.7900133614,
+      "model_agreement": 0.9925282969066821,
+      "years_ahead": 10,
+      "uncertainty_level": "high"
+    },
+    {
+      "year": 2033,
+      "ensemble_mean": 549830.0508626997,
+      "ensemble_std": 6328.676764413423,
+      "model_min": 543501.3740982863,
+      "model_max": 556158.7276271131,
+      "model_agreement": 0.9884897583271712,
+      "years_ahead": 11,
+      "uncertainty_level": "high"
+    },
+    {
+      "year": 2034,
+      "ensemble_mean": 550729.3652011766,
+      "ensemble_std": 8511.34696399764,
+      "model_min": 542218.0182371789,
+      "model_max": 559240.7121651742,
+      "model_agreement": 0.9845453184416841,
+      "years_ahead": 12,
+      "uncertainty_level": "high"
+    },
+    {
+      "year": 2035,
+      "ensemble_mean": 551674.9402952604,
+      "ensemble_std": 10649.804116711195,
+      "model_min": 541025.1361785491,
+      "model_max": 562324.7444119715,
+      "model_agreement": 0.980695508643167,
+      "years_ahead": 13,
+      "uncertainty_level": "high"
+    }
+  ],
+  "model_performance": {
+    "linear": {
+      "r2_score": -0.514036898961818,
+      "mse": 135708641.37633377,
+      "mae": 11423.993012850095
+    },
+    "polynomial": {
+      "r2_score": -3.6563847033367143,
+      "mse": 417368719.5131593,
+      "mae": 19323.930689036886
+    }
+  },
+  "uncertainty_info": {
+    "confidence_level": 95,
+    "uncertainty_sources": [
+      "model_performance",
+      "temporal_extrapolation",
+      "historical_variability"
+    ],
+    "interpretation": {
+      "confidence_bounds": "95% Konfidenzintervall für einzelne Modelle",
+      "ensemble_bounds": "Bereich basierend auf Linear vs. Polynomial Disagreement",
+      "uncertainty_growth": "Unsicherheit steigt exponentiell mit Prognosehorizont",
+      "model_types": "Linear Regression und Polynomial Regression (Grad 2-3)"
+    }
+  }
+}

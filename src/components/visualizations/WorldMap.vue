@@ -19,7 +19,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   width: 800,
-  height: 500,
+  height: 600,
   selectedProduct: 'maize_and_products',
   selectedYear: 2022,
   selectedMetric: 'production'
@@ -46,17 +46,65 @@ let geoDataStatic = null // Non-reactive
 let productionDataStatic = [] // Non-reactive
 const isInitialized = ref(false)
 
-// Simple tooltip implementation
+// Legend state
+const legendScale = ref(null)
+const legendDomain = ref([0, 100000000]) // Static domain across years
+
+// Tooltip implementation with D3
+let tooltipDiv = null
+
 const tooltip = {
   element: null,
+  
+  init: () => {
+    // Create tooltip div if it doesn't exist
+    if (!tooltipDiv) {
+      tooltipDiv = d3.select('body')
+        .append('div')
+        .attr('class', 'worldmap-tooltip')
+        .style('position', 'absolute')
+        .style('padding', '10px')
+        .style('background', 'rgba(0, 0, 0, 0.9)')
+        .style('color', 'white')
+        .style('border-radius', '4px')
+        .style('pointer-events', 'none')
+        .style('font-size', '14px')
+        .style('box-shadow', '0 2px 4px rgba(0,0,0,0.2)')
+        .style('z-index', '9999')
+        .style('opacity', 0)
+        .style('transition', 'opacity 0.2s')
+    }
+    tooltip.element = tooltipDiv
+  },
+  
   show: (event, data, formatter) => {
-    // Simple tooltip implementation if needed
+    if (!tooltipDiv) tooltip.init()
+    
+    // Get content from formatter or use default
+    const content = formatter ? formatter() : 'No data'
+    
+    // Get mouse position
+    const mouseX = event.pageX || event.clientX
+    const mouseY = event.pageY || event.clientY
+    
+    tooltipDiv
+      .html(content)
+      .style('opacity', 1)
+      .style('left', (mouseX + 10) + 'px')
+      .style('top', (mouseY - 28) + 'px')
   },
+  
   hide: () => {
-    // Hide tooltip
+    if (tooltipDiv) {
+      tooltipDiv.style('opacity', 0)
+    }
   },
+  
   destroy: () => {
-    // Cleanup
+    if (tooltipDiv) {
+      tooltipDiv.remove()
+      tooltipDiv = null
+    }
   }
 }
 
@@ -72,10 +120,23 @@ let path: d3.GeoPath
 let colorScale: d3.ScaleQuantize<string>
 let zoom: d3.ZoomBehavior<SVGElement, unknown>
 
+// Green color scheme for production data
+const greenColorScheme = [
+  '#f7fcf5',
+  '#e5f5e0', 
+  '#c7e9c0',
+  '#a1d99b',
+  '#74c476',
+  '#41ab5d',
+  '#238b45',
+  '#006d2c',
+  '#00441b'
+]
+
 // Computed properties
 const mapConfig = computed(() => ({
   projection: 'naturalEarth1',
-  colorScheme: vizStore.getColorScheme('production'),
+  colorScheme: greenColorScheme,
   ...vizStore.getVisualizationConfig('worldMap')
 }))
 
@@ -84,9 +145,15 @@ const initializeMap = async () => {
   console.log('🚀 WorldMap: initializeMap called')
   console.log('🔍 WorldMap: containerRef.value:', containerRef.value)
   console.log('🔍 WorldMap: svgContainerRef.value:', svgContainerRef.value)
+  console.log('🔍 WorldMap: isInitialized:', isInitialized.value)
   
-  if (!containerRef.value || !svgContainerRef.value || isInitialized.value) {
-    console.warn('⚠️ WorldMap: Container not ready or already initialized')
+  if (!containerRef.value || !svgContainerRef.value) {
+    console.warn('⚠️ WorldMap: Container not ready')
+    return
+  }
+  
+  if (isInitialized.value) {
+    console.warn('⚠️ WorldMap: Already initialized')
     return
   }
   
@@ -104,6 +171,9 @@ const initializeMap = async () => {
     console.log('📊 WorldMap: Features count:', loadedGeoData?.features?.length || 'N/A')
     geoDataStatic = loadedGeoData
 
+    // Initialize tooltip
+    tooltip.init()
+    
     // Initialize map with direct D3 approach (working solution)
     console.log('🚀 WorldMap: Creating map directly...')
     createMapDirect(loadedGeoData)
@@ -198,10 +268,10 @@ const createMapDirect = (data) => {
 
   console.log('✅ WorldMap: SVG created')
 
-  // Setup projection
+  // Setup projection with better scale for visibility
   projection = d3.geoNaturalEarth1()
-    .scale(width / 6.5)
-    .translate([width / 2, height / 2])
+    .scale(width / 5.5)
+    .translate([width / 2, height / 2.2])
 
   path = d3.geoPath().projection(projection)
   
@@ -209,7 +279,7 @@ const createMapDirect = (data) => {
 
   // Setup zoom behavior
   zoom = d3.zoom()
-    .scaleExtent([0.5, 8])
+    .scaleExtent([0.8, 8])
     .on('zoom', (event) => {
       svg.select('.map-container').attr('transform', event.transform)
     })
@@ -232,6 +302,8 @@ const createMapDirect = (data) => {
   } else {
     console.log('⚠️ WorldMap: No production data available yet')
   }
+  
+  // Don't create legend here - wait for production data
   
   console.log('🎉 WorldMap: Map creation completed successfully!')
 }
@@ -265,6 +337,96 @@ const drawCountriesDirect = (container, features) => {
   
   const totalCountries = container.selectAll('.country').size()
   console.log('✅ WorldMap: Countries drawn, total:', totalCountries)
+}
+
+// Create legend
+const createLegend = (svg) => {
+  console.log('🎨 WorldMap: Creating legend...')
+  
+  // Remove existing legend
+  svg.select('.legend-group').remove()
+  
+  if (!legendScale.value || !legendDomain.value) {
+    console.log('⚠️ WorldMap: No legend scale available yet')
+    return
+  }
+  
+  const legendWidth = 200
+  const legendHeight = 10
+  const legendMargin = { top: 10, right: 20, bottom: 30, left: 20 }
+  
+  // Get actual SVG dimensions
+  const svgNode = svg.node()
+  const svgWidth = svgNode ? svgNode.clientWidth : props.width
+  const svgHeight = svgNode ? svgNode.clientHeight : props.height
+  
+  const legend = svg.append('g')
+    .attr('class', 'legend-group')
+    .attr('transform', `translate(${svgWidth - legendWidth - legendMargin.right}, ${svgHeight - legendHeight - legendMargin.bottom})`)
+  
+  // Create gradient
+  const gradientId = 'legend-gradient'
+  
+  // Check if defs already exists
+  let defs = svg.select('defs')
+  if (defs.empty()) {
+    defs = svg.append('defs')
+  }
+  
+  const gradient = defs
+    .append('linearGradient')
+    .attr('id', gradientId)
+    .attr('x1', '0%')
+    .attr('x2', '100%')
+    .attr('y1', '0%')
+    .attr('y2', '0%')
+  
+  // Add color stops
+  const colorStops = greenColorScheme.length
+  greenColorScheme.forEach((color, i) => {
+    gradient.append('stop')
+      .attr('offset', `${(i / (colorStops - 1)) * 100}%`)
+      .attr('stop-color', color)
+  })
+  
+  // Add rectangle with gradient
+  legend.append('rect')
+    .attr('width', legendWidth)
+    .attr('height', legendHeight)
+    .attr('fill', `url(#${gradientId})`)
+    .attr('stroke', '#e5e7eb')
+    .attr('stroke-width', 0.5)
+  
+  // Add scale
+  const legendScaleLinear = d3.scaleLinear()
+    .domain(legendDomain.value)
+    .range([0, legendWidth])
+  
+  const legendAxis = d3.axisBottom(legendScaleLinear)
+    .ticks(5)
+    .tickFormat(d => {
+      if (d >= 1000000) return d3.format('.1s')(d)
+      if (d >= 1000) return d3.format('.0s')(d)
+      return d3.format('.0f')(d)
+    })
+  
+  legend.append('g')
+    .attr('transform', `translate(0, ${legendHeight})`)
+    .call(legendAxis)
+    .selectAll('text')
+    .style('font-size', '10px')
+  
+  // Add title
+  legend.append('text')
+    .attr('x', legendWidth / 2)
+    .attr('y', -5)
+    .attr('text-anchor', 'middle')
+    .style('font-size', '11px')
+    .style('font-weight', '500')
+    .text(props.selectedMetric === 'production' ? 'Produktion (t)' : 
+          props.selectedMetric === 'import_quantity' ? 'Import (t)' :
+          props.selectedMetric === 'export_quantity' ? 'Export (t)' :
+          'Versorgung (t)')
 }
 
 // Setup map with D3.js (keeping original for compatibility)
@@ -589,6 +751,12 @@ const updateMapWithProductionDataDirect = (container) => {
   
   console.log('🎨 WorldMap: Updating production data directly...')
   applyProductionDataDirect(container, processedData)
+  
+  // Create/update legend after data is applied
+  const svg = d3.select(svgContainerRef.value).select('svg')
+  if (!svg.empty() && legendScale.value) {
+    createLegend(svg)
+  }
 }
 
 // Static version for non-reactive updates
@@ -619,15 +787,21 @@ const applyProductionDataDirect = (container, data) => {
     }
   })
 
-  // Create color scale
+  // Create color scale with fixed domain for consistency across years
   const values = data.filter(d => d.value > 0).map(d => d.value)
   if (values.length > 0) {
-    const extent = d3.extent(values)
-    const colorScheme = mapConfig.value.colorScheme
+    // Update legend domain if needed
+    const maxValue = d3.max(values)
+    if (maxValue > legendDomain.value[1]) {
+      legendDomain.value = [0, Math.ceil(maxValue / 10000000) * 10000000]
+    }
     
     colorScale = d3.scaleQuantize()
-      .domain(extent)
-      .range(colorScheme)
+      .domain(legendDomain.value)
+      .range(greenColorScheme)
+    
+    // Update legend scale
+    legendScale.value = colorScale
   }
 
   // Update country colors
@@ -760,6 +934,14 @@ const handleCountryMouseover = (event, d) => {
   const countryCode = d.properties.iso_a3 || d.properties.adm0_a3
   const normalizedName = normalizeCountryName(countryName || '')
   
+  // Add visual hover effect
+  d3.select(event.currentTarget)
+    .transition()
+    .duration(100)
+    .attr('stroke', '#3b82f6')
+    .attr('stroke-width', 2)
+    .style('filter', 'brightness(1.1)')
+  
   // Find country data by code, normalized name, or original name
   const processedData = getProcessedProductionData()
   const countryData = processedData.find(
@@ -773,10 +955,11 @@ const handleCountryMouseover = (event, d) => {
   if (countryData && countryData.value > 0) {
     const formattedValue = d3.format(',.0f')(countryData.value)
     const productName = props.selectedProduct?.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) || 'Produkt'
-    content += `${productName}: ${formattedValue} ${countryData.unit || ''}<br/>`
-    content += `Jahr: ${props.selectedYear}`
+    content += `<span style="color: #fbbf24">${productName}</span><br/>`
+    content += `Produktion: <strong>${formattedValue}</strong> ${countryData.unit || 't'}<br/>`
+    content += `<span style="color: #9ca3af; font-size: 12px">Jahr: ${props.selectedYear}</span>`
   } else {
-    content += 'Keine Daten verfügbar'
+    content += '<span style="color: #ef4444">Keine Daten verfügbar</span>'
   }
   
   // Show tooltip
@@ -786,6 +969,14 @@ const handleCountryMouseover = (event, d) => {
 }
 
 const handleCountryMouseout = (event, d) => {
+  // Remove visual hover effect
+  d3.select(event.currentTarget)
+    .transition()
+    .duration(100)
+    .attr('stroke', '#ffffff')
+    .attr('stroke-width', 0.5)
+    .style('filter', 'none')
+  
   tooltip.hide()
   emit('countryHover', null)
 }
@@ -894,7 +1085,7 @@ defineExpose({
   <div 
     ref="containerRef"
     class="chart-container relative w-full h-full bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700"
-    style="min-height: 400px; width: 100%; height: 100%;"
+    style="min-height: 600px; width: 100%; height: 100%;"
   >
     <!-- Loading overlay -->
     <LoadingSpinner
@@ -943,18 +1134,15 @@ defineExpose({
     <div 
       ref="svgContainerRef"
       class="map-svg-container" 
-      style="width: 100%; height: 100%; min-height: 400px; position: relative;"
-    ></div>
-
-    <!-- Legend - simplified to avoid reactive issues -->
-    <div
-      v-show="false"
-      class="absolute bottom-4 left-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-3 shadow-sm max-w-xs"
+      style="width: 100%; height: 100%; min-height: 600px; position: relative;"
     >
-      <h4 class="text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">
-        Legende (temporär deaktiviert)
-      </h4>
+      <!-- Debug message -->
+      <div v-if="!isInitialized && !isLoading && !error" class="absolute inset-0 flex items-center justify-center text-gray-500">
+        <p>Karte wird initialisiert...</p>
+      </div>
     </div>
+
+    <!-- Legend is rendered inside the SVG via D3 -->
   </div>
 </template>
 
@@ -962,7 +1150,7 @@ defineExpose({
 .chart-container {
   width: 100%;
   height: 100%;
-  min-height: 400px;
+  min-height: 600px;
   position: relative;
 }
 
@@ -983,17 +1171,24 @@ defineExpose({
 }
 
 .country {
-  transition: fill 0.3s ease, opacity 0.3s ease;
-}
-
-.country:hover {
-  stroke-width: 1px;
-  stroke: #3b82f6;
+  transition: fill 0.3s ease, opacity 0.3s ease, stroke 0.1s ease, stroke-width 0.1s ease;
 }
 
 /* Ensure proper rendering within parent containers */
 :deep(.map-container) {
   width: 100%;
   height: 100%;
+}
+
+/* Global tooltip styles (unscoped) */
+:global(.worldmap-tooltip) {
+  max-width: 300px;
+  line-height: 1.4;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+:global(.worldmap-tooltip strong) {
+  font-weight: 600;
+  color: #fbbf24;
 }
 </style>

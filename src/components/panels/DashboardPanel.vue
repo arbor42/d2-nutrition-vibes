@@ -5,6 +5,7 @@ import { useUIStore } from '@/stores/useUIStore'
 import WorldMap from '@/components/visualizations/WorldMap.vue'
 import WorldMapSimple from '@/components/visualizations/WorldMapSimple.vue'
 import TimeseriesChart from '@/components/visualizations/TimeseriesChart.vue'
+import ProductSelector from '@/components/ui/ProductSelector.vue'
 
 const dataStore = useDataStore()
 const uiStore = useUIStore()
@@ -18,34 +19,129 @@ const visualizationOptions = [
   { value: 'overview', label: 'Übersicht', icon: 'grid' }
 ]
 
+// Helper to get countries array from different data structures
+const getCountriesArray = () => {
+  const rawData = dataStore.getProductionData(uiStore.selectedProduct, uiStore.selectedYear)
+  if (!rawData) return []
+  
+  if (Array.isArray(rawData)) {
+    return rawData
+  } else if (rawData.data && Array.isArray(rawData.data)) {
+    return rawData.data
+  } else if (typeof rawData === 'object') {
+    return Object.entries(rawData).map(([country, data]) => ({
+      country,
+      value: data.value || 0,
+      unit: data.unit || 't',
+      year: data.year || uiStore.selectedYear
+    }))
+  }
+  return []
+}
+
 const selectedCountryData = computed(() => {
   if (!uiStore.selectedCountry || !uiStore.selectedProduct || !uiStore.selectedYear) {
     return null
   }
   
-  const data = dataStore.getProductionData(uiStore.selectedProduct, uiStore.selectedYear)
-  return data?.data?.find(item => item.country === uiStore.selectedCountry)
+  const countries = getCountriesArray()
+  return countries.find(item => item.country === uiStore.selectedCountry)
+})
+
+// Country ranking
+const countryRank = computed(() => {
+  if (!uiStore.selectedCountry) return 'N/A'
+  
+  const countries = getCountriesArray()
+  const sorted = countries
+    .filter(item => item.value > 0)
+    .sort((a, b) => b.value - a.value)
+  
+  const index = sorted.findIndex(item => item.country === uiStore.selectedCountry)
+  return index >= 0 ? index + 1 : 'N/A'
 })
 
 const globalStats = computed(() => {
   if (!uiStore.selectedProduct || !uiStore.selectedYear) {
-    return { production: 0, countries: 0, topProducer: null }
+    return { total: 0, countries: 0, topProducer: null, unit: 't' }
   }
   
-  const data = dataStore.getProductionData(uiStore.selectedProduct, uiStore.selectedYear)
-  if (!data?.data) return { production: 0, countries: 0, topProducer: null }
+  const rawData = dataStore.getProductionData(uiStore.selectedProduct, uiStore.selectedYear)
+  if (!rawData) return { total: 0, countries: 0, topProducer: null, unit: 't' }
   
-  const total = data.data.reduce((sum, item) => sum + item.value, 0)
-  const countries = data.data.filter(item => item.value > 0).length
-  const topProducer = data.data.reduce((max, item) => 
-    item.value > (max?.value || 0) ? item : max, null
-  )
+  // Handle different data structures (object with country keys vs array)
+  let dataArray = []
+  if (Array.isArray(rawData)) {
+    dataArray = rawData
+  } else if (rawData.data && Array.isArray(rawData.data)) {
+    dataArray = rawData.data
+  } else if (typeof rawData === 'object') {
+    // Convert object format to array
+    dataArray = Object.entries(rawData).map(([country, data]) => ({
+      country,
+      value: data.value || 0,
+      unit: data.unit || 't',
+      year: data.year || uiStore.selectedYear
+    }))
+  }
+  
+  const validData = dataArray.filter(item => item && item.value > 0)
+  const total = validData.reduce((sum, item) => sum + (item.value || 0), 0)
+  const countries = validData.length
+  const topProducer = validData.length > 0 ? validData.reduce((max, item) => 
+    (item.value || 0) > (max?.value || 0) ? item : max, null
+  ) : null
   
   return { 
-    production: total, 
+    total, 
     countries, 
-    topProducer: topProducer?.country 
+    topProducer: topProducer?.country,
+    unit: topProducer?.unit || 't'
   }
+})
+
+// Available product options for the searchable dropdown
+const productOptions = computed(() => {
+  // Get both grouped products and individual items from metadata
+  const groupedProducts = dataStore.availableProducts || []
+  const individualItems = dataStore.faoMetadata?.data_summary?.food_items || []
+  
+  // Create options for grouped products
+  const groupedOptions = groupedProducts.map(product => ({
+    value: product,
+    label: product.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) + ' (Gruppe)'
+  }))
+  
+  // Create options for individual items (simplified for now)
+  const individualOptions = individualItems
+    .filter(item => !item.includes('Excluding') && !item.includes('Other'))
+    .slice(0, 50) // Limit to 50 items for performance
+    .map(item => ({
+      value: item.toLowerCase().replace(/[\s&-]+/g, '_').replace(/[^a-z0-9_]/g, ''),
+      label: item
+    }))
+  
+  // Combine and sort
+  return [...groupedOptions, ...individualOptions].sort((a, b) => 
+    a.label.localeCompare(b.label, 'de')
+  )
+})
+
+// Metric options
+const metricOptions = [
+  { value: 'production', label: 'Produktion' },
+  { value: 'import_quantity', label: 'Import' },
+  { value: 'export_quantity', label: 'Export' },
+  { value: 'domestic_supply_quantity', label: 'Inlandsversorgung' }
+]
+
+// Year options  
+const yearOptions = computed(() => {
+  const years = dataStore.availableYears || []
+  return years.map(year => ({
+    value: year,
+    label: year.toString()
+  })).reverse()
 })
 
 const onCountryClick = (countryCode: string) => {
@@ -91,6 +187,13 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
 
 <template>
   <div class="space-y-6">
+    <!-- Product Selector -->
+    <div class="card">
+      <div class="card-body">
+        <ProductSelector />
+      </div>
+    </div>
+    
     <!-- Dashboard Header with Stats -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <!-- Total Production Card -->
@@ -106,13 +209,16 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
             </div>
             <div class="ml-4">
               <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400">
-                Gesamtproduktion {{ uiStore.selectedYear }}
+                {{ uiStore.selectedMetric === 'production' ? 'Gesamtproduktion' : 
+                   uiStore.selectedMetric === 'import_quantity' ? 'Gesamtimport' :
+                   uiStore.selectedMetric === 'export_quantity' ? 'Gesamtexport' :
+                   'Inlandsversorgung' }} {{ uiStore.selectedYear }}
               </h3>
               <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                {{ globalStats.production.toLocaleString('de-DE') }}
+                {{ (globalStats?.total || 0).toLocaleString('de-DE') }}
               </p>
               <p class="text-sm text-gray-500 dark:text-gray-400">
-                {{ uiStore.selectedProduct?.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) || 'Alle Produkte' }}
+                {{ globalStats.unit }} - {{ uiStore.selectedProduct?.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) || 'Alle Produkte' }}
               </p>
             </div>
           </div>
@@ -132,13 +238,19 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
             </div>
             <div class="ml-4">
               <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400">
-                Produzierende Länder
+                {{ uiStore.selectedMetric === 'production' ? 'Produzierende Länder' :
+                   uiStore.selectedMetric === 'import_quantity' ? 'Importierende Länder' :
+                   uiStore.selectedMetric === 'export_quantity' ? 'Exportierende Länder' :
+                   'Länder mit Daten' }}
               </h3>
               <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">
                 {{ globalStats.countries }}
               </p>
               <p class="text-sm text-gray-500 dark:text-gray-400">
-                mit Produktionsdaten
+                mit {{ uiStore.selectedMetric === 'production' ? 'Produktionsdaten' :
+                       uiStore.selectedMetric === 'import_quantity' ? 'Importdaten' :
+                       uiStore.selectedMetric === 'export_quantity' ? 'Exportdaten' :
+                       'Versorgungsdaten' }}
               </p>
             </div>
           </div>
@@ -158,7 +270,10 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
             </div>
             <div class="ml-4">
               <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400">
-                Größter Produzent
+                {{ uiStore.selectedMetric === 'production' ? 'Größter Produzent' :
+                   uiStore.selectedMetric === 'import_quantity' ? 'Größter Importeur' :
+                   uiStore.selectedMetric === 'export_quantity' ? 'Größter Exporteur' :
+                   'Größter Verbraucher' }}
               </h3>
               <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">
                 {{ globalStats.topProducer || 'N/A' }}
@@ -201,7 +316,7 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
           <div class="text-center">
             <p class="text-sm text-gray-600 dark:text-gray-400">Weltanteil</p>
             <p class="text-xl font-bold text-secondary-600 dark:text-secondary-400">
-              {{ ((selectedCountryData.value / globalStats.production) * 100).toFixed(1) }}%
+              {{ globalStats.total > 0 && selectedCountryData ? ((selectedCountryData.value / globalStats.total) * 100).toFixed(1) : '0' }}%
             </p>
             <p class="text-xs text-gray-500 dark:text-gray-400">
               der Weltproduktion
@@ -210,9 +325,7 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
           <div class="text-center">
             <p class="text-sm text-gray-600 dark:text-gray-400">Rang</p>
             <p class="text-xl font-bold text-success-600 dark:text-success-400">
-              #{{ (dataStore.getProductionData(uiStore.selectedProduct, uiStore.selectedYear)?.data
-                ?.sort((a, b) => b.value - a.value)
-                ?.findIndex(item => item.country === uiStore.selectedCountry) + 1) || 'N/A' }}
+              #{{ countryRank }}
             </p>
             <p class="text-xs text-gray-500 dark:text-gray-400">
               weltweit
@@ -253,9 +366,9 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
           </button>
         </div>
       </div>
-      <div class="card-body p-0">
+      <div class="card-body">
         <!-- World Map View -->
-        <div v-if="selectedVisualization === 'world-map'" class="h-96">
+        <div v-if="selectedVisualization === 'world-map'" class="h-[600px] w-full relative">
           <WorldMap
             :selected-product="uiStore.selectedProduct"
             :selected-year="uiStore.selectedYear"
@@ -319,9 +432,10 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
               </h4>
               <div class="space-y-2">
                 <div
-                  v-for="(item, index) in (dataStore.getProductionData(uiStore.selectedProduct, uiStore.selectedYear)?.data
-                    ?.sort((a, b) => b.value - a.value)
-                    ?.slice(0, 10) || [])"
+                  v-for="(item, index) in getCountriesArray()
+                    .filter(item => item.value > 0)
+                    .sort((a, b) => b.value - a.value)
+                    .slice(0, 10)"
                   :key="item.country"
                   class="flex items-center justify-between p-2 bg-white dark:bg-gray-800 rounded"
                 >

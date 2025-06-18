@@ -12,7 +12,6 @@ window.Dashboard = {
             this.loadClimateImpacts();
             this.initialized = true;
         } catch (error) {
-            console.error('Fehler beim Laden der Dashboard-Daten:', error);
             FAOUtils.showError('overview-stats', 'Fehler beim Laden der Dashboard-Daten');
         }
     },

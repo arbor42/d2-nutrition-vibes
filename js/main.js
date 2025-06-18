@@ -11,9 +11,7 @@ class FAOApp {
             await this.populateProductSelectors();
             this.updateYearRange();
             this.initializeModules();
-            console.log('FAO App initialized successfully');
         } catch (error) {
-            console.error('Error initializing FAO App:', error);
         }
     }
 
@@ -22,7 +20,6 @@ class FAOApp {
             const metadata = await FAOUtils.loadData('data/metadata.json');
             this.data.metadata = metadata;
         } catch (error) {
-            console.error('Error loading metadata:', error);
         }
     }
 
@@ -60,9 +57,7 @@ class FAOApp {
                 await FAOUtils.populateMetricSelect(selectorId);
             }
 
-            console.log('All product and metric selectors populated');
         } catch (error) {
-            console.error('Error populating selectors:', error);
         }
     }
 
@@ -86,10 +81,8 @@ class FAOApp {
                     yearDisplay.textContent = minYear;
                 }
                 
-                console.log(`Year range updated: ${minYear} - ${maxYear}`);
             }
         } catch (error) {
-            console.error('Error updating year range:', error);
         }
     }
 
@@ -110,9 +103,7 @@ class FAOApp {
             if (window[moduleName] && typeof window[moduleName].init === 'function') {
                 try {
                     window[moduleName].init();
-                    console.log(`${moduleName} module initialized`);
                 } catch (error) {
-                    console.error(`Error initializing ${moduleName}:`, error);
                 }
             }
         });

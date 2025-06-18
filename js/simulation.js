@@ -11,7 +11,6 @@ window.Simulation = {
             await this.runSimulation();
             this.initialized = true;
         } catch (error) {
-            console.error('Fehler beim Initialisieren der Simulation:', error);
             FAOUtils.showError('simulation-results', 'Fehler beim Laden der Simulation');
         }
     },
@@ -154,7 +153,6 @@ window.Simulation = {
             
             this.visualizeResults(simulationResults, scenario, years);
         } catch (error) {
-            console.error('Fehler beim Ausführen der Simulation:', error);
             FAOUtils.showError('simulation-results', 'Fehler beim Ausführen der Simulation');
         }
     },

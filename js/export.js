@@ -8,7 +8,6 @@ window.FAOExport = {
     downloadSVG(containerId, filename = 'diagramm.svg') {
         const svgNode = document.querySelector(`#${containerId} svg`);
         if (!svgNode) {
-            alert('Kein SVG-Element für den Export gefunden.');
             return;
         }
 
@@ -37,7 +36,6 @@ window.FAOExport = {
 
     downloadCSV(dataArray, filename = 'daten.csv') {
         if (!Array.isArray(dataArray) || dataArray.length === 0) {
-            alert('Keine Daten für CSV-Export vorhanden.');
             return;
         }
 
@@ -61,7 +59,6 @@ window.FAOExport = {
     downloadPNG(containerId, filename = 'diagramm.png') {
         const svgNode = document.querySelector(`#${containerId} svg`);
         if (!svgNode) {
-            alert('Kein SVG-Element für den PNG-Export gefunden.');
             return;
         }
 
@@ -97,7 +94,6 @@ window.FAOExport = {
         };
 
         img.onerror = () => {
-            alert('Fehler beim Rendern des PNG-Exports.');
             URL.revokeObjectURL(url);
         };
 

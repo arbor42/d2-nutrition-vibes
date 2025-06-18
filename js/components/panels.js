@@ -110,7 +110,7 @@ window.Panels = {
                     li.style.display = li.textContent.toLowerCase().includes(term) ? '' : 'none';
                 });
             });
-        }).catch(err => console.error('Fehler beim Laden der Länder-Liste:', err));
+        }).catch(err => {});
     },
 
     togglePanel(key) {

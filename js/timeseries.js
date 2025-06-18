@@ -13,7 +13,6 @@ window.TimeSeries = {
             await this.loadInitialData();
             this.initialized = true;
         } catch (error) {
-            console.error('Fehler beim Initialisieren der Zeitreihenanalyse:', error);
             FAOUtils.showError('timeseries-chart', 'Fehler beim Laden der Zeitreihendaten');
         }
     },
@@ -49,7 +48,6 @@ window.TimeSeries = {
         const chartContainer = document.getElementById('timeseries-chart');
 
         if (!productSelect || !countriesSelect || !chartContainer) {
-            console.warn('Timeseries chart controls or container not found. Chart will not be updated.');
             return;
         }
 
@@ -71,7 +69,6 @@ window.TimeSeries = {
             
             this.createChart(data, selectedCountries, product);
         } catch (error) {
-            console.error('Fehler beim Laden der Zeitreihendaten:', error);
             FAOUtils.showError('timeseries-chart', 'Fehler beim Laden der Zeitreihendaten');
         }
     },

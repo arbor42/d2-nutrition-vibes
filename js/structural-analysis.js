@@ -11,7 +11,6 @@ window.StructuralAnalysis = {
             await this.performAnalysis();
             this.initialized = true;
         } catch (error) {
-            console.error('Fehler beim Initialisieren der Strukturanalyse:', error);
             FAOUtils.showError('structural-analysis-chart', 'Fehler beim Laden der Strukturanalyse');
         }
     },
@@ -50,7 +49,6 @@ window.StructuralAnalysis = {
                     break;
             }
         } catch (error) {
-            console.error('Fehler beim Durchführen der Strukturanalyse:', error);
             FAOUtils.showError('structural-analysis-chart', 'Fehler beim Durchführen der Strukturanalyse');
         }
     },

@@ -17,7 +17,6 @@ window.WorldMap = {
 
     async init() {
         if (this.initialized) return;
-        console.log('WorldMap.init() gestartet');
         FAOUtils.showLoading('world-map');
         try {
             await this.loadWorldData();
@@ -26,9 +25,7 @@ window.WorldMap = {
             FAOExport.attachExport('export-btn-worldmap','export-format-worldmap','world-map');
             await this.loadInitialData();
             this.initialized = true;
-            console.log('WorldMap.init() erfolgreich beendet');
         } catch (error) {
-            console.error('Fehler beim Initialisieren der Weltkarte:', error);
             FAOUtils.showError('world-map', 'Fehler beim Laden der Weltkarte');
         }
     },
@@ -38,22 +35,17 @@ window.WorldMap = {
             // Verwende die vom Nutzer bereitgestellte GeoJSON-Datei
             this.worldData = await FAOUtils.loadData('data/geo/geo.json');
             if (!this.worldData || !this.worldData.features) {
-                console.error('loadWorldData(): geo.json geladen, aber es ist kein valides GeoJSON-Objekt mit Features.', this.worldData);
                 FAOUtils.showError('world-map', 'Ungültige Geodaten geladen.');
                 throw new Error('Ungültige Geodaten');
             }
-            console.log('Weltkarten-Daten geladen:', this.worldData.features.length, 'Länder');
         } catch (error) {
-            console.error('Fehler beim Laden der Weltkarten-Daten:', error);
             throw error;
         }
     },
 
     setupMap() {
-        console.log('setupMap(): Container holen');
         const container = document.getElementById('world-map');
         if (!container) {
-            console.error('setupMap(): Container #world-map nicht gefunden!');
             return;
         }
         container.innerHTML = ''; // Vorherigen Inhalt (z.B. Ladeindikator) entfernen
@@ -62,11 +54,9 @@ window.WorldMap = {
         const height = container.clientHeight;
 
         if (width === 0 || height === 0) {
-            console.error(`setupMap(): Kartencontainer #world-map hat keine validen Dimensionen: Breite=${width}, Höhe=${height}. Die Karte kann nicht gezeichnet werden.`);
             FAOUtils.showError('world-map', 'Kartencontainer hat keine Größe.');
             return;
         }
-        console.log(`setupMap(): SVG wird erstellt mit Dimensionen: Breite=${width}, Höhe=${height}`);
 
         // Speichere Abmessungen für Zoom-Features
         this.width = width;
@@ -110,11 +100,9 @@ window.WorldMap = {
 
     drawCountries() {
         if (!this.worldData || !this.worldData.features || this.worldData.features.length === 0) {
-            console.error('drawCountries(): Keine Features in worldData zum Zeichnen vorhanden.');
             FAOUtils.showError('world-map', 'Keine Länderdaten zum Zeichnen.');
             return;
         }
-        console.log(`drawCountries(): Zeichne ${this.worldData.features.length} Länder.`);
 
         const paths = this.g.selectAll('.country')
             .data(this.worldData.features)
@@ -137,9 +125,7 @@ window.WorldMap = {
             .on('click', (event, d) => this.onCountryClick(event, d));
 
         if (paths.empty()) {
-            console.error('drawCountries(): Es wurden keine Pfad-Elemente zum SVG hinzugefügt.');
         } else {
-            console.log(`drawCountries(): ${paths.size()} Pfad-Elemente erfolgreich zum SVG hinzugefügt.`);
         }
     },
 
@@ -212,8 +198,6 @@ window.WorldMap = {
         document.querySelectorAll('.highlight-list button').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const hl = e.currentTarget.getAttribute('data-highlight');
-                console.log('Highlight ausgewählt:', hl);
-                // TODO: Highlight-Logik implementieren
             });
         });
 
@@ -232,7 +216,6 @@ window.WorldMap = {
     },
 
     async updateMap() {
-        console.log('updateMap() gestartet');
         // Aktuelle Werte aus den Steuerelementen holen
         const productSelect = document.getElementById('product-select');
         const metricSelect  = document.getElementById('metric-select');
@@ -242,7 +225,6 @@ window.WorldMap = {
         const metric  = metricSelect  ? metricSelect.value  : 'production';
         const year    = yearSlider   ? parseInt(yearSlider.value) : 2010;
 
-        console.log(`updateMap(): ${product}, ${year}, ${metric}`);
 
         // Jahr-Anzeige synchronisieren, falls vorhanden
         const yearDisplay = document.getElementById('year-display');
@@ -272,7 +254,6 @@ window.WorldMap = {
             // Filter bei Datenänderung zurücksetzen
             this.resetLegendFilter();
         } catch (error) {
-            console.error('Fehler beim Laden der Kartendaten (Timeseries):', error);
             this.currentData = {}; // Sicherstellen, dass currentData definiert ist
             this.updateMapColors(); // Karte ggf. leeren
             FAOUtils.showError('world-map-overlay', 'Fehler beim Laden der Daten für die Karte.');
@@ -301,9 +282,7 @@ window.WorldMap = {
     },
 
     updateMapColors() {
-        console.log('updateMapColors() gestartet');
         if (!this.currentData) {
-            console.log('updateMapColors(): Keine Daten, Abbruch.');
             return;
         }
 
@@ -339,7 +318,6 @@ window.WorldMap = {
 
         // Legende aktualisieren
         this.updateLegend(values);
-        console.log('updateMapColors() beendet');
     },
 
     getCountryName(feature) {
@@ -360,23 +338,19 @@ window.WorldMap = {
     updateLegend(values) {
         const legendContainer = document.getElementById('map-legend');
         if (!legendContainer) {
-            console.error("WorldMap.updateLegend: Legend container #map-legend not found!");
             return;
         }
         legendContainer.innerHTML = ''; // Clear previous legend
 
         if (!this.colorScale || typeof this.colorScale.quantiles !== 'function' || typeof this.colorScale.range !== 'function') {
-            console.error("WorldMap.updateLegend: Color scale is not properly initialized or not a D3 scale. Cannot create legend.", this.colorScale);
             legendContainer.innerHTML = '<p>Farbskala nicht initialisiert.</p>';
             return;
         }
 
         if (!values || values.length === 0) {
-            console.warn("WorldMap.updateLegend: No data values provided for legend. Displaying 'Keine Daten für Legende verfügbar'.");
             legendContainer.innerHTML = '<p>Keine Daten für Legende verfügbar</p>';
             return;
         }
-        console.log(`WorldMap.updateLegend: Creating legend with ${values.length} values.`);
 
         const legend = d3.select(legendContainer); // Use the already fetched container
         // Überschrift und Reset-Button
@@ -408,7 +382,6 @@ window.WorldMap = {
             item.append('span')
                 .text(`${FAOUtils.formatNumber(min)} - ${FAOUtils.formatNumber(max)}`);
         }
-        console.log("WorldMap.updateLegend: Legend HTML should now be created in #map-legend.");
     },
 
     toggleLegendFilter(min, max, item) {

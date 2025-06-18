@@ -10,7 +10,6 @@ window.ProcessMining = {
             // await this.performProcessMining(); // Removed to prevent rendering in hidden panel
             this.initialized = true;
         } catch (error) {
-            console.error('Fehler beim Initialisieren des Process Mining:', error);
             FAOUtils.showError('process-mining-chart', 'Fehler beim Laden des Process Mining');
         }
     },
@@ -54,7 +53,6 @@ window.ProcessMining = {
                     break;
             }
         } catch (error) {
-            console.error('Fehler beim Process Mining:', error);
             FAOUtils.showError('process-mining-chart', 'Fehler beim Process Mining');
         }
     },

@@ -11,7 +11,6 @@ window.MLPredictions = {
             await this.loadPredictions();
             this.initialized = true;
         } catch (error) {
-            console.error('Fehler beim Initialisieren der ML-Prognosen:', error);
             FAOUtils.showError('ml-chart', 'Fehler beim Laden der ML-Prognosen');
         }
     },
@@ -24,7 +23,6 @@ window.MLPredictions = {
     async loadPredictions() {
         const productSelect = document.getElementById('ml-product-select');
         if (!productSelect || !productSelect.value) {
-            console.warn('No product selected for ML predictions');
             return;
         }
         
@@ -34,7 +32,6 @@ window.MLPredictions = {
             FAOUtils.showLoading('ml-chart');
             
             const dataUrl = `data/ml/${product}_production_forecast.json`;
-            console.log(`ML Panel: Loading forecast for ${product}`);
             const mlData = await FAOUtils.loadData(dataUrl);
             
             if (!mlData) {
@@ -43,9 +40,7 @@ window.MLPredictions = {
             
             this.visualizePredictions(mlData, product);
             this.displayModelInfo(mlData, product);
-            console.log(`ML Panel: Successfully loaded and visualized forecast for ${product}`);
         } catch (error) {
-            console.error('Fehler beim Laden der ML-Prognosen:', error);
             FAOUtils.showError('ml-chart', `Fehler beim Laden der ML-Prognosen für ${this.getProductDisplayName(product)}: ${error.message}`);
         }
     },

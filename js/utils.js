@@ -75,7 +75,6 @@ async function loadDataDirect(url) {
         }
         return await response.json();
     } catch (error) {
-        console.error(`Fehler beim Laden von ${url}:`, error);
         throw error;
     }
 }
@@ -264,19 +263,9 @@ async function loadProductTimeseries(product, metric = 'production') {
     const productData = timeseriesData.filter(d => d.item === actualProductName);
     
     if (productData.length === 0) {
-        console.warn(`No data found for product: ${actualProductName} (searched for: ${product})`);
-        console.log('Available products:', timeseriesData.map(d => d.item).slice(0, 10));
         return {};
     }
     
-    console.log(`Found ${productData.length} countries for product: ${actualProductName}, metric: ${metric}`);
-    
-    // Quick sample of first country's data structure
-    if (productData.length > 0) {
-        const sampleCountry = productData[0];
-        const sampleYear = sampleCountry.data[0];
-        console.log(`Sample data structure from ${sampleCountry.country}:`, Object.keys(sampleYear));
-    }
     
     // Transform to old format structure: {country: [{year, value, unit}]}
     const result = {};
@@ -301,10 +290,6 @@ async function loadProductTimeseries(product, metric = 'production') {
             const value = yearData[actualMetric];
             
             // Debug: Log what we're looking for (only for first few items)
-            if (countryName === 'Germany' && yearData.year === 2010 && metric === 'domestic_supply') {
-                console.log(`Debug for Germany 2010: metric=${metric}, actualMetric=${actualMetric}, value=${value}`);
-                console.log('Available keys in yearData:', Object.keys(yearData));
-            }
             
             // Only include data points that have values
             if (value !== null && value !== undefined) {
@@ -322,7 +307,6 @@ async function loadProductTimeseries(product, metric = 'production') {
         }
     });
     
-    console.log(`Returning data for ${Object.keys(result).length} countries with metric: ${metric}`);
     return result;
 }
 
@@ -386,7 +370,6 @@ async function generateMLForecast(product) {
         };
         
     } catch (error) {
-        console.error('Error generating ML forecast:', error);
         return {
             product: product,
             model_info: {
@@ -414,7 +397,6 @@ async function loadDataWithFallback(url) {
             // Parse the URL to extract product and metric
             // Handle URLs like: data/timeseries/wheat_and_products_production.json
             const fileName = url.replace('data/timeseries/', '').replace('.json', '');
-            console.log(`Parsing timeseries URL: ${url} -> fileName: ${fileName}`);
             
             // Known metrics to properly split URLs with underscores
             const knownMetrics = ['production', 'imports', 'exports', 'domestic_supply', 
@@ -432,11 +414,8 @@ async function loadDataWithFallback(url) {
             }
             
             if (product && metric) {
-                console.log(`Loading timeseries for product: ${product}, metric: ${metric}`);
                 return await loadProductTimeseries(product, metric);
             } else {
-                console.warn(`Could not parse product and metric from fileName: ${fileName}`);
-                console.warn(`Known metrics: ${knownMetrics.join(', ')}`);
             }
         }
         if (url.startsWith('data/ml/')) {
@@ -444,7 +423,6 @@ async function loadDataWithFallback(url) {
             const productMatch = url.match(/data\/ml\/(.+)_production_forecast\.json/);
             if (productMatch) {
                 const product = productMatch[1];
-                console.log(`Looking for ML forecast for product: ${product}`);
                 
                 // Load ML index to find available forecasts
                 try {
@@ -464,13 +442,10 @@ async function loadDataWithFallback(url) {
                         
                         if (availableFiles.includes(targetFilename)) {
                             const forecastUrl = `fao_data/ml/${targetFilename}`;
-                            console.log(`Found ML forecast: ${targetFilename}`);
                             try {
                                 const data = await loadDataDirect(forecastUrl);
-                                console.log(`Successfully loaded ${prefix} ML forecast for ${product}`);
                                 return data;
                             } catch (loadError) {
-                                console.warn(`Failed to load ${targetFilename}:`, loadError);
                                 continue;
                             }
                         }
@@ -484,22 +459,17 @@ async function loadDataWithFallback(url) {
                     
                     if (fuzzyMatches.length > 0) {
                         const bestMatch = fuzzyMatches[0];
-                        console.log(`Using fuzzy match: ${bestMatch} for ${product}`);
                         try {
                             const data = await loadDataDirect(`fao_data/ml/${bestMatch}`);
-                            console.log(`Successfully loaded fuzzy match ML forecast for ${product}`);
                             return data;
                         } catch (loadError) {
-                            console.warn(`Failed to load fuzzy match ${bestMatch}:`, loadError);
                         }
                     }
                     
                     // Last resort: generate synthetic data
-                    console.warn(`No ML forecast found for ${product}, generating synthetic data`);
                     return await generateMLForecast(product);
                     
                 } catch (indexError) {
-                    console.error('Failed to load ML index:', indexError);
                     return await generateMLForecast(product);
                 }
             }
@@ -536,19 +506,15 @@ async function populateMetricSelect(selectId) {
                 option.value = metricMapping[element].key;
                 option.textContent = metricMapping[element].label;
                 selectElement.appendChild(option);
-                console.log(`Added metric option: ${element} -> ${metricMapping[element].key}`);
             } else {
-                console.warn(`No mapping found for element: ${element}`);
             }
         });
         
         // Set default to production
         selectElement.value = 'production';
         
-        console.log(`Populated ${selectId} with ${elements.length} metrics`);
         
     } catch (error) {
-        console.error('Error populating metric select:', error);
         // Fallback to basic options
         const selectElement = document.getElementById(selectId);
         if (selectElement) {
@@ -624,10 +590,8 @@ async function populateMLProductSelect(selectId) {
             selectElement.value = wheatOptions[0];
         }
         
-        console.log(`Populated ${selectId} with ${sortedProducts.length} ML products from ${availableFiles.length} forecasts`);
         
     } catch (error) {
-        console.error('Error populating ML product select:', error);
         // Fallback to basic options
         const selectElement = document.getElementById(selectId);
         if (selectElement) {
@@ -686,10 +650,8 @@ async function populateProductSelect(selectId) {
             selectElement.value = wheatKey;
         }
         
-        console.log(`Populated ${selectId} with ${foodItems.length} products`);
         
     } catch (error) {
-        console.error('Error populating product select:', error);
         // Fallback to basic options
         const selectElement = document.getElementById(selectId);
         if (selectElement) {
@@ -704,16 +666,11 @@ async function populateProductSelect(selectId) {
 
 // Test function for debugging
 async function testDomesticSupply() {
-    console.log('Testing domestic supply data loading...');
     try {
         const data = await loadProductTimeseries('wheat_and_products', 'domestic_supply');
-        console.log('Domestic supply data loaded:', Object.keys(data).length, 'countries');
-        if (data.Germany) {
-            console.log('Germany data sample:', data.Germany.slice(0, 3));
-        }
         return data;
     } catch (error) {
-        console.error('Error loading domestic supply:', error);
+        // Error loading domestic supply
     }
 }
 

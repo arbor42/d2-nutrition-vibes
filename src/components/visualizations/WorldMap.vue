@@ -120,17 +120,17 @@ let path: d3.GeoPath
 let colorScale: d3.ScaleQuantize<string>
 let zoom: d3.ZoomBehavior<SVGElement, unknown>
 
-// Green color scheme for production data
+// High contrast green color scheme for production data
 const greenColorScheme = [
-  '#f7fcf5',
-  '#e5f5e0', 
-  '#c7e9c0',
-  '#a1d99b',
-  '#74c476',
-  '#41ab5d',
-  '#238b45',
-  '#006d2c',
-  '#00441b'
+  '#f7fcf5',  // Almost white for zero/very low values
+  '#e5f5e0',  // Very light green
+  '#a8dba8',  // Light green
+  '#7bc96f',  // Light-medium green
+  '#4eb157',  // Medium green
+  '#2e8b3e',  // Medium-dark green
+  '#1b7828',  // Dark green
+  '#0d5814',  // Very dark green
+  '#003300'   // Almost black green for highest values
 ]
 
 // Computed properties
@@ -381,13 +381,7 @@ const createLegend = (svg) => {
     .attr('y1', '0%')
     .attr('y2', '0%')
   
-  // Add color stops
-  const colorStops = greenColorScheme.length
-  greenColorScheme.forEach((color, i) => {
-    gradient.append('stop')
-      .attr('offset', `${(i / (colorStops - 1)) * 100}%`)
-      .attr('stop-color', color)
-  })
+  // Color stops are now added above in the scale section
   
   // Add rectangle with gradient
   legend.append('rect')
@@ -401,6 +395,38 @@ const createLegend = (svg) => {
   const legendScaleLinear = d3.scaleLinear()
     .domain(legendDomain.value)
     .range([0, legendWidth])
+  
+  // Update gradient with smooth transition
+  gradient.selectAll('stop').remove()
+  
+  // Add color stops for each color in the scheme
+  if (legendScale.value && legendScale.value.quantiles) {
+    const quantiles = [0, ...legendScale.value.quantiles(), legendDomain.value[1]]
+    
+    greenColorScheme.forEach((color, i) => {
+      if (i < quantiles.length - 1) {
+        const startPos = legendScaleLinear(quantiles[i]) / legendWidth
+        const endPos = legendScaleLinear(quantiles[i + 1]) / legendWidth
+        
+        gradient.append('stop')
+          .attr('offset', `${startPos * 100}%`)
+          .attr('stop-color', color)
+        
+        if (i < greenColorScheme.length - 1) {
+          gradient.append('stop')
+            .attr('offset', `${endPos * 100}%`)
+            .attr('stop-color', color)
+        }
+      }
+    })
+  } else {
+    // Fallback: linear gradient
+    greenColorScheme.forEach((color, i) => {
+      gradient.append('stop')
+        .attr('offset', `${(i / (greenColorScheme.length - 1)) * 100}%`)
+        .attr('stop-color', color)
+    })
+  }
   
   const legendAxis = d3.axisBottom(legendScaleLinear)
     .ticks(5)
@@ -542,17 +568,42 @@ const loadProductionData = async () => {
     )
     
     console.log('🗺️ WorldMap: Raw production data:', productionData)
+    console.log('🗺️ WorldMap: Data type:', typeof productionData)
 
     if (productionData) {
-      // Transform the object structure to array format expected by the visualization
-      const transformedData = Object.entries(productionData).map(([countryName, data]) => ({
-        country: countryName,
-        countryCode: getCountryCode(countryName), // data doesn't have iso3/code, need to derive it
-        value: data.value || 0,
-        unit: data.unit || '',
-        year: data.year || props.selectedYear,
-        element: data.element || props.selectedMetric
-      }))
+      let transformedData = []
+      
+      // Check if it's already an array
+      if (Array.isArray(productionData)) {
+        transformedData = productionData.map(item => ({
+          country: item.country || item.Area || '',
+          countryCode: item.countryCode || item.iso3 || getCountryCode(item.country || item.Area || ''),
+          value: item.value || item.Value || 0,
+          unit: item.unit || item.Unit || 't',
+          year: item.year || item.Year || props.selectedYear,
+          element: item.element || item.Element || props.selectedMetric
+        }))
+      } else if (productionData.data && Array.isArray(productionData.data)) {
+        // Handle wrapped data
+        transformedData = productionData.data.map(item => ({
+          country: item.country || item.Area || '',
+          countryCode: item.countryCode || item.iso3 || getCountryCode(item.country || item.Area || ''),
+          value: item.value || item.Value || 0,
+          unit: item.unit || item.Unit || 't',
+          year: item.year || item.Year || props.selectedYear,
+          element: item.element || item.Element || props.selectedMetric
+        }))
+      } else if (typeof productionData === 'object') {
+        // Transform the object structure to array format
+        transformedData = Object.entries(productionData).map(([countryName, data]) => ({
+          country: countryName,
+          countryCode: getCountryCode(countryName),
+          value: data.value || data.Value || 0,
+          unit: data.unit || data.Unit || 't',
+          year: data.year || data.Year || props.selectedYear,
+          element: data.element || data.Element || props.selectedMetric
+        }))
+      }
       
       console.log('🗺️ WorldMap: Transformed data:', transformedData)
       productionDataStatic = transformedData
@@ -570,6 +621,7 @@ const loadProductionData = async () => {
 const getCountryCode = (countryName) => {
   const mapping = {
     'China': 'CHN',
+    'China, mainland': 'CHN',
     'United States': 'USA', 
     'United States of America': 'USA',
     'Brazil': 'BRA',
@@ -706,7 +758,22 @@ const getCountryCode = (countryName) => {
     'Nauru': 'NRU',
     'Palau': 'PLW',
     'Marshall Islands': 'MHL',
-    'Micronesia': 'FSM'
+    'Micronesia': 'FSM',
+    'Czechia': 'CZE',
+    'Türkiye': 'TUR',
+    'Turkey': 'TUR',
+    'Viet Nam': 'VNM',
+    'United Kingdom of Great Britain and Northern Ireland': 'GBR',
+    'Bolivia (Plurinational State of)': 'BOL',
+    'Venezuela (Bolivarian Republic of)': 'VEN',
+    'Iran (Islamic Republic of)': 'IRN',
+    'Korea, Republic of': 'KOR',
+    'Democratic People\'s Republic of Korea': 'PRK',
+    'Lao People\'s Democratic Republic': 'LAO',
+    'Timor-Leste': 'TLS',
+    'Côte d\'Ivoire': 'CIV',
+    'United Republic of Tanzania': 'TZA',
+    'Syrian Arab Republic': 'SYR'
   }
   return mapping[countryName] || countryName.substring(0, 3).toUpperCase()
 }
@@ -775,30 +842,52 @@ const applyProductionDataDirect = (container, data) => {
   if (!data || !Array.isArray(data)) return
 
   console.log('📊 WorldMap: Applying production data:', data.length, 'entries')
+  console.log('📊 WorldMap: Sample data:', data.slice(0, 5))
 
   // Create data lookup
   const dataByCountry = new Map()
   const dataByCountryCode = new Map()
+  const dataByNormalizedName = new Map()
   
   data.forEach(d => {
     if (d.value > 0) {
       dataByCountry.set(d.country.toLowerCase(), d.value)
-      dataByCountryCode.set(d.countryCode, d.value)
+      if (d.countryCode) {
+        dataByCountryCode.set(d.countryCode, d.value)
+      }
+      // Also store by normalized name
+      const normalized = normalizeCountryName(d.country).toLowerCase()
+      dataByNormalizedName.set(normalized, d.value)
     }
   })
+  
+  console.log('🗺️ WorldMap: Data maps created - Countries:', dataByCountry.size, 'Codes:', dataByCountryCode.size)
 
   // Create color scale with fixed domain for consistency across years
   const values = data.filter(d => d.value > 0).map(d => d.value)
   if (values.length > 0) {
     // Update legend domain if needed
     const maxValue = d3.max(values)
-    if (maxValue > legendDomain.value[1]) {
-      legendDomain.value = [0, Math.ceil(maxValue / 10000000) * 10000000]
-    }
+    const minValue = d3.min(values)
     
-    colorScale = d3.scaleQuantize()
-      .domain(legendDomain.value)
+    // Create domain with better distribution
+    legendDomain.value = [0, maxValue]
+    
+    console.log('🎨 WorldMap: Color scale domain:', legendDomain.value)
+    console.log('🎨 WorldMap: Min value:', minValue, 'Max value:', maxValue)
+    
+    // Use quantile scale for better distribution of colors
+    // This ensures equal number of countries in each color bin
+    const sortedValues = values.sort((a, b) => a - b)
+    
+    colorScale = d3.scaleQuantile()
+      .domain(sortedValues)
       .range(greenColorScheme)
+    
+    console.log('🎨 WorldMap: Quantile thresholds:', colorScale.quantiles())
+    
+    // Test the scale
+    console.log('🎨 WorldMap: Test colors - 0:', colorScale(0), maxValue/2 + ':', colorScale(maxValue/2), maxValue + ':', colorScale(maxValue))
     
     // Update legend scale
     legendScale.value = colorScale
@@ -809,21 +898,39 @@ const applyProductionDataDirect = (container, data) => {
     .transition()
     .duration(750)
     .attr('fill', (d) => {
-      const countryName = (d.properties.name || '').toLowerCase()
-      const countryCode = d.properties.iso_a3 || d.properties.adm0_a3
+      // Try multiple properties for country identification
+      const countryName = (d.properties.name || d.properties.NAME || d.properties.admin || '').toLowerCase()
+      const countryCode = d.properties.iso_a3 || d.properties.ISO_A3 || d.properties.adm0_a3 || d.properties.ADM0_A3
+      const normalizedName = normalizeCountryName(d.properties.name || d.properties.NAME || '').toLowerCase()
       
-      const value = dataByCountryCode.get(countryCode) || dataByCountry.get(countryName)
+      // Try to find value by different keys
+      let value = null
+      if (countryCode && dataByCountryCode.has(countryCode)) {
+        value = dataByCountryCode.get(countryCode)
+      } else if (dataByNormalizedName.has(normalizedName)) {
+        value = dataByNormalizedName.get(normalizedName)
+      } else if (dataByCountry.has(countryName)) {
+        value = dataByCountry.get(countryName)
+      }
       
       if (value && colorScale) {
-        return colorScale(value)
+        const color = colorScale(value)
+        // Log first few countries to debug
+        if (container.selectAll('.country').nodes().indexOf(d) < 5) {
+          console.log(`🎨 Country: ${countryName}, Code: ${countryCode}, Value: ${value}, Color: ${color}`)
+        }
+        return color
       }
       return '#e5e7eb'
     })
     .attr('opacity', (d) => {
-      const countryName = (d.properties.name || '').toLowerCase()
-      const countryCode = d.properties.iso_a3 || d.properties.adm0_a3
+      const countryName = (d.properties.name || d.properties.NAME || d.properties.admin || '').toLowerCase()
+      const countryCode = d.properties.iso_a3 || d.properties.ISO_A3 || d.properties.adm0_a3 || d.properties.ADM0_A3
+      const normalizedName = normalizeCountryName(d.properties.name || d.properties.NAME || '').toLowerCase()
       
-      const hasData = dataByCountryCode.has(countryCode) || dataByCountry.has(countryName)
+      const hasData = (countryCode && dataByCountryCode.has(countryCode)) || 
+                      dataByNormalizedName.has(normalizedName) ||
+                      dataByCountry.has(countryName)
       return hasData ? 1 : 0.6
     })
 }
@@ -1024,9 +1131,10 @@ const handleResize = () => {
 }
 
 // Watchers
-watch([() => props.selectedProduct, () => props.selectedYear], () => {
-  loadProductionData()
-})
+watch([() => props.selectedProduct, () => props.selectedYear], async () => {
+  console.log('🔄 WorldMap: Product/Year changed, reloading data...')
+  await loadProductionData()
+}, { immediate: false })
 
 // Removed watcher - using static updates instead
 

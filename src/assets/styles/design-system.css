@@ -1,0 +1,418 @@
+/* Design System CSS Variables and Custom Properties */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import './visualizations.css';
+
+/* CSS Custom Properties for Design Tokens */
+:root {
+  /* Color Tokens */
+  --color-primary: theme('colors.primary.500');
+  --color-primary-hover: theme('colors.primary.600');
+  --color-primary-light: theme('colors.primary.100');
+  --color-primary-dark: theme('colors.primary.800');
+  
+  --color-secondary: theme('colors.secondary.500');
+  --color-secondary-hover: theme('colors.secondary.600');
+  --color-secondary-light: theme('colors.secondary.100');
+  --color-secondary-dark: theme('colors.secondary.800');
+  
+  /* Visualization Colors */
+  --color-viz-production: theme('colors.viz.production.500');
+  --color-viz-forecast: theme('colors.viz.forecast.500');
+  --color-viz-analysis: theme('colors.viz.analysis.500');
+  
+  /* Semantic Colors */
+  --color-success: theme('colors.success.500');
+  --color-warning: theme('colors.warning.500');
+  --color-error: theme('colors.error.500');
+  
+  /* Typography Scale */
+  --font-size-xs: theme('fontSize.xs.0');
+  --font-size-sm: theme('fontSize.sm.0');
+  --font-size-base: theme('fontSize.base.0');
+  --font-size-lg: theme('fontSize.lg.0');
+  --font-size-xl: theme('fontSize.xl.0');
+  --font-size-2xl: theme('fontSize.2xl.0');
+  --font-size-3xl: theme('fontSize.3xl.0');
+  --font-size-4xl: theme('fontSize.4xl.0');
+  
+  /* Spacing Scale */
+  --spacing-xs: theme('spacing.1');
+  --spacing-sm: theme('spacing.2');
+  --spacing-md: theme('spacing.4');
+  --spacing-lg: theme('spacing.6');
+  --spacing-xl: theme('spacing.8');
+  --spacing-2xl: theme('spacing.12');
+  --spacing-3xl: theme('spacing.16');
+  
+  /* Border Radius */
+  --radius-sm: theme('borderRadius.sm');
+  --radius-md: theme('borderRadius.md');
+  --radius-lg: theme('borderRadius.lg');
+  --radius-xl: theme('borderRadius.xl');
+  
+  /* Shadows */
+  --shadow-sm: theme('boxShadow.sm');
+  --shadow-md: theme('boxShadow.md');
+  --shadow-lg: theme('boxShadow.lg');
+  --shadow-xl: theme('boxShadow.xl');
+  
+  /* Transitions */
+  --transition-fast: 150ms ease-in-out;
+  --transition-normal: 200ms ease-in-out;
+  --transition-slow: 300ms ease-in-out;
+  
+  /* Z-Index Scale */
+  --z-dropdown: 10;
+  --z-modal: 20;
+  --z-tooltip: 30;
+  --z-notification: 40;
+  --z-overlay: 50;
+}
+
+/* Dark Mode Variables */
+.dark {
+  --color-primary: theme('colors.primary.400');
+  --color-primary-hover: theme('colors.primary.500');
+  --color-primary-light: theme('colors.primary.900');
+  --color-primary-dark: theme('colors.primary.200');
+  
+  --color-secondary: theme('colors.secondary.400');
+  --color-secondary-hover: theme('colors.secondary.500');
+  --color-secondary-light: theme('colors.secondary.900');
+  --color-secondary-dark: theme('colors.secondary.200');
+}
+
+/* Component Base Styles */
+@layer components {
+  /* Button Components */
+  .btn {
+    @apply inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  
+  .btn-sm {
+    @apply px-3 py-1.5 text-sm;
+  }
+  
+  .btn-md {
+    @apply px-4 py-2 text-sm;
+  }
+  
+  .btn-lg {
+    @apply px-6 py-3 text-base;
+  }
+  
+  .btn-primary {
+    @apply bg-primary-500 text-white hover:bg-primary-600 focus:ring-primary-500;
+  }
+  
+  .btn-secondary {
+    @apply bg-secondary-500 text-white hover:bg-secondary-600 focus:ring-secondary-500;
+  }
+  
+  .btn-outline {
+    @apply border-2 border-current bg-transparent hover:bg-current hover:text-white;
+  }
+  
+  .btn-ghost {
+    @apply bg-transparent text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800;
+  }
+  
+  /* Card Components */
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700;
+  }
+  
+  .card-header {
+    @apply px-6 py-4 border-b border-gray-200 dark:border-gray-700;
+  }
+  
+  .card-body {
+    @apply px-6 py-4;
+  }
+  
+  .card-footer {
+    @apply px-6 py-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50;
+  }
+  
+  /* Form Components */
+  .form-input {
+    @apply block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors;
+  }
+  
+  .form-input-error {
+    @apply border-error-300 focus:border-error-500 focus:ring-error-500;
+  }
+  
+  .form-label {
+    @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1;
+  }
+  
+  .form-error {
+    @apply mt-1 text-sm text-error-600 dark:text-error-400;
+  }
+  
+  .form-help {
+    @apply mt-1 text-sm text-gray-500 dark:text-gray-400;
+  }
+  
+  /* Panel Components */
+  .panel {
+    @apply bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden;
+  }
+  
+  .panel-header {
+    @apply px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50;
+  }
+  
+  .panel-title {
+    @apply text-lg font-semibold text-gray-900 dark:text-gray-100;
+  }
+  
+  .panel-subtitle {
+    @apply text-sm text-gray-600 dark:text-gray-400;
+  }
+  
+  .panel-body {
+    @apply px-6 py-4;
+  }
+  
+  .panel-actions {
+    @apply px-6 py-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50 flex items-center justify-end space-x-3;
+  }
+  
+  /* Visualization Components */
+  .viz-container {
+    @apply relative overflow-hidden bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700;
+  }
+  
+  .viz-header {
+    @apply px-4 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50;
+  }
+  
+  .viz-title {
+    @apply text-base font-semibold text-gray-900 dark:text-gray-100;
+  }
+  
+  .viz-subtitle {
+    @apply text-sm text-gray-600 dark:text-gray-400;
+  }
+  
+  .viz-body {
+    @apply p-4;
+  }
+  
+  .viz-legend {
+    @apply absolute bottom-4 left-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg p-3 shadow-sm;
+  }
+  
+  .viz-controls {
+    @apply absolute top-4 right-4 flex flex-col space-y-2;
+  }
+  
+  /* Loading States */
+  .loading-overlay {
+    @apply absolute inset-0 bg-gray-50 dark:bg-gray-900 bg-opacity-75 flex items-center justify-center z-10;
+  }
+  
+  .loading-spinner {
+    @apply animate-spin rounded-full h-6 w-6 border-b-2 border-primary-500;
+  }
+  
+  .loading-text {
+    @apply text-gray-600 dark:text-gray-400;
+  }
+  
+  /* Error States */
+  .error-overlay {
+    @apply absolute inset-0 bg-error-50 dark:bg-error-900/20 flex items-center justify-center z-10;
+  }
+  
+  .error-message {
+    @apply text-error-600 dark:text-error-400;
+  }
+  
+  /* Notification Components */
+  .notification {
+    @apply fixed top-4 right-4 max-w-sm w-full bg-white dark:bg-gray-800 shadow-lg rounded-lg border border-gray-200 dark:border-gray-700 z-40;
+  }
+  
+  .notification-success {
+    @apply border-l-4 border-success-500;
+  }
+  
+  .notification-warning {
+    @apply border-l-4 border-warning-500;
+  }
+  
+  .notification-error {
+    @apply border-l-4 border-error-500;
+  }
+  
+  .notification-info {
+    @apply border-l-4 border-secondary-500;
+  }
+  
+  /* Responsive Layout Utilities */
+  .container-fluid {
+    @apply w-full max-w-none px-4 sm:px-6 lg:px-8;
+  }
+  
+  .container-sm {
+    @apply w-full max-w-sm mx-auto px-4;
+  }
+  
+  .container-md {
+    @apply w-full max-w-2xl mx-auto px-4;
+  }
+  
+  .container-lg {
+    @apply w-full max-w-4xl mx-auto px-4;
+  }
+  
+  .container-xl {
+    @apply w-full max-w-6xl mx-auto px-4;
+  }
+  
+  .container-2xl {
+    @apply w-full max-w-7xl mx-auto px-4;
+  }
+  
+  /* Grid Utilities */
+  .grid-cols-auto {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+  
+  .grid-cols-auto-sm {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+  
+  .grid-cols-auto-lg {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+  
+  /* Accessibility Utilities */
+  .sr-only {
+    @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+  }
+  
+  .focus-visible {
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500;
+  }
+  
+  /* Animation Utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .animate-slide-in-up {
+    animation: slideInUp 0.3s ease-out;
+  }
+  
+  .animate-slide-in-down {
+    animation: slideInDown 0.3s ease-out;
+  }
+  
+  .animate-bounce-in {
+    animation: bounceIn 0.6s ease-out;
+  }
+}
+
+/* Responsive Design Patterns */
+@layer utilities {
+  /* Mobile-first responsive breakpoints */
+  @media (max-width: 640px) {
+    .responsive-grid {
+      @apply grid-cols-1;
+    }
+    
+    .responsive-text {
+      @apply text-sm;
+    }
+    
+    .responsive-padding {
+      @apply px-4 py-2;
+    }
+  }
+  
+  @media (min-width: 641px) and (max-width: 1024px) {
+    .responsive-grid {
+      @apply grid-cols-2;
+    }
+    
+    .responsive-text {
+      @apply text-base;
+    }
+    
+    .responsive-padding {
+      @apply px-6 py-3;
+    }
+  }
+  
+  @media (min-width: 1025px) {
+    .responsive-grid {
+      @apply grid-cols-3;
+    }
+    
+    .responsive-text {
+      @apply text-lg;
+    }
+    
+    .responsive-padding {
+      @apply px-8 py-4;
+    }
+  }
+  
+  /* Print Styles */
+  @media print {
+    .no-print {
+      display: none !important;
+    }
+    
+    .print-only {
+      display: block !important;
+    }
+    
+    .viz-container {
+      page-break-inside: avoid;
+    }
+  }
+}
+
+/* Dark Mode Transitions */
+* {
+  transition: background-color var(--transition-normal), 
+              border-color var(--transition-normal), 
+              color var(--transition-normal);
+}
+
+/* Focus Styles for Better Accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  :root {
+    --color-primary: #000000;
+    --color-secondary: #ffffff;
+  }
+  
+  .dark {
+    --color-primary: #ffffff;
+    --color-secondary: #000000;
+  }
+}

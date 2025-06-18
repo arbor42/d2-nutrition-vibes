@@ -1,0 +1,405 @@
+/* D3.js Visualization Specific Styles */
+@layer utilities {
+  /* Chart Container Utilities */
+  .chart-container {
+    @apply relative overflow-hidden bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700;
+  }
+  
+  .chart-svg {
+    @apply w-full h-full text-gray-900 dark:text-gray-100;
+  }
+  
+  /* Tooltip Utilities */
+  .chart-tooltip {
+    @apply absolute pointer-events-none bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-sm rounded-lg px-3 py-2 shadow-lg opacity-0 transition-opacity z-30 max-w-xs;
+  }
+  
+  .chart-tooltip.visible {
+    @apply opacity-100;
+  }
+  
+  /* Axis Utilities */
+  .chart-axis text {
+    @apply fill-gray-600 dark:fill-gray-400 text-xs;
+  }
+  
+  .chart-axis path,
+  .chart-axis line {
+    @apply stroke-gray-300 dark:stroke-gray-600;
+  }
+  
+  .chart-axis-label {
+    @apply fill-gray-700 dark:fill-gray-300 text-sm font-medium;
+  }
+  
+  /* Grid Utilities */
+  .chart-grid line {
+    @apply stroke-gray-200 dark:stroke-gray-700 stroke-1;
+    opacity: 0.5;
+  }
+  
+  .chart-grid path {
+    @apply stroke-none;
+  }
+  
+  /* World Map Specific Styles */
+  .world-map-country {
+    @apply fill-gray-200 dark:fill-gray-700 stroke-white dark:stroke-gray-600;
+    stroke-width: 0.5;
+    cursor: pointer;
+    transition: fill 0.2s ease-in-out;
+  }
+  
+  .world-map-country:hover {
+    @apply fill-gray-300 dark:fill-gray-600;
+  }
+  
+  .world-map-country.selected {
+    @apply stroke-primary-500 dark:stroke-primary-400;
+    stroke-width: 2;
+  }
+  
+  .world-map-country.has-data {
+    opacity: 1;
+  }
+  
+  .world-map-country.no-data {
+    opacity: 0.6;
+  }
+  
+  /* Timeseries Chart Specific Styles */
+  .timeseries-line {
+    @apply fill-none stroke-primary-500 dark:stroke-primary-400;
+    stroke-width: 2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+  
+  .timeseries-point {
+    @apply fill-primary-500 dark:fill-primary-400;
+    r: 4;
+    cursor: pointer;
+    transition: r 0.2s ease-in-out;
+  }
+  
+  .timeseries-point:hover {
+    r: 6;
+  }
+  
+  .timeseries-area {
+    @apply fill-primary-100 dark:fill-primary-900;
+    opacity: 0.3;
+  }
+  
+  /* Bar Chart Specific Styles */
+  .bar-chart-bar {
+    @apply fill-secondary-500 dark:fill-secondary-400;
+    cursor: pointer;
+    transition: fill 0.2s ease-in-out;
+  }
+  
+  .bar-chart-bar:hover {
+    @apply fill-secondary-600 dark:fill-secondary-300;
+  }
+  
+  .bar-chart-bar.selected {
+    @apply fill-primary-500 dark:fill-primary-400;
+  }
+  
+  /* Scatter Plot Specific Styles */
+  .scatter-point {
+    @apply fill-viz-analysis-500 dark:fill-viz-analysis-400;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s ease-in-out, r 0.2s ease-in-out;
+  }
+  
+  .scatter-point:hover {
+    opacity: 1;
+  }
+  
+  .scatter-point.highlighted {
+    @apply stroke-gray-900 dark:stroke-gray-100;
+    stroke-width: 2;
+    opacity: 1;
+  }
+  
+  /* Heatmap Specific Styles */
+  .heatmap-cell {
+    cursor: pointer;
+    transition: opacity 0.2s ease-in-out;
+  }
+  
+  .heatmap-cell:hover {
+    opacity: 0.8;
+    stroke: theme('colors.gray.900');
+    stroke-width: 1;
+  }
+  
+  /* Network Graph Specific Styles */
+  .network-node {
+    cursor: pointer;
+    transition: r 0.2s ease-in-out;
+  }
+  
+  .network-node:hover {
+    r: 8;
+  }
+  
+  .network-link {
+    @apply stroke-gray-400 dark:stroke-gray-600;
+    stroke-opacity: 0.6;
+    transition: stroke-opacity 0.2s ease-in-out;
+  }
+  
+  .network-link:hover {
+    stroke-opacity: 1;
+  }
+  
+  .network-link.highlighted {
+    @apply stroke-primary-500 dark:stroke-primary-400;
+    stroke-opacity: 1;
+    stroke-width: 2;
+  }
+  
+  /* Legend Utilities */
+  .chart-legend {
+    @apply bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg p-3 shadow-sm;
+  }
+  
+  .chart-legend-item {
+    @apply flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300;
+  }
+  
+  .chart-legend-color {
+    @apply w-4 h-3 border border-gray-300 dark:border-gray-600 rounded-sm flex-shrink-0;
+  }
+  
+  .chart-legend-label {
+    @apply text-xs text-gray-600 dark:text-gray-400 font-medium;
+  }
+  
+  /* Control Utilities */
+  .chart-controls {
+    @apply absolute top-4 right-4 flex flex-col space-y-2 z-20;
+  }
+  
+  .chart-control-button {
+    @apply px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-gray-700 dark:text-gray-300;
+  }
+  
+  .chart-control-button:hover {
+    @apply bg-gray-50 dark:bg-gray-700;
+  }
+  
+  .chart-control-button.active {
+    @apply bg-primary-500 text-white border-primary-500;
+  }
+  
+  /* Zoom and Pan Controls */
+  .zoom-controls {
+    @apply absolute bottom-4 right-4 flex flex-col space-y-1 z-20;
+  }
+  
+  .zoom-button {
+    @apply w-8 h-8 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-center text-gray-700 dark:text-gray-300;
+  }
+  
+  /* Animation Classes */
+  .chart-enter {
+    animation: chartEnter 0.5s ease-out;
+  }
+  
+  .chart-update {
+    animation: chartUpdate 0.3s ease-in-out;
+  }
+  
+  .chart-exit {
+    animation: chartExit 0.3s ease-in;
+  }
+  
+  /* Loading States for Charts */
+  .chart-loading {
+    @apply absolute inset-0 bg-gray-50 dark:bg-gray-900 bg-opacity-75 flex items-center justify-center z-10;
+  }
+  
+  .chart-loading-spinner {
+    @apply animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500;
+  }
+  
+  .chart-loading-text {
+    @apply ml-3 text-gray-600 dark:text-gray-400 text-sm;
+  }
+  
+  /* Error States for Charts */
+  .chart-error {
+    @apply absolute inset-0 bg-error-50 dark:bg-error-900/20 flex items-center justify-center z-10;
+  }
+  
+  .chart-error-content {
+    @apply text-center max-w-sm;
+  }
+  
+  .chart-error-message {
+    @apply text-error-600 dark:text-error-400 text-sm mb-3;
+  }
+  
+  .chart-error-button {
+    @apply px-4 py-2 bg-error-600 text-white rounded hover:bg-error-700 transition-colors text-sm;
+  }
+  
+  /* No Data States */
+  .chart-no-data {
+    @apply absolute inset-0 flex items-center justify-center text-gray-500 dark:text-gray-400;
+  }
+  
+  .chart-no-data-content {
+    @apply text-center;
+  }
+  
+  .chart-no-data-icon {
+    @apply w-12 h-12 mx-auto mb-4 opacity-50;
+  }
+  
+  .chart-no-data-message {
+    @apply text-sm;
+  }
+  
+  /* Responsive Chart Utilities */
+  @media (max-width: 640px) {
+    .chart-responsive {
+      @apply h-64;
+    }
+    
+    .chart-legend {
+      @apply absolute bottom-2 left-2 right-2 top-auto;
+    }
+    
+    .chart-controls {
+      @apply top-2 right-2 flex-row space-y-0 space-x-2;
+    }
+  }
+  
+  @media (min-width: 641px) and (max-width: 1024px) {
+    .chart-responsive {
+      @apply h-80;
+    }
+  }
+  
+  @media (min-width: 1025px) {
+    .chart-responsive {
+      @apply h-96;
+    }
+  }
+}
+
+/* Keyframe Animations for Charts */
+@keyframes chartEnter {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes chartUpdate {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes chartExit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+/* Print Styles for Visualizations */
+@media print {
+  .chart-container {
+    @apply shadow-none border border-gray-400;
+    page-break-inside: avoid;
+  }
+  
+  .chart-controls,
+  .zoom-controls {
+    display: none !important;
+  }
+  
+  .chart-tooltip {
+    display: none !important;
+  }
+  
+  .chart-legend {
+    @apply border border-gray-400 bg-white;
+  }
+}
+
+/* High Contrast Mode for Visualizations */
+@media (prefers-contrast: high) {
+  .world-map-country {
+    @apply stroke-black;
+    stroke-width: 1;
+  }
+  
+  .timeseries-line {
+    @apply stroke-black;
+    stroke-width: 3;
+  }
+  
+  .timeseries-point {
+    @apply fill-black stroke-white;
+    stroke-width: 2;
+  }
+  
+  .bar-chart-bar {
+    @apply fill-black stroke-white;
+    stroke-width: 1;
+  }
+  
+  .chart-axis text,
+  .chart-axis path,
+  .chart-axis line {
+    @apply stroke-black fill-black;
+  }
+  
+  .chart-grid line {
+    @apply stroke-black;
+    opacity: 0.3;
+  }
+}
+
+/* Reduced Motion for Visualizations */
+@media (prefers-reduced-motion: reduce) {
+  .chart-enter,
+  .chart-update,
+  .chart-exit {
+    animation: none;
+  }
+  
+  .timeseries-point,
+  .bar-chart-bar,
+  .scatter-point,
+  .network-node,
+  .network-link {
+    transition: none;
+  }
+  
+  .chart-tooltip {
+    transition: none;
+  }
+}

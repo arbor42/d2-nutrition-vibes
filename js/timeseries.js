@@ -215,13 +215,26 @@ window.TimeSeries = {
     },
 
     addPoliticalEventsAnnotations(g, xScale, height) {
-        const events = [
-            { year: 2014, title: 'Ukraine-Konflikt', color: '#e74c3c' },
-            { year: 2020, title: 'COVID-19', color: '#f39c12' },
-            { year: 2022, title: 'Russland-Ukraine Krieg', color: '#e74c3c' }
-        ];
+        // Get major world events from utils.js
+        const phaseOneYears = [2010, 2018, 2019, 2020, 2022];
+        const majorEvents = [];
+        
+        // Collect all major events
+        phaseOneYears.forEach(year => {
+            const yearEvents = FAOUtils.getPoliticalEvents(year);
+            yearEvents.forEach(event => {
+                majorEvents.push({
+                    year,
+                    title: event.title,
+                    category: event.category,
+                    color: this.getCategoryColor(event.category),
+                    impact: event.impact
+                });
+            });
+        });
 
-        events.forEach(event => {
+        // Create event annotations
+        majorEvents.forEach((event, index) => {
             const x = xScale(event.year);
             
             // Add vertical line
@@ -231,20 +244,134 @@ window.TimeSeries = {
                 .attr('y1', 0)
                 .attr('y2', height)
                 .style('stroke', event.color)
-                .style('stroke-width', 1)
-                .style('stroke-dasharray', '3,3')
-                .style('opacity', 0.7);
+                .style('stroke-width', 2)
+                .style('stroke-dasharray', '4,4')
+                .style('opacity', 0.8)
+                .attr('class', `event-line event-${event.category}`);
+
+            // Add background rect for label
+            const labelBg = g.append('rect')
+                .attr('x', x - 35)
+                .attr('y', -25)
+                .attr('width', 70)
+                .attr('height', 16)
+                .style('fill', event.color)
+                .style('opacity', 0.9)
+                .style('rx', 3);
 
             // Add label
             g.append('text')
                 .attr('x', x)
-                .attr('y', -5)
+                .attr('y', -12)
                 .attr('text-anchor', 'middle')
-                .style('font-size', '10px')
-                .style('fill', event.color)
+                .style('font-size', '9px')
+                .style('fill', 'white')
                 .style('font-weight', 'bold')
-                .text(event.title);
+                .text(event.year)
+                .attr('class', `event-label event-${event.category}`);
+
+            // Add hover interaction for detailed info
+            labelBg
+                .style('cursor', 'pointer')
+                .on('mouseover', (mouseEvent) => {
+                    this.showEventTooltip(mouseEvent, event);
+                })
+                .on('mouseout', () => {
+                    this.hideEventTooltip();
+                });
         });
+
+        // Add legend for event categories
+        this.addEventLegend(g, height);
+    },
+
+    getCategoryColor(category) {
+        const colorMap = {
+            'climate': '#e67e22',    // Orange
+            'conflict': '#e74c3c',   // Red  
+            'disease': '#9b59b6',    // Purple
+            'pandemic': '#8e44ad',   // Dark purple
+            'unknown': '#95a5a6'     // Gray
+        };
+        return colorMap[category] || '#95a5a6';
+    },
+
+    addEventLegend(g, height) {
+        const categories = [
+            { name: 'climate', label: 'Klima', color: '#e67e22' },
+            { name: 'conflict', label: 'Konflikt', color: '#e74c3c' },
+            { name: 'disease', label: 'Krankheit', color: '#9b59b6' },
+            { name: 'pandemic', label: 'Pandemie', color: '#8e44ad' }
+        ];
+
+        const legend = g.append('g')
+            .attr('class', 'event-legend')
+            .attr('transform', `translate(10, ${height - 80})`);
+
+        legend.append('text')
+            .attr('x', 0)
+            .attr('y', 0)
+            .style('font-size', '10px')
+            .style('font-weight', 'bold')
+            .style('fill', '#555')
+            .text('Ereignistypen:');
+
+        categories.forEach((cat, i) => {
+            const legendItem = legend.append('g')
+                .attr('transform', `translate(0, ${15 + i * 12})`);
+
+            legendItem.append('rect')
+                .attr('width', 8)
+                .attr('height', 2)
+                .style('fill', cat.color);
+
+            legendItem.append('text')
+                .attr('x', 12)
+                .attr('y', 4)
+                .style('font-size', '8px')
+                .style('fill', '#666')
+                .text(cat.label);
+        });
+    },
+
+    showEventTooltip(event, eventData) {
+        // Remove existing tooltip
+        d3.select('.event-tooltip').remove();
+        
+        const tooltip = d3.select('body')
+            .append('div')
+            .attr('class', 'event-tooltip')
+            .style('position', 'absolute')
+            .style('background', 'rgba(0, 0, 0, 0.9)')
+            .style('color', 'white')
+            .style('padding', '8px')
+            .style('border-radius', '4px')
+            .style('font-size', '12px')
+            .style('max-width', '250px')
+            .style('z-index', '1000')
+            .style('pointer-events', 'none');
+
+        tooltip.html(`
+            <strong>${eventData.year}: ${eventData.title}</strong><br/>
+            <em>Kategorie: ${eventData.category}</em><br/>
+            ${eventData.impact}
+        `);
+
+        tooltip
+            .style('left', (event.pageX + 10) + 'px')
+            .style('top', (event.pageY - 10) + 'px')
+            .style('opacity', 0)
+            .transition()
+            .duration(200)
+            .style('opacity', 1);
+    },
+
+    hideEventTooltip() {
+        d3.select('.event-tooltip')
+            .transition()
+            .duration(200)
+            .style('opacity', 0)
+            .remove();
     },
 
     getProductDisplayName(product) {

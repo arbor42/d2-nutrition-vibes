@@ -159,31 +159,137 @@ window.Dashboard = {
         const container = document.getElementById('political-events');
         if (!container) return;
         
-        const currentYear = new Date().getFullYear();
-        const recentEvents = [];
+        // Phase 1 Priority Events (2010-2022)
+        const phaseOneYears = [2010, 2018, 2019, 2020, 2022];
+        const priorityEvents = [];
         
-        // Get events from recent years
-        for (let year = 2020; year <= 2022; year++) {
+        // Get Phase 1 priority events
+        phaseOneYears.forEach(year => {
             const events = FAOUtils.getPoliticalEvents(year);
             events.forEach(event => {
-                recentEvents.push({ year, ...event });
+                priorityEvents.push({ year, ...event });
             });
-        }
+        });
 
-        if (recentEvents.length === 0) {
-            container.innerHTML = '<p>Keine aktuellen politischen Ereignisse verfügbar.</p>';
+        if (priorityEvents.length === 0) {
+            container.innerHTML = '<p>Keine Major World Events verfügbar.</p>';
             return;
         }
 
-        const eventsHtml = recentEvents.map(event => `
-            <div class="event-item">
-                <h5>${event.year}: ${event.title}</h5>
-                <p>${event.description}</p>
-                <small>${event.impact}</small>
-            </div>
-        `).join('');
+        // Group events by category
+        const eventsByCategory = {};
+        priorityEvents.forEach(event => {
+            const category = event.category || 'unknown';
+            if (!eventsByCategory[category]) {
+                eventsByCategory[category] = [];
+            }
+            eventsByCategory[category].push(event);
+        });
+
+        // Create category-based HTML
+        let eventsHtml = '<div class="major-events-header"><h4>🌍 Major World Events Analysis (2010-2022)</h4></div>';
+        
+        Object.keys(eventsByCategory).forEach(category => {
+            const categoryClass = this.getCategoryClass(category);
+            const categoryTitle = this.getCategoryTitle(category);
+            
+            eventsHtml += `
+                <div class="event-category ${categoryClass}">
+                    <h5 class="category-title">${categoryTitle}</h5>
+                    ${eventsByCategory[category].map(event => `
+                        <div class="event-item priority-event" data-year="${event.year}" data-category="${event.category}">
+                            <div class="event-header">
+                                <span class="event-year">${event.year}</span>
+                                <span class="event-title">${event.title}</span>
+                            </div>
+                            <p class="event-description">${event.description}</p>
+                            <div class="event-impact">${event.impact}</div>
+                            ${event.affectedCountries ? `
+                                <div class="affected-countries">
+                                    <small>Betroffene Länder: ${event.affectedCountries.join(', ')}</small>
+                                </div>
+                            ` : ''}
+                            ${event.dataEvidence ? `
+                                <div class="data-evidence">
+                                    <small>📊 Datenbeleg: ${event.dataEvidence}</small>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        });
 
         container.innerHTML = eventsHtml;
+        
+        // Add event listeners for interactive exploration
+        this.addEventInteractions();
+    },
+
+    getCategoryClass(category) {
+        const categoryMap = {
+            'climate': 'category-climate',
+            'conflict': 'category-conflict', 
+            'disease': 'category-disease',
+            'pandemic': 'category-pandemic',
+            'unknown': 'category-unknown'
+        };
+        return categoryMap[category] || 'category-unknown';
+    },
+
+    getCategoryTitle(category) {
+        const titleMap = {
+            'climate': '🌡️ Klimaereignisse',
+            'conflict': '⚔️ Konflikte', 
+            'disease': '🦠 Krankheitsausbrüche',
+            'pandemic': '🌍 Pandemie',
+            'unknown': '❓ Andere Ereignisse'
+        };
+        return titleMap[category] || '❓ Andere Ereignisse';
+    },
+
+    addEventInteractions() {
+        const eventItems = document.querySelectorAll('.event-item.priority-event');
+        
+        eventItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                const year = parseInt(item.dataset.year);
+                const category = item.dataset.category;
+                
+                // Highlight event
+                eventItems.forEach(el => el.classList.remove('event-selected'));
+                item.classList.add('event-selected');
+                
+                // Trigger map update to show event year
+                if (window.WorldMap && window.WorldMap.updateYear) {
+                    window.WorldMap.updateYear(year);
+                }
+                
+                // Show additional analysis for this event
+                this.showEventAnalysis(year, category);
+            });
+        });
+    },
+
+    async showEventAnalysis(year, category) {
+        // Optional: Show detailed analysis for the selected event
+        // This could trigger additional visualizations or data loading
+        try {
+            // Get event-specific analysis
+            const events = FAOUtils.getPoliticalEvents(year);
+            if (events.length > 0) {
+                // Could trigger specific analysis functions here
+                // For now, just update the year slider
+                const yearSlider = document.getElementById('year-slider');
+                if (yearSlider) {
+                    yearSlider.value = year;
+                    // Trigger change event to update visualizations
+                    yearSlider.dispatchEvent(new Event('input'));
+                }
+            }
+        } catch (error) {
+            // Error in event analysis
+        }
     },
 
     loadClimateImpacts() {

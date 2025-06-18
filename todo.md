@@ -1,472 +1,274 @@
-# FAO Major World Events Analysis - TODO List
+# D2 Nutrition Vibes - Complete JavaScript Refactor Plan
 
-## 🎯 Project Overview
-Implement comprehensive analysis and visualization of Major World Events (2010-2022) impact on global agricultural production using FAO data.
-
----
-
-## 📊 Data Validation & Preparation
-
-### Initial Data Checks
-- [ ] Verify `fao_data/timeseries.json` contains all required countries and products for 2010-2022
-- [ ] Check `fao_data/ml/` for forecast data covering event years 2010-2022
-- [ ] Validate country name mappings in `js/country-mapping.js` for all affected countries
-- [ ] Ensure production data available for years 2009-2023 (to show before/after effects)
-
-### Data Quality Assessment
-```javascript
-// TODO: Add data completeness check function in utils.js
-- [ ] Create function `checkDataCompleteness(country, product, yearRange)`
-- [ ] Create function `identifyDataGaps(countries, products, years)`
-- [ ] Generate data availability report for all event-related countries/products 2010-2022
-```
+## 🎯 **REFACTOR OBJECTIVES**
+Transform the current vanilla JavaScript application into a modern, maintainable, and performant codebase while preserving all existing functionality.
 
 ---
 
-## 🌍 Event-Specific Implementation Tasks
+## 📋 **PHASE 1: PROJECT SETUP & BUILD SYSTEM**
 
-### 1. **2010: Russian Heatwave & Wheat Export Ban**
+### Build System & Tooling
+- [ ] Add package.json with proper dependencies and scripts
+- [ ] Install and configure Vite as build tool
+- [ ] Set up TypeScript configuration (optional but recommended)
+- [ ] Configure ESLint and Prettier for code quality
+- [ ] Add development server with hot reload
+- [ ] Set up production build pipeline with minification
+- [ ] Configure environment variables management
+- [ ] Add source maps for debugging
 
-#### Data Analysis Tasks (2010)
-```javascript
-// In timeseries.js
-- [ ] Add Russia wheat production comparison 2009 vs 2010
-- [ ] Highlight 25% production drop annotation for 2010
-- [ ] Show 10-month export ban period (August 2010 - June 2011) with shaded area
-```
-
-#### Visualization Tasks (2010)
-```javascript
-// In worldmap.js
-- [ ] Add 2010 heatwave layer showing affected regions
-- [ ] Color code: Russia in deep red for wheat production 2010
-- [ ] Add tooltip: "2010 Hitzewelle: -25% Weizenproduktion"
-```
-
-#### Dashboard Enhancement (2010)
-```javascript
-// In dashboard.js - update getPoliticalEvents()
-- [ ] Add detailed 2010 event with quantified impact:
-    {
-        year: 2010,
-        title: 'Russische Hitzewelle & Exportverbot',
-        description: 'Extreme Hitzewelle führt zu 25% Produktionsrückgang',
-        impact: 'Weizenexporte für 10 Monate gestoppt (Aug 2010 - Juni 2011), +25% globale Preise',
-        affectedCountries: ['Russian Federation'],
-        dataEvidence: 'wheat_production_2010: -25%, wheat_exports_2010: -100%'
-    }
-```
+### Dependency Management
+- [ ] Install D3.js as npm dependency (currently CDN)
+- [ ] Add any missing utility libraries
+- [ ] Configure proper import/export structure
+- [ ] Remove all CDN script tags from HTML
 
 ---
 
-### 2. **2011: Thailand Floods & Arab Spring**
+## 📋 **PHASE 2: MODULE ARCHITECTURE RESTRUCTURE**
 
-#### Thailand Rice Crisis Implementation (2011)
-```javascript
-// In process-mining.js
-- [ ] Add specific Thailand rice supply chain disruption visualization for 2011
-- [ ] Show 2011 production drop: 25M → 19M tonnes
-- [ ] Highlight Thailand as world's 2nd largest rice exporter in 2011
+### Core Architecture
+- [ ] Convert all files to ES6 modules
+- [ ] Eliminate global namespace pollution (remove window.D2Nutrition)
+- [ ] Create proper module boundaries and interfaces
+- [ ] Implement dependency injection pattern
+- [ ] Add module-level error boundaries
+
+### File Structure Reorganization
+```
+src/
+├── core/
+│   ├── app.js (main application controller)
+│   ├── config.js (application configuration)
+│   └── state.js (centralized state management)
+├── data/
+│   ├── loaders/
+│   ├── processors/
+│   ├── validators/
+│   └── cache.js
+├── visualizations/
+│   ├── worldmap/
+│   ├── timeseries/
+│   ├── predictions/
+│   └── simulation/
+├── components/
+│   ├── ui/
+│   ├── panels/
+│   └── controls/
+├── utils/
+│   ├── helpers.js
+│   ├── formatters.js
+│   └── constants.js
+└── services/
+    ├── export.js
+    ├── analysis.js
+    └── mining.js
 ```
 
-#### Arab Spring Countries (2011)
-```javascript
-// In structural-analysis.js
-- [ ] Create correlation matrix: political instability vs food imports 2011
-- [ ] Countries to analyze: Egypt, Tunisia, Syria, Libya (2011 events)
-- [ ] Show increased import dependency 2011-2012
-```
+### Module Restructure Tasks
+- [ ] Break down utils.js (1,106 lines) into focused modules
+- [ ] Split structural-analysis.js into smaller, focused modules
+- [ ] Separate process-mining.js concerns
+- [ ] Create dedicated data loading service
+- [ ] Extract common D3.js patterns into reusable components
 
 ---
 
-### 3. **2012: US Drought & Global Impacts**
+## 📋 **PHASE 3: CODE ORGANIZATION & CLEAN ARCHITECTURE**
 
-#### Maize Production Analysis (2012)
-```javascript
-// In timeseries.js
-- [ ] Add USA maize production 2011-2013 with 2012 drought annotation
-- [ ] Compare 2012 production with other major producers (China, Brazil)
-- [ ] Show global maize price spike correlation in 2012
-```
+### Data Layer
+- [ ] Create centralized DataService class
+- [ ] Implement data loading strategies (lazy loading, caching)
+- [ ] Add data validation schemas
+- [ ] Create data transformation pipelines
+- [ ] Implement error handling for failed data loads
+- [ ] Add data versioning and migration support
 
-#### Climate Event Integration (2012)
-```javascript
-// In utils.js - enhance getClimateEvents()
-- [ ] Add 2012: {
-    year: 2012,
-    event: 'US Midwest Drought',
-    severity: 'Extreme',
-    production_impact: 'maize_2012: -13%, soybeans_2012: -8%'
-}
-```
+### Service Layer
+- [ ] Create VisualizationService for D3.js operations
+- [ ] Implement AnalysisService for data analysis
+- [ ] Create ExportService for data export functionality
+- [ ] Add ConfigurationService for settings management
+- [ ] Implement EventService for inter-module communication
 
----
-
-### 4. **2012-2015: Coffee Rust Epidemic ("The Big Rust")**
-
-#### Multi-Country Analysis (2012-2015)
-```javascript
-// In timeseries.js
-- [ ] Create multi-country coffee production chart 2010-2016
-- [ ] Countries: Colombia (-31% by 2015), Guatemala, Honduras, Costa Rica (-16% average)
-- [ ] Add shaded area for epidemic period 2012-2015
-- [ ] Show employment impact: 375,000 jobs lost (2012-2015) annotation
-```
+### Component Layer
+- [ ] Create base Component class with lifecycle methods
+- [ ] Implement WorldMapComponent with proper encapsulation
+- [ ] Create TimeSeriesComponent with reusable chart logic
+- [ ] Build PredictionComponent with ML integration
+- [ ] Create SimulationComponent with performance optimization
+- [ ] Implement reusable UI components (panels, controls, selects)
 
 ---
 
-### 5. **2014-2022: Ukraine Conflict Begins**
+## 📋 **PHASE 4: PERFORMANCE OPTIMIZATION**
 
-#### Geopolitical Impact Visualization (2014)
-```javascript
-// In worldmap.js
-- [ ] Add conflict zone overlay for Eastern Ukraine starting 2014
-- [ ] Show wheat/maize production areas affected from 2014
-- [ ] Add year-over-year comparison slider 2013 vs 2014
-```
+### D3.js Performance
+- [ ] Implement virtual scrolling for large datasets
+- [ ] Add canvas rendering for heavy visualizations
+- [ ] Optimize DOM manipulation with batching
+- [ ] Implement efficient data binding strategies
+- [ ] Add progressive rendering for complex charts
+- [ ] Cache compiled D3 selections
 
-#### Trade Flow Analysis (2014-2022)
-```javascript
-// In process-mining.js
-- [ ] Visualize Ukraine grain export routes pre-2014 vs post-2014
-- [ ] Show trade diversion to EU markets starting 2014
-- [ ] Highlight Black Sea shipping disruptions 2014-2022
-```
+### Data Processing Performance
+- [ ] Implement Web Workers for heavy calculations
+- [ ] Add data streaming for large files
+- [ ] Optimize JSON parsing and processing
+- [ ] Implement efficient filtering algorithms
+- [ ] Add memoization for expensive operations
+- [ ] Create data pagination strategies
 
----
-
-### 6. **2018-2022: African Swine Fever (ASF) in China**
-
-#### Production Collapse Visualization (2018-2022)
-```javascript
-// In timeseries.js
-- [ ] China pork production 2017-2022 with ASF outbreak marked in 2018
-- [ ] Show 40.5% decline by August 2019 (225 million pigs)
-- [ ] Mark peak impact in 2019: -21% annual production
-- [ ] Add secondary axis for pork prices (doubled in 2019)
-```
-
-#### Global Impact Dashboard (2018-2022)
-```javascript
-// In dashboard.js
-- [ ] Create ASF impact card showing:
-  - 2018: Outbreak begins
-  - 2019: Production: -21% 
-  - 2019: Imports: +70%
-  - Economic loss 2018-2022: $60-297 billion
-  - Affected countries: China (2018), Vietnam (2019), Philippines (2019)
-```
-
-#### Network Analysis (2019-2020)
-```javascript
-// In structural-analysis.js
-- [ ] Create pork trade network visualization for 2019-2020
-- [ ] Show trade flow changes 2019: EU, USA, Brazil → China
-- [ ] Highlight new trade relationships formed 2019-2020
-```
+### Memory Management
+- [ ] Implement proper cleanup in visualization components
+- [ ] Add memory leak detection
+- [ ] Optimize object creation and destruction
+- [ ] Implement efficient event listener management
+- [ ] Add garbage collection optimization
 
 ---
 
-### 7. **2019-2021: East Africa Desert Locust Plague**
+## 📋 **PHASE 5: ERROR HANDLING & VALIDATION**
 
-#### Regional Impact Map (2019-2021)
-```javascript
-// In worldmap.js
-- [ ] Add locust swarm affected areas layer 2019-2021
-- [ ] Countries: Ethiopia, Kenya, Somalia, Uganda
-- [ ] Show 2020 peak damage: up to 100% crop loss in affected areas
-- [ ] Add animation showing swarm progression 2019→2020→2021
-```
+### Error Handling System
+- [ ] Create centralized ErrorHandler class
+- [ ] Implement error boundaries for each module
+- [ ] Add graceful degradation for missing data
+- [ ] Create user-friendly error messages
+- [ ] Implement retry mechanisms for failed operations
+- [ ] Add error logging and reporting
 
-#### Production Loss Quantification (2020)
-```javascript
-// In timeseries.js
-- [ ] Ethiopia grain loss 2020: 356,286 tonnes visualization
-- [ ] Regional comparison chart for affected countries 2019-2021
-- [ ] Show potential vs actual production 2020
-```
-
----
-
-### 8. **2020-2022: COVID-19 Pandemic**
-
-#### Global Dashboard Enhancement (2020)
-```javascript
-// In dashboard.js
-- [ ] Create comprehensive COVID-19 impact section:
-  - 2020: Global meat production: -1.7%
-  - 2020: Processing capacity: 75%
-  - 2020: Countries with export restrictions: 19
-  - 2020-2021: Supply chain disruption index
-```
-
-#### Year-over-Year Comparison (2020)
-```javascript
-// In worldmap.js
-- [ ] Add 2020 vs 2019 production anomaly heatmap
-- [ ] Add 2021 vs 2020 recovery patterns
-- [ ] Color scale: red (decrease) to green (increase)
-- [ ] Filter by product category
-```
-
-#### Multi-Module Integration (2020-2022)
-```javascript
-// Cross-module COVID analysis
-- [ ] TimeSeries: Show production volatility increase 2020-2021
-- [ ] ProcessMining: Visualize 2020 supply chain bottlenecks
-- [ ] MLPredictions: Compare forecast vs actual for 2020
-- [ ] Simulation: Validate pandemic scenario accuracy for 2020-2021
-```
+### Data Validation
+- [ ] Create validation schemas for all data types
+- [ ] Implement input sanitization
+- [ ] Add type checking for critical operations
+- [ ] Validate GeoJSON and geographic data
+- [ ] Check data completeness and consistency
+- [ ] Add boundary checks for numerical data
 
 ---
 
-### 9. **2022: Russia-Ukraine War**
+## 📋 **PHASE 6: CODE QUALITY & STANDARDS**
 
-#### Comprehensive War Impact Analysis (2022)
-```javascript
-// In all modules - coordinate 2022 war impact visualization
-- [ ] WorldMap: 
-  - Highlight Ukraine/Russia with 2022 production data
-  - Show blocked Black Sea ports (February 2022 onwards)
-  - Add wheat/maize/sunflower production areas affected in 2022
-  
-- [ ] TimeSeries:
-  - Combined Ukraine+Russia share of global exports 2020-2022
-  - Production trends 2020-2022
-  - Export volume collapse visualization starting February 2022
-  
-- [ ] ProcessMining:
-  - Black Sea grain corridor disruption from February 2022
-  - Alternative trade routes visualization post-February 2022
-  - Global wheat flow redirection in 2022
-  
-- [ ] Dashboard:
-  - Real-time style 2022 impact tracker
-  - Affected products 2022: wheat (-X%), maize (-Y%), sunflower (-Z%)
-  - Secondary impacts on fertilizer availability 2022
-```
+### Code Standards
+- [ ] Standardize naming conventions across all files
+- [ ] Implement consistent coding patterns
+- [ ] Add comprehensive JSDoc documentation
+- [ ] Create coding guidelines and best practices
+- [ ] Standardize function signatures and return types
+- [ ] Implement consistent error handling patterns
+
+### Refactoring Tasks
+- [ ] Extract magic numbers into constants
+- [ ] Remove code duplication across modules
+- [ ] Simplify complex conditional logic
+- [ ] Break down large functions into smaller ones
+- [ ] Improve variable and function naming
+- [ ] Add missing comments and documentation
 
 ---
 
-## 🔧 Technical Implementation Tasks
+## 📋 **PHASE 7: STATE MANAGEMENT & DATA FLOW**
 
-### Data Processing Enhancements
-```javascript
-// In utils.js
-- [ ] Create `calculateYearOverYearChange(country, product, year)`
-- [ ] Create `identifyAnomalies(data, threshold = 0.1)` // 10% change
-- [ ] Create `aggregateRegionalData(countries, product, year)`
-- [ ] Add `exportEventAnalysisData()` function
-```
+### State Management
+- [ ] Implement centralized state store
+- [ ] Create state management patterns (actions, reducers)
+- [ ] Add state persistence and restoration
+- [ ] Implement undo/redo functionality
+- [ ] Create state validation and consistency checks
+- [ ] Add state debugging tools
 
-### Visualization Improvements
-```javascript
-// General visualization tasks
-- [ ] Add event annotation system to all charts with year labels
-- [ ] Create consistent color scheme for event types:
-  - Climate events (2010, 2012, 2015, 2018, 2019, 2021): Orange (#e67e22)
-  - Conflicts (2011, 2014, 2022): Red (#e74c3c)
-  - Disease (2012-2015, 2018-2022, 2020): Purple (#9b59b6)
-  - Economic (2014-2022 Venezuela): Blue (#3498db)
-- [ ] Add interactive event timeline component 2010-2022
-```
-
-### ML Model Validation
-```javascript
-// In ml-predictions.js
-- [ ] Analyze forecast accuracy for event years:
-  - 2010: Russian drought
-  - 2012: US drought
-  - 2019: ASF peak
-  - 2020: COVID-19
-  - 2022: War
-- [ ] Document R² score degradation during events
-- [ ] Create "forecast vs reality" comparison for major events
-- [ ] Add event impact factor to future predictions
-```
+### Data Flow Optimization
+- [ ] Implement unidirectional data flow
+- [ ] Create clear data transformation pipelines
+- [ ] Add reactive programming patterns
+- [ ] Optimize data synchronization between components
+- [ ] Implement efficient change detection
+- [ ] Create data subscription mechanisms
 
 ---
 
-## 📈 Regional Analysis Tasks
+## 📋 **PHASE 8: TESTING & QUALITY ASSURANCE**
 
-### Brazil: Sugar & Soy Expansion (2000-2022)
-```javascript
-// In timeseries.js
-- [ ] Show sugarcane production doubling 2000-2020 (300M → 630M tonnes)
-- [ ] Visualize 10M hectares cultivation area by 2022
-- [ ] Add biofuel production correlation 2010-2022
-```
+### Testing Infrastructure
+- [ ] Set up Jest testing framework
+- [ ] Add unit tests for all utility functions
+- [ ] Create integration tests for data processing
+- [ ] Add visual regression tests for charts
+- [ ] Implement performance benchmarking
+- [ ] Create end-to-end testing scenarios
 
-### Australia: Drought Cycles (2010-2022)
-```javascript
-// In simulation.js
-- [ ] Add Australian drought years: 2012, 2018, 2019
-- [ ] Show Murray-Darling Basin impact 2018-2019
-- [ ] Cotton area reduction: -83% visualization (drought years)
-- [ ] Rice area reduction: -65% visualization (drought years)
-```
-
-### Venezuela: Economic Collapse (2014-2022)
-```javascript
-// In structural-analysis.js
-- [ ] Create comprehensive collapse visualization 2014-2022
-- [ ] Show all products declining simultaneously from 2014
-- [ ] Add 2018 markers: Hyperinflation 130,000%, GDP -75%
-- [ ] Population exodus impact by 2022: 7.8M emigrants
-```
-
-### EU: Neonicotinoid Ban Impact (2013-2022)
-```javascript
-// In process-mining.js
-- [ ] Show 2013: Partial ban implementation
-- [ ] Show 2018: Full outdoor ban
-- [ ] Rapeseed import explosion 2018-2022: 63k → 811k tonnes (+1200%)
-- [ ] Cost impact by 2022: €900M annotation
-```
+### Testing Coverage
+- [ ] Test data loading and processing functions
+- [ ] Validate visualization rendering logic
+- [ ] Test export functionality
+- [ ] Verify analysis algorithms
+- [ ] Test error handling scenarios
+- [ ] Validate cross-browser compatibility
 
 ---
 
-## 🎨 UI/UX Enhancements
+## 📋 **PHASE 9: DOCUMENTATION & MAINTENANCE**
 
-### Event Navigation
-```javascript
-// New component in panels.js
-- [ ] Create event timeline navigator 2010-2022
-- [ ] Add "Jump to Event" dropdown with years
-- [ ] Implement event comparison mode (e.g., 2010 vs 2022)
-- [ ] Add event impact summary cards with year badges
-```
+### Documentation
+- [ ] Create comprehensive API documentation
+- [ ] Add architecture decision records (ADRs)
+- [ ] Write developer setup guide
+- [ ] Create deployment documentation
+- [ ] Add troubleshooting guide
+- [ ] Document performance optimization techniques
 
-### Interactive Features
-```javascript
-- [ ] Add event layer toggle in map controls by year
-- [ ] Create event impact intensity slider
-- [ ] Implement before/after comparison mode with year selector
-- [ ] Add anomaly detection highlights with year labels
-```
-
----
-
-## 📊 Export & Reporting
-
-### Automated Report Generation
-```javascript
-// In export.js
-- [ ] Create `generateEventImpactReport(eventName, year)`
-- [ ] Add `exportAnomalyData(country, product, timeRange)`
-- [ ] Implement `createEventComparisonChart(events[])` with years
-- [ ] Build comprehensive PDF report generator with timeline
-```
-
-### Data Export Formats
-```javascript
-- [ ] CSV export with event annotations and years
-- [ ] JSON export with anomaly flags and event years
-- [ ] PowerPoint-ready chart exports with year labels
-- [ ] Interactive HTML report generation with timeline
-```
+### Maintenance Tools
+- [ ] Add code coverage reporting
+- [ ] Implement automated dependency updates
+- [ ] Create performance monitoring
+- [ ] Add bundle size analysis
+- [ ] Implement automated code quality checks
+- [ ] Create deployment pipelines
 
 ---
 
-## 🧪 Testing & Validation
+## 🎯 **SUCCESS METRICS**
 
-### Data Integrity Tests
-```javascript
-// Create test suite
-- [ ] Test anomaly detection accuracy for each event year
-- [ ] Validate event date alignments (2010-2022)
-- [ ] Cross-check multiple data sources by year
-- [ ] Verify calculation correctness for time periods
-```
+### Performance Targets
+- [ ] Reduce initial load time by 50%
+- [ ] Improve visualization rendering speed by 60%
+- [ ] Decrease memory usage by 40%
+- [ ] Achieve 90+ Lighthouse performance score
 
-### Visual QA Checklist
-- [ ] Screenshot all major events with year labels
-- [ ] Document data gaps and limitations by year
-- [ ] Create visual regression tests for each event year
-- [ ] Validate color consistency across years
+### Code Quality Targets
+- [ ] 95%+ test coverage
+- [ ] Zero ESLint errors
+- [ ] Consistent code formatting
+- [ ] Comprehensive documentation
+- [ ] Modular architecture with clear boundaries
 
----
-
-## 📚 Documentation Tasks
-
-### Technical Documentation
-- [ ] Document anomaly detection methodology with year examples
-- [ ] Create event impact calculation guide with timeline
-- [ ] Write data source attribution with collection years
-- [ ] Build troubleshooting guide for missing years
-
-### User Documentation
-- [ ] Create event exploration tutorial with chronological flow
-- [ ] Write interpretation guidelines by event year
-- [ ] Build glossary of terms with historical context
-- [ ] Design quick reference card with event timeline
+### Maintainability Goals
+- [ ] Easy onboarding for new developers
+- [ ] Clear separation of concerns
+- [ ] Reusable component library
+- [ ] Efficient debugging capabilities
+- [ ] Scalable architecture for future features
 
 ---
 
-## 🚀 Deployment & Performance
+## 🚀 **IMPLEMENTATION PRIORITY**
 
-### Optimization Tasks
-```javascript
-- [ ] Implement lazy loading for event data by year
-- [ ] Add caching for expensive calculations (13 years data)
-- [ ] Optimize large dataset queries (2010-2022)
-- [ ] Minimize redundant API calls for year ranges
-```
+**HIGH PRIORITY** (Critical for foundation):
+- Build system setup
+- Module architecture restructure
+- Core performance optimizations
 
-### Monitoring Setup
-```javascript
-- [ ] Add performance metrics for event queries by year
-- [ ] Create usage analytics for event features timeline
-- [ ] Implement error tracking for missing year data
-- [ ] Set up alerts for data anomalies by event year
-```
+**MEDIUM PRIORITY** (Important for quality):
+- Error handling implementation
+- Code quality improvements
+- Testing infrastructure
 
----
-
-## 🎯 Priority Order
-
-### Phase 1: Core Event Implementation (Week 1)
-1. **2010**: Russian Heatwave
-2. **2020**: COVID-19 Pandemic
-3. **2022**: Russia-Ukraine War
-4. **2018-2019**: China ASF
-
-### Phase 2: Regional Events (Week 2)
-1. **2011**: Arab Spring & Thailand Floods
-2. **2012**: US Drought
-3. **2014**: Ukraine Conflict Start
-
-### Phase 3: Extended Analysis (Week 3)
-1. **2012-2015**: Coffee Rust
-2. **2019-2021**: Locust Plague
-3. **2014-2022**: Venezuela Collapse
-4. **Various years**: Australia Droughts
-
-### Phase 4: Polish & Deploy (Week 4)
-1. Cross-validation all years
-2. Documentation with timeline
-3. Performance optimization
-4. User testing all events
+**LOW PRIORITY** (Nice to have):
+- Advanced performance optimizations
+- Comprehensive documentation
+- Maintenance tooling
 
 ---
 
-## ⚠️ Critical Considerations
-
-- **Data Gaps**: Some countries/years may have incomplete data (especially 2020-2022)
-- **Lag Effects**: Events may show delayed impacts (e.g., 2010 drought → 2011 prices)
-- **Attribution**: Multiple concurrent events complicate analysis (e.g., 2020-2022)
-- **Scale**: National averages may hide regional extremes
-- **Uncertainty**: Differentiate correlation from causation
-
----
-
-## ✅ Definition of Done
-
-Each event implementation is complete when:
-- [ ] Data anomaly is clearly visible in visualizations with correct year
-- [ ] Event is properly annotated across all relevant modules with dates
-- [ ] Impact magnitude matches documented expectations for that year
-- [ ] Export functionality includes event context and timeline
-- [ ] Documentation explains interpretation with temporal context
-- [ ] Performance remains acceptable (<3s load time) for 13 years data
-- [ ] Cross-browser compatibility verified for all year selectors
+*This refactor plan represents a complete transformation from vanilla JavaScript to a modern, maintainable, and performant application architecture while preserving all existing functionality.*

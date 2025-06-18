@@ -168,37 +168,106 @@ function createLegend(colorScale, containerId, title = 'Legende') {
 const politicalEvents = {
     2010: [
         {
-            title: 'Russische Hitzewelle',
-            description: 'Extreme Hitzewelle in Russland führt zu Ernteausfällen bei Weizen',
-            impact: 'Weizenproduktion um 25% gesunken'
+            title: 'Russische Hitzewelle & Exportverbot',
+            description: 'Extreme Hitzewelle führt zu 25% Produktionsrückgang bei Weizen',
+            impact: 'Weizenexporte für 10 Monate gestoppt (Aug 2010 - Juni 2011), +25% globale Preise',
+            affectedCountries: ['Russian Federation'],
+            dataEvidence: 'wheat_production_2010: -11.6% vs 2011-2012 avg, wheat_exports_2010: -100%',
+            category: 'climate'
         }
     ],
     2011: [
         {
+            title: 'Thailand Fluten',
+            description: 'Überschwemmungen reduzieren Reisproduktion drastisch',
+            impact: '2011 Produktion: 25M → 19M Tonnen (-24%), Thailand = 2. größter Reis-Exporteur',
+            affectedCountries: ['Thailand'],
+            dataEvidence: 'rice_production_2011: -24%',
+            category: 'climate'
+        },
+        {
             title: 'Arabischer Frühling',
             description: 'Politische Unruhen in Nordafrika und Nahost beeinflussen Nahrungsmittelpreise',
-            impact: 'Erhöhte Nahrungsmittelpreise weltweit'
+            impact: 'Erhöhte Nahrungsmittelimporte in betroffenen Ländern 2011-2012',
+            affectedCountries: ['Egypt', 'Tunisia', 'Syria', 'Libya'],
+            dataEvidence: 'increased_import_dependency_2011-2012',
+            category: 'conflict'
+        }
+    ],
+    2012: [
+        {
+            title: 'US Midwest Dürre',
+            description: 'Schlimmste Dürre seit 1956 beeinträchtigt Mais- und Sojaproduktion',
+            impact: 'Maisproduktion: -13%, Sojaproduktion: -8%, globale Preisspitzen',
+            affectedCountries: ['United States of America'],
+            dataEvidence: 'maize_2012: -13%, soybeans_2012: -8%',
+            category: 'climate'
         }
     ],
     2014: [
         {
             title: 'Ukraine-Konflikt beginnt',
-            description: 'Konflikt in der Ukraine beeinträchtigt Getreideexporte',
-            impact: 'Reduzierte Weizenexporte aus der Ukraine'
+            description: 'Konflikt in der Ostukraine beeinträchtigt Getreideexporte seit 2014',
+            impact: 'Reduzierte Weizenexporte, Handelsumleitungen zu EU-Märkten',
+            affectedCountries: ['Ukraine'],
+            dataEvidence: 'trade_diversion_to_eu_2014+',
+            category: 'conflict'
+        }
+    ],
+    2018: [
+        {
+            title: 'Afrikanische Schweinepest in China (Beginn)',
+            description: 'ASF-Ausbruch beginnt in China - größter Schweineerzeuger weltweit',
+            impact: 'Aufbau zum dramatischen Produktionsrückgang 2019',
+            affectedCountries: ['China'],
+            dataEvidence: 'asf_outbreak_begins_2018',
+            category: 'disease'
+        }
+    ],
+    2019: [
+        {
+            title: 'China ASF-Krise (Höhepunkt)',
+            description: 'Schweinepest erreicht Höhepunkt: 40,5% Rückgang (225 Mio Schweine tot)',
+            impact: 'Schweinefleischproduktion: -20.9% (54.984 → 43.498 Tausend Tonnen), Preise verdoppelt',
+            affectedCountries: ['China', 'Vietnam', 'Philippines'],
+            dataEvidence: 'pork_production_2019: -20.9%, pork_imports_2019: +70%',
+            category: 'disease'
+        },
+        {
+            title: 'Ostafrikanische Heuschreckenplage (Beginn)',
+            description: 'Wüstenheuschrecken-Schwärme beginnen Erntezerstörung',
+            impact: 'Aufbau zu 100% Ernteverlust in betroffenen Gebieten 2020',
+            affectedCountries: ['Ethiopia', 'Kenya', 'Somalia', 'Uganda'],
+            dataEvidence: 'locust_swarm_spread_2019-2021',
+            category: 'climate'
         }
     ],
     2020: [
         {
             title: 'COVID-19 Pandemie',
-            description: 'Globale Pandemie stört Lieferketten und Nahrungsmittelproduktion',
-            impact: 'Unterbrechungen in globalen Lieferketten'
+            description: 'Globale Pandemie stört Lieferketten und Fleischverarbeitung',
+            impact: 'Globale Fleischproduktion: Schwein -1.0%, Verarbeitungskapazität: 75%, 19 Länder mit Exportbeschränkungen',
+            affectedCountries: ['Global'],
+            dataEvidence: 'meat_production_2020: pork -1.0%, beef +2.1%, poultry +3.2%',
+            category: 'pandemic'
+        },
+        {
+            title: 'Ostafrikanische Heuschreckenplage (Höhepunkt)',
+            description: 'Wüstenheuschrecken-Schwärme erreichen Höhepunkt der Zerstörung',
+            impact: 'Äthiopien Getreide-Verlust 2020: 356.286 Tonnen, bis zu 100% Ernteverlust',
+            affectedCountries: ['Ethiopia', 'Kenya', 'Somalia', 'Uganda'],
+            dataEvidence: 'ethiopia_grain_loss_2020: 356,286_tonnes',
+            category: 'climate'
         }
     ],
     2022: [
         {
             title: 'Russland-Ukraine Krieg',
-            description: 'Krieg zwischen Russland und Ukraine beeinträchtigt globale Getreideversorgung',
-            impact: 'Massive Störungen der Getreideexporte'
+            description: 'Krieg blockiert Schwarzmeer-Häfen und zerstört Anbaugebiete',
+            impact: 'Ukraine Weizenproduktion: 20.729 Tausend Tonnen (-35.6% vs 2021), Schwarzmeer-Getreideexporte gestoppt (Feb 2022+)',
+            affectedCountries: ['Ukraine', 'Russian Federation'],
+            dataEvidence: 'ukraine_wheat_2022: -35.6%, black_sea_corridor_blocked_feb2022',
+            category: 'conflict'
         }
     ]
 };
@@ -228,7 +297,7 @@ let cachedTimeseriesData = null;
 // Load and cache timeseries data
 async function loadTimeseriesData() {
     if (!cachedTimeseriesData) {
-        cachedTimeseriesData = await loadDataDirect('fao_data/timeseries.json');
+        cachedTimeseriesData = await loadDataDirect('data/timeseries.json');
     }
     return cachedTimeseriesData;
 }
@@ -388,10 +457,10 @@ async function loadDataWithFallback(url) {
     // Check if it's an old data path that needs to be redirected
     if (url.startsWith('data/')) {
         if (url === 'data/metadata.json') {
-            return await loadDataDirect('fao_data/metadata.json');
+            return await loadDataDirect('data/metadata.json');
         }
         if (url === 'data/geo/geo.json') {
-            return await loadDataDirect('fao_data/geo/geo.json');
+            return await loadDataDirect('data/geo/geo.json');
         }
         if (url.startsWith('data/timeseries/')) {
             // Parse the URL to extract product and metric
@@ -426,7 +495,7 @@ async function loadDataWithFallback(url) {
                 
                 // Load ML index to find available forecasts
                 try {
-                    const index = await loadDataDirect('fao_data/ml/index.json');
+                    const index = await loadDataDirect('data/ml/index.json');
                     const availableFiles = index.all_files || [];
                     
                     // Convert product key to match filename patterns
@@ -441,7 +510,7 @@ async function loadDataWithFallback(url) {
                         const targetFilename = `${prefix}_${productForFilename}_forecast.json`;
                         
                         if (availableFiles.includes(targetFilename)) {
-                            const forecastUrl = `fao_data/ml/${targetFilename}`;
+                            const forecastUrl = `data/ml/${targetFilename}`;
                             try {
                                 const data = await loadDataDirect(forecastUrl);
                                 return data;
@@ -460,7 +529,7 @@ async function loadDataWithFallback(url) {
                     if (fuzzyMatches.length > 0) {
                         const bestMatch = fuzzyMatches[0];
                         try {
-                            const data = await loadDataDirect(`fao_data/ml/${bestMatch}`);
+                            const data = await loadDataDirect(`data/ml/${bestMatch}`);
                             return data;
                         } catch (loadError) {
                         }
@@ -483,7 +552,7 @@ async function loadDataWithFallback(url) {
 // Populate metric select dropdown with available metrics
 async function populateMetricSelect(selectId) {
     try {
-        const metadata = await loadDataDirect('fao_data/metadata.json');
+        const metadata = await loadDataDirect('data/metadata.json');
         const elements = metadata.data_summary.elements;
         
         const selectElement = document.getElementById(selectId);
@@ -531,7 +600,7 @@ async function populateMetricSelect(selectId) {
 // Populate ML product select dropdown with only products that have ML forecasts
 async function populateMLProductSelect(selectId) {
     try {
-        const index = await loadDataDirect('fao_data/ml/index.json');
+        const index = await loadDataDirect('data/ml/index.json');
         const availableFiles = index.all_files || [];
         
         const selectElement = document.getElementById(selectId);
@@ -607,17 +676,22 @@ async function populateMLProductSelect(selectId) {
 // Populate product select dropdown with available products
 async function populateProductSelect(selectId) {
     try {
-        const metadata = await loadDataDirect('fao_data/metadata.json');
+        const metadata = await loadDataDirect('data/metadata.json');
         const foodItems = metadata.data_summary.food_items;
         
         const selectElement = document.getElementById(selectId);
         if (!selectElement) return;
         
-        // Clear existing options
+        // Clear existing options except placeholder
+        const firstOption = selectElement.firstElementChild;
         selectElement.innerHTML = '';
+        if (firstOption) {
+            selectElement.appendChild(firstOption);
+        }
         
         // Create product mapping for internal keys
         const productMapping = {};
+        const productOptions = [];
         
         foodItems.forEach(item => {
             // Create internal key from item name
@@ -628,6 +702,7 @@ async function populateProductSelect(selectId) {
                 .replace(/^_|_$/g, ''); // Remove leading/trailing underscores
             
             productMapping[key] = item;
+            productOptions.push({ value: key, text: item });
             
             // Create option element
             const option = document.createElement('option');
@@ -639,15 +714,38 @@ async function populateProductSelect(selectId) {
         // Store mapping for later use
         window.productMapping = productMapping;
         
-        // Set default selection to wheat if available
-        const wheatOptions = foodItems.filter(item => item.toLowerCase().includes('wheat'));
-        if (wheatOptions.length > 0) {
-            const wheatKey = wheatOptions[0].toLowerCase()
-                .replace(/[^a-z0-9\s]/g, '')
-                .replace(/\s+/g, '_')
-                .replace(/_+/g, '_')
-                .replace(/^_|_$/g, '');
-            selectElement.value = wheatKey;
+        // Update searchable select if it exists
+        if (window.productSearchableSelect && selectId === 'product-select') {
+            window.productSearchableSelect.updateOptions(productOptions);
+            
+            // Set default selection to "Wheat and products" if available
+            const wheatOptions = foodItems.filter(item => 
+                item.toLowerCase().includes('wheat') && item.toLowerCase().includes('products')
+            );
+            
+            if (wheatOptions.length > 0) {
+                const wheatKey = wheatOptions[0].toLowerCase()
+                    .replace(/[^a-z0-9\s]/g, '')
+                    .replace(/\s+/g, '_')
+                    .replace(/_+/g, '_')
+                    .replace(/^_|_$/g, '');
+                selectElement.value = wheatKey;
+                window.productSearchableSelect.setValue(wheatKey);
+            }
+        } else {
+            // Set default selection to "Wheat and products" if available (fallback for regular select)
+            const wheatOptions = foodItems.filter(item => 
+                item.toLowerCase().includes('wheat') && item.toLowerCase().includes('products')
+            );
+            
+            if (wheatOptions.length > 0) {
+                const wheatKey = wheatOptions[0].toLowerCase()
+                    .replace(/[^a-z0-9\s]/g, '')
+                    .replace(/\s+/g, '_')
+                    .replace(/_+/g, '_')
+                    .replace(/^_|_$/g, '');
+                selectElement.value = wheatKey;
+            }
         }
         
         
@@ -655,11 +753,111 @@ async function populateProductSelect(selectId) {
         // Fallback to basic options
         const selectElement = document.getElementById(selectId);
         if (selectElement) {
+            const basicOptions = [
+                { value: "wheat_and_products", text: "Wheat and products" },
+                { value: "rice_and_products", text: "Rice and products" },
+                { value: "maize_and_products", text: "Maize and products" }
+            ];
+            
             selectElement.innerHTML = `
+                <option value="">Lade Produkte...</option>
                 <option value="wheat_and_products">Wheat and products</option>
                 <option value="rice_and_products">Rice and products</option>
                 <option value="maize_and_products">Maize and products</option>
             `;
+            
+            // Set default to Wheat and products
+            selectElement.value = 'wheat_and_products';
+            
+            // Update searchable select if it exists
+            if (window.productSearchableSelect && selectId === 'product-select') {
+                window.productSearchableSelect.updateOptions(basicOptions);
+                window.productSearchableSelect.setValue('wheat_and_products');
+            }
+        }
+    }
+}
+
+// Populate country select dropdown with available countries
+async function populateCountrySelect(selectId) {
+    try {
+        const data = await loadDataDirect('data/geo/geo.json');
+        const features = data.features;
+        
+        const selectElement = document.getElementById(selectId);
+        if (!selectElement) return;
+        
+        // Clear existing options except placeholder
+        const firstOption = selectElement.firstElementChild;
+        selectElement.innerHTML = '';
+        if (firstOption) {
+            selectElement.appendChild(firstOption);
+        }
+        
+        // Extract and sort countries
+        const countries = features
+            .map(f => f.properties.name || f.properties.NAME)
+            .filter(Boolean)
+            .sort();
+        
+        const countryOptions = [];
+        
+        countries.forEach(name => {
+            countryOptions.push({ value: name, text: name });
+            
+            // Create option element
+            const option = document.createElement('option');
+            option.value = name;
+            option.textContent = name;
+            selectElement.appendChild(option);
+        });
+        
+        // Update searchable select if it exists
+        if (window.countrySearchableSelect && selectId === 'country-select') {
+            window.countrySearchableSelect.updateOptions(countryOptions);
+            
+            // Set default selection to Germany if available
+            const germanyOption = countries.find(country => country === 'Germany');
+            if (germanyOption) {
+                selectElement.value = 'Germany';
+                window.countrySearchableSelect.setValue('Germany');
+            }
+        } else {
+            // Set default selection to Germany if available (fallback for regular select)
+            const germanyOption = countries.find(country => country === 'Germany');
+            if (germanyOption) {
+                selectElement.value = 'Germany';
+            }
+        }
+        
+    } catch (error) {
+        console.error('Error loading countries:', error);
+        // Fallback to basic options
+        const selectElement = document.getElementById(selectId);
+        if (selectElement) {
+            const basicOptions = [
+                { value: "Germany", text: "Germany" },
+                { value: "United States of America", text: "United States of America" },
+                { value: "China", text: "China" },
+                { value: "India", text: "India" }
+            ];
+            
+            selectElement.innerHTML = `
+                <option value="">Lade Länder...</option>
+                <option value="Germany">Germany</option>
+                <option value="United States of America">United States of America</option>
+                <option value="China">China</option>
+                <option value="India">India</option>
+            `;
+            
+            // Set default to Germany
+            selectElement.value = 'Germany';
+            
+            // Update searchable select if it exists
+            if (window.countrySearchableSelect && selectId === 'country-select') {
+                window.countrySearchableSelect.updateOptions(basicOptions);
+                window.countrySearchableSelect.setValue('Germany');
+            }
         }
     }
 }
@@ -672,6 +870,204 @@ async function testDomesticSupply() {
     } catch (error) {
         // Error loading domestic supply
     }
+}
+
+// =======================================
+// MAJOR WORLD EVENTS ANALYSIS FUNCTIONS
+// =======================================
+
+// Calculate year-over-year change for a specific country and product
+async function calculateYearOverYearChange(country, product, year, metric = 'production') {
+    try {
+        const timeseriesData = await loadProductTimeseries(product, metric);
+        
+        if (!timeseriesData || !timeseriesData[country]) {
+            return null;
+        }
+        
+        const countryData = timeseriesData[country];
+        const currentYear = countryData.find(d => d.year === year);
+        const previousYear = countryData.find(d => d.year === year - 1);
+        
+        if (!currentYear || !previousYear || currentYear.value === 0 || previousYear.value === 0) {
+            return null;
+        }
+        
+        const change = ((currentYear.value - previousYear.value) / previousYear.value) * 100;
+        return {
+            country,
+            product,
+            year,
+            metric,
+            currentValue: currentYear.value,
+            previousValue: previousYear.value,
+            changePercent: change,
+            isAnomalous: Math.abs(change) > 10 // Default 10% threshold
+        };
+    } catch (error) {
+        return null;
+    }
+}
+
+// Identify anomalies in time series data based on threshold
+function identifyAnomalies(data, threshold = 0.1) {
+    if (!Array.isArray(data) || data.length < 3) {
+        return [];
+    }
+    
+    const anomalies = [];
+    
+    for (let i = 1; i < data.length; i++) {
+        const current = data[i];
+        const previous = data[i - 1];
+        
+        if (current.value && previous.value && previous.value !== 0) {
+            const change = Math.abs((current.value - previous.value) / previous.value);
+            
+            if (change > threshold) {
+                anomalies.push({
+                    year: current.year,
+                    value: current.value,
+                    previousValue: previous.value,
+                    changePercent: ((current.value - previous.value) / previous.value) * 100,
+                    severity: change > 0.2 ? 'high' : change > 0.15 ? 'medium' : 'low'
+                });
+            }
+        }
+    }
+    
+    return anomalies;
+}
+
+// Aggregate regional data for multiple countries
+async function aggregateRegionalData(countries, product, year, metric = 'production') {
+    try {
+        const timeseriesData = await loadProductTimeseries(product, metric);
+        
+        if (!timeseriesData) {
+            return null;
+        }
+        
+        let totalValue = 0;
+        let validCountries = [];
+        
+        countries.forEach(country => {
+            if (timeseriesData[country]) {
+                const yearData = timeseriesData[country].find(d => d.year === year);
+                if (yearData && yearData.value) {
+                    totalValue += yearData.value;
+                    validCountries.push({
+                        country,
+                        value: yearData.value
+                    });
+                }
+            }
+        });
+        
+        return {
+            year,
+            product,
+            metric,
+            countries: validCountries,
+            totalValue,
+            averageValue: validCountries.length > 0 ? totalValue / validCountries.length : 0,
+            countryCount: validCountries.length
+        };
+    } catch (error) {
+        return null;
+    }
+}
+
+// Check data completeness for a country/product/year range
+async function checkDataCompleteness(country, product, yearRange) {
+    try {
+        const timeseriesData = await loadProductTimeseries(product, 'production');
+        
+        if (!timeseriesData || !timeseriesData[country]) {
+            return {
+                country,
+                product,
+                completeness: 0,
+                availableYears: [],
+                missingYears: yearRange
+            };
+        }
+        
+        const countryData = timeseriesData[country];
+        const availableYears = countryData.map(d => d.year).filter(year => yearRange.includes(year));
+        const missingYears = yearRange.filter(year => !availableYears.includes(year));
+        
+        return {
+            country,
+            product,
+            completeness: (availableYears.length / yearRange.length) * 100,
+            availableYears,
+            missingYears,
+            totalYears: yearRange.length
+        };
+    } catch (error) {
+        return {
+            country,
+            product,
+            completeness: 0,
+            availableYears: [],
+            missingYears: yearRange,
+            error: error.message
+        };
+    }
+}
+
+// Identify data gaps across multiple countries and products
+async function identifyDataGaps(countries, products, years) {
+    const gaps = [];
+    
+    for (const country of countries) {
+        for (const product of products) {
+            const completeness = await checkDataCompleteness(country, product, years);
+            if (completeness.completeness < 100) {
+                gaps.push(completeness);
+            }
+        }
+    }
+    
+    return gaps.sort((a, b) => a.completeness - b.completeness);
+}
+
+// Export event analysis data for reports
+function exportEventAnalysisData() {
+    const eventYears = Object.keys(politicalEvents).map(year => parseInt(year));
+    const analysisData = {
+        eventYears,
+        totalEvents: eventYears.reduce((sum, year) => sum + politicalEvents[year].length, 0),
+        eventsByCategory: {},
+        eventsByYear: politicalEvents,
+        affectedCountries: new Set()
+    };
+    
+    // Group by category and collect affected countries
+    eventYears.forEach(year => {
+        politicalEvents[year].forEach(event => {
+            const category = event.category || 'unknown';
+            if (!analysisData.eventsByCategory[category]) {
+                analysisData.eventsByCategory[category] = [];
+            }
+            analysisData.eventsByCategory[category].push({
+                year,
+                ...event
+            });
+            
+            if (event.affectedCountries) {
+                event.affectedCountries.forEach(country => {
+                    analysisData.affectedCountries.add(country);
+                });
+            }
+        });
+    });
+    
+    // Convert Set to Array
+    analysisData.affectedCountries = Array.from(analysisData.affectedCountries);
+    
+    return analysisData;
 }
 
 // Export functions for use in other modules
@@ -687,6 +1083,7 @@ window.FAOUtils = {
     populateProductSelect,
     populateMLProductSelect,
     populateMetricSelect,
+    populateCountrySelect,
     testDomesticSupply,
     debounce,
     normalizeCountryName,
@@ -696,6 +1093,13 @@ window.FAOUtils = {
     createLegend,
     getPoliticalEvents,
     getClimateEvents,
+    // Major World Events Analysis Functions
+    calculateYearOverYearChange,
+    identifyAnomalies,
+    aggregateRegionalData,
+    checkDataCompleteness,
+    identifyDataGaps,
+    exportEventAnalysisData,
     COLOR_RANGE // Palette exportieren
 };
 

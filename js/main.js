@@ -10,6 +10,12 @@ class FAOApp {
             await this.loadMetadata();
             await this.populateProductSelectors();
             this.updateYearRange();
+            
+            // Initialize searchable selects after data is loaded
+            if (window.initializeSearchableSelects) {
+                window.initializeSearchableSelects();
+            }
+            
             this.initializeModules();
         } catch (error) {
         }
@@ -42,6 +48,11 @@ class FAOApp {
                 'metric-select'          // World map (main metric selector)
             ];
 
+            // List of country selector IDs
+            const countrySelectors = [
+                'country-select'         // World map (main country selector)
+            ];
+
             // Populate each regular product selector
             for (const selectorId of productSelectors) {
                 await FAOUtils.populateProductSelect(selectorId);
@@ -50,6 +61,11 @@ class FAOApp {
             // Populate ML product selector with only forecasted products
             for (const selectorId of mlSelectors) {
                 await FAOUtils.populateMLProductSelect(selectorId);
+            }
+
+            // Populate country selectors
+            for (const selectorId of countrySelectors) {
+                await FAOUtils.populateCountrySelect(selectorId);
             }
 
             // Populate each metric selector

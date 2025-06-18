@@ -21,9 +21,6 @@
             
             <!-- Navigation Controls -->
             <nav class="nav-controls">
-                <button data-panel="country-list" aria-label="Länder-Liste">
-                    <i class="material-icons">list</i>
-                </button>
                 <div class="nav-group">
                     <button class="nav-toggle" aria-label="Analysen" aria-expanded="false">
                         <i class="material-icons">apps</i>
@@ -44,10 +41,22 @@
             <!-- Map Controls -->
             <div class="map-controls">
                 <div class="control-group">
+                    <label for="country-select">Land:</label>
+                    <div class="searchable-select">
+                        <input type="text" id="country-search" placeholder="Land suchen..." />
+                        <select id="country-select">
+                            <option value="">Lade Länder...</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
                     <label for="product-select">Produkt:</label>
-                    <select id="product-select">
-                        <option value="">Lade Produkte...</option>
-                    </select>
+                    <div class="searchable-select">
+                        <input type="text" id="product-search" placeholder="Produkt suchen..." />
+                        <select id="product-select">
+                            <option value="">Lade Produkte...</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="control-group">
                     <label for="metric-select">Metrik:</label>
@@ -251,16 +260,6 @@
                 </div>
             </div>
 
-            <div id="panel-country-list" class="panel">
-                <div class="panel-header">
-                    <h3>Länder-Liste</h3>
-                    <button class="panel-close" aria-label="Schließen"><i class="material-icons">close</i></button>
-                </div>
-                <div class="panel-content">
-                    <input type="text" id="country-list-search" placeholder="Land suchen..." />
-                    <ul id="country-list-container"></ul>
-                </div>
-            </div>
 
             <div id="panel-country-info" class="panel country-info-panel">
                 <div class="panel-header">
@@ -277,6 +276,7 @@
 
     <script src="js/utils.js"></script>
     <script src="js/country-mapping.js"></script>
+    <script src="js/searchable-select.js"></script>
     <script src="js/main.js"></script>
     <script src="js/dashboard.js"></script>
     <script src="js/worldmap.js"></script>

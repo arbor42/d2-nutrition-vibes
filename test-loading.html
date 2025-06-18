@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Data Loading</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-result { margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background-color: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        select, input { margin: 5px; padding: 5px; }
+        button { margin: 5px; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Test Data Loading</h1>
+    
+    <div id="test-results"></div>
+    
+    <h2>Manual Test Controls</h2>
+    <div>
+        <label for="country-select">Land:</label>
+        <div class="searchable-select">
+            <input type="text" id="country-search" placeholder="Land suchen..." />
+            <select id="country-select">
+                <option value="">Lade Länder...</option>
+            </select>
+        </div>
+    </div>
+    
+    <div>
+        <label for="product-select">Produkt:</label>
+        <div class="searchable-select">
+            <input type="text" id="product-search" placeholder="Produkt suchen..." />
+            <select id="product-select">
+                <option value="">Lade Produkte...</option>
+            </select>
+        </div>
+    </div>
+    
+    <button onclick="testProductLoading()">Test Product Loading</button>
+    <button onclick="testCountryLoading()">Test Country Loading</button>
+    
+    <script src="js/utils.js"></script>
+    <script src="js/searchable-select.js"></script>
+    
+    <script>
+        const testResults = document.getElementById('test-results');
+        
+        function addTestResult(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `test-result ${type}`;
+            div.innerHTML = `${new Date().toLocaleTimeString()}: ${message}`;
+            testResults.appendChild(div);
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+        
+        async function testMetadataLoading() {
+            try {
+                addTestResult('Testing metadata loading...', 'info');
+                const metadata = await FAOUtils.loadData('fao_data/metadata.json');
+                
+                if (metadata && metadata.data_summary) {
+                    addTestResult(`✓ Metadata loaded successfully. Found ${metadata.data_summary.food_items.length} food items`, 'success');
+                    return metadata;
+                } else {
+                    addTestResult('✗ Metadata loaded but structure is invalid', 'error');
+                    return null;
+                }
+            } catch (error) {
+                addTestResult(`✗ Failed to load metadata: ${error.message}`, 'error');
+                return null;
+            }
+        }
+        
+        async function testGeoLoading() {
+            try {
+                addTestResult('Testing geo data loading...', 'info');
+                const geoData = await FAOUtils.loadData('fao_data/geo/geo.json');
+                
+                if (geoData && geoData.features) {
+                    addTestResult(`✓ Geo data loaded successfully. Found ${geoData.features.length} countries`, 'success');
+                    return geoData;
+                } else {
+                    addTestResult('✗ Geo data loaded but structure is invalid', 'error');
+                    return null;
+                }
+            } catch (error) {
+                addTestResult(`✗ Failed to load geo data: ${error.message}`, 'error');
+                return null;
+            }
+        }
+        
+        async function testProductLoading() {
+            try {
+                addTestResult('Testing product select population...', 'info');
+                await FAOUtils.populateProductSelect('product-select');
+                
+                const select = document.getElementById('product-select');
+                const optionCount = select.options.length;
+                
+                if (optionCount > 1) {
+                    addTestResult(`✓ Product select populated with ${optionCount} options`, 'success');
+                    
+                    // Test searchable select integration
+                    if (window.productSearchableSelect) {
+                        addTestResult('✓ Product searchable select is initialized', 'success');
+                    } else {
+                        addTestResult('⚠ Product searchable select not initialized', 'error');
+                    }
+                } else {
+                    addTestResult(`✗ Product select has only ${optionCount} options`, 'error');
+                }
+            } catch (error) {
+                addTestResult(`✗ Failed to populate product select: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testCountryLoading() {
+            try {
+                addTestResult('Testing country select population...', 'info');
+                await FAOUtils.populateCountrySelect('country-select');
+                
+                const select = document.getElementById('country-select');
+                const optionCount = select.options.length;
+                
+                if (optionCount > 1) {
+                    addTestResult(`✓ Country select populated with ${optionCount} options`, 'success');
+                    
+                    // Test searchable select integration
+                    if (window.countrySearchableSelect) {
+                        addTestResult('✓ Country searchable select is initialized', 'success');
+                    } else {
+                        addTestResult('⚠ Country searchable select not initialized', 'error');
+                    }
+                } else {
+                    addTestResult(`✗ Country select has only ${optionCount} options`, 'error');
+                }
+            } catch (error) {
+                addTestResult(`✗ Failed to populate country select: ${error.message}`, 'error');
+            }
+        }
+        
+        async function runAllTests() {
+            addTestResult('Starting comprehensive data loading tests...', 'info');
+            
+            // Test basic data loading
+            await testMetadataLoading();
+            await testGeoLoading();
+            
+            // Initialize searchable selects
+            if (window.initializeSearchableSelects) {
+                window.initializeSearchableSelects();
+                addTestResult('✓ Searchable selects initialized', 'success');
+            } else {
+                addTestResult('✗ initializeSearchableSelects function not found', 'error');
+            }
+            
+            // Test select population
+            await testProductLoading();
+            await testCountryLoading();
+            
+            addTestResult('All tests completed!', 'info');
+        }
+        
+        // Auto-run tests when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(runAllTests, 100);
+        });
+    </script>
+</body>
+</html>

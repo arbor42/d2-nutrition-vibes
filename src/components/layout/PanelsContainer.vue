@@ -9,6 +9,7 @@ import SimulationPanel from '@/components/panels/SimulationPanel.vue'
 import MLPanel from '@/components/panels/MLPanel.vue'
 import StructuralPanel from '@/components/panels/StructuralPanel.vue'
 import ProcessPanel from '@/components/panels/ProcessPanel.vue'
+import ProductSelector from '@/components/ui/ProductSelector.vue'
 
 const route = useRoute()
 const uiStore = useUIStore()
@@ -104,130 +105,7 @@ const panelDescription = computed(() => {
         Globale Steuerung
       </h3>
       
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <!-- Product Selection -->
-        <div class="space-y-2">
-          <label class="form-label">Produkt</label>
-          <select 
-            v-model="uiStore.selectedProduct"
-            class="form-input"
-          >
-            <option value="">Alle Produkte</option>
-            <option 
-              v-for="product in dataStore.availableProducts"
-              :key="product"
-              :value="product"
-            >
-              {{ product.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) }}
-            </option>
-          </select>
-        </div>
-        
-        <!-- Year Selection -->
-        <div class="space-y-2">
-          <label class="form-label">Jahr</label>
-          <select 
-            v-model="uiStore.selectedYear"
-            class="form-input"
-          >
-            <option 
-              v-for="year in dataStore.availableYears"
-              :key="year"
-              :value="year"
-            >
-              {{ year }}
-            </option>
-          </select>
-        </div>
-        
-        <!-- Country Selection -->
-        <div class="space-y-2">
-          <label class="form-label">Land</label>
-          <select 
-            v-model="uiStore.selectedCountry"
-            class="form-input"
-          >
-            <option value="">Alle Länder</option>
-            <option 
-              v-for="country in dataStore.availableCountries"
-              :key="country"
-              :value="country"
-            >
-              {{ country }}
-            </option>
-          </select>
-        </div>
-        
-        <!-- Metric Selection -->
-        <div class="space-y-2">
-          <label class="form-label">Metrik</label>
-          <select 
-            v-model="uiStore.selectedMetric"
-            class="form-input"
-          >
-            <option value="production">Produktion</option>
-            <option value="export">Export</option>
-            <option value="import">Import</option>
-            <option value="consumption">Verbrauch</option>
-          </select>
-        </div>
-      </div>
-      
-      <!-- Action Buttons -->
-      <div class="flex items-center justify-between mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-        <div class="flex space-x-3">
-          <button
-            @click="dataStore.refreshData"
-            :disabled="dataStore.loading"
-            class="btn btn-primary btn-sm"
-          >
-            <svg 
-              class="w-4 h-4 mr-2" 
-              :class="{ 'animate-spin': dataStore.loading }"
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-            </svg>
-            Daten aktualisieren
-          </button>
-          
-          <button
-            @click="uiStore.resetFilters"
-            class="btn btn-outline btn-sm"
-          >
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-            </svg>
-            Filter zurücksetzen
-          </button>
-        </div>
-        
-        <div class="flex items-center space-x-3">
-          <!-- Export Button -->
-          <button
-            class="btn btn-secondary btn-sm"
-            @click="uiStore.showExportModal = true"
-          >
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-            Exportieren
-          </button>
-          
-          <!-- Settings Button -->
-          <button
-            class="btn btn-ghost btn-sm"
-            @click="uiStore.showSettingsModal = true"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-          </button>
-        </div>
-      </div>
+      <ProductSelector />
     </div>
     
     <!-- Dynamic Content Panel -->

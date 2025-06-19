@@ -66,23 +66,111 @@ const globalStats = computed(() => {
     return { total: 0, countries: 0, topProducer: null, unit: 't' }
   }
   
-  const rawData = dataStore.getProductionData(uiStore.selectedProduct, uiStore.selectedYear)
-  if (!rawData) return { total: 0, countries: 0, topProducer: null, unit: 't' }
-  
-  // Handle different data structures (object with country keys vs array)
+  let rawData = null
   let dataArray = []
-  if (Array.isArray(rawData)) {
-    dataArray = rawData
-  } else if (rawData.data && Array.isArray(rawData.data)) {
-    dataArray = rawData.data
-  } else if (typeof rawData === 'object') {
-    // Convert object format to array
-    dataArray = Object.entries(rawData).map(([country, data]) => ({
-      country,
-      value: data.value || 0,
-      unit: data.unit || 't',
-      year: data.year || uiStore.selectedYear
-    }))
+  
+  // Use different data sources based on selected metric
+  if (uiStore.selectedMetric === 'production') {
+    // Use production data
+    rawData = dataStore.getProductionData(uiStore.selectedProduct, uiStore.selectedYear)
+  } else if (dataStore.timeseriesData && ['import_quantity', 'export_quantity', 'domestic_supply_quantity'].includes(uiStore.selectedMetric)) {
+    // Use timeseries data for other metrics
+    const metricKey = uiStore.selectedMetric === 'import_quantity' ? 'imports' :
+                      uiStore.selectedMetric === 'export_quantity' ? 'exports' :
+                      'domestic_supply'
+    
+    // Extract data from timeseries for the selected product, year and metric
+    // Normalize product name to match timeseries data format
+    const normalizeProductName = (product) => {
+      // First, convert underscores to spaces
+      let normalized = product.replace(/_/g, ' ')
+      
+      // Handle specific patterns
+      const mappings = {
+        'cereals excluding beer': 'Cereals - Excluding Beer',
+        'coconuts incl copra': 'Coconuts - Incl Copra',
+        'fruits excluding wine': 'Fruits - Excluding Wine',
+        'milk excluding butter': 'Milk - Excluding Butter',
+        'mutton and goat meat': 'Mutton & Goat Meat',
+        'sugar and sweeteners': 'Sugar & Sweeteners',
+        'sugar non centrifugal': 'Sugar non-centrifugal',
+        'cassava and products': 'Cassava and products',
+        'maize and products': 'Maize and products',
+        'wheat and products': 'Wheat and products',
+        'rice and products': 'Rice and products',
+        'potatoes and products': 'Potatoes and products',
+        'nuts and products': 'Nuts and products',
+        'pulses': 'Pulses',
+        'vegetables': 'Vegetables'
+      }
+      
+      // Check if we have a direct mapping
+      const lowerNormalized = normalized.toLowerCase()
+      if (mappings[lowerNormalized]) {
+        return mappings[lowerNormalized]
+      }
+      
+      // Otherwise, capitalize properly
+      return normalized
+        .split(' ')
+        .map((word, index) => {
+          const lower = word.toLowerCase()
+          if (lower === 'and' || lower === 'the' || lower === 'of') {
+            return lower
+          }
+          return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        })
+        .join(' ')
+    }
+    
+    const normalizedProduct = normalizeProductName(uiStore.selectedProduct)
+    
+    console.log(`📊 DashboardPanel: Looking for timeseries data - Original: "${uiStore.selectedProduct}", Normalized: "${normalizedProduct}"`)
+    
+    if (dataStore.timeseriesData[normalizedProduct]) {
+      const productTimeseries = dataStore.timeseriesData[normalizedProduct]
+      console.log(`📊 DashboardPanel: Processing ${metricKey} data for ${normalizedProduct}:`, {
+        countries: Object.keys(productTimeseries).length,
+        year: uiStore.selectedYear
+      })
+      
+      dataArray = Object.entries(productTimeseries).map(([country, countryData]) => {
+        const yearData = countryData.find(d => d.year === uiStore.selectedYear)
+        return {
+          country,
+          value: yearData ? (yearData[metricKey] || 0) : 0,
+          unit: yearData?.unit || 't',
+          year: uiStore.selectedYear
+        }
+      }).filter(item => item.value > 0)
+      
+      console.log(`📊 DashboardPanel: Found ${dataArray.length} countries with ${metricKey} > 0`)
+    } else {
+      console.log(`⚠️ DashboardPanel: No timeseries data found for product: ${normalizedProduct}`)
+      console.log(`⚠️ DashboardPanel: Available products:`, Object.keys(dataStore.timeseriesData || {}).slice(0, 5))
+    }
+  } else {
+    // Fallback to production data
+    rawData = dataStore.getProductionData(uiStore.selectedProduct, uiStore.selectedYear)
+  }
+  
+  if (!rawData && dataArray.length === 0) return { total: 0, countries: 0, topProducer: null, unit: 't' }
+  
+  // Handle different data structures (object with country keys vs array) - only if we used production data
+  if (rawData && dataArray.length === 0) {
+    if (Array.isArray(rawData)) {
+      dataArray = rawData
+    } else if (rawData.data && Array.isArray(rawData.data)) {
+      dataArray = rawData.data
+    } else if (typeof rawData === 'object') {
+      // Convert object format to array
+      dataArray = Object.entries(rawData).map(([country, data]) => ({
+        country,
+        value: data.value || 0,
+        unit: data.unit || 't',
+        year: data.year || uiStore.selectedYear
+      }))
+    }
   }
   
   const validData = dataArray.filter(item => item && item.value > 0)
@@ -127,49 +215,6 @@ const globalStats = computed(() => {
   }
 })
 
-// Available product options for the searchable dropdown
-const productOptions = computed(() => {
-  // Get both grouped products and individual items from metadata
-  const groupedProducts = dataStore.availableProducts || []
-  const individualItems = dataStore.faoMetadata?.data_summary?.food_items || []
-  
-  // Create options for grouped products
-  const groupedOptions = groupedProducts.map(product => ({
-    value: product,
-    label: product.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) + ' (Gruppe)'
-  }))
-  
-  // Create options for individual items (simplified for now)
-  const individualOptions = individualItems
-    .filter(item => !item.includes('Excluding') && !item.includes('Other'))
-    .slice(0, 50) // Limit to 50 items for performance
-    .map(item => ({
-      value: item.toLowerCase().replace(/[\s&-]+/g, '_').replace(/[^a-z0-9_]/g, ''),
-      label: item
-    }))
-  
-  // Combine and sort
-  return [...groupedOptions, ...individualOptions].sort((a, b) => 
-    a.label.localeCompare(b.label, 'de')
-  )
-})
-
-// Metric options
-const metricOptions = [
-  { value: 'production', label: 'Produktion' },
-  { value: 'import_quantity', label: 'Import' },
-  { value: 'export_quantity', label: 'Export' },
-  { value: 'domestic_supply_quantity', label: 'Inlandsversorgung' }
-]
-
-// Year options  
-const yearOptions = computed(() => {
-  const years = dataStore.availableYears || []
-  return years.map(year => ({
-    value: year,
-    label: year.toString()
-  })).reverse()
-})
 
 const onCountryClick = (countryCode: string) => {
   // Find country name from data
@@ -198,6 +243,9 @@ onMounted(async () => {
   } catch (error) {
     console.error('Failed to load initial production data:', error)
   }
+  
+  // Timeseries data is now loaded during app initialization
+  console.log('📊 DashboardPanel: Timeseries data available:', dataStore.timeseriesData ? Object.keys(dataStore.timeseriesData).length + ' products' : 'Not loaded')
 })
 
 // Watch for changes in selection and reload data
@@ -214,13 +262,6 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
 
 <template>
   <div class="space-y-6">
-    <!-- Product Selector -->
-    <div class="card">
-      <div class="card-body">
-        <ProductSelector />
-      </div>
-    </div>
-    
     <!-- Dashboard Header with Stats -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <!-- Total Production Card -->

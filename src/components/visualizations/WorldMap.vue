@@ -561,7 +561,10 @@ const loadProductionData = async () => {
   if (!props.selectedProduct || !props.selectedYear) return
 
   try {
-    console.log(`🗺️ WorldMap: Loading production data for ${props.selectedProduct} ${props.selectedYear}`)
+    console.log(`🗺️ WorldMap: Loading data for ${props.selectedProduct} ${props.selectedYear} - Metric: ${props.selectedMetric}`)
+    
+    // For now, we only have production data available
+    // Trade data (import/export) would need different data source
     const productionData = await dataStore.loadProductionData(
       props.selectedProduct, 
       props.selectedYear
@@ -1062,8 +1065,12 @@ const handleCountryMouseover = (event, d) => {
   if (countryData && countryData.value > 0) {
     const formattedValue = d3.format(',.0f')(countryData.value)
     const productName = props.selectedProduct?.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) || 'Produkt'
+    const metricLabel = props.selectedMetric === 'production' ? 'Produktion' :
+                       props.selectedMetric === 'import_quantity' ? 'Import' :
+                       props.selectedMetric === 'export_quantity' ? 'Export' :
+                       'Inlandsversorgung'
     content += `<span style="color: #fbbf24">${productName}</span><br/>`
-    content += `Produktion: <strong>${formattedValue}</strong> ${countryData.unit || 't'}<br/>`
+    content += `${metricLabel}: <strong>${formattedValue}</strong> ${countryData.unit || 't'}<br/>`
     content += `<span style="color: #9ca3af; font-size: 12px">Jahr: ${props.selectedYear}</span>`
   } else {
     content += '<span style="color: #ef4444">Keine Daten verfügbar</span>'
@@ -1131,8 +1138,8 @@ const handleResize = () => {
 }
 
 // Watchers
-watch([() => props.selectedProduct, () => props.selectedYear], async () => {
-  console.log('🔄 WorldMap: Product/Year changed, reloading data...')
+watch([() => props.selectedProduct, () => props.selectedYear, () => props.selectedMetric], async () => {
+  console.log('🔄 WorldMap: Product/Year/Metric changed, reloading data...')
   await loadProductionData()
 }, { immediate: false })
 

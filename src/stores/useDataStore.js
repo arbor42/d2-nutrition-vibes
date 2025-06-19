@@ -248,13 +248,40 @@ export const useDataStore = defineStore('data', () => {
 
   const loadTimeseriesData = async () => {
     const key = 'timeseries'
+    console.log('📊 DataStore: Starting loadTimeseriesData...')
     setLoading(key, true)
     try {
       const data = await dataService.loadTimeseriesData()
-      timeseriesData.value = data
+      console.log('📊 DataStore: Raw timeseries data:', Array.isArray(data) ? `Array with ${data.length} entries` : typeof data)
+      
+      // Transform array structure to nested object structure
+      // Expected: { product: { country: [yearData] } }
+      const transformedData = {}
+      
+      if (Array.isArray(data)) {
+        data.forEach(entry => {
+          const { item: product, country, data: yearData } = entry
+          
+          if (!transformedData[product]) {
+            transformedData[product] = {}
+          }
+          
+          transformedData[product][country] = yearData
+        })
+        
+        console.log('📊 DataStore: Transformed timeseries data structure:', {
+          products: Object.keys(transformedData).length,
+          sampleProduct: Object.keys(transformedData)[0],
+          sampleCountries: transformedData[Object.keys(transformedData)[0]] ? 
+            Object.keys(transformedData[Object.keys(transformedData)[0]]).slice(0, 3) : []
+        })
+      }
+      
+      timeseriesData.value = transformedData
       errors.value.delete(key)
-      return data
+      return transformedData
     } catch (error) {
+      console.error('❌ DataStore: Error loading timeseries data:', error)
       setError(key, error.message)
       throw error
     } finally {
@@ -309,6 +336,10 @@ export const useDataStore = defineStore('data', () => {
       console.log('🗺️ DataStore: Loading geo data...')
       const geoResult = await loadGeoData('geo')
       console.log('✅ DataStore: Geo data loaded:', geoResult)
+      
+      console.log('📈 DataStore: Loading timeseries data...')
+      const timeseriesResult = await loadTimeseriesData()
+      console.log('✅ DataStore: Timeseries data loaded:', timeseriesResult ? 'Success' : 'Failed')
       
       console.log('🎉 DataStore: App initialization completed successfully!')
     } catch (error) {

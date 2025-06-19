@@ -1228,7 +1228,7 @@ const handleResize = () => {
 watch([() => props.selectedProduct, () => props.selectedYear, () => props.selectedMetric], async () => {
   console.log('🔄 WorldMap: Product/Year/Metric changed, reloading data...')
   await loadProductionData()
-}, { immediate: false })
+}, { immediate: true })
 
 // Removed watcher - using static updates instead
 

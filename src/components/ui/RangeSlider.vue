@@ -129,7 +129,7 @@ const thumbStyle = computed(() => {
 
 const handleInput = (event: Event) => {
   const target = event.target as HTMLInputElement
-  const value = parseInt(target.value)
+  const value = parseFloat(target.value)
   
   emit('update:modelValue', value)
   emit('input', value)
@@ -137,7 +137,7 @@ const handleInput = (event: Event) => {
 
 const handleChange = (event: Event) => {
   const target = event.target as HTMLInputElement
-  const value = parseInt(target.value)
+  const value = parseFloat(target.value)
   
   emit('change', value)
 }

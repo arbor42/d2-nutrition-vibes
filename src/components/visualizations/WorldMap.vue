@@ -264,7 +264,7 @@ const createMapDirect = (data) => {
     .style('width', '100%')
     .style('height', '100%')
     .style('display', 'block')
-    .style('background-color', '#f8fafc')
+    .style('background-color', 'transparent')
 
   console.log('✅ WorldMap: SVG created')
 
@@ -312,6 +312,11 @@ const createMapDirect = (data) => {
 const drawCountriesDirect = (container, features) => {
   console.log('🌍 WorldMap: Drawing countries directly...')
   
+  // Get theme colors
+  const isDarkMode = document.documentElement.classList.contains('dark')
+  const defaultFill = isDarkMode ? '#374151' : '#e5e7eb' // gray-700 : gray-200
+  const defaultStroke = isDarkMode ? '#4B5563' : '#ffffff' // gray-600 : white
+  
   const countries = container.selectAll('.country')
     .data(features, d => d.properties.iso_a3 || d.properties.adm0_a3 || d.properties.name)
   
@@ -323,8 +328,8 @@ const drawCountriesDirect = (container, features) => {
     .append('path')
     .attr('class', 'country')
     .attr('d', path)
-    .attr('fill', '#e5e7eb')
-    .attr('stroke', '#ffffff')
+    .attr('fill', defaultFill)
+    .attr('stroke', defaultStroke)
     .attr('stroke-width', 0.5)
     .style('cursor', 'pointer')
     .on('click', handleCountryClick)
@@ -334,6 +339,8 @@ const drawCountriesDirect = (container, features) => {
   // Update existing countries
   countries.merge(enterCountries)
     .attr('d', path)
+    .attr('fill', defaultFill)
+    .attr('stroke', defaultStroke)
   
   const totalCountries = container.selectAll('.country').size()
   console.log('✅ WorldMap: Countries drawn, total:', totalCountries)
@@ -384,11 +391,14 @@ const createLegend = (svg) => {
   // Color stops are now added above in the scale section
   
   // Add rectangle with gradient
+  const isDarkMode = document.documentElement.classList.contains('dark')
+  const legendStroke = isDarkMode ? '#4B5563' : '#e5e7eb' // gray-600 : gray-200
+  
   legend.append('rect')
     .attr('width', legendWidth)
     .attr('height', legendHeight)
     .attr('fill', `url(#${gradientId})`)
-    .attr('stroke', '#e5e7eb')
+    .attr('stroke', legendStroke)
     .attr('stroke-width', 0.5)
   
   // Add scale
@@ -436,11 +446,21 @@ const createLegend = (svg) => {
       return d3.format('.0f')(d)
     })
   
-  legend.append('g')
+  const legendTextColor = isDarkMode ? '#D1D5DB' : '#374151' // gray-300 : gray-700
+  
+  const legendAxisGroup = legend.append('g')
     .attr('transform', `translate(0, ${legendHeight})`)
     .call(legendAxis)
-    .selectAll('text')
+    
+  legendAxisGroup.selectAll('text')
     .style('font-size', '10px')
+    .style('fill', legendTextColor)
+    
+  legendAxisGroup.selectAll('path')
+    .style('stroke', legendTextColor)
+    
+  legendAxisGroup.selectAll('line')
+    .style('stroke', legendTextColor)
   
   // Add title
   legend.append('text')
@@ -449,6 +469,7 @@ const createLegend = (svg) => {
     .attr('text-anchor', 'middle')
     .style('font-size', '11px')
     .style('font-weight', '500')
+    .style('fill', legendTextColor)
     .text(props.selectedMetric === 'production' ? 'Produktion (t)' : 
           props.selectedMetric === 'import_quantity' ? 'Import (t)' :
           props.selectedMetric === 'export_quantity' ? 'Export (t)' :
@@ -951,7 +972,9 @@ const applyProductionDataDirect = (container, data) => {
         }
         return color
       }
-      return '#e5e7eb'
+      // Return theme-appropriate default color for countries without data
+      const isDarkMode = document.documentElement.classList.contains('dark')
+      return isDarkMode ? '#374151' : '#e5e7eb' // gray-700 : gray-200
     })
     .attr('opacity', (d) => {
       const countryName = (d.properties.name || d.properties.NAME || d.properties.admin || '').toLowerCase()
@@ -1040,7 +1063,9 @@ const applyProductionData = (container, data) => {
         console.log(`🗺️ WorldMap: Coloring ${countryName}/${countryCode} with value ${value}`)
         return colorScale(value)
       }
-      return '#e5e7eb'
+      // Return theme-appropriate default color for countries without data
+      const isDarkMode = document.documentElement.classList.contains('dark')
+      return isDarkMode ? '#374151' : '#e5e7eb' // gray-700 : gray-200
     })
     .attr('opacity', (d) => {
       const countryName = (d.properties.name || d.properties.NAME || d.properties.admin || '').toLowerCase()
@@ -1110,11 +1135,15 @@ const handleCountryMouseover = (event, d) => {
 }
 
 const handleCountryMouseout = (event, d) => {
+  // Get theme-appropriate stroke color
+  const isDarkMode = document.documentElement.classList.contains('dark')
+  const defaultStroke = isDarkMode ? '#4B5563' : '#ffffff' // gray-600 : white
+  
   // Remove visual hover effect
   d3.select(event.currentTarget)
     .transition()
     .duration(100)
-    .attr('stroke', '#ffffff')
+    .attr('stroke', defaultStroke)
     .attr('stroke-width', 0.5)
     .style('filter', 'none')
   
@@ -1158,6 +1187,37 @@ const resetZoom = () => {
   }
 }
 
+// Theme observer for dynamic styling updates
+const updateThemeStyles = () => {
+  const container = d3.select(svgContainerRef.value)
+  if (container.empty()) return
+  
+  const isDarkMode = document.documentElement.classList.contains('dark')
+  const defaultFill = isDarkMode ? '#374151' : '#e5e7eb' // gray-700 : gray-200
+  const defaultStroke = isDarkMode ? '#4B5563' : '#ffffff' // gray-600 : white
+  
+  // Update country styling
+  container.selectAll('.country')
+    .each(function(d) {
+      const element = d3.select(this)
+      const currentFill = element.attr('fill')
+      
+      // Only update if it's the default color (not a data-driven color)
+      if (currentFill === '#e5e7eb' || currentFill === '#374151') {
+        element.attr('fill', defaultFill)
+      }
+      element.attr('stroke', defaultStroke)
+    })
+}
+
+const themeObserver = new MutationObserver((mutations) => {
+  mutations.forEach((mutation) => {
+    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+      updateThemeStyles()
+    }
+  })
+})
+
 // Resize handler (simplified)
 const handleResize = () => {
   // Could implement resize logic here if needed
@@ -1198,6 +1258,15 @@ onMounted(async () => {
         await initializeMap()
         console.log('📊 WorldMap: Loading production data from onMounted...')
         await loadProductionData()
+        
+        // Start observing theme changes
+        if (document.documentElement) {
+          themeObserver.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['class']
+          })
+        }
+        
         console.log('✅ WorldMap: onMounted initialization complete')
       } catch (error) {
         console.error('❌ WorldMap: Error in onMounted initialization:', error)
@@ -1212,6 +1281,7 @@ onUnmounted(() => {
   if (tooltip && tooltip.destroy) {
     tooltip.destroy()
   }
+  themeObserver.disconnect()
   vizStore.setMapInstance(null)
 })
 

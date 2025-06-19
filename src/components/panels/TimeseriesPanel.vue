@@ -11,50 +11,43 @@
       <div class="panel-controls">
         <div class="filters-grid">
           <div class="filter-group">
-            <label for="product-select">Produkt</label>
             <SearchableSelect
-              id="product-select"
               v-model="selectedProduct"
               :options="productOptions"
               placeholder="Produkt auswählen..."
+              label="Produkt"
+              size="md"
             />
           </div>
           
           <div class="filter-group">
-            <label for="countries-select">Land</label>
             <SearchableSelect
-              id="countries-select"
               v-model="selectedCountry"
               :options="countryOptions"
               placeholder="Land auswählen..."
+              label="Land"
+              size="md"
             />
           </div>
           
           <div class="filter-group">
-            <label>Zeitraum</label>
-            <div class="flex gap-2 items-center">
-              <input 
-                type="number" 
-                v-model.number="yearRange[0]" 
-                :min="2010" 
-                :max="2022"
-                class="form-input flex-1"
-                placeholder="Von"
-              />
-              <span>bis</span>
-              <input 
-                type="number" 
-                v-model.number="yearRange[1]" 
-                :min="2010" 
-                :max="2022"
-                class="form-input flex-1"
-                placeholder="Bis"
-              />
-            </div>
+            <SearchableSelect
+              v-model="selectedMetric"
+              :options="metricOptions"
+              placeholder="Metrik auswählen..."
+              label="Metrik"
+              size="md"
+            />
           </div>
 
           <div class="filter-group">
-            <BaseButton @click="loadData" :disabled="isLoading">
+            <BaseButton 
+              @click="loadData" 
+              :disabled="isLoading"
+              variant="primary"
+              size="md"
+              class="mt-6"
+            >
               <LoadingSpinner v-if="isLoading" size="sm" />
               {{ isLoading ? 'Lädt...' : 'Daten laden' }}
             </BaseButton>
@@ -79,17 +72,19 @@
 
         <div v-else-if="chartData.length > 0" class="chart-container">
           <TimeseriesChart
-            :data="chartData"
-            :config="chartConfig"
+            :width="800"
+            :height="500"
+            :selected-country="selectedCountry"
+            :selected-product="selectedProduct"
+            :selected-metric="selectedMetric"
             @point-click="handlePointClick"
-            @range-select="handleRangeSelect"
           />
         </div>
 
         <div v-else class="empty-state">
           <div class="empty-icon">📈</div>
           <h3>Keine Daten verfügbar</h3>
-          <p>Wählen Sie Produkt und Länder aus, um Zeitreihendaten anzuzeigen.</p>
+          <p>Wählen Sie Produkt und Land aus, um Zeitreihendaten anzuzeigen.</p>
         </div>
       </div>
 
@@ -100,12 +95,12 @@
             <span class="stat-value">{{ chartData.length }}</span>
           </div>
           <div class="stat-item">
-            <span class="stat-label">Zeitraum</span>
-            <span class="stat-value">{{ yearRange[0] }} - {{ yearRange[1] }}</span>
+            <span class="stat-label">Produkt</span>
+            <span class="stat-value">{{ getGermanName(selectedProduct) }}</span>
           </div>
           <div class="stat-item">
             <span class="stat-label">Land</span>
-            <span class="stat-value">{{ selectedCountry }}</span>
+            <span class="stat-value">{{ selectedCountry || 'Global' }}</span>
           </div>
         </div>
       </div>
@@ -116,23 +111,23 @@
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue'
 import { useDataStore } from '@/stores/useDataStore'
-import { useErrorHandling } from '@/composables/useErrorHandling'
+import { useUIStore } from '@/stores/useUIStore'
 import ErrorBoundary from '@/components/ui/ErrorBoundary.vue'
 import ErrorDisplay from '@/components/ui/ErrorDisplay.vue'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import SearchableSelect from '@/components/ui/SearchableSelect.vue'
-import RangeSlider from '@/components/ui/RangeSlider.vue'
 import TimeseriesChart from '@/components/visualizations/TimeseriesChart.vue'
+import { getAllProductOptions, getGermanName } from '@/utils/productMappings'
 
 // Store and composables
 const dataStore = useDataStore()
-const { handleError: handleErrorUtil, wrapAsync } = useErrorHandling()
+const uiStore = useUIStore()
 
-// Reactive state
-const selectedProduct = ref('maize_and_products')
-const selectedCountry = ref('USA')
-const yearRange = ref([2015, 2022])
+// Reactive state - use the same defaults as dashboard
+const selectedProduct = ref('Wheat and products')
+const selectedCountry = ref('')
+const selectedMetric = ref('production')
 const chartData = ref([])
 const isLoading = ref(false)
 const error = ref(null)
@@ -140,78 +135,132 @@ const error = ref(null)
 // Computed properties
 const hasError = computed(() => error.value !== null)
 
-const productOptions = computed(() => [
-  { value: 'maize_and_products', label: 'Mais und Produkte' },
-  { value: 'wheat_and_products', label: 'Weizen und Produkte' },
-  { value: 'rice_and_products', label: 'Reis und Produkte' },
-  { value: 'cassava_and_products', label: 'Kassava und Produkte' },
-  { value: 'potatoes_and_products', label: 'Kartoffeln und Produkte' },
-  { value: 'fruits_-_excluding_wine', label: 'Früchte (ohne Wein)' },
-  { value: 'vegetables', label: 'Gemüse' },
-  { value: 'nuts_and_products', label: 'Nüsse und Produkte' },
-  { value: 'pulses', label: 'Hülsenfrüchte' },
-  { value: 'sugar_and_sweeteners', label: 'Zucker und Süßstoffe' },
-  { value: 'milk_-_excluding_butter', label: 'Milch (ohne Butter)' }
-])
+// Get available products from metadata
+const productOptions = computed(() => {
+  const individualItems = dataStore.faoMetadata?.data_summary?.food_items || []
+  
+  if (individualItems.length > 0) {
+    return individualItems.map(product => ({
+      value: product,
+      label: getGermanName(product)
+    })).sort((a, b) => a.label.localeCompare(b.label, 'de'))
+  } else {
+    return getAllProductOptions()
+  }
+})
 
-const countryOptions = computed(() => [
-  { value: 'USA', label: 'Vereinigte Staaten' },
-  { value: 'CHN', label: 'China' },
-  { value: 'BRA', label: 'Brasilien' },
-  { value: 'IND', label: 'Indien' },
-  { value: 'RUS', label: 'Russland' },
-  { value: 'ARG', label: 'Argentinien' },
-  { value: 'CAN', label: 'Kanada' },
-  { value: 'FRA', label: 'Frankreich' },
-  { value: 'UKR', label: 'Ukraine' },
-  { value: 'TUR', label: 'Türkei' },
-  { value: 'DEU', label: 'Deutschland' },
-  { value: 'IDN', label: 'Indonesien' },
-  { value: 'THA', label: 'Thailand' },
-  { value: 'VNM', label: 'Vietnam' },
-  { value: 'POL', label: 'Polen' }
-])
+// Get available countries from timeseries data
+const countryOptions = computed(() => {
+  if (!dataStore.timeseriesData || !selectedProduct.value) return []
+  
+  const productData = dataStore.timeseriesData[selectedProduct.value]
+  if (!productData) return []
+  
+  const countries = Object.keys(productData)
+  const NON_COUNTRY_ENTITIES = [
+    "World", "Africa", "Americas", "Asia", "Europe", "Oceania",
+    "Northern America", "South America", "Central America", "Caribbean",
+    "Northern Africa", "Eastern Africa", "Middle Africa", "Southern Africa", "Western Africa", 
+    "Eastern Asia", "South-eastern Asia", "Southern Asia", "Western Asia", "Central Asia",
+    "Eastern Europe", "Northern Europe", "Southern Europe", "Western Europe",
+    "Australia and New Zealand", "Melanesia",
+    "European Union (27)",
+    "Small Island Developing States", "Least Developed Countries", 
+    "Land Locked Developing Countries", "Low Income Food Deficit Countries",
+    "Net Food Importing Developing Countries"
+  ]
+  
+  return countries
+    .filter(country => !NON_COUNTRY_ENTITIES.includes(country) && !country.toLowerCase().includes('total'))
+    .map(country => ({
+      value: country,
+      label: country
+    }))
+    .sort((a, b) => a.label.localeCompare(b.label))
+})
 
-const chartConfig = computed(() => ({
-  width: 800,
-  height: 400,
-  margin: { top: 20, right: 30, bottom: 40, left: 80 },
-  showPoints: true,
-  pointRadius: 4,
-  curveType: 'monotone',
-  showGrid: true,
-  xAxisFormat: 'd',
-  yAxisFormat: '.2s',
-  responsive: true,
-  animated: true,
-  interactive: true
-}))
+// Metric options
+const metricOptions = [
+  { value: 'production', label: 'Produktion' },
+  { value: 'import_quantity', label: 'Import' },
+  { value: 'export_quantity', label: 'Export' },
+  { value: 'domestic_supply_quantity', label: 'Inlandsversorgung' }
+]
+
+// Update chart data when selections change
+const updateChartData = () => {
+  if (!dataStore.timeseriesData || !selectedProduct.value) {
+    chartData.value = []
+    return
+  }
+
+  const productData = dataStore.timeseriesData[selectedProduct.value]
+  if (!productData) {
+    chartData.value = []
+    return
+  }
+
+  if (selectedCountry.value && productData[selectedCountry.value]) {
+    // Single country data
+    const countryData = productData[selectedCountry.value]
+    const metricKey = selectedMetric.value === 'production' ? 'production' :
+                     selectedMetric.value === 'import_quantity' ? 'imports' :
+                     selectedMetric.value === 'export_quantity' ? 'exports' :
+                     'domestic_supply'
+    
+    chartData.value = countryData
+      .map(yearData => ({
+        year: yearData.year,
+        value: yearData[metricKey] || 0,
+        country: selectedCountry.value,
+        product: selectedProduct.value,
+        unit: yearData.unit || 't'
+      }))
+      .filter(item => item.value > 0)
+      .sort((a, b) => a.year - b.year)
+  } else {
+    // Global aggregated data
+    const yearlyTotals = new Map()
+    const metricKey = selectedMetric.value === 'production' ? 'production' :
+                     selectedMetric.value === 'import_quantity' ? 'imports' :
+                     selectedMetric.value === 'export_quantity' ? 'exports' :
+                     'domestic_supply'
+    
+    Object.entries(productData).forEach(([country, countryData]) => {
+      countryData.forEach(yearData => {
+        const value = yearData[metricKey] || 0
+        if (value > 0) {
+          const year = yearData.year
+          const currentTotal = yearlyTotals.get(year) || 0
+          yearlyTotals.set(year, currentTotal + value)
+        }
+      })
+    })
+    
+    chartData.value = Array.from(yearlyTotals.entries())
+      .map(([year, value]) => ({
+        year: year,
+        value: value,
+        country: 'Global',
+        product: selectedProduct.value,
+        unit: 't'
+      }))
+      .sort((a, b) => a.year - b.year)
+  }
+}
 
 // Methods
-const loadData = wrapAsync(async () => {
+const loadData = async () => {
   error.value = null
   isLoading.value = true
   
   try {
-    // Load timeseries data from store
-    const timeseriesData = await dataStore.loadTimeseriesData()
+    // Ensure timeseries data is loaded
+    if (!dataStore.timeseriesData) {
+      await dataStore.initializeApp()
+    }
     
-    // Filter data based on selections
-    const filtered = timeseriesData.filter(item => 
-      item.product === selectedProduct.value &&
-      item.country === selectedCountry.value &&
-      item.year >= yearRange.value[0] &&
-      item.year <= yearRange.value[1]
-    )
-    
-    // Transform data for chart
-    chartData.value = filtered.map(item => ({
-      year: item.year,
-      value: item.value,
-      country: item.country,
-      product: item.product,
-      unit: item.unit || 'tonnes'
-    }))
+    updateChartData()
     
   } catch (err) {
     error.value = err
@@ -219,77 +268,59 @@ const loadData = wrapAsync(async () => {
   } finally {
     isLoading.value = false
   }
-}, {
-  component: 'TimeseriesPanel',
-  operation: 'loadData'
-})
+}
 
 const handleError = (err) => {
   error.value = err
-  handleErrorUtil(err, {
-    component: 'TimeseriesPanel',
-    action: 'component_error'
-  })
+  console.error('TimeseriesPanel error:', err)
 }
 
 const handlePointClick = (point) => {
   console.log('Point clicked:', point)
-  // TODO: Show detail modal or update selection
-}
-
-const handleRangeSelect = (range) => {
-  console.log('Range selected:', range)
-  // TODO: Update year range based on brush selection
 }
 
 // Watchers
-watch([selectedProduct, selectedCountry, yearRange], () => {
-  if (selectedProduct.value && selectedCountry.value) {
-    loadData()
-  }
-}, { deep: true })
+watch([selectedProduct, selectedCountry, selectedMetric], () => {
+  updateChartData()
+})
 
 // Lifecycle
-onMounted(() => {
-  loadData()
+onMounted(async () => {
+  await loadData()
 })
 </script>
 
 <style scoped>
 .timeseries-panel {
-  @apply flex flex-col h-full bg-white rounded-lg shadow-lg;
+  @apply flex flex-col h-full bg-white dark:bg-gray-800 rounded-lg shadow-lg;
 }
 
 .panel-header {
-  @apply p-6 border-b border-gray-200;
+  @apply p-6 border-b border-gray-200 dark:border-gray-700;
 }
 
 .panel-title {
-  @apply text-2xl font-bold text-gray-900 mb-2;
+  @apply text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2;
 }
 
 .panel-description {
-  @apply text-gray-600;
+  @apply text-gray-600 dark:text-gray-400;
 }
 
 .panel-controls {
-  @apply p-6 bg-gray-50 border-b border-gray-200;
+  @apply p-6 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700;
 }
 
 .filters-grid {
-  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4;
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-end;
 }
 
 .filter-group {
   @apply flex flex-col;
 }
 
-.filter-group label {
-  @apply text-sm font-medium text-gray-700 mb-2;
-}
-
 .panel-content {
-  @apply flex-1 p-6;
+  @apply flex-1 p-6 min-h-0;
 }
 
 .error-container,
@@ -299,7 +330,7 @@ onMounted(() => {
 }
 
 .loading-text {
-  @apply mt-4 text-gray-600;
+  @apply mt-4 text-gray-600 dark:text-gray-400;
 }
 
 .empty-icon {
@@ -307,19 +338,19 @@ onMounted(() => {
 }
 
 .empty-state h3 {
-  @apply text-xl font-semibold text-gray-700 mb-2;
+  @apply text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2;
 }
 
 .empty-state p {
-  @apply text-gray-500;
+  @apply text-gray-500 dark:text-gray-400;
 }
 
 .chart-container {
-  @apply w-full h-full min-h-96;
+  @apply w-full h-full min-h-[500px] bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700;
 }
 
 .panel-footer {
-  @apply p-6 bg-gray-50 border-t border-gray-200;
+  @apply p-6 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700;
 }
 
 .stats-grid {
@@ -331,10 +362,10 @@ onMounted(() => {
 }
 
 .stat-label {
-  @apply block text-sm text-gray-500 mb-1;
+  @apply block text-sm text-gray-500 dark:text-gray-400 mb-1;
 }
 
 .stat-value {
-  @apply block text-lg font-semibold text-gray-900;
+  @apply block text-lg font-semibold text-gray-900 dark:text-gray-100;
 }
 </style>

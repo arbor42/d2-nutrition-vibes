@@ -113,6 +113,9 @@ const initializeChart = () => {
   }
 
   // Add axis labels
+  const isDarkMode = document.documentElement.classList.contains('dark')
+  const labelColor = isDarkMode ? '#9CA3AF' : '#374151' // gray-400 : gray-700
+
   g.append('text')
     .attr('class', 'x-label')
     .attr('text-anchor', 'middle')
@@ -120,7 +123,7 @@ const initializeChart = () => {
     .attr('y', innerHeight + 35)
     .text('Jahr')
     .style('font-size', '12px')
-    .style('fill', 'currentColor')
+    .style('fill', labelColor)
 
   g.append('text')
     .attr('class', 'y-label')
@@ -130,7 +133,7 @@ const initializeChart = () => {
     .attr('y', -40)
     .text(getMetricLabel())
     .style('font-size', '12px')
-    .style('fill', 'currentColor')
+    .style('fill', labelColor)
 
   // Create tooltip with green theme
   tooltip = d3.select('body')
@@ -338,39 +341,64 @@ const updateChart = () => {
   xScale.domain(d3.extent(years) as [Date, Date])
   yScale.domain([0, d3.max(values) as number])
 
-  // Update axes
-  const xAxis = d3.axisBottom(xScale).tickFormat(d3.timeFormat('%Y'))
-  const yAxis = d3.axisLeft(yScale).tickFormat(d3.format('.2s'))
+  // Get theme colors
+  const isDarkMode = document.documentElement.classList.contains('dark')
+  const axisColor = isDarkMode ? '#9CA3AF' : '#374151' // gray-400 : gray-700
+  const gridColor = isDarkMode ? '#4B5563' : '#E5E7EB' // gray-600 : gray-200
 
-  g.select('.x-axis')
+  // Update axes
+  const xAxis = d3.axisBottom(xScale)
+    .tickFormat(d3.timeFormat('%Y'))
+    .tickSizeOuter(0)
+  const yAxis = d3.axisLeft(yScale)
+    .tickFormat(d3.format('.2s'))
+    .tickSizeOuter(0)
+
+  const xAxisSelection = g.select('.x-axis')
     .transition()
     .duration(750)
     .call(xAxis)
 
-  g.select('.y-axis')
+  const yAxisSelection = g.select('.y-axis')
     .transition()
     .duration(750)
     .call(yAxis)
 
+  // Style axes
+  xAxisSelection.selectAll('path').style('stroke', axisColor).style('stroke-width', '1px')
+  xAxisSelection.selectAll('line').style('stroke', axisColor).style('stroke-width', '1px')
+  xAxisSelection.selectAll('text').style('fill', axisColor).style('font-size', '12px')
+
+  yAxisSelection.selectAll('path').style('stroke', axisColor).style('stroke-width', '1px')
+  yAxisSelection.selectAll('line').style('stroke', axisColor).style('stroke-width', '1px')
+  yAxisSelection.selectAll('text').style('fill', axisColor).style('font-size', '12px')
+
   // Update grid
   if (props.showGrid) {
-    g.select('.x-grid')
+    const xGridSelection = g.select('.x-grid')
       .transition()
       .duration(750)
       .call(d3.axisBottom(xScale)
         .tickSize(-innerHeight)
         .tickFormat(() => '')
+        .tickSizeOuter(0)
       )
-      .style('opacity', 0.1)
 
-    g.select('.y-grid')
+    const yGridSelection = g.select('.y-grid')
       .transition()
       .duration(750)
       .call(d3.axisLeft(yScale)
         .tickSize(-innerWidth)
         .tickFormat(() => '')
+        .tickSizeOuter(0)
       )
-      .style('opacity', 0.1)
+
+    // Style grid lines
+    xGridSelection.selectAll('path').style('stroke', 'none')
+    xGridSelection.selectAll('line').style('stroke', gridColor).style('stroke-width', '1px').style('opacity', 0.5)
+
+    yGridSelection.selectAll('path').style('stroke', 'none')
+    yGridSelection.selectAll('line').style('stroke', gridColor).style('stroke-width', '1px').style('opacity', 0.5)
   }
 
   // Draw line with green color scheme
@@ -423,6 +451,11 @@ const updateChart = () => {
   // Update Y-axis label
   g.select('.y-label')
     .text(getMetricLabel())
+    .style('fill', axisColor)
+
+  // Update X-axis label
+  g.select('.x-label')
+    .style('fill', axisColor)
 }
 
 // Event handlers
@@ -478,6 +511,41 @@ const cleanup = () => {
   }
 }
 
+// Update styling based on theme
+const updateThemeStyles = () => {
+  if (!g) return
+  
+  const isDarkMode = document.documentElement.classList.contains('dark')
+  const axisColor = isDarkMode ? '#9CA3AF' : '#374151' // gray-400 : gray-700
+  const gridColor = isDarkMode ? '#4B5563' : '#E5E7EB' // gray-600 : gray-200
+  
+  // Update axis styling
+  g.select('.x-axis').selectAll('path').style('stroke', axisColor)
+  g.select('.x-axis').selectAll('line').style('stroke', axisColor)
+  g.select('.x-axis').selectAll('text').style('fill', axisColor)
+  
+  g.select('.y-axis').selectAll('path').style('stroke', axisColor)
+  g.select('.y-axis').selectAll('line').style('stroke', axisColor)
+  g.select('.y-axis').selectAll('text').style('fill', axisColor)
+  
+  // Update grid styling
+  g.select('.x-grid').selectAll('line').style('stroke', gridColor)
+  g.select('.y-grid').selectAll('line').style('stroke', gridColor)
+  
+  // Update labels
+  g.select('.x-label').style('fill', axisColor)
+  g.select('.y-label').style('fill', axisColor)
+}
+
+// Watch for theme changes
+const observer = new MutationObserver((mutations) => {
+  mutations.forEach((mutation) => {
+    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+      updateThemeStyles()
+    }
+  })
+})
+
 // Watchers
 watch([() => props.selectedCountry, () => props.selectedProduct, () => props.selectedMetric], () => {
   loadData()
@@ -487,10 +555,19 @@ watch([() => props.selectedCountry, () => props.selectedProduct, () => props.sel
 onMounted(() => {
   initializeChart()
   loadData()
+  
+  // Start observing theme changes
+  if (document.documentElement) {
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    })
+  }
 })
 
 onUnmounted(() => {
   cleanup()
+  observer.disconnect()
 })
 
 // Exposed methods

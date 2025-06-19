@@ -8,7 +8,7 @@ export const useUIStore = defineStore('ui', () => {
   const currentPanel = ref('dashboard')
   const activePanel = ref('dashboard')
   const selectedCountry = ref('')
-  const selectedProduct = ref('maize_and_products')
+  const selectedProduct = ref('Wheat and products')
   const selectedMetric = ref('production')
   const selectedYear = ref(2022)
   const showAnalysisMenu = ref(false)
@@ -276,7 +276,7 @@ export const useUIStore = defineStore('ui', () => {
   const resetUI = () => {
     currentPanel.value = 'dashboard'
     selectedCountry.value = ''
-    selectedProduct.value = 'maize_and_products'
+    selectedProduct.value = 'Wheat and products'
     selectedMetric.value = 'production'
     selectedYear.value = 2022
     showAnalysisMenu.value = false

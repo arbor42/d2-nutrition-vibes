@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useDataStore } from '@/stores/useDataStore'
 import { useUIStore } from '@/stores/useUIStore'
 import WorldMap from '@/components/visualizations/WorldMap.vue'
@@ -12,6 +12,7 @@ const uiStore = useUIStore()
 
 const selectedVisualization = ref('world-map')
 const dashboardLoading = ref(false)
+const containerWidth = ref(400)
 
 const visualizationOptions = [
   { value: 'world-map', label: 'Weltkarte', icon: 'globe' },
@@ -21,7 +22,32 @@ const visualizationOptions = [
 
 // Helper to get countries array from different data structures
 const getCountriesArray = () => {
-  const rawData = dataStore.getProductionData(uiStore.selectedProduct, uiStore.selectedYear)
+  const currentProduct = uiStore.selectedProduct
+  const currentYear = uiStore.selectedYear
+  const currentMetric = uiStore.selectedMetric
+  const hasTimeseries = !!dataStore.timeseriesData
+  
+  // Use timeseries data for individual products when available
+  if (hasTimeseries && dataStore.timeseriesData[currentProduct]) {
+    const metricKey = currentMetric === 'production' ? 'production' :
+                      currentMetric === 'import_quantity' ? 'imports' :
+                      currentMetric === 'export_quantity' ? 'exports' :
+                      'domestic_supply'
+    
+    const productTimeseries = dataStore.timeseriesData[currentProduct]
+    return Object.entries(productTimeseries).map(([country, countryData]) => {
+      const yearData = countryData.find(d => d.year === currentYear)
+      return {
+        country,
+        value: yearData ? (yearData[metricKey] || 0) : 0,
+        unit: yearData?.unit || 't',
+        year: currentYear
+      }
+    }).filter(item => item.value > 0)
+  }
+  
+  // Fallback to production data for grouped products
+  const rawData = dataStore.getProductionData(currentProduct, currentYear)
   if (!rawData) return []
   
   if (Array.isArray(rawData)) {
@@ -33,7 +59,7 @@ const getCountriesArray = () => {
       country,
       value: data.value || 0,
       unit: data.unit || 't',
-      year: data.year || uiStore.selectedYear
+      year: data.year || currentYear
     }))
   }
   return []
@@ -59,6 +85,42 @@ const countryRank = computed(() => {
   
   const index = sorted.findIndex(item => item.country === uiStore.selectedCountry)
   return index >= 0 ? index + 1 : 'N/A'
+})
+
+// Top countries computed property with proper filtering
+const topCountries = computed(() => {
+  const countries = getCountriesArray()
+  
+  // Filter out non-country entities (continents, regions, aggregates)
+  const NON_COUNTRY_ENTITIES = [
+    // Global/Continental
+    "World", "Africa", "Americas", "Asia", "Europe", "Oceania",
+    
+    // Regional subdivisions
+    "Northern America", "South America", "Central America", "Caribbean",
+    "Northern Africa", "Eastern Africa", "Middle Africa", "Southern Africa", "Western Africa", 
+    "Eastern Asia", "South-eastern Asia", "Southern Asia", "Western Asia", "Central Asia",
+    "Eastern Europe", "Northern Europe", "Southern Europe", "Western Europe",
+    "Australia and New Zealand", "Melanesia",
+    
+    // Economic/Political unions
+    "European Union (27)",
+    
+    // Development status groups
+    "Small Island Developing States", "Least Developed Countries", 
+    "Land Locked Developing Countries", "Low Income Food Deficit Countries",
+    "Net Food Importing Developing Countries"
+  ]
+  
+  return countries
+    .filter(item => 
+      item.value > 0 &&
+      item.country && 
+      !NON_COUNTRY_ENTITIES.includes(item.country) &&
+      !item.country.toLowerCase().includes('total')
+    )
+    .sort((a, b) => b.value - a.value)
+    .slice(0, 10)
 })
 
 const globalStats = computed(() => {
@@ -210,6 +272,24 @@ onMounted(async () => {
   
   // Timeseries data is now loaded during app initialization
   console.log('📊 DashboardPanel: Timeseries data available:', dataStore.timeseriesData ? Object.keys(dataStore.timeseriesData).length + ' products' : 'Not loaded')
+  
+  // Set up responsive width calculation
+  const updateWidth = () => {
+    containerWidth.value = Math.min(400, Math.max(300, window.innerWidth * 0.4))
+  }
+  
+  updateWidth()
+  window.addEventListener('resize', updateWidth)
+  
+  // Store handler for cleanup
+  resizeHandler = updateWidth
+})
+
+let resizeHandler = null
+onUnmounted(() => {
+  if (resizeHandler) {
+    window.removeEventListener('resize', resizeHandler)
+  }
 })
 
 // Watch for changes in selection and reload data
@@ -388,10 +468,10 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
             :key="option.value"
             @click="selectedVisualization = option.value"
             :class="[
-              'btn btn-sm',
+              'btn btn-sm transition-colors duration-200',
               selectedVisualization === option.value
-                ? 'btn-primary'
-                : 'btn-outline'
+                ? 'bg-primary-600 text-white border-primary-600 hover:bg-primary-700'
+                : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600'
             ]"
           >
             {{ option.label }}
@@ -422,17 +502,19 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
         </div>
         
         <!-- Overview Grid -->
-        <div v-else-if="selectedVisualization === 'overview'" class="p-4">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div v-else-if="selectedVisualization === 'overview'" class="p-4 overflow-hidden">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-full">
             <!-- Mini World Map -->
-            <div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-              <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-                Weltweite Verteilung
-              </h4>
-              <div class="h-48">
+            <div class="bg-gray-50 dark:bg-gray-900 rounded-lg overflow-hidden min-h-[700px] flex flex-col">
+              <div class="px-4 pt-4 pb-2 flex-shrink-0">
+                <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Weltweite Verteilung
+                </h4>
+              </div>
+              <div class="flex-1 w-full">
                 <WorldMap
-                  :width="400"
-                  :height="200"
+                  :width="containerWidth"
+                  :height="600"
                   :selected-product="uiStore.selectedProduct"
                   :selected-year="uiStore.selectedYear"
                   :selected-metric="uiStore.selectedMetric"
@@ -442,14 +524,16 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
             </div>
             
             <!-- Mini Timeseries -->
-            <div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-              <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-                Zeitliche Entwicklung
-              </h4>
-              <div class="h-48">
+            <div class="bg-gray-50 dark:bg-gray-900 rounded-lg overflow-hidden min-h-[700px] flex flex-col">
+              <div class="px-4 pt-4 pb-2 flex-shrink-0">
+                <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Zeitliche Entwicklung
+                </h4>
+              </div>
+              <div class="flex-1 w-full">
                 <TimeseriesChart
-                  :width="400"
-                  :height="200"
+                  :width="containerWidth"
+                  :height="600"
                   :selected-country="uiStore.selectedCountry"
                   :selected-product="uiStore.selectedProduct"
                   :selected-metric="uiStore.selectedMetric"
@@ -458,16 +542,13 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
             </div>
             
             <!-- Top Countries List -->
-            <div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+            <div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 overflow-hidden">
               <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                 Top 10 Länder
               </h4>
-              <div class="space-y-2">
+              <div class="space-y-2 max-h-96 overflow-y-auto">
                 <div
-                  v-for="(item, index) in getCountriesArray()
-                    .filter(item => item.value > 0)
-                    .sort((a, b) => b.value - a.value)
-                    .slice(0, 10)"
+                  v-for="(item, index) in topCountries"
                   :key="item.country"
                   class="flex items-center justify-between p-2 bg-white dark:bg-gray-800 rounded"
                 >
@@ -487,7 +568,7 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
             </div>
             
             <!-- Quick Stats -->
-            <div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+            <div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 overflow-hidden">
               <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                 Schnellstatistiken
               </h4>

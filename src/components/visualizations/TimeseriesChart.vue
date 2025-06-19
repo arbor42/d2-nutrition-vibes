@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<Props>(), {
   width: 600,
   height: 400,
   selectedCountry: '',
-  selectedProduct: 'maize_and_products',
+  selectedProduct: 'Wheat and products',
   selectedMetric: 'production',
   showGrid: true,
   showPoints: true

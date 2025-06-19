@@ -20,7 +20,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   width: 800,
   height: 600,
-  selectedProduct: 'maize_and_products',
+  selectedProduct: 'Wheat and products',
   selectedYear: 2022,
   selectedMetric: 'production'
 })

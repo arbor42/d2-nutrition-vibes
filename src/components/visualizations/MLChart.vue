@@ -1,546 +1,475 @@
-<script setup lang="ts">
-import { ref, computed, watch } from 'vue'
-import { useVisualization, useTooltip } from '@/composables/useVisualization'
-import { useD3Data } from '@/composables/useD3'
-import { useDataStore } from '@/stores/useDataStore'
-import { useVisualizationStore } from '@/stores/useVisualizationStore'
-import BaseButton from '@/components/ui/BaseButton.vue'
-import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
+<script setup>
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import * as d3 from 'd3'
+import { useD3 } from '@/composables/useD3'
 
-interface Props {
-  width?: number
-  height?: number
-  selectedProduct?: string
-  selectedRegion?: string
-  predictionYears?: number
-  modelType?: 'linear' | 'polynomial' | 'neural'
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  width: 800,
-  height: 500,
-  selectedProduct: 'maize_and_products',
-  selectedRegion: 'global',
-  predictionYears: 5,
-  modelType: 'linear'
+const props = defineProps({
+  data: {
+    type: Array,
+    default: () => []
+  },
+  config: {
+    type: Object,
+    default: () => ({})
+  }
 })
 
-const emit = defineEmits<{
-  predictionClick: [data: any]
-  modelChange: [model: string]
-}>()
+const emit = defineEmits(['prediction-select', 'confidence-toggle'])
 
-// Stores
-const dataStore = useDataStore()
-const vizStore = useVisualizationStore()
+// D3 setup
+const containerRef = ref(null)
+const svgRef = ref(null)
+const gRef = ref(null)
+let resizeObserver = null
 
-// Refs
-const containerRef = ref<HTMLDivElement>()
+const { 
+  dimensions,
+  isReady,
+  createSVG,
+  updateDimensions 
+} = useD3(containerRef, {
+  margin: { top: 40, right: 150, bottom: 60, left: 80 }
+})
 
 // State
-const isLoading = ref(false)
-const error = ref<string | null>(null)
-const historicalDataRef = ref<any[]>([])
-const predictionDataRef = ref<any[]>([])
+const showConfidenceInterval = ref(true)
 
-// Composables
-const margin = computed(() => ({
-  top: 20,
-  right: 120,
-  bottom: 40,
-  left: 60
-}))
-
-const visualization = useVisualization(containerRef, {
-  margin: margin.value,
-  responsive: true,
-  autoResize: true
-})
-
-const tooltip = useTooltip({
-  className: 'ml-chart-tooltip chart-tooltip',
-  followMouse: true
-})
-
-const { processedData: processedHistoricalData } = useD3Data(historicalDataRef, {
-  transform: (data) => {
-    if (!Array.isArray(data)) return []
-    return data.filter(d => d.value > 0).sort((a, b) => a.year - b.year)
+// Chart dimensions
+const chartDimensions = computed(() => {
+  // Use container width if config width is '100%' or not specified
+  let width = 800
+  if (props.config?.width === '100%') {
+    width = containerRef.value?.clientWidth || 800
+  } else if (props.config?.width) {
+    width = props.config.width
+  }
+  
+  const height = props.config?.height || 400
+  const margin = { top: 40, right: 150, bottom: 60, left: 80 }
+  
+  return {
+    width,
+    height,
+    innerWidth: width - margin.left - margin.right,
+    innerHeight: height - margin.top - margin.bottom,
+    margin
   }
 })
 
-const { processedData: processedPredictionData } = useD3Data(predictionDataRef, {
-  transform: (data) => {
-    if (!Array.isArray(data)) return []
-    return data.sort((a, b) => a.year - b.year)
-  }
+// Process data
+const processedData = computed(() => {
+  if (!props.data || props.data.length === 0) return { predictions: [], historical: [] }
+  
+  // Separate historical and prediction data
+  const currentYear = new Date().getFullYear()
+  const predictions = props.data.filter(d => d.year > currentYear && (d.predicted_value > 0 || d.value > 0))
+  const historical = props.data.filter(d => d.year <= currentYear && (d.predicted_value > 0 || d.value > 0))
+  
+  return { predictions, historical }
 })
-
-// Chart configuration
-const chartConfig = computed(() => ({
-  historicalColor: vizStore.getColorScheme('analysis')[0] || '#3b82f6',
-  predictionColor: vizStore.getColorScheme('analysis')[1] || '#ef4444',
-  confidenceColor: vizStore.getColorScheme('analysis')[2] || '#f59e0b',
-  ...vizStore.getVisualizationConfig('ml')
-}))
-
-// D3 scales and generators
-let xScale: d3.ScaleTime<number, number>
-let yScale: d3.ScaleLinear<number, number>
-let historicalLine: d3.Line<any>
-let predictionLine: d3.Line<any>
-let area: d3.Area<any>
 
 // Initialize chart
-const initializeChart = async () => {
-  if (!visualization.isReady.value) return
-
-  try {
-    isLoading.value = true
-    error.value = null
-
-    visualization.queueUpdate(setupChart, null, true)
-
-  } catch (err) {
-    error.value = 'Fehler beim Initialisieren der ML-Analyse'
-    console.error('ML Chart initialization error:', err)
-  } finally {
-    isLoading.value = false
-  }
-}
-
-// Setup chart with D3.js
-const setupChart = (container) => {
-  const { width, height } = visualization.dimensions.value
-  const innerWidth = width - margin.value.left - margin.value.right
-  const innerHeight = height - margin.value.top - margin.value.bottom
-
-  // Create SVG
-  const { svg, g } = visualization.createSVG({
+const initChart = () => {
+  if (!isReady.value || !containerRef.value) return
+  
+  const { width, height, margin } = chartDimensions.value
+  
+  // Clear any existing SVG
+  d3.select(containerRef.value).selectAll('svg').remove()
+  
+  // Create new SVG
+  const result = createSVG({
     width,
     height,
     className: 'ml-chart-svg',
-    margin: margin.value
+    margin
   })
-
-  // Setup scales
-  xScale = d3.scaleTime().range([0, innerWidth])
-  yScale = d3.scaleLinear().range([innerHeight, 0])
-
-  // Setup line generators
-  historicalLine = d3.line()
-    .x(d => xScale(new Date(d.year, 0, 1)))
-    .y(d => yScale(d.value))
-    .curve(d3.curveMonotoneX)
-
-  predictionLine = d3.line()
-    .x(d => xScale(new Date(d.year, 0, 1)))
-    .y(d => yScale(d.predicted))
-    .curve(d3.curveMonotoneX)
-
-  // Setup area for confidence intervals
-  area = d3.area()
-    .x(d => xScale(new Date(d.year, 0, 1)))
-    .y0(d => yScale(d.lower))
-    .y1(d => yScale(d.upper))
-    .curve(d3.curveMonotoneX)
-
-  // Setup axes
-  const xAxis = d3.axisBottom(xScale).tickFormat(d3.timeFormat('%Y'))
-  const yAxis = d3.axisLeft(yScale).tickFormat(d3.format('.2s'))
-
-  // Add axes groups
-  g.append('g')
-    .attr('class', 'x-axis')
-    .attr('transform', `translate(0,${innerHeight})`)
-
-  g.append('g')
-    .attr('class', 'y-axis')
-
-  // Add grid
-  g.append('g')
-    .attr('class', 'grid x-grid')
-    .attr('transform', `translate(0,${innerHeight})`)
-    .style('opacity', 0.1)
-
-  g.append('g')
-    .attr('class', 'grid y-grid')
-    .style('opacity', 0.1)
-
-  // Add axis labels
-  addAxisLabels(g, innerWidth, innerHeight)
-
-  // Add legend
-  addLegend(g, innerWidth)
-
-  // Set chart instance
-  vizStore.setChartInstance('ml', svg.node())
-}
-
-// Add axis labels
-const addAxisLabels = (container, innerWidth, innerHeight) => {
-  container.append('text')
-    .attr('class', 'x-label')
-    .attr('text-anchor', 'middle')
-    .attr('x', innerWidth / 2)
-    .attr('y', innerHeight + margin.value.bottom - 5)
-    .text('Jahr')
-    .style('fill', 'currentColor')
-    .style('font-size', '12px')
-
-  container.append('text')
-    .attr('class', 'y-label')
-    .attr('text-anchor', 'middle')
-    .attr('transform', 'rotate(-90)')
-    .attr('x', -innerHeight / 2)
-    .attr('y', -margin.value.left + 15)
-    .text('Produktionsmenge')
-    .style('fill', 'currentColor')
-    .style('font-size', '12px')
-}
-
-// Add legend
-const addLegend = (container, innerWidth) => {
-  const legend = container.append('g')
-    .attr('class', 'legend')
-    .attr('transform', `translate(${innerWidth + 20}, 20)`)
-
-  const legendItems = [
-    { label: 'Historische Daten', color: chartConfig.value.historicalColor },
-    { label: 'Vorhersage', color: chartConfig.value.predictionColor },
-    { label: 'Konfidenzintervall', color: chartConfig.value.confidenceColor }
-  ]
-
-  const legendItem = legend.selectAll('.legend-item')
-    .data(legendItems)
-    .enter()
-    .append('g')
-    .attr('class', 'legend-item')
-    .attr('transform', (d, i) => `translate(0, ${i * 20})`)
-
-  legendItem.append('line')
-    .attr('x1', 0)
-    .attr('x2', 15)
-    .attr('y1', 0)
-    .attr('y2', 0)
-    .attr('stroke', d => d.color)
-    .attr('stroke-width', 2)
-
-  legendItem.append('text')
-    .attr('x', 20)
-    .attr('y', 0)
-    .attr('dy', '0.35em')
-    .style('fill', 'currentColor')
-    .style('font-size', '12px')
-    .text(d => d.label)
-}
-
-// Load data and generate predictions
-const loadData = async () => {
-  if (!props.selectedProduct) return
-
-  try {
-    isLoading.value = true
-    error.value = null
-
-    // Load historical data (simplified for demo)
-    const currentYear = new Date().getFullYear()
-    const startYear = currentYear - 10
-
-    const historicalData = []
-    const predictionData = []
-
-    // Generate sample historical data
-    for (let year = startYear; year <= currentYear; year++) {
-      historicalData.push({
-        year,
-        value: Math.random() * 1000000 + year * 10000,
-        product: props.selectedProduct
-      })
-    }
-
-    // Generate sample predictions
-    for (let i = 1; i <= props.predictionYears; i++) {
-      const year = currentYear + i
-      const baseValue = historicalData[historicalData.length - 1].value
-      const trend = baseValue * 0.05 * i // 5% growth per year
-      const noise = (Math.random() - 0.5) * baseValue * 0.1
-
-      predictionData.push({
-        year,
-        predicted: baseValue + trend + noise,
-        lower: baseValue + trend + noise - baseValue * 0.2,
-        upper: baseValue + trend + noise + baseValue * 0.2,
-        confidence: Math.max(0.95 - i * 0.1, 0.5)
-      })
-    }
-
-    historicalDataRef.value = historicalData
-    predictionDataRef.value = predictionData
-
-  } catch (err) {
-    error.value = 'Fehler beim Laden der ML-Daten'
-    console.error('ML data loading error:', err)
-  } finally {
-    isLoading.value = false
+  
+  if (result) {
+    svgRef.value = result.svg
+    gRef.value = result.g
+    drawChart()
   }
 }
 
-// Update chart with data
-const updateChartWithData = () => {
-  if (!processedHistoricalData.value.length && !processedPredictionData.value.length) return
-
-  visualization.queueUpdate(renderChart, {
-    historical: processedHistoricalData.value,
-    predictions: processedPredictionData.value
-  })
-}
-
-// Render chart with D3.js
-const renderChart = (container, data) => {
-  if (!data) return
-
-  const { historical, predictions } = data
-  const allData = [...historical, ...predictions]
-
-  if (allData.length === 0) return
-
-  const { width, height } = visualization.dimensions.value
-  const innerWidth = width - margin.value.left - margin.value.right
-  const innerHeight = height - margin.value.top - margin.value.bottom
-
-  // Update scales domains
-  const years = allData.map(d => new Date(d.year, 0, 1))
-  const values = [
-    ...historical.map(d => d.value),
-    ...predictions.map(d => d.predicted),
-    ...predictions.flatMap(d => [d.lower, d.upper])
-  ].filter(v => v != null)
-
-  xScale.domain(d3.extent(years))
-  yScale.domain([0, d3.max(values)])
-
-  // Update axes
-  container.select('.x-axis')
-    .transition()
-    .duration(750)
-    .call(d3.axisBottom(xScale).tickFormat(d3.timeFormat('%Y')))
-
-  container.select('.y-axis')
-    .transition()
-    .duration(750)
+// Draw chart
+const drawChart = () => {
+  if (!gRef.value || !props.data || props.data.length === 0) return
+  
+  const { innerWidth, innerHeight } = chartDimensions.value
+  const { predictions, historical } = processedData.value
+  
+  // Clear previous content
+  gRef.value.selectAll('*').remove()
+  
+  // Scales
+  const allYears = [...historical, ...predictions].map(d => d.year)
+  const allValues = [
+    ...historical.map(d => d.predicted_value || d.value).filter(v => v != null && v > 0),
+    ...predictions.map(d => d.predicted_value).filter(v => v != null && v > 0),
+    ...predictions.map(d => d.confidence_lower).filter(v => v != null && v > 0),
+    ...predictions.map(d => d.confidence_upper).filter(v => v != null && v > 0)
+  ]
+  
+  if (allYears.length === 0 || allValues.length === 0) return
+  
+  const xScale = d3.scaleLinear()
+    .domain(d3.extent(allYears))
+    .range([0, innerWidth])
+  
+  const yScale = d3.scaleLinear()
+    .domain([0, d3.max(allValues) * 1.1])
+    .range([innerHeight, 0])
+  
+  // Line generators
+  const line = d3.line()
+    .x(d => xScale(d.year))
+    .y(d => yScale(d.predicted_value || d.value || 0))
+    .curve(d3.curveMonotoneX)
+  
+  // Area generator for confidence interval
+  const area = d3.area()
+    .x(d => xScale(d.year))
+    .y0(d => yScale(d.confidence_lower || d.predicted_value || d.value || 0))
+    .y1(d => yScale(d.confidence_upper || d.predicted_value || d.value || 0))
+    .curve(d3.curveMonotoneX)
+  
+  // Add axes
+  const xAxis = gRef.value.append('g')
+    .attr('transform', `translate(0,${innerHeight})`)
+    .call(d3.axisBottom(xScale).tickFormat(d3.format('d')))
+  
+  const yAxis = gRef.value.append('g')
     .call(d3.axisLeft(yScale).tickFormat(d3.format('.2s')))
-
-  // Update grid
-  container.select('.x-grid')
-    .transition()
-    .duration(750)
+  
+  // Add axis labels
+  xAxis.append('text')
+    .attr('x', innerWidth / 2)
+    .attr('y', 40)
+    .style('text-anchor', 'middle')
+    .style('fill', 'currentColor')
+    .attr('class', 'axis-label')
+    .text('Jahr')
+  
+  yAxis.append('text')
+    .attr('transform', 'rotate(-90)')
+    .attr('y', -60)
+    .attr('x', -innerHeight / 2)
+    .style('text-anchor', 'middle')
+    .style('fill', 'currentColor')
+    .attr('class', 'axis-label')
+    .text('Produktion (1000 t)')
+  
+  // Add grid lines
+  gRef.value.append('g')
+    .attr('class', 'grid')
+    .attr('transform', `translate(0,${innerHeight})`)
     .call(d3.axisBottom(xScale)
       .tickSize(-innerHeight)
-      .tickFormat(() => '')
+      .tickFormat('')
     )
-
-  container.select('.y-grid')
-    .transition()
-    .duration(750)
+    .style('stroke-dasharray', '3,3')
+    .style('opacity', 0.3)
+  
+  gRef.value.append('g')
+    .attr('class', 'grid')
     .call(d3.axisLeft(yScale)
       .tickSize(-innerWidth)
-      .tickFormat(() => '')
+      .tickFormat('')
     )
-
-  // Draw confidence interval area
-  if (predictions.length > 0) {
-    visualization.handleDataJoin(
-      container,
-      '.confidence-area',
-      [predictions],
-      {
-        keyFn: () => 'confidence',
-        enterFn: (enter, transition) => {
-          enter
-            .append('path')
-            .attr('class', 'confidence-area')
-            .attr('fill', chartConfig.value.confidenceColor)
-            .attr('opacity', 0.3)
-            .attr('d', area)
-            .call(transition)
-        },
-        updateFn: (update, transition) => {
-          update.call(transition).attr('d', area)
-        }
-      }
+    .style('stroke-dasharray', '3,3')
+    .style('opacity', 0.3)
+  
+  // Draw confidence interval
+  if (showConfidenceInterval.value && predictions.length > 0) {
+    // Only include predictions with valid confidence bounds
+    const predictionsWithConfidence = predictions.filter(d => 
+      d.confidence_lower != null && d.confidence_upper != null &&
+      d.confidence_lower >= 0 && d.confidence_upper > d.confidence_lower
     )
+    
+    if (predictionsWithConfidence.length > 0) {
+      gRef.value.append('path')
+        .datum(predictionsWithConfidence)
+        .attr('fill', '#60a5fa')
+        .attr('fill-opacity', 0.2)
+        .attr('d', area)
+    }
   }
-
-  // Draw historical line
+  
+  // Draw historical line if exists
   if (historical.length > 0) {
-    visualization.handleDataJoin(
-      container,
-      '.historical-line',
-      [historical],
-      {
-        keyFn: () => 'historical',
-        enterFn: (enter, transition) => {
-          enter
-            .append('path')
-            .attr('class', 'historical-line')
-            .attr('fill', 'none')
-            .attr('stroke', chartConfig.value.historicalColor)
-            .attr('stroke-width', 2)
-            .attr('d', historicalLine)
-            .call(transition)
-        },
-        updateFn: (update, transition) => {
-          update.call(transition).attr('d', historicalLine)
-        }
-      }
-    )
+    gRef.value.append('path')
+      .datum(historical)
+      .attr('fill', 'none')
+      .attr('stroke', '#10b981')
+      .attr('stroke-width', 2)
+      .attr('d', line)
+    
+    // Add dots for historical data
+    gRef.value.selectAll('.hist-dot')
+      .data(historical)
+      .enter().append('circle')
+      .attr('class', 'hist-dot')
+      .attr('cx', d => xScale(d.year))
+      .attr('cy', d => yScale(d.predicted_value || d.value))
+      .attr('r', 4)
+      .attr('fill', '#10b981')
   }
-
+  
   // Draw prediction line
   if (predictions.length > 0) {
-    visualization.handleDataJoin(
-      container,
-      '.prediction-line',
-      [predictions],
-      {
-        keyFn: () => 'prediction',
-        enterFn: (enter, transition) => {
-          enter
-            .append('path')
-            .attr('class', 'prediction-line')
-            .attr('fill', 'none')
-            .attr('stroke', chartConfig.value.predictionColor)
-            .attr('stroke-width', 2)
-            .attr('stroke-dasharray', '5,5')
-            .attr('d', predictionLine)
-            .call(transition)
-        },
-        updateFn: (update, transition) => {
-          update.call(transition).attr('d', predictionLine)
-        }
-      }
-    )
+    // Connect from last historical point
+    const lastHistorical = historical[historical.length - 1]
+    const connectionData = lastHistorical 
+      ? [{ ...lastHistorical, predicted_value: lastHistorical.value }, ...predictions]
+      : predictions
+    
+    gRef.value.append('path')
+      .datum(connectionData)
+      .attr('fill', 'none')
+      .attr('stroke', '#3b82f6')
+      .attr('stroke-width', 2)
+      .attr('stroke-dasharray', '5,5')
+      .attr('d', line)
+    
+    // Add dots for predictions
+    gRef.value.selectAll('.pred-dot')
+      .data(predictions)
+      .enter().append('circle')
+      .attr('class', 'pred-dot')
+      .attr('cx', d => xScale(d.year))
+      .attr('cy', d => yScale(d.predicted_value || d.value))
+      .attr('r', 4)
+      .attr('fill', '#3b82f6')
+      .style('cursor', 'pointer')
+      .on('click', (event, d) => {
+        emit('prediction-select', d)
+      })
+      .on('mouseenter', function(event, d) {
+        d3.select(this).attr('r', 6)
+        
+        // Show tooltip
+        const tooltip = d3.select('body').append('div')
+          .attr('class', 'chart-tooltip')
+          .style('position', 'absolute')
+          .style('background', 'rgba(0, 0, 0, 0.8)')
+          .style('color', 'white')
+          .style('padding', '8px')
+          .style('border-radius', '4px')
+          .style('font-size', '12px')
+          .style('pointer-events', 'none')
+          .style('opacity', 0)
+        
+        tooltip.html(`
+          <strong>Jahr ${d.year}</strong><br/>
+          Prognose: ${d3.format(',.0f')(d.predicted_value)}<br/>
+          Konfidenz: ${d3.format(',.0f')(d.confidence_lower)} - ${d3.format(',.0f')(d.confidence_upper)}<br/>
+          Zuverlässigkeit: ${d.reliability?.toFixed(1) || 'N/A'}%
+        `)
+        .style('left', (event.pageX + 10) + 'px')
+        .style('top', (event.pageY - 10) + 'px')
+        .transition()
+        .duration(200)
+        .style('opacity', 1)
+      })
+      .on('mouseleave', function() {
+        d3.select(this).attr('r', 4)
+        d3.selectAll('.chart-tooltip').remove()
+      })
   }
+  
+  // Add legend
+  const legend = gRef.value.append('g')
+    .attr('transform', `translate(${innerWidth - 120}, 20)`)
+  
+  // Add legend background for better visibility in dark mode
+  legend.append('rect')
+    .attr('x', -10)
+    .attr('y', -10)
+    .attr('width', 140)
+    .attr('height', 70)
+    .attr('rx', 4)
+    .attr('class', 'legend-background')
+    .style('fill', 'white')
+    .style('fill-opacity', 0.9)
+    .style('stroke', '#e5e7eb')
+    .style('stroke-width', 1)
+  
+  const legendItems = [
+    { label: 'Historisch', color: '#10b981', dash: false },
+    { label: 'Prognose', color: '#3b82f6', dash: true },
+    { label: 'Konfidenzintervall', color: '#60a5fa', dash: false, area: true }
+  ]
+  
+  legendItems.forEach((item, i) => {
+    const legendRow = legend.append('g')
+      .attr('transform', `translate(0, ${i * 20})`)
+    
+    if (item.area) {
+      legendRow.append('rect')
+        .attr('width', 15)
+        .attr('height', 10)
+        .attr('fill', item.color)
+        .attr('fill-opacity', 0.2)
+    } else {
+      legendRow.append('line')
+        .attr('x1', 0)
+        .attr('x2', 15)
+        .attr('y1', 5)
+        .attr('y2', 5)
+        .attr('stroke', item.color)
+        .attr('stroke-width', 2)
+        .attr('stroke-dasharray', item.dash ? '5,5' : null)
+    }
+    
+    legendRow.append('text')
+      .attr('x', 20)
+      .attr('y', 5)
+      .attr('dy', '0.35em')
+      .style('font-size', '12px')
+      .style('fill', 'currentColor')
+      .attr('class', 'legend-text')
+      .text(item.label)
+  })
+  
+  // Add confidence toggle button
+  const toggleButton = gRef.value.append('g')
+    .attr('transform', `translate(20, 20)`)
+    .style('cursor', 'pointer')
+    .on('click', () => {
+      showConfidenceInterval.value = !showConfidenceInterval.value
+      emit('confidence-toggle', showConfidenceInterval.value)
+      drawChart()
+    })
+  
+  toggleButton.append('rect')
+    .attr('width', 140)
+    .attr('height', 25)
+    .attr('rx', 4)
+    .attr('class', 'confidence-toggle')
+    .attr('fill', showConfidenceInterval.value ? '#3b82f6' : '#e5e7eb')
+  
+  toggleButton.append('text')
+    .attr('x', 70)
+    .attr('y', 12.5)
+    .attr('text-anchor', 'middle')
+    .attr('dy', '0.35em')
+    .style('font-size', '12px')
+    .style('fill', showConfidenceInterval.value ? 'white' : 'black')
+    .text('Konfidenzintervall')
 }
 
-// Event handlers
-const handlePredictionClick = (event, d) => {
-  emit('predictionClick', d)
-}
-
-const changeModel = (newModel: string) => {
-  emit('modelChange', newModel)
-  // Reload data with new model
-  loadData()
-}
-
-// Watchers
-watch([() => props.selectedProduct, () => props.selectedRegion, () => props.modelType], () => {
-  loadData()
+// Watch for ready state
+watch(isReady, (ready) => {
+  if (ready) {
+    initChart()
+  }
 })
 
-watch([processedHistoricalData, processedPredictionData], () => {
-  updateChartWithData()
+// Watch for data changes
+watch(() => props.data, () => {
+  if (isReady.value) {
+    drawChart()
+  }
 }, { deep: true })
 
-// Initialize when visualization is ready
-watch(() => visualization.isReady.value, (isReady) => {
-  if (isReady) {
-    initializeChart()
+// Watch for config changes
+watch(() => props.config, () => {
+  if (isReady.value) {
+    initChart()
+  }
+}, { deep: true })
+
+// Initialize on mount
+onMounted(() => {
+  if (isReady.value) {
+    initChart()
+  }
+  
+  // Setup resize observer for responsive chart
+  if (containerRef.value && ResizeObserver) {
+    resizeObserver = new ResizeObserver((entries) => {
+      // Debounce resize events
+      setTimeout(() => {
+        if (isReady.value) {
+          initChart()
+        }
+      }, 100)
+    })
+    
+    resizeObserver.observe(containerRef.value)
   }
 })
 
 // Cleanup on unmount
-watch(() => visualization.isDestroyed.value, (isDestroyed) => {
-  if (isDestroyed) {
-    tooltip.destroy()
-    vizStore.removeChartInstance('ml')
+onUnmounted(() => {
+  if (resizeObserver) {
+    resizeObserver.disconnect()
+    resizeObserver = null
   }
-})
-
-// Exposed methods
-defineExpose({
-  loadData,
-  updateChartWithData,
-  changeModel
 })
 </script>
 
 <template>
   <div 
-    ref="containerRef"
-    class="chart-container relative w-full bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700"
-  >
-    <!-- Loading overlay -->
-    <LoadingSpinner
-      v-if="isLoading"
-      :overlay="true"
-      :centered="true"
-      text="Lädt ML-Analyse..."
-      size="md"
-    />
-
-    <!-- Error message -->
-    <div
-      v-if="error"
-      class="absolute inset-0 bg-error-50 dark:bg-error-900/20 flex items-center justify-center z-10"
-    >
-      <div class="text-center">
-        <p class="text-error-600 dark:text-error-400 mb-3">{{ error }}</p>
-        <BaseButton
-          @click="loadData"
-          variant="danger"
-          size="sm"
-        >
-          Erneut versuchen
-        </BaseButton>
-      </div>
-    </div>
-
-    <!-- Chart controls -->
-    <div class="p-4 border-b border-gray-200 dark:border-gray-700">
-      <div class="flex items-center justify-between">
-        <div>
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
-            ML Vorhersage - {{ props.selectedProduct }}
-          </h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400">
-            {{ props.predictionYears }}-Jahres-Prognose mit {{ props.modelType }} Modell
-          </p>
-        </div>
-        
-        <!-- Model selection -->
-        <div class="flex space-x-2">
-          <BaseButton
-            v-for="model in ['linear', 'polynomial', 'neural']"
-            :key="model"
-            :variant="props.modelType === model ? 'primary' : 'secondary'"
-            size="sm"
-            @click="changeModel(model)"
-          >
-            {{ model }}
-          </BaseButton>
-        </div>
-      </div>
-    </div>
-
-    <!-- Chart SVG Container -->
-    <div class="p-4 min-h-[400px]" />
-
-    <!-- No data message -->
-    <div
-      v-if="!isLoading && !error && processedHistoricalData.length === 0"
-      class="absolute inset-0 flex items-center justify-center text-gray-500 dark:text-gray-400"
-    >
-      <div class="text-center">
-        <svg class="w-12 h-12 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-        </svg>
-        <p>Keine ML-Daten verfügbar</p>
-        <p class="text-xs mt-1">Wählen Sie ein Produkt aus, um Vorhersagen zu generieren</p>
-      </div>
-    </div>
-  </div>
+    ref="containerRef" 
+    class="ml-chart w-full"
+    :style="{ height: chartDimensions.height + 'px' }"
+  />
 </template>
+
+<style scoped>
+.ml-chart {
+  @apply bg-white dark:bg-gray-800 rounded-lg shadow-sm dark:shadow-gray-900/20;
+}
+
+:deep(.chart-tooltip) {
+  z-index: 1000;
+}
+
+/* Ensure text is visible in dark mode */
+:deep(.ml-chart-svg text) {
+  @apply fill-gray-700 dark:fill-gray-300;
+}
+
+:deep(.ml-chart-svg .axis-label) {
+  @apply fill-gray-600 dark:fill-gray-400;
+}
+
+:deep(.ml-chart-svg .legend-text) {
+  @apply fill-gray-700 dark:fill-gray-300;
+}
+
+/* Legend background and button styling in dark mode */
+:deep(.ml-chart-svg .legend-background) {
+  @apply fill-white dark:fill-gray-800 stroke-gray-200 dark:stroke-gray-600;
+}
+
+:deep(.ml-chart-svg .confidence-toggle) {
+  @apply fill-blue-500 dark:fill-blue-400;
+}
+
+:deep(.ml-chart-svg .confidence-toggle text) {
+  @apply fill-white dark:fill-gray-100;
+}
+
+/* Grid lines in dark mode */
+:deep(.ml-chart-svg .grid) {
+  @apply stroke-gray-300 dark:stroke-gray-600;
+}
+
+:deep(.ml-chart-svg .grid line) {
+  @apply stroke-gray-300 dark:stroke-gray-600;
+}
+
+/* Axis lines in dark mode */
+:deep(.ml-chart-svg .domain) {
+  @apply stroke-gray-400 dark:stroke-gray-500;
+}
+
+/* Tick lines in dark mode */
+:deep(.ml-chart-svg .tick line) {
+  @apply stroke-gray-400 dark:stroke-gray-500;
+}
+</style>

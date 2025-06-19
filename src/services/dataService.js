@@ -76,6 +76,12 @@ class DataService {
       return data
     } catch (error) {
       console.error(`Error loading data from ${url}:`, error)
+      console.error('Error details:', {
+        message: error.message,
+        stack: error.stack,
+        url: url,
+        response: error.response
+      })
       throw error
     }
   }
@@ -155,8 +161,12 @@ class DataService {
    * Load ML forecast data
    */
   async loadMLForecast(forecastKey) {
-    const url = `/data/fao/ml/${forecastKey}.json`
-    return this.loadData(url, `ml-${forecastKey}`)
+    console.log(`🔮 DataService: loadMLForecast called with key: ${forecastKey}`)
+    // Ensure we don't double-add .json extension
+    const cleanKey = forecastKey.replace('.json', '')
+    const url = `/data/fao/ml/${cleanKey}.json`
+    console.log(`🔮 DataService: Loading ML forecast from URL: ${url}`)
+    return this.loadData(url, `ml-${cleanKey}`)
   }
 
   /**
@@ -200,7 +210,40 @@ class DataService {
    * Load ML forecasts index
    */
   async loadMLIndex() {
+    console.log('🤖 DataService: loadMLIndex called')
     return this.loadData('/data/fao/ml/index.json', 'ml-index')
+  }
+
+  /**
+   * Load comprehensive ML forecasts index with metadata
+   */
+  async loadMLComprehensiveIndex() {
+    console.log('🤖 DataService: loadMLComprehensiveIndex called')
+    return this.loadData('/data/fao/ml/comprehensive_index.json', 'ml-comprehensive-index')
+  }
+
+  /**
+   * Load global ML forecasts index
+   */
+  async loadMLGlobalIndex() {
+    console.log('🤖 DataService: loadMLGlobalIndex called')
+    return this.loadData('/data/fao/ml/global_forecasts_index.json', 'ml-global-index')
+  }
+
+  /**
+   * Load regional ML forecasts index
+   */
+  async loadMLRegionalIndex() {
+    console.log('🤖 DataService: loadMLRegionalIndex called')
+    return this.loadData('/data/fao/ml/regional_forecasts_index.json', 'ml-regional-index')
+  }
+
+  /**
+   * Load country ML forecasts index
+   */
+  async loadMLCountryIndex() {
+    console.log('🤖 DataService: loadMLCountryIndex called')
+    return this.loadData('/data/fao/ml/country_forecasts_index.json', 'ml-country-index')
   }
 
   /**

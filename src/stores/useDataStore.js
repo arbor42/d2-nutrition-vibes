@@ -13,6 +13,13 @@ export const useDataStore = defineStore('data', () => {
   const dataIndex = ref(null)
   const faoMetadata = ref(null)
   
+  // ML-specific state
+  const mlIndex = ref(null)
+  const mlComprehensiveIndex = ref(null)
+  const mlGlobalIndex = ref(null)
+  const mlRegionalIndex = ref(null)
+  const mlCountryIndex = ref(null)
+  
   // Enhanced state for Phase 5
   const selectedProduct = ref('maize_and_products')
   const selectedRegion = ref('global')
@@ -332,6 +339,102 @@ export const useDataStore = defineStore('data', () => {
     }
   }
 
+  // ML-specific actions
+  const loadMLIndex = async () => {
+    const key = 'ml-index'
+    setLoading(key, true)
+    try {
+      const data = await dataService.loadMLIndex()
+      mlIndex.value = data
+      errors.value.delete(key)
+      return data
+    } catch (error) {
+      setError(key, error.message)
+      throw error
+    } finally {
+      setLoading(key, false)
+    }
+  }
+
+  const loadMLComprehensiveIndex = async () => {
+    const key = 'ml-comprehensive-index'
+    setLoading(key, true)
+    try {
+      const data = await dataService.loadMLComprehensiveIndex()
+      mlComprehensiveIndex.value = data
+      errors.value.delete(key)
+      return data
+    } catch (error) {
+      setError(key, error.message)
+      throw error
+    } finally {
+      setLoading(key, false)
+    }
+  }
+
+  const loadMLGlobalIndex = async () => {
+    const key = 'ml-global-index'
+    setLoading(key, true)
+    try {
+      const data = await dataService.loadMLGlobalIndex()
+      mlGlobalIndex.value = data
+      errors.value.delete(key)
+      return data
+    } catch (error) {
+      setError(key, error.message)
+      throw error
+    } finally {
+      setLoading(key, false)
+    }
+  }
+
+  const loadMLRegionalIndex = async () => {
+    const key = 'ml-regional-index'
+    setLoading(key, true)
+    try {
+      const data = await dataService.loadMLRegionalIndex()
+      mlRegionalIndex.value = data
+      errors.value.delete(key)
+      return data
+    } catch (error) {
+      setError(key, error.message)
+      throw error
+    } finally {
+      setLoading(key, false)
+    }
+  }
+
+  const loadMLCountryIndex = async () => {
+    const key = 'ml-country-index'
+    setLoading(key, true)
+    try {
+      const data = await dataService.loadMLCountryIndex()
+      mlCountryIndex.value = data
+      errors.value.delete(key)
+      return data
+    } catch (error) {
+      setError(key, error.message)
+      throw error
+    } finally {
+      setLoading(key, false)
+    }
+  }
+
+  // Get available ML forecasts by type
+  const getAvailableMLForecasts = (type = 'all') => {
+    switch (type) {
+      case 'global':
+        return mlGlobalIndex.value?.forecasts || []
+      case 'regional':
+        return mlRegionalIndex.value?.forecasts || []
+      case 'country':
+        return mlCountryIndex.value?.forecasts || []
+      case 'all':
+      default:
+        return mlComprehensiveIndex.value?.forecast_categories || {}
+    }
+  }
+
   // Initialize critical data
   const initializeApp = async () => {
     console.log('🚀 DataStore: Starting app initialization...')
@@ -568,6 +671,13 @@ export const useDataStore = defineStore('data', () => {
     loading,
     errors,
     
+    // ML state
+    mlIndex,
+    mlComprehensiveIndex,
+    mlGlobalIndex,
+    mlRegionalIndex,
+    mlCountryIndex,
+    
     // Enhanced state
     selectedProduct,
     selectedRegion,
@@ -605,6 +715,14 @@ export const useDataStore = defineStore('data', () => {
     clearCache,
     getError,
     isLoadingData,
+    
+    // ML actions
+    loadMLIndex,
+    loadMLComprehensiveIndex,
+    loadMLGlobalIndex,
+    loadMLRegionalIndex,
+    loadMLCountryIndex,
+    getAvailableMLForecasts,
     
     // Enhanced actions
     setSelectedProduct,

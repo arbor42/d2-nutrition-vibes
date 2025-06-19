@@ -2,6 +2,7 @@
  * Product mappings for German translations and enhanced product selection
  * Maps English FAO product names to German names and provides additional metadata
  * Updated with exact FAO metadata product names (113 products total)
+ * Now includes ML forecast product name mappings
  */
 
 export const productMappings = {
@@ -136,7 +137,120 @@ export const productMappings = {
   // Other Categories
   'Coconuts - Incl Copra': 'Kokosnüsse - Inkl. Kopra',
   'Infant food': 'Säuglingsnahrung',
-  'Miscellaneous': 'Verschiedenes'
+  'Miscellaneous': 'Verschiedenes',
+
+  // ML Forecast specific product mappings (using underscores as in filenames)
+  'animal_fats': 'Tierische Fette',
+  'apples_and_products': 'Äpfel und Erzeugnisse',
+  'aquatic_animals_others': 'Wassertiere, andere',
+  'aquatic_plants': 'Wasserpflanzen',
+  'aquatic_products_other': 'Wasserprodukte, andere',
+  'bananas': 'Bananen',
+  'barley_and_products': 'Gerste und Erzeugnisse',
+  'beans': 'Bohnen',
+  'beer': 'Bier',
+  'beverages_fermented': 'Fermentierte Getränke',
+  'bovine_meat': 'Rindfleisch',
+  'butter_ghee': 'Butter, Ghee',
+  'cassava_and_products': 'Maniok und Erzeugnisse',
+  'cephalopods': 'Kopffüßer',
+  'cereals___excluding_beer': 'Getreide - Ohne Bier',
+  'cereals_other': 'Getreide, andere',
+  'citrus_other': 'Zitrusfrüchte, andere',
+  'cloves': 'Nelken',
+  'cocoa_beans_and_products': 'Kakaobohnen und Erzeugnisse',
+  'coconut_oil': 'Kokosöl',
+  'coconuts___incl_copra': 'Kokosnüsse - Inkl. Kopra',
+  'coffee_and_products': 'Kaffee und Erzeugnisse',
+  'cottonseed': 'Baumwollsamen',
+  'cottonseed_oil': 'Baumwollsamenöl',
+  'cream': 'Sahne',
+  'crustaceans': 'Krebstiere',
+  'dates': 'Datteln',
+  'demersal_fish': 'Bodenfische',
+  'eggs': 'Eier',
+  'fats_animals_raw': 'Tierische Fette, roh',
+  'fish_body_oil': 'Fischkörperöl',
+  'fish_liver_oil': 'Fischleberöl',
+  'fish_seafood': 'Fisch, Meeresfrüchte',
+  'freshwater_fish': 'Süßwasserfische',
+  'fruits___excluding_wine': 'Früchte - Ohne Wein',
+  'fruits_other': 'Früchte, andere',
+  'grapefruit_and_products': 'Grapefruit und Erzeugnisse',
+  'grapes_and_products_excl_wine': 'Trauben und Erzeugnisse (ohne Wein)',
+  'groundnut_oil': 'Erdnussöl',
+  'groundnuts': 'Erdnüsse',
+  'honey': 'Honig',
+  'lemons_limes_and_products': 'Zitronen, Limetten und Erzeugnisse',
+  'maize_and_products': 'Mais und Erzeugnisse',
+  'maize_germ_oil': 'Maiskeimöl',
+  'marine_fish_other': 'Meeresfische, andere',
+  'meat': 'Fleisch',
+  'meat_other': 'Fleisch, andere',
+  'milk___excluding_butter': 'Milch - Ohne Butter',
+  'millet_and_products': 'Hirse und Erzeugnisse',
+  'miscellaneous': 'Verschiedenes',
+  'molluscs_other': 'Weichtiere, andere',
+  'mutton_&_goat_meat': 'Hammel- und Ziegenfleisch',
+  'nuts_and_products': 'Nüsse und Erzeugnisse',
+  'oats': 'Hafer',
+  'offals': 'Innereien',
+  'offals_edible': 'Innereien, essbar',
+  'oilcrops': 'Ölsaaten',
+  'oilcrops_oil_other': 'Ölsaatenöl, andere',
+  'oilcrops_other': 'Ölsaaten, andere',
+  'olive_oil': 'Olivenöl',
+  'olives_including_preserved': 'Oliven (einschließlich konservierte)',
+  'onions': 'Zwiebeln',
+  'oranges_mandarines': 'Orangen, Mandarinen',
+  'palm_kernels': 'Palmkerne',
+  'palm_oil': 'Palmöl',
+  'palmkernel_oil': 'Palmkernöl',
+  'peas': 'Erbsen',
+  'pelagic_fish': 'Pelagische Fische',
+  'pepper': 'Pfeffer',
+  'pigmeat': 'Schweinefleisch',
+  'pimento': 'Piment',
+  'pineapples_and_products': 'Ananas und Erzeugnisse',
+  'plantains': 'Kochbananen',
+  'potatoes_and_products': 'Kartoffeln und Erzeugnisse',
+  'poultry_meat': 'Geflügelfleisch',
+  'pulses': 'Hülsenfrüchte',
+  'pulses_other_and_products': 'Hülsenfrüchte, andere und Erzeugnisse',
+  'rape_and_mustard_oil': 'Raps- und Senföl',
+  'rape_and_mustardseed': 'Raps- und Senfsamen',
+  'rice_and_products': 'Reis und Erzeugnisse',
+  'ricebran_oil': 'Reiskleieöl',
+  'roots_other': 'Wurzeln, andere',
+  'rye_and_products': 'Roggen und Erzeugnisse',
+  'sesame_seed': 'Sesamsamen',
+  'sesameseed_oil': 'Sesamöl',
+  'sorghum_and_products': 'Sorghum und Erzeugnisse',
+  'soyabean_oil': 'Sojaöl',
+  'soyabeans': 'Sojabohnen',
+  'spices': 'Gewürze',
+  'spices_other': 'Gewürze, andere',
+  'starchy_roots': 'Stärkehaltige Wurzeln',
+  'stimulants': 'Stimulanzien',
+  'sugar_&_sweeteners': 'Zucker und Süßstoffe',
+  'sugar_beet': 'Zuckerrüben',
+  'sugar_cane': 'Zuckerrohr',
+  'sugar_crops': 'Zuckerpflanzen',
+  'sugar_non_centrifugal': 'Zucker, nicht zentrifugiert',
+  'sugar_raw_equivalent': 'Zucker (Rohzuckeräquivalent)',
+  'sunflower_seed': 'Sonnenblumenkerne',
+  'sunflowerseed_oil': 'Sonnenblumenöl',
+  'sweet_potatoes': 'Süßkartoffeln',
+  'sweeteners_other': 'Süßstoffe, andere',
+  'tea_including_mate': 'Tee (einschließlich Mate)',
+  'tomatoes_and_products': 'Tomaten und Erzeugnisse',
+  'treenuts': 'Baumnüsse',
+  'vegetable_oils': 'Pflanzenöle',
+  'vegetables': 'Gemüse',
+  'vegetables_other': 'Gemüse, andere',
+  'wheat_and_products': 'Weizen und Erzeugnisse',
+  'wine': 'Wein',
+  'yams': 'Yams'
 }
 
 /**
@@ -244,6 +358,42 @@ export const productCategories = {
  */
 export const getGermanName = (englishName) => {
   return productMappings[englishName] || englishName
+}
+
+/**
+ * Get German name for ML forecast products (handles underscore format)
+ * @param {string} mlProductName - The ML product name (may contain underscores)
+ * @returns {string} The German product name or formatted English name if not found
+ */
+export const getMLGermanName = (mlProductName) => {
+  // First try direct mapping
+  if (productMappings[mlProductName]) {
+    return productMappings[mlProductName]
+  }
+  
+  // Try with spaces instead of underscores
+  const spaceVersion = mlProductName.replace(/_/g, ' ')
+  if (productMappings[spaceVersion]) {
+    return productMappings[spaceVersion]
+  }
+  
+  // Try title case version
+  const titleCase = spaceVersion
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ')
+  if (productMappings[titleCase]) {
+    return productMappings[titleCase]
+  }
+  
+  // Fallback: format the product name nicely
+  return mlProductName
+    .replace(/_/g, ' ')
+    .replace(/&/g, '&')
+    .replace(/___/g, ' - ')
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
 }
 
 /**

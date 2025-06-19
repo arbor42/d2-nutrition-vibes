@@ -97,22 +97,41 @@
                 Das lineare Modell ist für diese Daten ungeeignet. Bitte wechseln Sie zum polynomialen oder Ensemble-Modell für bessere Vorhersagen.
               </p>
             </div>
+            <!-- Ensemble Info -->
+            <div v-if="selectedModel === 'ensemble'" class="ensemble-info">
+              <p class="text-sm text-blue-600 dark:text-blue-400 mb-3">
+                ℹ️ Ensemble-Modell kombiniert Linear- und Polynomialregressionen für robustere Vorhersagen.
+              </p>
+            </div>
+            
             <div class="stats-grid">
               <div class="stat-card">
                 <div class="stat-label">R² Score</div>
                 <div class="stat-value" :class="getR2Class(modelStats.r2)">{{ modelStats.r2 }}</div>
+                <div v-if="selectedModel === 'ensemble'" class="stat-help text-xs text-gray-500 mt-1">
+                  Durchschnitt der Einzelmodelle
+                </div>
               </div>
               <div class="stat-card">
                 <div class="stat-label">RMSE</div>
                 <div class="stat-value">{{ modelStats.rmse }}</div>
+                <div v-if="selectedModel === 'ensemble'" class="stat-help text-xs text-gray-500 mt-1">
+                  Gemittelte Wurzel der mittleren Quadratfehler
+                </div>
               </div>
               <div class="stat-card">
                 <div class="stat-label">MAE</div>
                 <div class="stat-value">{{ modelStats.mae }}</div>
+                <div v-if="selectedModel === 'ensemble'" class="stat-help text-xs text-gray-500 mt-1">
+                  Gemittelter mittlerer absoluter Fehler
+                </div>
               </div>
               <div class="stat-card">
-                <div class="stat-label">Genauigkeit</div>
+                <div class="stat-label">{{ selectedModel === 'ensemble' ? 'Übereinstimmung' : 'Genauigkeit' }}</div>
                 <div class="stat-value text-green-600">{{ modelStats.accuracy }}%</div>
+                <div v-if="selectedModel === 'ensemble'" class="stat-help text-xs text-gray-500 mt-1">
+                  Modellübereinstimmung zwischen Linear- und Polynomialregression
+                </div>
               </div>
             </div>
           </div>
@@ -410,10 +429,34 @@ const loadPredictions = wrapAsync(async () => {
           mae: (perf.mae || 0).toFixed(0),
           r2: (perf.r2_score || 0).toFixed(3)
         }
+      } else if (selectedModel.value === 'ensemble' && data.model_performance) {
+        // For ensemble: calculate average performance from individual models
+        const models = Object.values(data.model_performance)
+        if (models.length > 0) {
+          const avgR2 = models.reduce((sum, m) => sum + (m.r2_score || 0), 0) / models.length
+          const avgMSE = models.reduce((sum, m) => sum + (m.mse || 0), 0) / models.length
+          const avgMAE = models.reduce((sum, m) => sum + (m.mae || 0), 0) / models.length
+          
+          modelStats.value = {
+            accuracy: (avgR2 * 100).toFixed(1),
+            rmse: Math.sqrt(avgMSE).toFixed(0),
+            mae: avgMAE.toFixed(0),
+            r2: avgR2.toFixed(3)
+          }
+        } else {
+          // Fallback for ensemble without individual model performance
+          const avgAgreement = predictions.value.reduce((sum, p) => sum + (p.reliability || 0), 0) / predictions.value.length
+          modelStats.value = {
+            accuracy: avgAgreement.toFixed(1),
+            rmse: 'Ensemble',
+            mae: 'Kombination',
+            r2: 'Gemittelt'
+          }
+        }
       } else {
-        // Use ensemble stats if available
+        // Unknown model or missing data
         modelStats.value = {
-          accuracy: '95.0',
+          accuracy: 'N/A',
           rmse: 'N/A',
           mae: 'N/A',
           r2: 'N/A'
@@ -524,6 +567,24 @@ const getModelLabel = (model) => {
     ensemble: 'Ensemble-Modell'
   }
   return labels[model] || model
+}
+
+const getStatsExplanation = (model) => {
+  if (model === 'ensemble') {
+    return {
+      r2: 'Durchschnittlicher R² Score der Einzelmodelle',
+      rmse: 'Durchschnittliche Wurzel der mittleren Quadratfehler',
+      mae: 'Durchschnittlicher mittlerer absoluter Fehler',
+      accuracy: 'Durchschnittliche Modellübereinstimmung (%)'
+    }
+  } else {
+    return {
+      r2: 'Bestimmtheitsmaß (R²) - Erklärt Varianz',
+      rmse: 'Wurzel der mittleren Quadratfehler',
+      mae: 'Mittlerer absoluter Fehler',
+      accuracy: 'Modellgenauigkeit basierend auf R²'
+    }
+  }
 }
 
 const getR2Class = (r2) => {

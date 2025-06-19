@@ -62,7 +62,12 @@ const countryRank = computed(() => {
 })
 
 const globalStats = computed(() => {
-  if (!uiStore.selectedProduct || !uiStore.selectedYear) {
+  // Force reactivity on these dependencies
+  const currentProduct = uiStore.selectedProduct
+  const currentYear = uiStore.selectedYear  
+  const currentMetric = uiStore.selectedMetric
+  const hasTimeseries = !!dataStore.timeseriesData
+  if (!currentProduct || !currentYear) {
     return { total: 0, countries: 0, topProducer: null, unit: 't' }
   }
   
@@ -70,13 +75,13 @@ const globalStats = computed(() => {
   let dataArray = []
   
   // Use different data sources based on selected metric
-  if (uiStore.selectedMetric === 'production') {
+  if (currentMetric === 'production') {
     // Use production data
-    rawData = dataStore.getProductionData(uiStore.selectedProduct, uiStore.selectedYear)
-  } else if (dataStore.timeseriesData && ['import_quantity', 'export_quantity', 'domestic_supply_quantity'].includes(uiStore.selectedMetric)) {
+    rawData = dataStore.getProductionData(currentProduct, currentYear)
+  } else if (hasTimeseries && ['import_quantity', 'export_quantity', 'domestic_supply_quantity'].includes(currentMetric)) {
     // Use timeseries data for other metrics
-    const metricKey = uiStore.selectedMetric === 'import_quantity' ? 'imports' :
-                      uiStore.selectedMetric === 'export_quantity' ? 'exports' :
+    const metricKey = currentMetric === 'import_quantity' ? 'imports' :
+                      currentMetric === 'export_quantity' ? 'exports' :
                       'domestic_supply'
     
     // Extract data from timeseries for the selected product, year and metric
@@ -123,24 +128,24 @@ const globalStats = computed(() => {
         .join(' ')
     }
     
-    const normalizedProduct = normalizeProductName(uiStore.selectedProduct)
+    const normalizedProduct = normalizeProductName(currentProduct)
     
-    console.log(`📊 DashboardPanel: Looking for timeseries data - Original: "${uiStore.selectedProduct}", Normalized: "${normalizedProduct}"`)
+    console.log(`📊 DashboardPanel: Looking for timeseries data - Original: "${currentProduct}", Normalized: "${normalizedProduct}"`)
     
     if (dataStore.timeseriesData[normalizedProduct]) {
       const productTimeseries = dataStore.timeseriesData[normalizedProduct]
       console.log(`📊 DashboardPanel: Processing ${metricKey} data for ${normalizedProduct}:`, {
         countries: Object.keys(productTimeseries).length,
-        year: uiStore.selectedYear
+        year: currentYear
       })
       
       dataArray = Object.entries(productTimeseries).map(([country, countryData]) => {
-        const yearData = countryData.find(d => d.year === uiStore.selectedYear)
+        const yearData = countryData.find(d => d.year === currentYear)
         return {
           country,
           value: yearData ? (yearData[metricKey] || 0) : 0,
           unit: yearData?.unit || 't',
-          year: uiStore.selectedYear
+          year: currentYear
         }
       }).filter(item => item.value > 0)
       
@@ -151,7 +156,7 @@ const globalStats = computed(() => {
     }
   } else {
     // Fallback to production data
-    rawData = dataStore.getProductionData(uiStore.selectedProduct, uiStore.selectedYear)
+    rawData = dataStore.getProductionData(currentProduct, currentYear)
   }
   
   if (!rawData && dataArray.length === 0) return { total: 0, countries: 0, topProducer: null, unit: 't' }
@@ -168,13 +173,17 @@ const globalStats = computed(() => {
         country,
         value: data.value || 0,
         unit: data.unit || 't',
-        year: data.year || uiStore.selectedYear
+        year: data.year || currentYear
       }))
     }
   }
   
   const validData = dataArray.filter(item => item && item.value > 0)
   const total = validData.reduce((sum, item) => sum + (item.value || 0), 0)
+  
+  console.log(`📊 DashboardPanel globalStats: validData count: ${validData.length}`)
+  console.log(`📊 DashboardPanel globalStats: sample data:`, validData.slice(0, 3))
+  
   const countries = validData.length
   
   // Filter out non-country entities (continents, regions, aggregates) for top producer calculation
@@ -203,13 +212,17 @@ const globalStats = computed(() => {
     !NON_COUNTRY_ENTITIES.includes(item.country) &&
     !item.country.toLowerCase().includes('total')
   )
+  
+  console.log(`📊 DashboardPanel globalStats: countryData count: ${countryData.length}`)
+  console.log(`📊 DashboardPanel globalStats: sample countries:`, countryData.slice(0, 3).map(c => c.country))
+  
   const topProducer = countryData.length > 0 ? countryData.reduce((max, item) => 
     (item.value || 0) > (max?.value || 0) ? item : max, null
   ) : null
   
   return { 
     total, 
-    countries, 
+    countries: countryData.length, // Use filtered country count instead of all data
     topProducer: topProducer?.country,
     unit: topProducer?.unit || 't'
   }
@@ -280,7 +293,7 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
                 {{ uiStore.selectedMetric === 'production' ? 'Gesamtproduktion' : 
                    uiStore.selectedMetric === 'import_quantity' ? 'Gesamtimport' :
                    uiStore.selectedMetric === 'export_quantity' ? 'Gesamtexport' :
-                   'Inlandsversorgung' }} {{ uiStore.selectedYear }}
+                   'Inlandsversorgung' }} {{ uiStore.selectedYear || new Date().getFullYear() }}
               </h3>
               <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">
                 {{ (globalStats?.total || 0).toLocaleString('de-DE') }}
@@ -312,7 +325,7 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
                    'Länder mit Daten' }}
               </h3>
               <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                {{ globalStats.countries }}
+                {{ globalStats?.countries || 0 }}
               </p>
               <p class="text-sm text-gray-500 dark:text-gray-400">
                 mit {{ uiStore.selectedMetric === 'production' ? 'Produktionsdaten' :
@@ -531,7 +544,7 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
                 <div class="flex justify-between">
                   <span class="text-sm text-gray-600 dark:text-gray-400">Durchschnitt/Land:</span>
                   <span class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                    {{ Math.round(globalStats.production / globalStats.countries).toLocaleString('de-DE') }}
+                    {{ globalStats.countries > 0 ? Math.round(globalStats.total / globalStats.countries).toLocaleString('de-DE') : '0' }}
                   </span>
                 </div>
                 <div class="flex justify-between">
@@ -549,7 +562,7 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
                 <div class="flex justify-between">
                   <span class="text-sm text-gray-600 dark:text-gray-400">Gesamt Länder:</span>
                   <span class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                    {{ dataStore.availableCountries?.length || 0 }}
+                    {{ dataStore.geoData?.features?.length || 0 }}
                   </span>
                 </div>
               </div>

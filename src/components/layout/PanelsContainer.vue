@@ -91,7 +91,7 @@ const panelDescription = computed(() => {
           </div>
           <div class="text-center">
             <p class="text-2xl font-bold text-success-600 dark:text-success-400">
-              {{ dataStore.availableCountries?.length || 0 }}
+              {{ dataStore.geoData?.features?.length || 0 }}
             </p>
             <p class="text-gray-600 dark:text-gray-400">Länder</p>
           </div>

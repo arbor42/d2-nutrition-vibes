@@ -88,7 +88,34 @@ const globalStats = computed(() => {
   const validData = dataArray.filter(item => item && item.value > 0)
   const total = validData.reduce((sum, item) => sum + (item.value || 0), 0)
   const countries = validData.length
-  const topProducer = validData.length > 0 ? validData.reduce((max, item) => 
+  
+  // Filter out non-country entities (continents, regions, aggregates) for top producer calculation
+  const NON_COUNTRY_ENTITIES = [
+    // Global/Continental
+    "World", "Africa", "Americas", "Asia", "Europe", "Oceania",
+    
+    // Regional subdivisions
+    "Northern America", "South America", "Central America", "Caribbean",
+    "Northern Africa", "Eastern Africa", "Middle Africa", "Southern Africa", "Western Africa", 
+    "Eastern Asia", "South-eastern Asia", "Southern Asia", "Western Asia", "Central Asia",
+    "Eastern Europe", "Northern Europe", "Southern Europe", "Western Europe",
+    "Australia and New Zealand", "Melanesia",
+    
+    // Economic/Political unions
+    "European Union (27)",
+    
+    // Development status groups
+    "Small Island Developing States", "Least Developed Countries", 
+    "Land Locked Developing Countries", "Low Income Food Deficit Countries",
+    "Net Food Importing Developing Countries"
+  ]
+  
+  const countryData = validData.filter(item => 
+    item.country && 
+    !NON_COUNTRY_ENTITIES.includes(item.country) &&
+    !item.country.toLowerCase().includes('total')
+  )
+  const topProducer = countryData.length > 0 ? countryData.reduce((max, item) => 
     (item.value || 0) > (max?.value || 0) ? item : max, null
   ) : null
   

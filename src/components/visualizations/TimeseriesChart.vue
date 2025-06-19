@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
-import { useVisualization, useTooltip } from '@/composables/useVisualization'
-import { useD3Data } from '@/composables/useD3'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useDataStore } from '@/stores/useDataStore'
-import { useVisualizationStore } from '@/stores/useVisualizationStore'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 import * as d3 from 'd3'
@@ -33,105 +30,69 @@ const emit = defineEmits<{
   pointClick: [data: any]
 }>()
 
-// Stores
+// Store
 const dataStore = useDataStore()
-const vizStore = useVisualizationStore()
 
 // Refs
-const containerRef = ref<HTMLDivElement>()
+const svgContainerRef = ref<HTMLDivElement>()
 
 // State
 const isLoading = ref(false)
 const error = ref<string | null>(null)
-const chartDataRef = ref<any[]>([])
-
-// Composables
-const margin = computed(() => ({
-  top: 20,
-  right: 30,
-  bottom: 40,
-  left: 60
-}))
-
-const visualization = useVisualization(containerRef, {
-  margin: margin.value,
-  responsive: true,
-  autoResize: true
-})
-
-const tooltip = useTooltip({
-  className: 'timeseries-tooltip chart-tooltip',
-  followMouse: true
-})
-
-const { processedData: processedChartData } = useD3Data(chartDataRef, {
-  transform: (data) => {
-    if (!Array.isArray(data)) return []
-    return data.filter(d => d.value > 0).sort((a, b) => a.year - b.year)
-  }
-})
+const chartData = ref<any[]>([])
 
 // Chart configuration
-const chartConfig = computed(() => ({
-  lineColor: vizStore.getColorScheme('timeseries')[0] || '#3b82f6',
-  pointColor: vizStore.getColorScheme('timeseries')[1] || '#1d4ed8',
-  gridColor: '#e5e7eb',
-  ...vizStore.getVisualizationConfig('timeseries')
-}))
+const margin = { top: 20, right: 30, bottom: 40, left: 60 }
 
-// D3 scales and generators
+// D3 variables
+let svg: d3.Selection<SVGSVGElement, unknown, null, undefined>
+let g: d3.Selection<SVGGElement, unknown, null, undefined>
 let xScale: d3.ScaleTime<number, number>
 let yScale: d3.ScaleLinear<number, number>
 let line: d3.Line<any>
-let xAxis: d3.Axis<d3.NumberValue>
-let yAxis: d3.Axis<d3.NumberValue>
+let tooltip: d3.Selection<HTMLDivElement, unknown, HTMLElement, any>
+let resizeObserver: ResizeObserver
 
 // Initialize chart
-const initializeChart = async () => {
-  if (!visualization.isReady.value) return
+const initializeChart = () => {
+  if (!svgContainerRef.value) return
+  
+  console.log('📈 TimeseriesChart: Initializing chart...')
+  
+  // Clear existing chart
+  d3.select(svgContainerRef.value).selectAll('*').remove()
+  
+  // Get full parent dimensions
+  const containerRect = svgContainerRef.value.getBoundingClientRect()
+  const width = containerRect.width || 600
+  const height = containerRect.height || 400
+  const innerWidth = width - margin.left - margin.right
+  const innerHeight = height - margin.top - margin.bottom
+  
+  console.log('📈 TimeseriesChart: Chart dimensions:', { width, height, innerWidth, innerHeight })
 
-  try {
-    isLoading.value = true
-    error.value = null
+  // Create SVG with responsive sizing
+  svg = d3.select(svgContainerRef.value)
+    .append('svg')
+    .attr('width', '100%')
+    .attr('height', '100%')
+    .attr('viewBox', `0 0 ${width} ${height}`)
+    .attr('preserveAspectRatio', 'xMidYMid meet')
+    .attr('class', 'timeseries-chart')
 
-    // Queue the chart setup
-    visualization.queueUpdate(setupChart, null, true)
-
-  } catch (err) {
-    error.value = 'Fehler beim Initialisieren des Charts'
-    console.error('Chart initialization error:', err)
-  } finally {
-    isLoading.value = false
-  }
-}
-
-// Setup chart with D3.js
-const setupChart = (container) => {
-  const { width, height } = visualization.dimensions.value
-  const innerWidth = width - margin.value.left - margin.value.right
-  const innerHeight = height - margin.value.top - margin.value.bottom
-
-  // Create SVG
-  const { svg, g } = visualization.createSVG({
-    width,
-    height,
-    className: 'timeseries-svg',
-    margin: margin.value
-  })
+  // Create main group
+  g = svg.append('g')
+    .attr('transform', `translate(${margin.left},${margin.top})`)
 
   // Setup scales
   xScale = d3.scaleTime().range([0, innerWidth])
   yScale = d3.scaleLinear().range([innerHeight, 0])
 
   // Setup line generator
-  line = d3.line()
+  line = d3.line<any>()
     .x(d => xScale(new Date(d.year, 0, 1)))
     .y(d => yScale(d.value))
     .curve(d3.curveMonotoneX)
-
-  // Setup axes
-  xAxis = d3.axisBottom(xScale).tickFormat(d3.timeFormat('%Y'))
-  yAxis = d3.axisLeft(yScale).tickFormat(d3.format('.2s'))
 
   // Add axes groups
   g.append('g')
@@ -143,54 +104,79 @@ const setupChart = (container) => {
 
   // Add grid if enabled
   if (props.showGrid) {
-    setupGrid(g, innerWidth, innerHeight)
+    g.append('g')
+      .attr('class', 'grid x-grid')
+      .attr('transform', `translate(0,${innerHeight})`)
+
+    g.append('g')
+      .attr('class', 'grid y-grid')
   }
 
   // Add axis labels
-  addAxisLabels(g, innerWidth, innerHeight)
-
-  // Set chart instance
-  vizStore.setChartInstance('timeseries', svg.node())
-}
-
-// Setup grid lines
-const setupGrid = (container, innerWidth, innerHeight) => {
-  // X grid
-  container.append('g')
-    .attr('class', 'grid x-grid')
-    .attr('transform', `translate(0,${innerHeight})`)
-    .style('opacity', 0.1)
-    .style('stroke', chartConfig.value.gridColor)
-
-  // Y grid
-  container.append('g')
-    .attr('class', 'grid y-grid')
-    .style('opacity', 0.1)
-    .style('stroke', chartConfig.value.gridColor)
-}
-
-// Add axis labels
-const addAxisLabels = (container, innerWidth, innerHeight) => {
-  // X-axis label
-  container.append('text')
+  g.append('text')
     .attr('class', 'x-label')
     .attr('text-anchor', 'middle')
     .attr('x', innerWidth / 2)
-    .attr('y', innerHeight + margin.value.bottom - 5)
+    .attr('y', innerHeight + 35)
     .text('Jahr')
-    .style('fill', 'currentColor')
     .style('font-size', '12px')
+    .style('fill', 'currentColor')
 
-  // Y-axis label
-  container.append('text')
+  g.append('text')
     .attr('class', 'y-label')
     .attr('text-anchor', 'middle')
     .attr('transform', 'rotate(-90)')
     .attr('x', -innerHeight / 2)
-    .attr('y', -margin.value.left + 15)
-    .text(`${props.selectedMetric}`)
-    .style('fill', 'currentColor')
+    .attr('y', -40)
+    .text(getMetricLabel())
     .style('font-size', '12px')
+    .style('fill', 'currentColor')
+
+  // Create tooltip with green theme
+  tooltip = d3.select('body')
+    .append('div')
+    .attr('class', 'timeseries-tooltip')
+    .style('position', 'absolute')
+    .style('padding', '8px 12px')
+    .style('background', 'rgba(6, 78, 59, 0.95)') // emerald-800 with opacity
+    .style('color', 'white')
+    .style('border', '1px solid #10b981') // emerald-500
+    .style('border-radius', '6px')
+    .style('font-size', '12px')
+    .style('font-weight', '500')
+    .style('pointer-events', 'none')
+    .style('opacity', 0)
+    .style('z-index', 1000)
+    .style('box-shadow', '0 4px 6px -1px rgba(0, 0, 0, 0.1)')
+
+  // Setup resize observer
+  setupResizeObserver()
+  
+  console.log('✅ TimeseriesChart: Chart initialized')
+}
+
+// Setup resize observer for responsive behavior
+const setupResizeObserver = () => {
+  if (!svgContainerRef.value || !window.ResizeObserver) return
+  
+  resizeObserver = new ResizeObserver(() => {
+    if (chartData.value.length > 0) {
+      updateChart()
+    }
+  })
+  
+  resizeObserver.observe(svgContainerRef.value)
+}
+
+// Get metric label for Y-axis
+const getMetricLabel = () => {
+  switch (props.selectedMetric) {
+    case 'production': return 'Produktion (t)'
+    case 'import_quantity': return 'Import (t)'
+    case 'export_quantity': return 'Export (t)'
+    case 'domestic_supply_quantity': return 'Inlandsversorgung (t)'
+    default: return 'Wert (t)'
+  }
 }
 
 // Load and prepare data
@@ -201,8 +187,112 @@ const loadData = async () => {
     isLoading.value = true
     error.value = null
 
-    // Load data for all available years
-    const availableYears = dataStore.availableYears
+    // Use timeseries data if available
+    if (dataStore.timeseriesData) {
+      const normalizeProductName = (product) => {
+        let normalized = product.replace(/_/g, ' ')
+        
+        const mappings = {
+          'cereals excluding beer': 'Cereals - Excluding Beer',
+          'coconuts incl copra': 'Coconuts - Incl Copra',
+          'fruits excluding wine': 'Fruits - Excluding Wine',
+          'milk excluding butter': 'Milk - Excluding Butter',
+          'mutton and goat meat': 'Mutton & Goat Meat',
+          'sugar and sweeteners': 'Sugar & Sweeteners',
+          'sugar non centrifugal': 'Sugar non-centrifugal',
+          'cassava and products': 'Cassava and products',
+          'maize and products': 'Maize and products',
+          'wheat and products': 'Wheat and products',
+          'rice and products': 'Rice and products',
+          'potatoes and products': 'Potatoes and products',
+          'nuts and products': 'Nuts and products',
+          'pulses': 'Pulses',
+          'vegetables': 'Vegetables'
+        }
+        
+        const lowerNormalized = normalized.toLowerCase()
+        if (mappings[lowerNormalized]) {
+          return mappings[lowerNormalized]
+        }
+        
+        return normalized
+          .split(' ')
+          .map((word, index) => {
+            const lower = word.toLowerCase()
+            if (lower === 'and' || lower === 'the' || lower === 'of') {
+              return lower
+            }
+            return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+          })
+          .join(' ')
+      }
+
+      const normalizedProduct = normalizeProductName(props.selectedProduct)
+      
+      if (dataStore.timeseriesData[normalizedProduct]) {
+        const productTimeseries = dataStore.timeseriesData[normalizedProduct]
+        const processedData: any[] = []
+        
+        if (props.selectedCountry && productTimeseries[props.selectedCountry]) {
+          // Single country data
+          const countryData = productTimeseries[props.selectedCountry]
+          countryData.forEach((yearData: any) => {
+            const metricKey = props.selectedMetric === 'production' ? 'production' :
+                             props.selectedMetric === 'import_quantity' ? 'imports' :
+                             props.selectedMetric === 'export_quantity' ? 'exports' :
+                             'domestic_supply'
+            
+            const value = yearData[metricKey] || 0
+            if (value > 0) {
+              processedData.push({
+                year: yearData.year,
+                value: value,
+                country: props.selectedCountry,
+                product: normalizedProduct,
+                unit: yearData.unit || 't'
+              })
+            }
+          })
+        } else {
+          // Global aggregated data
+          const yearlyTotals = new Map()
+          
+          Object.entries(productTimeseries).forEach(([country, countryData]: [string, any]) => {
+            countryData.forEach((yearData: any) => {
+              const metricKey = props.selectedMetric === 'production' ? 'production' :
+                               props.selectedMetric === 'import_quantity' ? 'imports' :
+                               props.selectedMetric === 'export_quantity' ? 'exports' :
+                               'domestic_supply'
+              
+              const value = yearData[metricKey] || 0
+              if (value > 0) {
+                const year = yearData.year
+                const currentTotal = yearlyTotals.get(year) || 0
+                yearlyTotals.set(year, currentTotal + value)
+              }
+            })
+          })
+          
+          yearlyTotals.forEach((value, year) => {
+            processedData.push({
+              year: year,
+              value: value,
+              country: 'Global',
+              product: normalizedProduct,
+              unit: 't'
+            })
+          })
+        }
+        
+        chartData.value = processedData.sort((a, b) => a.year - b.year)
+        console.log(`📈 TimeseriesChart: Loaded ${processedData.length} data points for ${normalizedProduct}`)
+        updateChart()
+        return
+      }
+    }
+    
+    // Fallback to production data loading if timeseries not available
+    const availableYears = dataStore.availableYears || [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022]
     const dataPromises = availableYears.map(year => 
       dataStore.loadProductionData(props.selectedProduct, year)
         .then(data => ({ year, data }))
@@ -210,8 +300,6 @@ const loadData = async () => {
     )
 
     const results = await Promise.all(dataPromises)
-    
-    // Process and combine data
     const processedData: any[] = []
     
     results.forEach(({ year, data, error }) => {
@@ -223,7 +311,6 @@ const loadData = async () => {
       if (data?.data) {
         data.data.forEach((item: any) => {
           if (props.selectedCountry) {
-            // Filter by selected country
             if (item.country === props.selectedCountry && item.value > 0) {
               processedData.push({
                 year,
@@ -234,7 +321,6 @@ const loadData = async () => {
               })
             }
           } else {
-            // Aggregate global data
             const existingEntry = processedData.find(d => d.year === year)
             if (existingEntry) {
               existingEntry.value += item.value
@@ -252,8 +338,8 @@ const loadData = async () => {
       }
     })
 
-    // Update reactive data
-    chartDataRef.value = processedData
+    chartData.value = processedData
+    updateChart()
 
   } catch (err) {
     error.value = 'Fehler beim Laden der Zeitreihen-Daten'
@@ -263,188 +349,196 @@ const loadData = async () => {
   }
 }
 
-// Update chart with data
-const updateChartWithData = () => {
-  if (!processedChartData.value.length) return
+// Update chart with current data
+const updateChart = () => {
+  if (!g || !chartData.value.length) return
+  
+  console.log('📈 TimeseriesChart: Updating chart with', chartData.value.length, 'data points')
+  
+  const data = chartData.value.filter(d => d.value > 0).sort((a, b) => a.year - b.year)
+  if (!data.length) return
 
-  visualization.queueUpdate(renderChart, processedChartData.value)
-}
+  // Get current dimensions from container
+  const containerRect = svgContainerRef.value?.getBoundingClientRect()
+  const width = containerRect?.width || 600
+  const height = containerRect?.height || 400
+  const innerWidth = width - margin.left - margin.right
+  const innerHeight = height - margin.top - margin.bottom
 
-// Render chart with D3.js
-const renderChart = (container, data) => {
-  if (!data || !Array.isArray(data) || data.length === 0) return
+  // Update viewBox for responsive scaling
+  svg.attr('viewBox', `0 0 ${width} ${height}`)
 
-  const { width, height } = visualization.dimensions.value
-  const innerWidth = width - margin.value.left - margin.value.right
-  const innerHeight = height - margin.value.top - margin.value.bottom
-
-  // Update scales domains
+  // Update scale domains
   const years = data.map(d => new Date(d.year, 0, 1))
   const values = data.map(d => d.value)
 
-  xScale.domain(d3.extent(years))
-  yScale.domain([0, d3.max(values)])
+  xScale.domain(d3.extent(years) as [Date, Date])
+  yScale.domain([0, d3.max(values) as number])
 
   // Update axes
-  container.select('.x-axis')
+  const xAxis = d3.axisBottom(xScale).tickFormat(d3.timeFormat('%Y'))
+  const yAxis = d3.axisLeft(yScale).tickFormat(d3.format('.2s'))
+
+  g.select('.x-axis')
     .transition()
     .duration(750)
     .call(xAxis)
 
-  container.select('.y-axis')
+  g.select('.y-axis')
     .transition()
     .duration(750)
     .call(yAxis)
 
   // Update grid
   if (props.showGrid) {
-    container.select('.x-grid')
+    g.select('.x-grid')
       .transition()
       .duration(750)
       .call(d3.axisBottom(xScale)
         .tickSize(-innerHeight)
         .tickFormat(() => '')
       )
+      .style('opacity', 0.1)
 
-    container.select('.y-grid')
+    g.select('.y-grid')
       .transition()
       .duration(750)
       .call(d3.axisLeft(yScale)
         .tickSize(-innerWidth)
         .tickFormat(() => '')
       )
+      .style('opacity', 0.1)
   }
 
-  // Draw line using data join pattern
-  visualization.handleDataJoin(
-    container,
-    '.line',
-    [data],
-    {
-      keyFn: () => 'main-line',
-      enterFn: (enter, transition) => {
-        enter
-          .append('path')
-          .attr('class', 'line')
-          .attr('fill', 'none')
-          .attr('stroke', chartConfig.value.lineColor)
-          .attr('stroke-width', 2)
-          .attr('stroke-linejoin', 'round')
-          .attr('stroke-linecap', 'round')
-          .attr('d', line)
-          .call(transition)
-      },
-      updateFn: (update, transition) => {
-        update.call(transition).attr('d', line)
-      }
-    }
-  )
+  // Draw line with green color scheme
+  const linePath = g.selectAll('.line-path').data([data])
+  
+  linePath.enter()
+    .append('path')
+    .attr('class', 'line-path')
+    .attr('fill', 'none')
+    .attr('stroke', '#059669') // emerald-600
+    .attr('stroke-width', 2.5)
+    .attr('stroke-linejoin', 'round')
+    .attr('stroke-linecap', 'round')
+    .merge(linePath)
+    .transition()
+    .duration(750)
+    .attr('d', line)
+
+  linePath.exit().remove()
 
   // Draw points if enabled
   if (props.showPoints) {
-    visualization.handleDataJoin(
-      container,
-      '.point',
-      data,
-      {
-        keyFn: (d) => d.year,
-        enterFn: (enter, transition) => {
-          enter
-            .append('circle')
-            .attr('class', 'point')
-            .attr('r', 0)
-            .attr('fill', chartConfig.value.pointColor)
-            .style('cursor', 'pointer')
-            .call(selection => 
-              visualization.addInteractivity(selection, {
-                click: handlePointClick,
-                hover: {
-                  enter: handlePointMouseover,
-                  leave: handlePointMouseout
-                },
-                tooltip: {
-                  show: tooltip.show,
-                  move: tooltip.updatePosition,
-                  hide: tooltip.hide
-                }
-              })
-            )
-            .call(transition)
-            .attr('r', 4)
-            .attr('cx', d => xScale(new Date(d.year, 0, 1)))
-            .attr('cy', d => yScale(d.value))
-        },
-        updateFn: (update, transition) => {
-          update
-            .call(transition)
-            .attr('cx', d => xScale(new Date(d.year, 0, 1)))
-            .attr('cy', d => yScale(d.value))
-        }
-      }
-    )
+    const points = g.selectAll('.data-point').data(data, (d: any) => d.year)
+    
+    points.enter()
+      .append('circle')
+      .attr('class', 'data-point')
+      .attr('r', 0)
+      .attr('fill', '#047857') // emerald-700
+      .attr('stroke', '#10b981') // emerald-500
+      .attr('stroke-width', 2)
+      .style('cursor', 'pointer')
+      .on('mouseover', handlePointMouseover)
+      .on('mouseout', handlePointMouseout)
+      .on('click', handlePointClick)
+      .merge(points)
+      .transition()
+      .duration(750)
+      .attr('r', 5)
+      .attr('cx', d => xScale(new Date(d.year, 0, 1)))
+      .attr('cy', d => yScale(d.value))
+
+    points.exit()
+      .transition()
+      .duration(500)
+      .attr('r', 0)
+      .remove()
   }
+
+  // Update Y-axis label
+  g.select('.y-label')
+    .text(getMetricLabel())
 }
 
 // Event handlers
-const handlePointMouseover = (event, d) => {
-  // Format tooltip content
-  const content = `
-    <strong>${d.country}</strong><br/>
-    Jahr: ${d.year}<br/>
-    ${d.product}: ${d3.format(',.0f')(d.value)} ${d.unit || ''}
-  `
-  
-  // Show tooltip
-  tooltip.show(event, d, () => content)
+const handlePointMouseover = (event: MouseEvent, d: any) => {
+  // Highlight the hovered point
+  d3.select(event.target as Element)
+    .transition()
+    .duration(150)
+    .attr('r', 7)
+    .attr('stroke-width', 3)
+    .attr('stroke', '#34d399') // emerald-400
+
+  tooltip
+    .style('opacity', 1)
+    .html(`
+      <strong>${d.country || 'Global'}</strong><br/>
+      Jahr: ${d.year}<br/>
+      ${getMetricLabel()}: ${d3.format(',.0f')(d.value)} ${d.unit || 't'}
+    `)
+    .style('left', (event.pageX + 10) + 'px')
+    .style('top', (event.pageY - 10) + 'px')
   
   emit('pointHover', d)
 }
 
-const handlePointMouseout = (event, d) => {
-  tooltip.hide()
+const handlePointMouseout = (event: MouseEvent) => {
+  // Reset point to normal size
+  d3.select(event.target as Element)
+    .transition()
+    .duration(150)
+    .attr('r', 5)
+    .attr('stroke-width', 2)
+    .attr('stroke', '#10b981') // emerald-500
+
+  tooltip.style('opacity', 0)
   emit('pointHover', null)
 }
 
-const handlePointClick = (event, d) => {
+const handlePointClick = (event: MouseEvent, d: any) => {
   emit('pointClick', d)
 }
 
+// Cleanup function
+const cleanup = () => {
+  if (resizeObserver) {
+    resizeObserver.disconnect()
+  }
+  if (tooltip) {
+    tooltip.remove()
+  }
+  if (svgContainerRef.value) {
+    d3.select(svgContainerRef.value).selectAll('*').remove()
+  }
+}
+
 // Watchers
-watch([() => props.selectedCountry, () => props.selectedProduct], () => {
+watch([() => props.selectedCountry, () => props.selectedProduct, () => props.selectedMetric], () => {
   loadData()
 })
 
-watch(processedChartData, () => {
-  updateChartWithData()
-}, { deep: true })
-
-// Initialize when visualization is ready
-watch(() => visualization.isReady.value, (isReady) => {
-  if (isReady) {
-    initializeChart()
-  }
+// Lifecycle
+onMounted(() => {
+  initializeChart()
+  loadData()
 })
 
-// Cleanup on unmount
-watch(() => visualization.isDestroyed.value, (isDestroyed) => {
-  if (isDestroyed) {
-    tooltip.destroy()
-    vizStore.removeChartInstance('timeseries')
-  }
+onUnmounted(() => {
+  cleanup()
 })
 
 // Exposed methods
 defineExpose({
   loadData,
-  updateChartWithData
+  updateChart
 })
 </script>
 
 <template>
-  <div 
-    ref="containerRef"
-    class="chart-container relative w-full bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700"
-  >
+  <div class="timeseries-chart-wrapper relative w-full h-full flex flex-col">
     <!-- Loading overlay -->
     <LoadingSpinner
       v-if="isLoading"
@@ -471,25 +565,22 @@ defineExpose({
       </div>
     </div>
 
-    <!-- Chart title -->
-    <div class="p-4 border-b border-gray-200 dark:border-gray-700">
-      <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
-        {{ props.selectedCountry || 'Global' }} - {{ props.selectedProduct }}
-      </h3>
-      <p class="text-sm text-gray-600 dark:text-gray-400">
-        Zeitreihen-Analyse
-        <span v-if="dataStore.availableYears?.length">
-          ({{ dataStore.availableYears[0] }} - {{ dataStore.availableYears[dataStore.availableYears.length - 1] }})
-        </span>
-      </p>
+    <!-- Chart title (optional, compact) -->
+    <div v-if="props.selectedCountry || chartData.length > 0" class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
+      <h4 class="text-sm font-medium text-gray-900 dark:text-gray-100">
+        {{ props.selectedCountry || 'Global' }} - {{ getMetricLabel() }}
+      </h4>
     </div>
 
-    <!-- Chart SVG Container -->
-    <div class="p-4 min-h-[300px]" />
+    <!-- Chart SVG Container - takes all remaining space -->
+    <div 
+      ref="svgContainerRef"
+      class="timeseries-svg-container flex-1 w-full min-h-0"
+    />
 
     <!-- No data message -->
     <div
-      v-if="!isLoading && !error && processedChartData.length === 0"
+      v-if="!isLoading && !error && chartData.length === 0"
       class="absolute inset-0 flex items-center justify-center text-gray-500 dark:text-gray-400"
     >
       <div class="text-center">

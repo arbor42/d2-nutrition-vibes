@@ -93,6 +93,17 @@ export const useDataStore = defineStore('data', () => {
   })
 
   const availableProducts = computed(() => {
+    // First try to get products from timeseries data
+    if (timeseriesData.value && Object.keys(timeseriesData.value).length > 0) {
+      return Object.keys(timeseriesData.value).sort()
+    }
+    
+    // Then try FAO metadata
+    if (faoMetadata.value?.data_summary?.food_items) {
+      return faoMetadata.value.data_summary.food_items.sort()
+    }
+    
+    // Fallback to current data or index
     const indexProducts = dataIndex.value?.products || []
     const currentProducts = [...new Set(currentData.value.map(item => item.Item))].sort()
     return currentProducts.length > 0 ? currentProducts : indexProducts
@@ -480,6 +491,52 @@ export const useDataStore = defineStore('data', () => {
       }))
   }
 
+  // Get data for a specific product from timeseries
+  const getTimeseriesDataForProduct = (product, year = null) => {
+    if (!timeseriesData.value || !timeseriesData.value[product]) {
+      return null
+    }
+    
+    const productData = timeseriesData.value[product]
+    
+    if (year) {
+      // Return data for specific year across all countries
+      const yearData = {}
+      Object.entries(productData).forEach(([country, countryData]) => {
+        const yearEntry = countryData.find(entry => entry.year === year)
+        if (yearEntry) {
+          yearData[country] = yearEntry
+        }
+      })
+      return yearData
+    }
+    
+    return productData
+  }
+
+  // Get available countries for a specific product
+  const getAvailableCountriesForProduct = (product) => {
+    if (!timeseriesData.value || !timeseriesData.value[product]) {
+      return []
+    }
+    
+    return Object.keys(timeseriesData.value[product]).sort()
+  }
+
+  // Get available years for a specific product
+  const getAvailableYearsForProduct = (product) => {
+    if (!timeseriesData.value || !timeseriesData.value[product]) {
+      return []
+    }
+    
+    const yearsSet = new Set()
+    Object.values(timeseriesData.value[product]).forEach(countryData => {
+      countryData.forEach(entry => yearsSet.add(entry.year))
+    })
+    
+    return Array.from(yearsSet).sort((a, b) => a - b)
+  }
+
   const syncCurrentData = (data) => {
     currentData.value = data
     lastUpdated.value = new Date()
@@ -561,6 +618,9 @@ export const useDataStore = defineStore('data', () => {
     getDataForProduct,
     getDataForRegion,
     getTrendData,
+    getTimeseriesDataForProduct,
+    getAvailableCountriesForProduct,
+    getAvailableYearsForProduct,
     syncCurrentData
   }
 })

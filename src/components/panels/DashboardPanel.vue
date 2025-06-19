@@ -74,86 +74,37 @@ const globalStats = computed(() => {
   let rawData = null
   let dataArray = []
   
-  // Use different data sources based on selected metric
-  if (currentMetric === 'production') {
-    // Use production data
-    rawData = dataStore.getProductionData(currentProduct, currentYear)
-  } else if (hasTimeseries && ['import_quantity', 'export_quantity', 'domestic_supply_quantity'].includes(currentMetric)) {
-    // Use timeseries data for other metrics
-    const metricKey = currentMetric === 'import_quantity' ? 'imports' :
+  // Use timeseries data for all metrics when available for individual products
+  if (hasTimeseries && dataStore.timeseriesData[currentProduct]) {
+    // Use timeseries data for individual products
+    const metricKey = currentMetric === 'production' ? 'production' :
+                      currentMetric === 'import_quantity' ? 'imports' :
                       currentMetric === 'export_quantity' ? 'exports' :
                       'domestic_supply'
     
-    // Extract data from timeseries for the selected product, year and metric
-    // Normalize product name to match timeseries data format
-    const normalizeProductName = (product) => {
-      // First, convert underscores to spaces
-      let normalized = product.replace(/_/g, ' ')
-      
-      // Handle specific patterns
-      const mappings = {
-        'cereals excluding beer': 'Cereals - Excluding Beer',
-        'coconuts incl copra': 'Coconuts - Incl Copra',
-        'fruits excluding wine': 'Fruits - Excluding Wine',
-        'milk excluding butter': 'Milk - Excluding Butter',
-        'mutton and goat meat': 'Mutton & Goat Meat',
-        'sugar and sweeteners': 'Sugar & Sweeteners',
-        'sugar non centrifugal': 'Sugar non-centrifugal',
-        'cassava and products': 'Cassava and products',
-        'maize and products': 'Maize and products',
-        'wheat and products': 'Wheat and products',
-        'rice and products': 'Rice and products',
-        'potatoes and products': 'Potatoes and products',
-        'nuts and products': 'Nuts and products',
-        'pulses': 'Pulses',
-        'vegetables': 'Vegetables'
-      }
-      
-      // Check if we have a direct mapping
-      const lowerNormalized = normalized.toLowerCase()
-      if (mappings[lowerNormalized]) {
-        return mappings[lowerNormalized]
-      }
-      
-      // Otherwise, capitalize properly
-      return normalized
-        .split(' ')
-        .map((word, index) => {
-          const lower = word.toLowerCase()
-          if (lower === 'and' || lower === 'the' || lower === 'of') {
-            return lower
-          }
-          return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-        })
-        .join(' ')
-    }
+    console.log(`📊 DashboardPanel: Looking for timeseries data - Product: "${currentProduct}", Metric: "${metricKey}"`)
     
-    const normalizedProduct = normalizeProductName(currentProduct)
+    const productTimeseries = dataStore.timeseriesData[currentProduct]
+    console.log(`📊 DashboardPanel: Processing ${metricKey} data for ${currentProduct}:`, {
+      countries: Object.keys(productTimeseries).length,
+      year: currentYear
+    })
     
-    console.log(`📊 DashboardPanel: Looking for timeseries data - Original: "${currentProduct}", Normalized: "${normalizedProduct}"`)
-    
-    if (dataStore.timeseriesData[normalizedProduct]) {
-      const productTimeseries = dataStore.timeseriesData[normalizedProduct]
-      console.log(`📊 DashboardPanel: Processing ${metricKey} data for ${normalizedProduct}:`, {
-        countries: Object.keys(productTimeseries).length,
+    dataArray = Object.entries(productTimeseries).map(([country, countryData]) => {
+      const yearData = countryData.find(d => d.year === currentYear)
+      return {
+        country,
+        value: yearData ? (yearData[metricKey] || 0) : 0,
+        unit: yearData?.unit || 't',
         year: currentYear
-      })
-      
-      dataArray = Object.entries(productTimeseries).map(([country, countryData]) => {
-        const yearData = countryData.find(d => d.year === currentYear)
-        return {
-          country,
-          value: yearData ? (yearData[metricKey] || 0) : 0,
-          unit: yearData?.unit || 't',
-          year: currentYear
-        }
-      }).filter(item => item.value > 0)
-      
-      console.log(`📊 DashboardPanel: Found ${dataArray.length} countries with ${metricKey} > 0`)
-    } else {
-      console.log(`⚠️ DashboardPanel: No timeseries data found for product: ${normalizedProduct}`)
-      console.log(`⚠️ DashboardPanel: Available products:`, Object.keys(dataStore.timeseriesData || {}).slice(0, 5))
-    }
+      }
+    }).filter(item => item.value > 0)
+    
+    console.log(`📊 DashboardPanel: Found ${dataArray.length} countries with ${metricKey} > 0`)
+  } else if (currentMetric === 'production') {
+    // Fallback to production data for grouped products
+    console.log(`📊 DashboardPanel: Using production data fallback for grouped product: ${currentProduct}`)
+    rawData = dataStore.getProductionData(currentProduct, currentYear)
   } else {
     // Fallback to production data
     rawData = dataStore.getProductionData(currentProduct, currentYear)

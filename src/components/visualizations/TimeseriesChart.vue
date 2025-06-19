@@ -189,45 +189,8 @@ const loadData = async () => {
 
     // Use timeseries data if available
     if (dataStore.timeseriesData) {
-      const normalizeProductName = (product) => {
-        let normalized = product.replace(/_/g, ' ')
-        
-        const mappings = {
-          'cereals excluding beer': 'Cereals - Excluding Beer',
-          'coconuts incl copra': 'Coconuts - Incl Copra',
-          'fruits excluding wine': 'Fruits - Excluding Wine',
-          'milk excluding butter': 'Milk - Excluding Butter',
-          'mutton and goat meat': 'Mutton & Goat Meat',
-          'sugar and sweeteners': 'Sugar & Sweeteners',
-          'sugar non centrifugal': 'Sugar non-centrifugal',
-          'cassava and products': 'Cassava and products',
-          'maize and products': 'Maize and products',
-          'wheat and products': 'Wheat and products',
-          'rice and products': 'Rice and products',
-          'potatoes and products': 'Potatoes and products',
-          'nuts and products': 'Nuts and products',
-          'pulses': 'Pulses',
-          'vegetables': 'Vegetables'
-        }
-        
-        const lowerNormalized = normalized.toLowerCase()
-        if (mappings[lowerNormalized]) {
-          return mappings[lowerNormalized]
-        }
-        
-        return normalized
-          .split(' ')
-          .map((word, index) => {
-            const lower = word.toLowerCase()
-            if (lower === 'and' || lower === 'the' || lower === 'of') {
-              return lower
-            }
-            return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-          })
-          .join(' ')
-      }
-
-      const normalizedProduct = normalizeProductName(props.selectedProduct)
+      // For individual products, use the product name directly (no normalization needed)
+      const normalizedProduct = props.selectedProduct
       
       if (dataStore.timeseriesData[normalizedProduct]) {
         const productTimeseries = dataStore.timeseriesData[normalizedProduct]

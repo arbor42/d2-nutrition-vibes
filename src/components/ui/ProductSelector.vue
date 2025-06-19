@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { useDataStore } from '@/stores/useDataStore'
 import { useUIStore } from '@/stores/useUIStore'
 import SearchableSelect from '@/components/ui/SearchableSelect.vue'
+import { getAllProductOptions, getGermanName } from '@/utils/productMappings'
 
 const router = useRouter()
 const dataStore = useDataStore()
@@ -11,21 +12,19 @@ const uiStore = useUIStore()
 
 // Available product options for the searchable dropdown
 const productOptions = computed(() => {
-  // Get grouped products from the data index
-  const groupedProducts = dataStore.availableProducts || []
-  
   // Get individual items from metadata if available
   const individualItems = dataStore.faoMetadata?.data_summary?.food_items || []
   
-  // Create options for grouped products
-  const groupedOptions = groupedProducts.map(product => ({
-    value: product,
-    label: product.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) + ' (Gruppe)'
-  }))
-  
-  // For now, we'll just use grouped products as individual items aren't in the production data
-  // In a real implementation, you'd need to map individual items to their data files
-  return groupedOptions.sort((a, b) => a.label.localeCompare(b.label, 'de'))
+  if (individualItems.length > 0) {
+    // Use individual products from metadata with German names
+    return individualItems.map(product => ({
+      value: product,
+      label: getGermanName(product)
+    })).sort((a, b) => a.label.localeCompare(b.label, 'de'))
+  } else {
+    // Fallback to all available products from mappings
+    return getAllProductOptions()
+  }
 })
 
 // Metric options
@@ -70,9 +69,29 @@ const handleYearChange = (value: string | number | null) => {
 watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([product, year]) => {
   if (product && year) {
     try {
-      await dataStore.loadProductionData(product, year)
+      // For individual products, we use the timeseries data which contains all products
+      // The timeseries data is loaded during app initialization
+      if (dataStore.timeseriesData && dataStore.timeseriesData[product]) {
+        console.log(`Selected individual product: ${product} for year ${year}`)
+        // No need to load additional data as timeseries contains all products
+        uiStore.addNotification({
+          type: 'success',
+          title: 'Produkt ausgewählt',
+          message: `${getGermanName(product)} für ${year} geladen`,
+          duration: 2000
+        })
+      } else {
+        // Fallback to production data loading for grouped products
+        await dataStore.loadProductionData(product, year)
+      }
     } catch (error) {
-      console.error('Failed to load production data:', error)
+      console.error('Failed to load product data:', error)
+      uiStore.addNotification({
+        type: 'error',
+        title: 'Fehler',
+        message: 'Produktdaten konnten nicht geladen werden.',
+        duration: 5000
+      })
     }
   }
 })

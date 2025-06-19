@@ -563,12 +563,39 @@ const loadProductionData = async () => {
   try {
     console.log(`🗺️ WorldMap: Loading data for ${props.selectedProduct} ${props.selectedYear} - Metric: ${props.selectedMetric}`)
     
-    // For now, we only have production data available
-    // Trade data (import/export) would need different data source
-    const productionData = await dataStore.loadProductionData(
-      props.selectedProduct, 
-      props.selectedYear
-    )
+    let productionData = null
+    
+    // Check if we have timeseries data for this product (individual products)
+    if (dataStore.timeseriesData && dataStore.timeseriesData[props.selectedProduct]) {
+      console.log('🗺️ WorldMap: Using timeseries data for individual product')
+      const timeseriesData = dataStore.getTimeseriesDataForProduct(props.selectedProduct, props.selectedYear)
+      
+      if (timeseriesData) {
+        productionData = Object.entries(timeseriesData).map(([country, data]) => {
+          const metricKey = props.selectedMetric === 'production' ? 'production' :
+                           props.selectedMetric === 'import_quantity' ? 'imports' :
+                           props.selectedMetric === 'export_quantity' ? 'exports' :
+                           props.selectedMetric === 'domestic_supply_quantity' ? 'domestic_supply' :
+                           'production'
+          
+          return {
+            country: country,
+            countryCode: getCountryCode(country),
+            value: data[metricKey] || 0,
+            unit: data.unit || 't',
+            year: props.selectedYear,
+            element: props.selectedMetric
+          }
+        }).filter(item => item.value > 0)
+      }
+    } else {
+      // Fallback to production data for grouped products
+      console.log('🗺️ WorldMap: Using production data for grouped product')
+      productionData = await dataStore.loadProductionData(
+        props.selectedProduct, 
+        props.selectedYear
+      )
+    }
     
     console.log('🗺️ WorldMap: Raw production data:', productionData)
     console.log('🗺️ WorldMap: Data type:', typeof productionData)

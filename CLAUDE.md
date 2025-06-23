@@ -8,15 +8,18 @@ This document provides guidance for Claude AI assistants on how to effectively i
 
 ### Technology Stack
 
-- **Frontend Framework**: Vue.js 3 with Composition API
-- **Build Tool**: Vite
-- **Styling**: TailwindCSS with custom design system
-- **Data Visualization**: D3.js v7
-- **State Management**: Pinia
-- **Routing**: Vue Router 4
-- **Type Safety**: TypeScript
-- **Testing**: Vitest + Cypress
+- **Frontend Framework**: Vue.js 3.4.0+ with Composition API
+- **Build Tool**: Vite 5.0.0+
+- **Styling**: TailwindCSS 3.4.0+ with custom design system
+- **Data Visualization**: D3.js v7.8.5+
+- **State Management**: Pinia 2.1.0+
+- **Routing**: Vue Router 4.2.0+
+- **Type Safety**: TypeScript 5.3.0+
+- **Testing**: Vitest 3.2.4+ + Cypress 14.5.0+ + Storybook 8.6.14+
 - **Code Quality**: ESLint + Prettier
+- **Form Validation**: VeeValidate 4.15.1+ with Zod 3.25.67+
+- **Utilities**: @vueuse/core 13.3.0+
+- **Performance**: Web Workers + Canvas Rendering + Progressive Loading
 
 ### Project Structure
 
@@ -33,10 +36,18 @@ d2-nutrition-vibes/
 │   ├── services/           # API and data services
 │   ├── utils/              # Utility functions
 │   ├── types/              # TypeScript type definitions
-│   └── assets/             # Static assets and styles
-├── docs/                   # Documentation
+│   ├── assets/             # Static assets and styles
+│   ├── router/             # Vue Router configuration
+│   ├── schemas/            # Validation schemas (Zod)
+│   └── workers/            # Web Workers for background processing
 ├── public/                 # Public static files
-└── tests/                  # Test files
+│   └── data/              # FAO datasets and ML predictions
+├── py/                     # Python scripts for data processing
+├── docs/                   # Documentation
+├── tests/                  # Test files
+├── cypress/                # E2E test configuration
+├── js/                     # Legacy JavaScript files (deprecated)
+└── css/                    # Legacy CSS files (deprecated)
 ```
 
 ## Key Patterns and Conventions
@@ -72,10 +83,27 @@ Components follow a consistent structure:
 
 All shared logic is encapsulated in composables located in `src/composables/`:
 
+**Core Composables:**
 - `useD3.js` - D3.js lifecycle management
 - `useDataLoader.js` - Data fetching and caching
 - `useVisualization.js` - Common visualization patterns
 - `usePerformance.js` - Performance monitoring
+
+**Advanced Features:**
+- `useD3Cache.js` - Advanced caching system for D3.js computations
+- `useCanvasRenderer.js` - Canvas rendering for performance-critical visualizations
+- `useProgressiveRenderer.js` - Progressive rendering for large datasets
+- `useWebWorker.js` - Web worker integration for background processing
+
+**Data Management:**
+- `useDataSync.js` - Data synchronization utilities
+- `useDataTransformations.js` - Data transformation helpers
+- `useDerivedData.js` - Computed data derivations
+- `useDataStreaming.js` - Streaming for large file processing
+
+**UI/UX:**
+- `useFormValidation.js` - Form validation with VeeValidate and Zod
+- `useStoreComposition.js` - Store composition patterns
 - Custom composables for specific features
 
 ### 3. State Management
@@ -85,6 +113,7 @@ Uses Pinia stores with consistent patterns:
 - `useDataStore` - FAO dataset management
 - `useUIStore` - UI state and preferences
 - `useVisualizationStore` - Visualization configuration
+- `useUserPreferencesStore` - User preferences and settings persistence
 
 ### 4. D3.js Integration
 
@@ -121,6 +150,8 @@ The project uses a comprehensive testing strategy:
 - **Integration Tests**: Vue Test Utils for component integration
 - **E2E Tests**: Cypress for full application testing
 - **Visual Tests**: Storybook for component documentation
+- **Visual Regression**: Percy integration for visual testing
+- **Accessibility Tests**: cypress-axe for a11y compliance
 - **Performance Tests**: Custom D3.js performance monitoring
 
 ### Test File Locations:
@@ -135,19 +166,25 @@ The application is optimized for handling large agricultural datasets:
 
 1. **Lazy Loading** - Route components are lazy loaded
 2. **Virtual Scrolling** - Large lists use virtual scrolling
-3. **Canvas Rendering** - Complex visualizations use canvas
-4. **Data Streaming** - Large files are processed in chunks
-5. **Caching** - Expensive computations are cached
-6. **Progressive Rendering** - Large datasets render progressively
+3. **Canvas Rendering** - Complex visualizations use canvas via `useCanvasRenderer`
+4. **Data Streaming** - Large files are processed in chunks via `dataStreaming.js`
+5. **Advanced Caching** - Multi-layer caching with `useD3Cache` composable
+6. **Progressive Rendering** - Large datasets render progressively via `useProgressiveRenderer`
+7. **Web Workers** - Background processing for heavy computations
+8. **CSS Optimization** - Critical CSS extraction and optimization utilities
+9. **Bundle Optimization** - Advanced chunk splitting and tree-shaking
 
 ## Data Handling
 
 The application works with FAO (Food and Agriculture Organization) datasets:
 
-- **Data Location**: `public/data/fao_data/`
-- **Data Types**: Production, trade, geographic, ML predictions
+- **Data Location**: `public/data/fao_data/` and `public/data/fao/`
+- **Data Types**: Production, trade, geographic, ML predictions, network analysis
 - **Formats**: JSON, GeoJSON, CSV
 - **Processing**: Client-side data transformation and analysis
+- **ML Forecasts**: Extensive ML predictions in `public/data/fao/ml/` and `py/fao_ml_forecasts/`
+- **Network Data**: Trade network analysis (`network.json`, `trade_network_analysis.py`)
+- **Rankings**: Production rankings and trade balance data
 
 ### Python Data Processing
 
@@ -182,6 +219,18 @@ npm run storybook       # Component library
 npm run build:analyze   # Bundle analysis
 npm run bundle-analyze  # Detailed bundle analysis
 ```
+
+## New Components and Features
+
+### Available Visualizations
+
+- **HierarchyVisualization.vue** - Hierarchical data visualization
+- **NetworkVisualization.vue** - Network graph visualization
+- **WorldMapSimple.vue** - Simplified world map component
+- **StructuralChart.vue** - Structural data visualization
+- **PopulationPyramid.vue** - Population demographics
+- **TradeFlowMap.vue** - International trade flows
+- **TimeSeriesChart.vue** - Time series analysis
 
 ## Common Tasks
 
@@ -231,7 +280,7 @@ The project follows a 9-phase refactor plan:
 - ✅ **Phase 1-8**: Completed (Setup through Performance Optimization)
 - 🚧 **Phase 9**: In Progress (Documentation & Maintenance)
 
-Each phase has detailed tasks in `todo.md` with completion tracking.
+*Note: The referenced `todo.md` file for phase tracking is currently not present in the repository.*
 
 ## Error Handling
 
@@ -242,6 +291,31 @@ The application implements comprehensive error handling:
 3. **Async Error Handling** - Proper promise rejection handling
 4. **User-Friendly Messages** - Clear error communication
 5. **Logging** - Console and external service integration
+
+## Form Validation
+
+The project uses VeeValidate with Zod for robust form validation:
+
+1. **Schema Definition** - Define schemas in `src/schemas/validation.js`
+2. **Form Setup** - Use `useFormValidation` composable
+3. **Field Validation** - Real-time field validation with error messages
+4. **Type Safety** - Zod provides TypeScript inference
+
+### Example:
+```javascript
+import { useFormValidation } from '@/composables/useFormValidation'
+import { dataFilterSchema } from '@/schemas/validation'
+
+const { form, errors, validate } = useFormValidation(dataFilterSchema)
+```
+
+## Legacy Code
+
+The following directories contain legacy code from the pre-Vue.js implementation:
+- `js/` - Old vanilla JavaScript files
+- `css/` - Legacy CSS files
+
+These are maintained for reference but are not used in the current application.
 
 ## Best Practices for Claude Assistants
 

@@ -1,186 +1,186 @@
 <template>
   <div class="structural-panel">
     <ErrorBoundary @error="handleError">
+      <!-- Header -->
       <div class="panel-header">
         <h2 class="panel-title">Strukturanalyse</h2>
         <p class="panel-description">
-          Netzwerk- und Strukturanalyse der globalen Landwirtschaft
+          Globale Handelsbeziehungen und Netzwerkanalyse
         </p>
       </div>
 
-      <div class="panel-controls">
-        <div class="analysis-tabs">
-          <BaseButton
-            v-for="tab in analysisTabs"
+      <!-- Main Content -->
+      <div class="panel-content">
+        <!-- Tab Navigation -->
+        <div class="tab-navigation">
+          <button
+            v-for="tab in tabs"
             :key="tab.id"
             @click="activeTab = tab.id"
-            :variant="activeTab === tab.id ? 'primary' : 'outline-primary'"
-            size="sm"
+            :class="[
+              'tab-button',
+              activeTab === tab.id ? 'active' : ''
+            ]"
           >
-            {{ tab.label }}
-          </BaseButton>
+            <component :is="tab.icon" class="tab-icon" />
+            <span>{{ tab.label }}</span>
+          </button>
         </div>
-      </div>
 
-      <div class="panel-content">
-        <div v-if="hasError" class="error-container">
+        <!-- Loading State -->
+        <div v-if="isLoading" class="loading-container">
+          <LoadingSpinner size="lg" />
+          <p class="loading-text">Lade Handelsdaten...</p>
+        </div>
+
+        <!-- Error State -->
+        <div v-else-if="error" class="error-container">
           <ErrorDisplay
             :error="error"
-            title="Fehler bei der Strukturanalyse"
+            title="Fehler beim Laden der Daten"
             :showRetry="true"
-            @retry="loadAnalysis"
+            @retry="loadData"
           />
         </div>
 
-        <div v-else-if="isLoading" class="loading-container">
-          <LoadingSpinner size="lg" />
-          <p class="loading-text">Führe Strukturanalyse durch...</p>
-        </div>
-
-        <div v-else class="analysis-content">
-          <!-- Network Analysis -->
-          <div v-if="activeTab === 'network'" class="network-section">
-            <div class="controls-row">
-              <div class="control-group">
-                <label>Analyse-Typ</label>
-                <SearchableSelect
-                  v-model="networkConfig.analysisType"
-                  :options="analysisTypeOptions"
-                />
-              </div>
-              
-              <div class="control-group">
-                <label>Schwellenwert</label>
-                <RangeSlider
-                  v-model="networkConfig.threshold"
-                  :min="0"
-                  :max="1"
-                  :step="0.1"
-                />
-              </div>
-              
-              <BaseButton 
-                variant="primary"
-                @click="loadAnalysis"
-              >
-                Analysieren
-              </BaseButton>
+        <!-- Content -->
+        <div v-else class="tab-content">
+          <!-- Network View -->
+          <div v-if="activeTab === 'network'" class="network-view">
+            <div class="view-header">
+              <h3>Handelsnetzwerk</h3>
+              <p>Visualisierung der globalen Handelsbeziehungen basierend auf gemeinsamen Produkten</p>
             </div>
 
-            <div v-if="networkData" class="network-visualization h-96">
-              <StructuralChart
-                :data="networkData"
-                :analysis-type="networkConfig.analysisType"
-                :selected-region="'global'"
-                @node-click="handleNodeSelect"
-                @analysis-change="handleAnalysisChange"
+            <div class="controls">
+              <div class="control-group">
+                <label>Ansicht</label>
+                <select v-model="networkView" class="control-select">
+                  <option value="force">Kraft-Layout</option>
+                  <option value="circular">Kreisförmig</option>
+                </select>
+              </div>
+              <div class="control-group">
+                <label>Filter nach Volumen</label>
+                <input
+                  type="range"
+                  v-model.number="volumeThreshold"
+                  min="0"
+                  max="10000"
+                  step="100"
+                  class="control-slider"
+                />
+                <span class="control-value">{{ volumeThreshold.toLocaleString() }}</span>
+              </div>
+            </div>
+
+            <div class="visualization-container">
+              <NetworkVisualization
+                v-if="networkData"
+                :data="filteredNetworkData"
+                :layout="networkView"
+                @node-click="handleNodeClick"
+                @node-hover="handleNodeHover"
               />
             </div>
 
-            <div v-if="networkMetrics" class="network-metrics">
-              <h3 class="metrics-title">Netzwerk-Metriken</h3>
-              <div class="metrics-grid">
-                <div class="metric-card">
-                  <div class="metric-label">Knoten</div>
-                  <div class="metric-value">{{ networkMetrics.nodeCount }}</div>
+            <!-- Node Details -->
+            <div v-if="selectedNode" class="detail-panel">
+              <h4>{{ selectedNode.name }}</h4>
+              <div class="detail-grid">
+                <div class="detail-item">
+                  <span class="detail-label">Handelsvolumen:</span>
+                  <span class="detail-value">{{ selectedNode.total_trade_volume.toLocaleString() }}</span>
                 </div>
-                <div class="metric-card">
-                  <div class="metric-label">Verbindungen</div>
-                  <div class="metric-value">{{ networkMetrics.linkCount }}</div>
+                <div class="detail-item">
+                  <span class="detail-label">Importe:</span>
+                  <span class="detail-value">{{ selectedNode.imports.toLocaleString() }}</span>
                 </div>
-                <div class="metric-card">
-                  <div class="metric-label">Dichte</div>
-                  <div class="metric-value">{{ networkMetrics.density.toFixed(3) }}</div>
+                <div class="detail-item">
+                  <span class="detail-label">Exporte:</span>
+                  <span class="detail-value">{{ selectedNode.exports.toLocaleString() }}</span>
                 </div>
-                <div class="metric-card">
-                  <div class="metric-label">Clustering</div>
-                  <div class="metric-value">{{ networkMetrics.clustering.toFixed(3) }}</div>
-                </div>
-                <div class="metric-card">
-                  <div class="metric-label">Durchmesser</div>
-                  <div class="metric-value">{{ networkMetrics.diameter }}</div>
-                </div>
-                <div class="metric-card">
-                  <div class="metric-label">Modularität</div>
-                  <div class="metric-value">{{ networkMetrics.modularity.toFixed(3) }}</div>
+                <div class="detail-item">
+                  <span class="detail-label">Handelsbilanz:</span>
+                  <span class="detail-value" :class="selectedNode.trade_balance > 0 ? 'positive' : 'negative'">
+                    {{ selectedNode.trade_balance.toLocaleString() }}
+                  </span>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Cluster Analysis -->
-          <div v-if="activeTab === 'clusters'" class="clusters-section">
-            <div class="controls-row">
-              <div class="control-group">
-                <label>Cluster-Methode</label>
-                <SearchableSelect
-                  v-model="clusterConfig.method"
-                  :options="clusterMethodOptions"
-                />
-              </div>
-              
-              <div class="control-group">
-                <label>Anzahl Cluster</label>
-                <RangeSlider
-                  v-model="clusterConfig.numClusters"
-                  :min="2"
-                  :max="10"
-                  :step="1"
-                  :show-labels="true"
-                />
-              </div>
-              
-              <BaseButton 
-                variant="primary"
-                @click="performClustering"
-              >
-                Clustern
-              </BaseButton>
+          <!-- Hierarchy View -->
+          <div v-if="activeTab === 'hierarchy'" class="hierarchy-view">
+            <div class="view-header">
+              <h3>Handelshierarchie</h3>
+              <p>Regionale Struktur des globalen Handels nach Produktkategorien</p>
             </div>
 
-            <div v-if="clusterResults" class="cluster-results">
-              <div class="cluster-visualization">
-                <StructuralChart
-                  :data="clusterResults.visualization"
-                  :config="clusterChartConfig"
-                  @cluster-select="handleClusterSelect"
-                />
+            <div class="controls">
+              <div class="control-group">
+                <label>Darstellung</label>
+                <select v-model="hierarchyView" class="control-select">
+                  <option value="tree">Baumdiagramm</option>
+                  <option value="sunburst">Sunburst</option>
+                  <option value="treemap">Treemap</option>
+                </select>
               </div>
+            </div>
 
-              <div class="cluster-details">
-                <h3 class="details-title">Cluster-Details</h3>
-                <div class="cluster-list">
-                  <div
-                    v-for="cluster in clusterResults.clusters"
-                    :key="cluster.id"
-                    class="cluster-item"
-                    :style="{ borderLeftColor: cluster.color }"
+            <div class="visualization-container">
+              <HierarchyVisualization
+                v-if="hierarchyData"
+                :data="hierarchyData"
+                :view-type="hierarchyView"
+                @node-click="handleHierarchyNodeClick"
+              />
+            </div>
+          </div>
+
+          <!-- Clusters View -->
+          <div v-if="activeTab === 'clusters'" class="clusters-view">
+            <div class="view-header">
+              <h3>Handelscluster</h3>
+              <p>Gruppierung von Ländern nach Handelsmustern</p>
+            </div>
+
+            <div class="cluster-grid">
+              <div
+                v-for="cluster in clusterData"
+                :key="cluster.id"
+                class="cluster-card"
+                :style="{ borderColor: cluster.color }"
+              >
+                <div class="cluster-header">
+                  <h4>{{ cluster.name }}</h4>
+                  <span class="cluster-badge" :style="{ backgroundColor: cluster.color }">
+                    {{ cluster.size }} Länder
+                  </span>
+                </div>
+                <div class="cluster-members">
+                  <span
+                    v-for="(member, idx) in cluster.members.slice(0, 8)"
+                    :key="member"
+                    class="member-chip"
                   >
-                    <div class="cluster-header">
-                      <h4>Cluster {{ cluster.id }}</h4>
-                      <span class="cluster-size">{{ cluster.members.length }} Mitglieder</span>
-                    </div>
-                    <div class="cluster-members">
-                      <span
-                        v-for="member in cluster.members.slice(0, 5)"
-                        :key="member"
-                        class="member-tag"
-                      >
-                        {{ member }}
-                      </span>
-                      <span v-if="cluster.members.length > 5" class="more-members">
-                        +{{ cluster.members.length - 5 }} weitere
-                      </span>
-                    </div>
-                    <div class="cluster-stats">
-                      <div class="stat">
-                        <span class="stat-label">Kohäsion:</span>
-                        <span class="stat-value">{{ cluster.cohesion.toFixed(2) }}</span>
-                      </div>
-                      <div class="stat">
-                        <span class="stat-label">Separierung:</span>
-                        <span class="stat-value">{{ cluster.separation.toFixed(2) }}</span>
-                      </div>
+                    {{ member }}
+                  </span>
+                  <span v-if="cluster.members.length > 8" class="more-chip">
+                    +{{ cluster.members.length - 8 }} weitere
+                  </span>
+                </div>
+                <div class="cluster-metrics">
+                  <div class="metric">
+                    <span class="metric-label">Kohäsion:</span>
+                    <div class="metric-bar">
+                      <div 
+                        class="metric-fill"
+                        :style="{ 
+                          width: (cluster.cohesion * 100) + '%',
+                          backgroundColor: cluster.color
+                        }"
+                      ></div>
                     </div>
                   </div>
                 </div>
@@ -188,48 +188,58 @@
             </div>
           </div>
 
-          <!-- Hierarchy Analysis -->
-          <div v-if="activeTab === 'hierarchy'" class="hierarchy-section">
-            <div class="controls-row">
-              <div class="control-group">
-                <label>Hierarchie-Typ</label>
-                <SearchableSelect
-                  v-model="hierarchyConfig.type"
-                  :options="hierarchyTypeOptions"
-                />
+          <!-- Statistics View -->
+          <div v-if="activeTab === 'stats'" class="stats-view">
+            <div class="view-header">
+              <h3>Handelsstatistiken</h3>
+              <p>Übersicht der wichtigsten Handelskennzahlen</p>
+            </div>
+
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-icon">🌍</div>
+                <div class="stat-content">
+                  <div class="stat-value">{{ summaryData?.total_nodes || 0 }}</div>
+                  <div class="stat-label">Länder/Regionen</div>
+                </div>
               </div>
-              
-              <BaseButton 
-                variant="primary"
-                @click="buildHierarchy"
-              >
-                Hierarchie erstellen
-              </BaseButton>
+              <div class="stat-card">
+                <div class="stat-icon">🔗</div>
+                <div class="stat-content">
+                  <div class="stat-value">{{ summaryData?.total_links || 0 }}</div>
+                  <div class="stat-label">Handelsverbindungen</div>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-content">
+                  <div class="stat-value">{{ summaryData?.total_clusters || 0 }}</div>
+                  <div class="stat-label">Handelscluster</div>
+                </div>
+              </div>
             </div>
 
-            <div v-if="hierarchyData" class="hierarchy-visualization">
-              <StructuralChart
-                :data="hierarchyData"
-                :config="hierarchyChartConfig"
-                @node-expand="handleNodeExpand"
-                @level-select="handleLevelSelect"
-              />
-            </div>
-
-            <div v-if="hierarchyMetrics" class="hierarchy-metrics">
-              <h3 class="metrics-title">Hierarchie-Metriken</h3>
-              <div class="hierarchy-stats">
-                <div class="stat-item">
-                  <span class="stat-label">Ebenen:</span>
-                  <span class="stat-value">{{ hierarchyMetrics.levels }}</span>
+            <div class="top-traders">
+              <h4>Top 10 Handelsakteure</h4>
+              <div class="traders-table">
+                <div class="table-header">
+                  <span>Land/Region</span>
+                  <span>Handelsvolumen</span>
+                  <span>Bilanz</span>
                 </div>
-                <div class="stat-item">
-                  <span class="stat-label">Breite:</span>
-                  <span class="stat-value">{{ hierarchyMetrics.width }}</span>
-                </div>
-                <div class="stat-item">
-                  <span class="stat-label">Balance:</span>
-                  <span class="stat-value">{{ hierarchyMetrics.balance.toFixed(2) }}</span>
+                <div
+                  v-for="trader in topTraders"
+                  :key="trader.id"
+                  class="table-row"
+                >
+                  <span class="trader-name">{{ trader.name }}</span>
+                  <span class="trader-volume">{{ formatNumber(trader.total_trade_volume) }}</span>
+                  <span 
+                    class="trader-balance"
+                    :class="trader.trade_balance > 0 ? 'positive' : 'negative'"
+                  >
+                    {{ formatNumber(trader.trade_balance) }}
+                  </span>
                 </div>
               </div>
             </div>
@@ -241,367 +251,105 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useDataStore } from '@/stores/useDataStore'
 import { useErrorHandling } from '@/composables/useErrorHandling'
 import ErrorBoundary from '@/components/ui/ErrorBoundary.vue'
 import ErrorDisplay from '@/components/ui/ErrorDisplay.vue'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
-import BaseButton from '@/components/ui/BaseButton.vue'
-import SearchableSelect from '@/components/ui/SearchableSelect.vue'
-import RangeSlider from '@/components/ui/RangeSlider.vue'
-import StructuralChart from '@/components/visualizations/StructuralChart.vue'
+import NetworkVisualization from '@/components/visualizations/NetworkVisualization.vue'
+import HierarchyVisualization from '@/components/visualizations/HierarchyVisualization.vue'
 
-// Store and composables
+// Icons (using simple text for now, can be replaced with proper icons)
+const NetworkIcon = { template: '<span>🌐</span>' }
+const HierarchyIcon = { template: '<span>🏛️</span>' }
+const ClusterIcon = { template: '<span>🎯</span>' }
+const StatsIcon = { template: '<span>📈</span>' }
+
+// Composables
 const dataStore = useDataStore()
 const { handleError: handleErrorUtil, wrapAsync } = useErrorHandling()
 
-// Reactive state
+// State
 const activeTab = ref('network')
 const isLoading = ref(false)
 const error = ref(null)
 
-const networkConfig = ref({
-  analysisType: 'trade',
-  threshold: 0.1
-})
-
-const clusterConfig = ref({
-  method: 'kmeans',
-  numClusters: 5
-})
-
-const hierarchyConfig = ref({
-  type: 'production'
-})
-
+// Data
 const networkData = ref(null)
-const networkMetrics = ref(null)
-const clusterResults = ref(null)
 const hierarchyData = ref(null)
-const hierarchyMetrics = ref(null)
+const clusterData = ref(null)
+const summaryData = ref(null)
 
-// Computed properties
-const hasError = computed(() => error.value !== null)
+// Controls
+const networkView = ref('force')
+const hierarchyView = ref('tree')
+const volumeThreshold = ref(1000)
 
-const analysisTabs = computed(() => [
-  { id: 'network', label: 'Netzwerk-Analyse' },
-  { id: 'clusters', label: 'Cluster-Analyse' },
-  { id: 'hierarchy', label: 'Hierarchie-Analyse' }
-])
+// Selection
+const selectedNode = ref(null)
 
-const analysisTypeOptions = computed(() => [
-  { value: 'trade', label: 'Handelsbeziehungen' },
-  { value: 'production', label: 'Produktionsähnlichkeit' },
-  { value: 'dependency', label: 'Abhängigkeiten' },
-  { value: 'competition', label: 'Wettbewerb' }
-])
+// Tabs configuration
+const tabs = [
+  { id: 'network', label: 'Netzwerk', icon: NetworkIcon },
+  { id: 'hierarchy', label: 'Hierarchie', icon: HierarchyIcon },
+  { id: 'clusters', label: 'Cluster', icon: ClusterIcon },
+  { id: 'stats', label: 'Statistiken', icon: StatsIcon }
+]
 
-const clusterMethodOptions = computed(() => [
-  { value: 'kmeans', label: 'K-Means' },
-  { value: 'hierarchical', label: 'Hierarchisch' },
-  { value: 'dbscan', label: 'DBSCAN' },
-  { value: 'spectral', label: 'Spektral' }
-])
+// Computed
+const filteredNetworkData = computed(() => {
+  if (!networkData.value) return null
+  
+  const filteredNodes = networkData.value.nodes.filter(node => 
+    node.total_trade_volume >= volumeThreshold.value
+  )
+  
+  const nodeIds = new Set(filteredNodes.map(n => n.id))
+  const filteredLinks = networkData.value.links.filter(link =>
+    nodeIds.has(link.source) && nodeIds.has(link.target)
+  )
+  
+  return {
+    nodes: filteredNodes,
+    links: filteredLinks
+  }
+})
 
-const hierarchyTypeOptions = computed(() => [
-  { value: 'production', label: 'Produktionshierarchie' },
-  { value: 'trade', label: 'Handelshierarchie' },
-  { value: 'geographic', label: 'Geografische Hierarchie' }
-])
-
-const networkChartConfig = computed(() => ({
-  type: 'network',
-  width: 800,
-  height: 600,
-  showLabels: true,
-  enableForce: true,
-  nodeRadius: 8,
-  linkWidth: 2,
-  interactive: true
-}))
-
-const clusterChartConfig = computed(() => ({
-  type: 'scatter',
-  width: 800,
-  height: 400,
-  showClusters: true,
-  showCentroids: true,
-  interactive: true
-}))
-
-const hierarchyChartConfig = computed(() => ({
-  type: 'tree',
-  width: 800,
-  height: 500,
-  orientation: 'vertical',
-  showLabels: true,
-  collapsible: true,
-  interactive: true
-}))
+const topTraders = computed(() => {
+  return summaryData.value?.top_traders || []
+})
 
 // Methods
-const loadAnalysis = wrapAsync(async () => {
+const loadData = wrapAsync(async () => {
   error.value = null
   isLoading.value = true
   
   try {
-    // Load network data
-    const rawNetworkData = await dataStore.loadNetworkData()
+    // Load all structural data
+    const [network, hierarchy, clusters, summary] = await Promise.all([
+      fetch('/data/fao_data/structural/trade_network.json').then(r => r.json()),
+      fetch('/data/fao_data/structural/trade_hierarchy.json').then(r => r.json()),
+      fetch('/data/fao_data/structural/trade_clusters.json').then(r => r.json()),
+      fetch('/data/fao_data/structural/trade_summary.json').then(r => r.json())
+    ])
     
-    // Use actual network data if available
-    if (rawNetworkData && rawNetworkData.nodes && rawNetworkData.links) {
-      networkData.value = rawNetworkData
-      networkMetrics.value = calculateNetworkMetrics(rawNetworkData)
-    } else {
-      // Fallback to mock data if real data not available
-      networkData.value = processNetworkData(rawNetworkData)
-      networkMetrics.value = calculateNetworkMetrics(networkData.value)
-    }
+    networkData.value = network
+    hierarchyData.value = hierarchy
+    clusterData.value = clusters
+    summaryData.value = summary
     
   } catch (err) {
     error.value = err
+    console.error('Error loading structural data:', err)
   } finally {
     isLoading.value = false
   }
 }, {
   component: 'StructuralPanel',
-  operation: 'loadAnalysis'
+  operation: 'loadData'
 })
 
-const performClustering = wrapAsync(async () => {
-  error.value = null
-  isLoading.value = true
-  
-  try {
-    // Load production data for clustering
-    const productionDataMap = new Map()
-    const products = ['maize_and_products', 'rice_and_products', 'wheat_and_products', 'vegetables', 'fruits_-_excluding_wine']
-    const year = 2022
-    
-    // Load data for multiple products
-    for (const product of products) {
-      try {
-        const data = await dataStore.loadProductionData(product, year)
-        if (data) productionDataMap.set(product, data)
-      } catch (err) {
-        console.warn(`Could not load data for ${product}`)
-      }
-    }
-    
-    // Process data for clustering
-    const countries = new Set()
-    productionDataMap.forEach(data => {
-      if (data.features) {
-        data.features.forEach(feature => {
-          if (feature.properties?.country) {
-            countries.add(feature.properties.country)
-          }
-        })
-      }
-    })
-    
-    // Create clusters based on production patterns
-    const countriesArray = Array.from(countries)
-    const numClusters = Math.min(clusterConfig.value.numClusters, countriesArray.length)
-    const clusters = []
-    const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7']
-    
-    // Simple clustering by dividing countries
-    const clusterSize = Math.ceil(countriesArray.length / numClusters)
-    
-    for (let i = 0; i < numClusters; i++) {
-      const startIdx = i * clusterSize
-      const endIdx = Math.min((i + 1) * clusterSize, countriesArray.length)
-      const members = countriesArray.slice(startIdx, endIdx)
-      
-      if (members.length > 0) {
-        clusters.push({
-          id: i + 1,
-          color: colors[i % colors.length],
-          members,
-          cohesion: 0.7 + Math.random() * 0.3,
-          separation: 0.5 + Math.random() * 0.4
-        })
-      }
-    }
-    
-    clusterResults.value = {
-      clusters,
-      visualization: generateClusterVisualization(clusters)
-    }
-    
-  } catch (err) {
-    error.value = err
-  } finally {
-    isLoading.value = false
-  }
-}, {
-  component: 'StructuralPanel',
-  operation: 'performClustering'
-})
-
-const buildHierarchy = wrapAsync(async () => {
-  error.value = null
-  isLoading.value = true
-  
-  try {
-    // Load summary data for hierarchy
-    const summaryData = await dataStore.loadSummaryData()
-    
-    if (summaryData && summaryData.production_by_category) {
-      // Build hierarchy from actual data
-      const root = {
-        name: 'Global Agriculture',
-        children: []
-      }
-      
-      // Group by category
-      const categories = {}
-      Object.entries(summaryData.production_by_category).forEach(([category, data]) => {
-        if (!categories[data.category || 'Other']) {
-          categories[data.category || 'Other'] = {
-            name: data.category || 'Other',
-            children: []
-          }
-        }
-        
-        categories[data.category || 'Other'].children.push({
-          name: category,
-          size: data.total_production || 100,
-          value: data.total_production
-        })
-      })
-      
-      root.children = Object.values(categories)
-      hierarchyData.value = root
-      
-      // Calculate metrics
-      const levels = 3
-      const width = Object.keys(categories).length
-      const totalNodes = Object.values(categories).reduce((sum, cat) => sum + cat.children.length, 0)
-      
-      hierarchyMetrics.value = {
-        levels,
-        width,
-        balance: Math.min(width / totalNodes, 1)
-      }
-    } else {
-      // Fallback to generated data
-      hierarchyData.value = generateHierarchyData()
-      hierarchyMetrics.value = {
-        levels: 4,
-        width: 12,
-        balance: 0.85
-      }
-    }
-    
-  } catch (err) {
-    error.value = err
-  } finally {
-    isLoading.value = false
-  }
-}, {
-  component: 'StructuralPanel',
-  operation: 'buildHierarchy'
-})
-
-// Helper methods
-const processNetworkData = (rawData) => {
-  // Mock network processing
-  const nodes = []
-  const links = []
-  
-  for (let i = 0; i < 20; i++) {
-    nodes.push({
-      id: `node-${i}`,
-      name: `Node ${i}`,
-      value: Math.random() * 100,
-      group: Math.floor(i / 5)
-    })
-  }
-  
-  for (let i = 0; i < 30; i++) {
-    const sourceId = Math.floor(Math.random() * 20)
-    const targetId = Math.floor(Math.random() * 20)
-    
-    if (sourceId !== targetId) {
-      links.push({
-        source: `node-${sourceId}`,
-        target: `node-${targetId}`,
-        value: Math.random() * 10
-      })
-    }
-  }
-  
-  return { nodes, links }
-}
-
-const calculateNetworkMetrics = (data) => {
-  return {
-    nodeCount: data.nodes.length,
-    linkCount: data.links.length,
-    density: (2 * data.links.length) / (data.nodes.length * (data.nodes.length - 1)),
-    clustering: 0.3 + Math.random() * 0.4,
-    diameter: Math.floor(Math.random() * 5) + 3,
-    modularity: 0.2 + Math.random() * 0.6
-  }
-}
-
-const generateClusterVisualization = (clusters) => {
-  const points = []
-  
-  clusters.forEach((cluster, clusterIndex) => {
-    const centerX = (clusterIndex % 3) * 300 + 150
-    const centerY = Math.floor(clusterIndex / 3) * 200 + 100
-    
-    cluster.members.forEach((member, memberIndex) => {
-      points.push({
-        x: centerX + (Math.random() - 0.5) * 100,
-        y: centerY + (Math.random() - 0.5) * 100,
-        cluster: cluster.id,
-        name: member,
-        color: cluster.color
-      })
-    })
-  })
-  
-  return points
-}
-
-const generateHierarchyData = () => {
-  return {
-    name: 'Global Agriculture',
-    children: [
-      {
-        name: 'Cereals',
-        children: [
-          { name: 'Wheat', size: 100 },
-          { name: 'Rice', size: 90 },
-          { name: 'Maize', size: 120 }
-        ]
-      },
-      {
-        name: 'Vegetables',
-        children: [
-          { name: 'Tomatoes', size: 60 },
-          { name: 'Onions', size: 40 },
-          { name: 'Potatoes', size: 80 }
-        ]
-      },
-      {
-        name: 'Fruits',
-        children: [
-          { name: 'Apples', size: 50 },
-          { name: 'Bananas', size: 70 },
-          { name: 'Oranges', size: 45 }
-        ]
-      }
-    ]
-  }
-}
-
-// Event handlers
 const handleError = (err) => {
   error.value = err
   handleErrorUtil(err, {
@@ -610,35 +358,30 @@ const handleError = (err) => {
   })
 }
 
-const handleNodeSelect = (node) => {
-  console.log('Node selected:', node)
+const handleNodeClick = (node) => {
+  selectedNode.value = node
 }
 
-const handleLinkSelect = (link) => {
-  console.log('Link selected:', link)
+const handleNodeHover = (node) => {
+  // Can be used for tooltip display
 }
 
-const handleAnalysisChange = (type) => {
-  networkConfig.value.analysisType = type
+const handleHierarchyNodeClick = (node) => {
+  console.log('Hierarchy node clicked:', node)
 }
 
-const handleClusterSelect = (cluster) => {
-  console.log('Cluster selected:', cluster)
-}
-
-const handleNodeExpand = (node) => {
-  console.log('Node expanded:', node)
-}
-
-const handleLevelSelect = (level) => {
-  console.log('Level selected:', level)
-}
-
-// Watchers
-watch(activeTab, (newTab) => {
-  if (newTab === 'network' && !networkData.value) {
-    loadAnalysis()
+const formatNumber = (num) => {
+  if (num >= 1000000) {
+    return (num / 1000000).toFixed(1) + 'M'
+  } else if (num >= 1000) {
+    return (num / 1000).toFixed(1) + 'K'
   }
+  return num.toLocaleString()
+}
+
+// Lifecycle
+onMounted(() => {
+  loadData()
 })
 </script>
 
@@ -659,147 +402,238 @@ watch(activeTab, (newTab) => {
   @apply text-gray-600 dark:text-gray-400;
 }
 
-.panel-controls {
-  @apply p-6 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700;
-}
-
-.analysis-tabs {
-  @apply flex gap-2;
-}
-
 .panel-content {
-  @apply flex-1 p-6 overflow-auto;
+  @apply flex-1 flex flex-col overflow-hidden;
 }
 
-.analysis-content {
-  @apply space-y-6;
+/* Tab Navigation */
+.tab-navigation {
+  @apply flex gap-1 p-4 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700;
 }
 
-.controls-row {
-  @apply flex flex-wrap items-end gap-4 mb-6;
+.tab-button {
+  @apply flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-gray-600 dark:text-gray-400;
+  @apply hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors;
+}
+
+.tab-button.active {
+  @apply bg-primary-500 text-white hover:bg-primary-600;
+}
+
+.tab-icon {
+  @apply text-lg;
+}
+
+/* Content */
+.tab-content {
+  @apply flex-1 overflow-auto p-6;
+}
+
+.loading-container,
+.error-container {
+  @apply flex flex-col items-center justify-center h-64;
+}
+
+.loading-text {
+  @apply mt-4 text-gray-600 dark:text-gray-400;
+}
+
+/* View Headers */
+.view-header {
+  @apply mb-6;
+}
+
+.view-header h3 {
+  @apply text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2;
+}
+
+.view-header p {
+  @apply text-gray-600 dark:text-gray-400;
+}
+
+/* Controls */
+.controls {
+  @apply flex flex-wrap gap-4 mb-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg;
 }
 
 .control-group {
-  @apply flex flex-col min-w-48;
+  @apply flex flex-col gap-2;
 }
 
 .control-group label {
-  @apply text-sm font-medium text-gray-700 dark:text-gray-300 mb-2;
+  @apply text-sm font-medium text-gray-700 dark:text-gray-300;
 }
 
-.network-visualization,
-.cluster-visualization,
-.hierarchy-visualization {
-  @apply w-full bg-gray-50 dark:bg-gray-800 rounded-lg mb-6;
+.control-select {
+  @apply px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md;
+  @apply text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-500;
 }
 
-.network-metrics,
-.hierarchy-metrics {
-  @apply space-y-4;
+.control-slider {
+  @apply w-48;
 }
 
-.metrics-title {
-  @apply text-lg font-semibold text-gray-900 dark:text-gray-100;
+.control-value {
+  @apply text-sm text-gray-600 dark:text-gray-400 ml-2;
 }
 
-.metrics-grid {
-  @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4;
+/* Visualization Container */
+.visualization-container {
+  @apply bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700;
+  @apply h-[600px] overflow-hidden;
 }
 
-.metric-card {
-  @apply bg-gray-50 dark:bg-gray-800 rounded-lg p-4 text-center;
+/* Detail Panel */
+.detail-panel {
+  @apply mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg;
 }
 
-.metric-label {
-  @apply text-sm text-gray-600 dark:text-gray-400 mb-1;
+.detail-panel h4 {
+  @apply text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4;
 }
 
-.metric-value {
-  @apply text-lg font-bold text-gray-900 dark:text-gray-100;
+.detail-grid {
+  @apply grid grid-cols-2 gap-4;
 }
 
-.cluster-results {
-  @apply grid grid-cols-1 lg:grid-cols-2 gap-6;
+.detail-item {
+  @apply flex flex-col;
 }
 
-.cluster-details {
-  @apply space-y-4;
-}
-
-.details-title {
-  @apply text-lg font-semibold text-gray-900 dark:text-gray-100;
-}
-
-.cluster-list {
-  @apply space-y-4;
-}
-
-.cluster-item {
-  @apply bg-gray-50 dark:bg-gray-800 rounded-lg p-4 border-l-4;
-}
-
-.cluster-header {
-  @apply flex justify-between items-center mb-3;
-}
-
-.cluster-header h4 {
-  @apply font-semibold text-gray-900 dark:text-gray-100;
-}
-
-.cluster-size {
+.detail-label {
   @apply text-sm text-gray-600 dark:text-gray-400;
 }
 
+.detail-value {
+  @apply text-lg font-medium text-gray-900 dark:text-gray-100;
+}
+
+.detail-value.positive {
+  @apply text-green-600 dark:text-green-400;
+}
+
+.detail-value.negative {
+  @apply text-red-600 dark:text-red-400;
+}
+
+/* Cluster View */
+.cluster-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-6;
+}
+
+.cluster-card {
+  @apply p-6 bg-white dark:bg-gray-800 rounded-lg border-l-4;
+  @apply shadow-sm hover:shadow-md transition-shadow;
+}
+
+.cluster-header {
+  @apply flex items-center justify-between mb-4;
+}
+
+.cluster-header h4 {
+  @apply text-lg font-semibold text-gray-900 dark:text-gray-100;
+}
+
+.cluster-badge {
+  @apply px-3 py-1 rounded-full text-white text-sm font-medium;
+}
+
 .cluster-members {
-  @apply flex flex-wrap gap-2 mb-3;
+  @apply flex flex-wrap gap-2 mb-4;
 }
 
-.member-tag {
-  @apply px-2 py-1 bg-white dark:bg-gray-700 rounded text-xs text-gray-700 dark:text-gray-300;
+.member-chip {
+  @apply px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm text-gray-700 dark:text-gray-300;
 }
 
-.more-members {
-  @apply px-2 py-1 bg-gray-200 dark:bg-gray-600 rounded text-xs text-gray-600 dark:text-gray-300;
+.more-chip {
+  @apply px-3 py-1 bg-gray-200 dark:bg-gray-600 rounded-full text-sm text-gray-600 dark:text-gray-400;
 }
 
-.cluster-stats {
-  @apply flex gap-4;
+.cluster-metrics {
+  @apply space-y-2;
 }
 
-.stat {
-  @apply text-sm;
+.metric {
+  @apply flex items-center gap-3;
+}
+
+.metric-label {
+  @apply text-sm text-gray-600 dark:text-gray-400 min-w-[80px];
+}
+
+.metric-bar {
+  @apply flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden;
+}
+
+.metric-fill {
+  @apply h-full transition-all duration-300;
+}
+
+/* Statistics View */
+.stats-grid {
+  @apply grid grid-cols-1 md:grid-cols-3 gap-6 mb-8;
+}
+
+.stat-card {
+  @apply flex items-center gap-4 p-6 bg-gray-50 dark:bg-gray-800 rounded-lg;
+}
+
+.stat-icon {
+  @apply text-4xl;
+}
+
+.stat-content {
+  @apply flex-1;
+}
+
+.stat-value {
+  @apply text-3xl font-bold text-gray-900 dark:text-gray-100;
 }
 
 .stat-label {
   @apply text-gray-600 dark:text-gray-400;
 }
 
-.stat-value {
+/* Top Traders Table */
+.top-traders {
+  @apply mt-8;
+}
+
+.top-traders h4 {
+  @apply text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4;
+}
+
+.traders-table {
+  @apply bg-white dark:bg-gray-800 rounded-lg overflow-hidden;
+}
+
+.table-header {
+  @apply grid grid-cols-3 gap-4 p-4 bg-gray-50 dark:bg-gray-700 font-medium text-gray-700 dark:text-gray-300;
+}
+
+.table-row {
+  @apply grid grid-cols-3 gap-4 p-4 border-t border-gray-200 dark:border-gray-700;
+  @apply hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors;
+}
+
+.trader-name {
   @apply font-medium text-gray-900 dark:text-gray-100;
 }
 
-.hierarchy-stats {
-  @apply flex gap-6;
+.trader-volume {
+  @apply text-gray-600 dark:text-gray-400;
 }
 
-.stat-item {
-  @apply text-sm;
+.trader-balance {
+  @apply font-medium;
 }
 
-.stat-item .stat-label {
-  @apply text-gray-600 mr-2;
+.trader-balance.positive {
+  @apply text-green-600 dark:text-green-400;
 }
 
-.stat-item .stat-value {
-  @apply font-medium text-gray-900 dark:text-gray-100;
-}
-
-.error-container,
-.loading-container {
-  @apply flex flex-col items-center justify-center h-64;
-}
-
-.loading-text {
-  @apply mt-4 text-gray-600 dark:text-gray-400;
+.trader-balance.negative {
+  @apply text-red-600 dark:text-red-400;
 }
 </style>

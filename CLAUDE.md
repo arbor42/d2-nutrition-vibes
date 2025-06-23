@@ -149,6 +149,14 @@ The application works with FAO (Food and Agriculture Organization) datasets:
 - **Formats**: JSON, GeoJSON, CSV
 - **Processing**: Client-side data transformation and analysis
 
+### Python Data Processing
+
+- **Raw FAO Dataset**: Located in `py/fao.csv` and `py/fao_slim.csv`
+- **Python Scripts**: You can create and run Python scripts in the `py/` directory
+- **Data Analysis**: Use Python for complex data analysis and preprocessing
+- **Example**: Trade network analysis script (`py/trade_network_analysis.py`) processes FAO trade data to create network visualizations
+- **Output**: Processed data should be saved to `public/data/fao_data/` for the Vue app to consume
+
 ## Development Commands
 
 Essential commands for development:

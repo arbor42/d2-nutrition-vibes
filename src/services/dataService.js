@@ -79,7 +79,7 @@ class DataService {
       console.error('Error details:', {
         message: error.message,
         stack: error.stack,
-        url: url,
+        url,
         response: error.response
       })
       throw error

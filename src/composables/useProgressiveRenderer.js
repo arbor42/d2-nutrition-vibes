@@ -128,7 +128,7 @@ export function useProgressiveRenderer(options = {}) {
     activeRenders.value.clear()
 
     const startTime = performance.now()
-    let chunks = []
+    const chunks = []
 
     try {
       // Split data into chunks
@@ -479,7 +479,7 @@ export function useProgressiveSVGRenderer(svgRef, options = {}) {
         const totalLength = path.node().getTotalLength()
         
         path
-          .attr('stroke-dasharray', totalLength + ' ' + totalLength)
+          .attr('stroke-dasharray', `${totalLength  } ${  totalLength}`)
           .attr('stroke-dashoffset', totalLength)
           .transition()
           .duration(transitionDuration)

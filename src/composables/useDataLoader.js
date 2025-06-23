@@ -4,6 +4,7 @@
  */
 
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+
 import { useDataStore } from '@/stores/useDataStore'
 import { useUIStore } from '@/stores/useUIStore'
 import dataService from '@/services/dataService'
@@ -215,6 +216,182 @@ export function useDataLoader(options = {}) {
   }
 
   /**
+   * Load process mining results from the generated data
+   */
+  const loadProcessMiningResults = async () => {
+    try {
+      const response = await fetch('/data/fao_data/process_mining_results.json')
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+      }
+      const data = await response.json()
+      
+      // Validate and transform the data structure
+      return {
+        ...data,
+        process_flows: data.process_flows || [],
+        process_statistics: data.process_statistics || {},
+        conformance_analysis: data.conformance_analysis || {},
+        enhancement_opportunities: data.enhancement_opportunities || [],
+        network_analysis: data.network_analysis || { nodes: [], links: [] }
+      }
+    } catch (err) {
+      throw new Error(`Failed to load process mining results: ${err.message}`)
+    }
+  }
+
+  /**
+   * Load process flows with optional filtering
+   */
+  const loadProcessFlows = async (filters = {}) => {
+    const data = await loadProcessMiningResults()
+    let flows = data.process_flows || []
+    
+    // Apply filters
+    if (filters.processType) {
+      flows = flows.filter(flow => 
+        flow.process_id.toLowerCase().includes(filters.processType.toLowerCase())
+      )
+    }
+    
+    if (filters.minValue) {
+      flows = flows.filter(flow => flow.total_value >= filters.minValue)
+    }
+    
+    if (filters.country) {
+      flows = flows.filter(flow => 
+        flow.process_id.includes(filters.country)
+      )
+    }
+    
+    return {
+      flows,
+      total: flows.length,
+      filtered: flows.length !== data.process_flows.length
+    }
+  }
+
+  /**
+   * Load conformance checking data
+   */
+  const loadConformanceData = async (referenceModel = 'iso_standard') => {
+    const data = await loadProcessMiningResults()
+    
+    // In a real implementation, this would perform conformance checking
+    // against the specified reference model
+    return {
+      referenceModel,
+      ...data.conformance_analysis,
+      timestamp: new Date().toISOString()
+    }
+  }
+
+  /**
+   * Load process enhancement opportunities
+   */
+  const loadEnhancementData = async (optimizationType = 'loss_reduction') => {
+    const data = await loadProcessMiningResults()
+    let opportunities = data.enhancement_opportunities || []
+    
+    // Filter by optimization type
+    if (optimizationType !== 'all') {
+      opportunities = opportunities.filter(opp => 
+        opp.type.toLowerCase().includes(optimizationType.toLowerCase().replace('_', ' '))
+      )
+    }
+    
+    return {
+      optimizationType,
+      opportunities,
+      total: opportunities.length
+    }
+  }
+
+  /**
+   * Load process network data
+   */
+  const loadProcessNetworkData = async () => {
+    try {
+      const response = await fetch('/data/fao_data/process_network.json')
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+      }
+      const data = await response.json()
+      
+      return {
+        nodes: data.nodes || [],
+        links: data.links || [],
+        metadata: {
+          nodeCount: data.nodes?.length || 0,
+          linkCount: data.links?.length || 0,
+          lastUpdated: new Date().toISOString()
+        }
+      }
+    } catch (err) {
+      throw new Error(`Failed to load process network data: ${err.message}`)
+    }
+  }
+
+  /**
+   * Export process mining results to various formats
+   */
+  const exportProcessMiningData = async (format = 'json', filters = {}) => {
+    const data = await loadProcessFlows(filters)
+    
+    let exportData
+    let mimeType
+    let filename
+    
+    switch (format.toLowerCase()) {
+      case 'json':
+        exportData = JSON.stringify(data, null, 2)
+        mimeType = 'application/json'
+        filename = `process-mining-${new Date().toISOString().split('T')[0]}.json`
+        break
+        
+      case 'csv':
+        // Convert process flows to CSV format
+        const csvRows = []
+        csvRows.push(['Process ID', 'Trace ID', 'Activity Name', 'Stage', 'Value', 'Unit', 'Timestamp'])
+        
+        data.flows.forEach(flow => {
+          flow.activities.forEach(activity => {
+            csvRows.push([
+              flow.process_id,
+              flow.trace_id,
+              activity.name,
+              activity.stage,
+              activity.value,
+              activity.unit,
+              activity.timestamp
+            ])
+          })
+        })
+        
+        exportData = csvRows.map(row => row.join(',')).join('\n')
+        mimeType = 'text/csv'
+        filename = `process-mining-${new Date().toISOString().split('T')[0]}.csv`
+        break
+        
+      default:
+        throw new Error(`Unsupported export format: ${format}`)
+    }
+    
+    // Create and trigger download
+    const blob = new Blob([exportData], { type: mimeType })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = filename
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+    
+    return { filename, size: blob.size }
+  }
+
+  /**
    * Clear cache and reset state
    */
   const reset = () => {
@@ -417,6 +594,28 @@ export function useDataLoader(options = {}) {
         case 'forecast':
           result = await dataService.loadMLForecast(params.key)
           break
+        case 'process_mining':
+          // Handle process mining data loading
+          switch (params.type) {
+            case 'results':
+              result = await loadProcessMiningResults()
+              break
+            case 'flows':
+              result = await loadProcessFlows(params.filters)
+              break
+            case 'conformance':
+              result = await loadConformanceData(params.referenceModel)
+              break
+            case 'enhancement':
+              result = await loadEnhancementData(params.optimizationType)
+              break
+            case 'network':
+              result = await loadProcessNetworkData()
+              break
+            default:
+              throw new Error(`Unknown process mining type: ${params.type}`)
+          }
+          break
         default:
           throw new Error(`Unknown endpoint: ${endpoint}`)
       }
@@ -524,6 +723,14 @@ export function useDataLoader(options = {}) {
     loadData: loadWithStoreIntegration,
     retryLoad,
     cancelLoad,
+    
+    // Process mining specific methods
+    loadProcessMiningResults,
+    loadProcessFlows,
+    loadConformanceData,
+    loadEnhancementData,
+    loadProcessNetworkData,
+    exportProcessMiningData,
     
     // Original methods (enhanced)
     loadGeoData,

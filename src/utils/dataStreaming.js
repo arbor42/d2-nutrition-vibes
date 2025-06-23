@@ -41,7 +41,7 @@ export class DataStreamReader {
       }
 
       const reader = response.body.getReader()
-      let chunks = []
+      const chunks = []
       let buffer = ''
 
       while (true) {

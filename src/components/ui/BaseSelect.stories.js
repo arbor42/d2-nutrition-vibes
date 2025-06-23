@@ -1,5 +1,6 @@
-import BaseSelect from './BaseSelect.vue'
 import { ref } from 'vue'
+
+import BaseSelect from './BaseSelect.vue'
 
 export default {
   title: 'UI/BaseSelect',

@@ -109,7 +109,7 @@ class DataProcessor {
         min: Math.min(...values),
         max: Math.max(...values),
         count: items.length,
-        items: items
+        items
       })
     })
 
@@ -265,7 +265,7 @@ class DataProcessor {
     )
 
     // Initialize centroids randomly
-    let centroids = []
+    const centroids = []
     for (let i = 0; i < k; i++) {
       centroids.push(vectors[Math.floor(Math.random() * vectors.length)].slice())
     }

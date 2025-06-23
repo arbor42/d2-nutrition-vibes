@@ -7,16 +7,48 @@ import BaseButton from '@/components/ui/BaseButton.vue'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 import * as d3 from 'd3'
 
+interface ProcessFlow {
+  process_id: string
+  trace_id: string
+  activities: Array<{
+    name: string
+    stage: number
+    value: number
+    unit: string
+    timestamp: string
+  }>
+  duration_years: number
+  total_value: number
+}
+
 interface Props {
-  width?: number
-  height?: number
+  data?: ProcessFlow[] | null
+  config?: {
+    type?: string
+    width?: number
+    height?: number
+    showMetrics?: boolean
+    showFrequencies?: boolean
+    interactive?: boolean
+    darkMode?: boolean
+  }
+  mode?: 'flow' | 'network' | 'timeline'
   processType?: 'production' | 'supply_chain' | 'consumption'
   timeRange?: 'monthly' | 'yearly'
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  width: 800,
-  height: 500,
+  data: null,
+  config: () => ({
+    type: 'flow',
+    width: 900,
+    height: 600,
+    showMetrics: true,
+    showFrequencies: true,
+    interactive: true,
+    darkMode: false
+  }),
+  mode: 'flow',
   processType: 'production',
   timeRange: 'yearly'
 })
@@ -25,6 +57,10 @@ const emit = defineEmits<{
   processChange: [type: string]
   timeRangeChange: [range: string]
   processStep: [step: any]
+  activitySelect: [activity: any]
+  pathSelect: [path: any]
+  nodeClick: [node: any]
+  linkClick: [link: any]
 }>()
 
 // Stores
@@ -60,9 +96,14 @@ const tooltip = useTooltip({
 
 // Chart configuration
 const chartConfig = computed(() => ({
-  primaryColor: vizStore.getColorScheme('process')[0] || '#3b82f6',
-  secondaryColor: vizStore.getColorScheme('process')[1] || '#10b981',
-  accentColor: vizStore.getColorScheme('process')[2] || '#f59e0b',
+  primaryColor: props.config?.darkMode ? '#60a5fa' : '#3b82f6',
+  secondaryColor: props.config?.darkMode ? '#4ade80' : '#10b981',
+  accentColor: props.config?.darkMode ? '#fbbf24' : '#f59e0b',
+  dangerColor: props.config?.darkMode ? '#f87171' : '#ef4444',
+  backgroundColor: props.config?.darkMode ? '#1f2937' : '#ffffff',
+  textColor: props.config?.darkMode ? '#f9fafb' : '#111827',
+  borderColor: props.config?.darkMode ? '#374151' : '#e5e7eb',
+  ...props.config,
   ...vizStore.getVisualizationConfig('process')
 }))
 
@@ -79,15 +120,59 @@ const timeRanges = [
   { id: 'yearly', name: 'Jährlich', description: 'Jährliche Prozessanalyse' }
 ]
 
+// Process the data for visualization
+const processedData = computed(() => {
+  if (!props.data || !Array.isArray(props.data)) {
+    return null
+  }
+  
+  // Extract all unique activities and their frequencies
+  const activityCounts = {}
+  const processFlows = []
+  
+  props.data.forEach(flow => {
+    flow.activities.forEach(activity => {
+      if (!activityCounts[activity.name]) {
+        activityCounts[activity.name] = 0
+      }
+      activityCounts[activity.name]++
+    })
+    
+    // Create flow connections
+    for (let i = 0; i < flow.activities.length - 1; i++) {
+      const from = flow.activities[i]
+      const to = flow.activities[i + 1]
+      
+      processFlows.push({
+        source: from.name,
+        target: to.name,
+        value: from.value,
+        flow_id: flow.process_id
+      })
+    }
+  })
+  
+  return {
+    activities: Object.keys(activityCounts).map(name => ({
+      id: name,
+      name,
+      count: activityCounts[name],
+      type: 'activity'
+    })),
+    flows: processFlows,
+    rawData: props.data
+  }
+})
+
 // Initialize chart
 const initializeChart = async () => {
-  if (!visualization.isReady.value) return
+  if (!visualization.isReady.value || !processedData.value) return
 
   try {
     isLoading.value = true
     error.value = null
 
-    visualization.queueUpdate(setupChart, null, true)
+    visualization.queueUpdate(setupChart, processedData.value, true)
 
   } catch (err) {
     error.value = 'Fehler beim Initialisieren der Prozessanalyse'
@@ -98,7 +183,7 @@ const initializeChart = async () => {
 }
 
 // Setup chart with D3.js
-const setupChart = (container) => {
+const setupChart = (data) => {
   const { width, height } = visualization.dimensions.value
   const innerWidth = width - margin.value.left - margin.value.right
   const innerHeight = height - margin.value.top - margin.value.bottom
@@ -111,70 +196,40 @@ const setupChart = (container) => {
     margin: margin.value
   })
 
-  // Create process flow diagram based on type
-  if (props.processType === 'production') {
-    createProductionFlow(g, innerWidth, innerHeight)
-  } else if (props.processType === 'supply_chain') {
-    createSupplyChainFlow(g, innerWidth, innerHeight)
-  } else if (props.processType === 'consumption') {
-    createConsumptionFlow(g, innerWidth, innerHeight)
+  // Apply dark mode styles
+  svg.style('background-color', chartConfig.value.backgroundColor)
+
+  // Create visualization based on mode
+  if (props.mode === 'flow') {
+    createProcessFlow(g, data, innerWidth, innerHeight)
+  } else if (props.mode === 'network') {
+    createNetworkDiagram(g, data, innerWidth, innerHeight)
+  } else if (props.mode === 'timeline') {
+    createTimelineView(g, data, innerWidth, innerHeight)
   }
 
   // Set chart instance
   vizStore.setChartInstance('process', svg.node())
 }
 
-// Create production flow diagram
-const createProductionFlow = (container, width, height) => {
-  const steps = [
-    { name: 'Planung', x: width * 0.15, y: height * 0.5 },
-    { name: 'Anbau', x: width * 0.35, y: height * 0.3 },
-    { name: 'Ernte', x: width * 0.55, y: height * 0.3 },
-    { name: 'Verarbeitung', x: width * 0.75, y: height * 0.5 },
-    { name: 'Distribution', x: width * 0.85, y: height * 0.7 }
-  ]
-
-  // Draw connections
-  for (let i = 0; i < steps.length - 1; i++) {
-    container.append('line')
-      .attr('x1', steps[i].x)
-      .attr('y1', steps[i].y)
-      .attr('x2', steps[i + 1].x)
-      .attr('y2', steps[i + 1].y)
-      .attr('stroke', chartConfig.value.secondaryColor)
-      .attr('stroke-width', 2)
-      .attr('marker-end', 'url(#arrow)')
+// Create process flow diagram with real data
+const createProcessFlow = (container, data, width, height) => {
+  if (!data || !data.activities || data.activities.length === 0) {
+    showNoDataMessage(container, width, height)
+    return
   }
 
-  // Draw process steps
-  container.selectAll('.process-step')
-    .data(steps)
-    .enter()
-    .append('g')
-    .attr('class', 'process-step')
-    .attr('transform', d => `translate(${d.x}, ${d.y})`)
-    .each(function(d) {
-      const group = d3.select(this)
-      
-      group.append('circle')
-        .attr('r', 25)
-        .attr('fill', chartConfig.value.primaryColor)
-        .attr('stroke', 'white')
-        .attr('stroke-width', 2)
-        .style('cursor', 'pointer')
+  // Position activities in a flow layout
+  const activities = data.activities.map((activity, i) => ({
+    ...activity,
+    x: (width / (data.activities.length + 1)) * (i + 1),
+    y: height / 2,
+    radius: Math.min(40, Math.max(20, Math.sqrt(activity.count) * 3))
+  }))
 
-      group.append('text')
-        .attr('text-anchor', 'middle')
-        .attr('dy', '0.35em')
-        .style('fill', 'white')
-        .style('font-size', '10px')
-        .style('font-weight', 'bold')
-        .text(d.name)
-    })
-
-  // Add arrow marker
-  container.append('defs')
-    .append('marker')
+  // Create arrow marker
+  const defs = container.append('defs')
+  defs.append('marker')
     .attr('id', 'arrow')
     .attr('viewBox', '0 -5 10 10')
     .attr('refX', 8)
@@ -185,98 +240,259 @@ const createProductionFlow = (container, width, height) => {
     .append('path')
     .attr('d', 'M0,-5L10,0L0,5')
     .attr('fill', chartConfig.value.secondaryColor)
-}
 
-// Create supply chain flow diagram
-const createSupplyChainFlow = (container, width, height) => {
-  const nodes = [
-    { name: 'Lieferant', x: width * 0.1, y: height * 0.3, type: 'supplier' },
-    { name: 'Produzent', x: width * 0.4, y: height * 0.5, type: 'producer' },
-    { name: 'Händler', x: width * 0.7, y: height * 0.3, type: 'distributor' },
-    { name: 'Verbraucher', x: width * 0.9, y: height * 0.7, type: 'consumer' }
-  ]
+  // Group flows by source-target pairs
+  const flowGroups = d3.group(data.flows, d => `${d.source}-${d.target}`)
+  
+  // Draw flow connections
+  Array.from(flowGroups.entries()).forEach(([key, flows]) => {
+    const [sourceName, targetName] = key.split('-')
+    const sourceActivity = activities.find(a => a.name === sourceName)
+    const targetActivity = activities.find(a => a.name === targetName)
+    
+    if (sourceActivity && targetActivity) {
+      const flowWidth = Math.min(8, Math.max(1, flows.length / 2))
+      
+      container.append('line')
+        .attr('x1', sourceActivity.x)
+        .attr('y1', sourceActivity.y)
+        .attr('x2', targetActivity.x)
+        .attr('y2', targetActivity.y)
+        .attr('stroke', chartConfig.value.secondaryColor)
+        .attr('stroke-width', flowWidth)
+        .attr('opacity', 0.7)
+        .attr('marker-end', 'url(#arrow)')
+        .style('cursor', 'pointer')
+        .on('click', () => emit('linkClick', { source: sourceName, target: targetName, flows }))
+    }
+  })
 
-  // Draw supply chain network
-  container.selectAll('.supply-node')
-    .data(nodes)
+  // Draw activity nodes
+  const activityGroups = container.selectAll('.activity-node')
+    .data(activities)
     .enter()
     .append('g')
-    .attr('class', 'supply-node')
+    .attr('class', 'activity-node')
     .attr('transform', d => `translate(${d.x}, ${d.y})`)
-    .each(function(d) {
-      const group = d3.select(this)
+    .style('cursor', 'pointer')
+    .on('click', (event, d) => emit('activitySelect', d))
+    .on('mouseover', function(event, d) {
+      tooltip.show(event, `
+        <div class="font-semibold">${d.name}</div>
+        <div class="text-sm">Vorkommen: ${d.count}</div>
+      `)
+    })
+    .on('mouseout', () => tooltip.hide())
+
+  // Activity circles
+  activityGroups.append('circle')
+    .attr('r', d => d.radius)
+    .attr('fill', chartConfig.value.primaryColor)
+    .attr('stroke', chartConfig.value.backgroundColor)
+    .attr('stroke-width', 3)
+    .transition()
+    .duration(500)
+    .attr('r', d => d.radius)
+
+  // Activity labels
+  activityGroups.append('text')
+    .attr('text-anchor', 'middle')
+    .attr('dy', '0.35em')
+    .style('fill', 'white')
+    .style('font-size', '12px')
+    .style('font-weight', 'bold')
+    .text(d => d.name.length > 10 ? d.name.substring(0, 10) + '...' : d.name)
+
+  // Activity count badges
+  activityGroups.append('circle')
+    .attr('cx', d => d.radius * 0.7)
+    .attr('cy', d => -d.radius * 0.7)
+    .attr('r', 12)
+    .attr('fill', chartConfig.value.accentColor)
+    .attr('stroke', chartConfig.value.backgroundColor)
+    .attr('stroke-width', 2)
+
+  activityGroups.append('text')
+    .attr('x', d => d.radius * 0.7)
+    .attr('y', d => -d.radius * 0.7)
+    .attr('text-anchor', 'middle')
+    .attr('dy', '0.35em')
+    .style('fill', 'white')
+    .style('font-size', '10px')
+    .style('font-weight', 'bold')
+    .text(d => d.count)
+}
+
+// Create network diagram
+const createNetworkDiagram = (container, data, width, height) => {
+  if (!data || !data.activities || data.activities.length === 0) {
+    showNoDataMessage(container, width, height)
+    return
+  }
+
+  // Create force simulation
+  const simulation = d3.forceSimulation(data.activities)
+    .force('link', d3.forceLink(data.flows).id(d => d.name).strength(0.1))
+    .force('charge', d3.forceManyBody().strength(-100))
+    .force('center', d3.forceCenter(width / 2, height / 2))
+    .force('collision', d3.forceCollide().radius(d => Math.sqrt(d.count) * 5 + 5))
+
+  // Draw links
+  const links = container.selectAll('.link')
+    .data(data.flows)
+    .enter()
+    .append('line')
+    .attr('class', 'link')
+    .attr('stroke', chartConfig.value.borderColor)
+    .attr('stroke-width', 2)
+    .attr('opacity', 0.6)
+
+  // Draw nodes
+  const nodes = container.selectAll('.node')
+    .data(data.activities)
+    .enter()
+    .append('g')
+    .attr('class', 'node')
+    .style('cursor', 'pointer')
+    .call(d3.drag()
+      .on('start', dragstarted)
+      .on('drag', dragged)
+      .on('end', dragended))
+    .on('click', (event, d) => emit('nodeClick', d))
+
+  nodes.append('circle')
+    .attr('r', d => Math.sqrt(d.count) * 3 + 10)
+    .attr('fill', chartConfig.value.primaryColor)
+    .attr('stroke', chartConfig.value.backgroundColor)
+    .attr('stroke-width', 2)
+
+  nodes.append('text')
+    .attr('text-anchor', 'middle')
+    .attr('dy', '0.35em')
+    .style('fill', 'white')
+    .style('font-size', '10px')
+    .style('font-weight', 'bold')
+    .text(d => d.name.length > 8 ? d.name.substring(0, 8) + '...' : d.name)
+
+  // Update positions on simulation tick
+  simulation.on('tick', () => {
+    links
+      .attr('x1', d => d.source.x)
+      .attr('y1', d => d.source.y)
+      .attr('x2', d => d.target.x)
+      .attr('y2', d => d.target.y)
+
+    nodes.attr('transform', d => `translate(${d.x}, ${d.y})`)
+  })
+
+  // Drag functions
+  function dragstarted(event, d) {
+    if (!event.active) simulation.alphaTarget(0.3).restart()
+    d.fx = d.x
+    d.fy = d.y
+  }
+
+  function dragged(event, d) {
+    d.fx = event.x
+    d.fy = event.y
+  }
+
+  function dragended(event, d) {
+    if (!event.active) simulation.alphaTarget(0)
+    d.fx = null
+    d.fy = null
+  }
+}
+
+// Create timeline view
+const createTimelineView = (container, data, width, height) => {
+  if (!data || !data.rawData || data.rawData.length === 0) {
+    showNoDataMessage(container, width, height)
+    return
+  }
+
+  // Extract timeline data from flows
+  const timelineData = []
+  data.rawData.forEach(flow => {
+    flow.activities.forEach((activity, index) => {
+      timelineData.push({
+        ...activity,
+        flow_id: flow.process_id,
+        order: index,
+        duration: flow.duration_years
+      })
+    })
+  })
+
+  // Group by timestamp/stage
+  const stageGroups = d3.group(timelineData, d => d.stage)
+  const stages = Array.from(stageGroups.keys()).sort((a, b) => a - b)
+  
+  const stageWidth = width / stages.length
+  const maxActivitiesPerStage = Math.max(...Array.from(stageGroups.values()).map(group => group.length))
+  
+  // Draw stage columns
+  stages.forEach((stage, stageIndex) => {
+    const stageActivities = stageGroups.get(stage)
+    const x = stageIndex * stageWidth + stageWidth / 2
+    
+    // Stage header
+    container.append('text')
+      .attr('x', x)
+      .attr('y', 20)
+      .attr('text-anchor', 'middle')
+      .style('fill', chartConfig.value.textColor)
+      .style('font-size', '14px')
+      .style('font-weight', 'bold')
+      .text(`Stage ${stage}`)
+    
+    // Draw activities in this stage
+    stageActivities.forEach((activity, activityIndex) => {
+      const y = 60 + (activityIndex * (height - 100) / maxActivitiesPerStage)
       
-      group.append('rect')
-        .attr('x', -30)
+      const activityGroup = container.append('g')
+        .attr('transform', `translate(${x}, ${y})`)
+        .style('cursor', 'pointer')
+        .on('click', () => emit('activitySelect', activity))
+      
+      activityGroup.append('rect')
+        .attr('x', -60)
         .attr('y', -15)
-        .attr('width', 60)
+        .attr('width', 120)
         .attr('height', 30)
         .attr('rx', 5)
-        .attr('fill', chartConfig.value.accentColor)
-        .attr('stroke', 'white')
+        .attr('fill', chartConfig.value.primaryColor)
+        .attr('stroke', chartConfig.value.backgroundColor)
         .attr('stroke-width', 2)
-
-      group.append('text')
+      
+      activityGroup.append('text')
         .attr('text-anchor', 'middle')
         .attr('dy', '0.35em')
         .style('fill', 'white')
         .style('font-size', '10px')
         .style('font-weight', 'bold')
-        .text(d.name)
+        .text(activity.name.length > 12 ? activity.name.substring(0, 12) + '...' : activity.name)
     })
+  })
 }
 
-// Create consumption flow diagram
-const createConsumptionFlow = (container, width, height) => {
-  // Create consumption pattern visualization
-  const centerX = width / 2
-  const centerY = height / 2
-  const radius = Math.min(width, height) * 0.3
-
-  const consumptionData = [
-    { category: 'Haushalte', value: 40, angle: 0 },
-    { category: 'Industrie', value: 30, angle: Math.PI * 0.8 },
-    { category: 'Export', value: 20, angle: Math.PI * 1.4 },
-    { category: 'Verluste', value: 10, angle: Math.PI * 1.8 }
-  ]
-
-  const colorScale = d3.scaleOrdinal()
-    .domain(consumptionData.map(d => d.category))
-    .range([
-      chartConfig.value.primaryColor,
-      chartConfig.value.secondaryColor,
-      chartConfig.value.accentColor,
-      '#ef4444'
-    ])
-
-  // Draw consumption sectors
-  container.selectAll('.consumption-sector')
-    .data(consumptionData)
-    .enter()
-    .append('g')
-    .attr('class', 'consumption-sector')
-    .attr('transform', `translate(${centerX}, ${centerY})`)
-    .each(function(d) {
-      const group = d3.select(this)
-      const sectorRadius = radius * (d.value / 50)
-      
-      group.append('circle')
-        .attr('cx', Math.cos(d.angle) * radius * 0.7)
-        .attr('cy', Math.sin(d.angle) * radius * 0.7)
-        .attr('r', sectorRadius)
-        .attr('fill', colorScale(d.category))
-        .attr('opacity', 0.8)
-
-      group.append('text')
-        .attr('x', Math.cos(d.angle) * radius * 0.7)
-        .attr('y', Math.sin(d.angle) * radius * 0.7)
-        .attr('text-anchor', 'middle')
-        .attr('dy', '0.35em')
-        .style('fill', 'white')
-        .style('font-size', '10px')
-        .style('font-weight', 'bold')
-        .text(`${d.category}\n${d.value}%`)
-    })
+// Show no data message
+const showNoDataMessage = (container, width, height) => {
+  container.append('text')
+    .attr('x', width / 2)
+    .attr('y', height / 2)
+    .attr('text-anchor', 'middle')
+    .style('fill', chartConfig.value.textColor)
+    .style('font-size', '16px')
+    .text('Keine Prozessdaten verfügbar')
+  
+  container.append('text')
+    .attr('x', width / 2)
+    .attr('y', height / 2 + 25)
+    .attr('text-anchor', 'middle')
+    .style('fill', chartConfig.value.textColor)
+    .style('font-size', '12px')
+    .text('Laden Sie Daten oder starten Sie eine Prozessanalyse')
 }
 
 // Start process analysis
@@ -317,12 +533,26 @@ watch(() => visualization.isReady.value, (isReady) => {
   }
 })
 
-// Reinitialize when process type changes
-watch(() => props.processType, () => {
+// Reinitialize when data changes
+watch(() => props.data, () => {
+  if (visualization.isReady.value) {
+    initializeChart()
+  }
+}, { deep: true })
+
+// Reinitialize when mode changes
+watch(() => props.mode, () => {
   if (visualization.isReady.value) {
     initializeChart()
   }
 })
+
+// Reinitialize when config changes
+watch(() => props.config, () => {
+  if (visualization.isReady.value) {
+    initializeChart()
+  }
+}, { deep: true })
 
 // Cleanup on unmount
 watch(() => visualization.isDestroyed.value, (isDestroyed) => {

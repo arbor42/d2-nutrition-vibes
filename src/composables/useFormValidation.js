@@ -1,7 +1,9 @@
 import { ref, computed, watch, reactive } from 'vue'
 import { useForm, useField, configure } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
+
 import { useErrorHandling } from './useErrorHandling'
+
 import { 
   searchFormSchema, 
   exportFormSchema, 
@@ -390,7 +392,7 @@ export function useFormValidation(schema = {}, options = {}) {
   }
 
   // Debounced validation
-  let validationTimeouts = {}
+  const validationTimeouts = {}
   
   const debouncedValidateField = (fieldName, value) => {
     clearTimeout(validationTimeouts[fieldName])
@@ -417,7 +419,7 @@ export function useFormValidation(schema = {}, options = {}) {
     const k = 1024
     const sizes = ['Bytes', 'KB', 'MB', 'GB']
     const i = Math.floor(Math.log(bytes) / Math.log(k))
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(2))  } ${  sizes[i]}`
   }
 
   // Create field helpers

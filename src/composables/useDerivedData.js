@@ -1,7 +1,9 @@
 import { computed, ref, watch } from 'vue'
-import { useDataStore } from '@/stores/useDataStore'
-import { useDataTransformations } from './useDataTransformations'
 import * as d3 from 'd3'
+
+import { useDataTransformations } from './useDataTransformations'
+
+import { useDataStore } from '@/stores/useDataStore'
 
 // Enhanced composable for computed properties and derived data
 export function useDerivedData() {

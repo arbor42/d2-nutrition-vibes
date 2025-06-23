@@ -324,14 +324,14 @@ export const useVisualizationStore = defineStore('visualization', () => {
         resolve(canvas.toDataURL('image/png'))
       }
       img.onerror = reject
-      img.src = 'data:image/svg+xml;base64,' + btoa(data)
+      img.src = `data:image/svg+xml;base64,${  btoa(data)}`
     })
   }
 
   const exportToSVG = (svgElement) => {
     const serializer = new XMLSerializer()
     const svgString = serializer.serializeToString(svgElement)
-    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgString)
+    return `data:image/svg+xml;charset=utf-8,${  encodeURIComponent(svgString)}`
   }
 
   // Cleanup function

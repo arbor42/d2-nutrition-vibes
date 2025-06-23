@@ -1,0 +1,1153 @@
+{
+  "timestamp": "2025-06-23T11:19:44.153992",
+  "data_summary": {
+    "total_records": 1250,
+    "countries": 5,
+    "items": 5,
+    "elements": 5,
+    "year_range": [
+      2010,
+      2021
+    ]
+  },
+  "process_flows": [
+    {
+      "process_id": "United States_Wheat",
+      "trace_id": "United States_Wheat",
+      "activities": [
+        {
+          "name": "Production",
+          "stage": 1,
+          "value": 449.73,
+          "unit": "tonnes",
+          "timestamp": "2020-01-01"
+        },
+        {
+          "name": "Domestic supply quantity",
+          "stage": 2,
+          "value": 2606.43,
+          "unit": "tonnes",
+          "timestamp": "2020-02-01"
+        },
+        {
+          "name": "Food supply quantity (kg/capita/yr)",
+          "stage": 4,
+          "value": 6.31,
+          "unit": "kg/capita/yr",
+          "timestamp": "2020-04-01"
+        },
+        {
+          "name": "Losses",
+          "stage": 5,
+          "value": 1109.03,
+          "unit": "tonnes",
+          "timestamp": "2020-05-01"
+        }
+      ],
+      "duration_years": 1,
+      "total_value": 4171.5
+    },
+    {
+      "process_id": "United States_Rice",
+      "trace_id": "United States_Rice",
+      "activities": [
+        {
+          "name": "Production",
+          "stage": 1,
+          "value": 215.82,
+          "unit": "tonnes",
+          "timestamp": "2020-01-01"
+        },
+        {
+          "name": "Domestic supply quantity",
+          "stage": 2,
+          "value": 1292.03,
+          "unit": "tonnes",
+          "timestamp": "2020-02-01"
+        },
+        {
+          "name": "Processing",
+          "stage": 3,
+          "value": 2783.03,
+          "unit": "tonnes",
+          "timestamp": "2020-03-01"
+        },
+        {
+          "name": "Food supply quantity (kg/capita/yr)",
+          "stage": 4,
+          "value": 500.2,
+          "unit": "kg/capita/yr",
+          "timestamp": "2020-04-01"
+        },
+        {
+          "name": "Losses",
+          "stage": 5,
+          "value": 1004.29,
+          "unit": "tonnes",
+          "timestamp": "2020-05-01"
+        }
+      ],
+      "duration_years": 1,
+      "total_value": 5795.37
+    },
+    {
+      "process_id": "United States_Maize",
+      "trace_id": "United States_Maize",
+      "activities": [
+        {
+          "name": "Production",
+          "stage": 1,
+          "value": 641.85,
+          "unit": "tonnes",
+          "timestamp": "2020-01-01"
+        },
+        {
+          "name": "Domestic supply quantity",
+          "stage": 2,
+          "value": 787.91,
+          "unit": "tonnes",
+          "timestamp": "2020-02-01"
+        },
+        {
+          "name": "Food supply quantity (kg/capita/yr)",
+          "stage": 4,
+          "value": 3881.95,
+          "unit": "kg/capita/yr",
+          "timestamp": "2020-04-01"
+        },
+        {
+          "name": "Losses",
+          "stage": 5,
+          "value": 4526.98,
+          "unit": "tonnes",
+          "timestamp": "2020-05-01"
+        }
+      ],
+      "duration_years": 1,
+      "total_value": 9838.689999999999
+    },
+    {
+      "process_id": "United States_Soybeans",
+      "trace_id": "United States_Soybeans",
+      "activities": [
+        {
+          "name": "Production",
+          "stage": 1,
+          "value": 1823.19,
+          "unit": "tonnes",
+          "timestamp": "2020-01-01"
+        },
+        {
+          "name": "Processing",
+          "stage": 3,
+          "value": 1737.44,
+          "unit": "tonnes",
+          "timestamp": "2020-03-01"
+        },
+        {
+          "name": "Food supply quantity (kg/capita/yr)",
+          "stage": 4,
+          "value": 397.55,
+          "unit": "kg/capita/yr",
+          "timestamp": "2020-04-01"
+        }
+      ],
+      "duration_years": 1,
+      "total_value": 3958.1800000000003
+    },
+    {
+      "process_id": "United States_Apples",
+      "trace_id": "United States_Apples",
+      "activities": [
+        {
+          "name": "Production",
+          "stage": 1,
+          "value": 288.84,
+          "unit": "tonnes",
+          "timestamp": "2020-01-01"
+        },
+        {
+          "name": "Domestic supply quantity",
+          "stage": 2,
+          "value": 2705.06,
+          "unit": "tonnes",
+          "timestamp": "2020-02-01"
+        },
+        {
+          "name": "Processing",
+          "stage": 3,
+          "value": 194.97,
+          "unit": "tonnes",
+          "timestamp": "2020-03-01"
+        },
+        {
+          "name": "Losses",
+          "stage": 5,
+          "value": 492.87,
+          "unit": "tonnes",
+          "timestamp": "2020-05-01"
+        }
+      ],
+      "duration_years": 1,
+      "total_value": 3681.74
+    },
+    {
+      "process_id": "China_Wheat",
+      "trace_id": "China_Wheat",
+      "activities": [
+        {
+          "name": "Production",
+          "stage": 1,
+          "value": 304.69,
+          "unit": "tonnes",
+          "timestamp": "2020-01-01"
+        },
+        {
+          "name": "Domestic supply quantity",
+          "stage": 2,
+          "value": 801.41,
+          "unit": "tonnes",
+          "timestamp": "2020-02-01"
+        },
+        {
+          "name": "Processing",
+          "stage": 3,
+          "value": 1162.52,
+          "unit": "tonnes",
+          "timestamp": "2020-03-01"
+        },
+        {
+          "name": "Food supply quantity (kg/capita/yr)",
+          "stage": 4,
+          "value": 1662.7,
+          "unit": "kg/capita/yr",
+          "timestamp": "2020-04-01"
+        },
+        {
+          "name": "Losses",
+          "stage": 5,
+          "value": 132.09,
+          "unit": "tonnes",
+          "timestamp": "2020-05-01"
+        }
+      ],
+      "duration_years": 1,
+      "total_value": 4063.41
+    },
+    {
+      "process_id": "China_Rice",
+      "trace_id": "China_Rice",
+      "activities": [
+        {
+          "name": "Production",
+          "stage": 1,
+          "value": 10.43,
+          "unit": "tonnes",
+          "timestamp": "2020-01-01"
+        },
+        {
+          "name": "Domestic supply quantity",
+          "stage": 2,
+          "value": 2580.4,
+          "unit": "tonnes",
+          "timestamp": "2020-02-01"
+        },
+        {
+          "name": "Food supply quantity (kg/capita/yr)",
+          "stage": 4,
+          "value": 2711.14,
+          "unit": "kg/capita/yr",
+          "timestamp": "2020-04-01"
+        },
+        {
+          "name": "Losses",
+          "stage": 5,
+          "value": 1995.71,
+          "unit": "tonnes",
+          "timestamp": "2020-05-01"
+        }
+      ],
+      "duration_years": 1,
+      "total_value": 7297.68
+    },
+    {
+      "process_id": "China_Maize",
+      "trace_id": "China_Maize",
+      "activities": [
+        {
+          "name": "Domestic supply quantity",
+          "stage": 2,
+          "value": 168.77,
+          "unit": "tonnes",
+          "timestamp": "2020-02-01"
+        },
+        {
+          "name": "Processing",
+          "stage": 3,
+          "value": 367.99,
+          "unit": "tonnes",
+          "timestamp": "2020-03-01"
+        },
+        {
+          "name": "Food supply quantity (kg/capita/yr)",
+          "stage": 4,
+          "value": 1078.55,
+          "unit": "kg/capita/yr",
+          "timestamp": "2020-04-01"
+        },
+        {
+          "name": "Losses",
+          "stage": 5,
+          "value": 466.22,
+          "unit": "tonnes",
+          "timestamp": "2020-05-01"
+        }
+      ],
+      "duration_years": 1,
+      "total_value": 2081.53
+    },
+    {
+      "process_id": "China_Soybeans",
+      "trace_id": "China_Soybeans",
+      "activities": [
+        {
+          "name": "Production",
+          "stage": 1,
+          "value": 209.1,
+          "unit": "tonnes",
+          "timestamp": "2020-01-01"
+        },
+        {
+          "name": "Domestic supply quantity",
+          "stage": 2,
+          "value": 3678.28,
+          "unit": "tonnes",
+          "timestamp": "2020-02-01"
+        },
+        {
+          "name": "Processing",
+          "stage": 3,
+          "value": 708.93,
+          "unit": "tonnes",
+          "timestamp": "2020-03-01"
+        },
+        {
+          "name": "Food supply quantity (kg/capita/yr)",
+          "stage": 4,
+          "value": 1171.48,
+          "unit": "kg/capita/yr",
+          "timestamp": "2020-04-01"
+        },
+        {
+          "name": "Losses",
+          "stage": 5,
+          "value": 2148.9,
+          "unit": "tonnes",
+          "timestamp": "2020-05-01"
+        }
+      ],
+      "duration_years": 1,
+      "total_value": 7916.6900000000005
+    },
+    {
+      "process_id": "China_Apples",
+      "trace_id": "China_Apples",
+      "activities": [
+        {
+          "name": "Production",
+          "stage": 1,
+          "value": 3306.07,
+          "unit": "tonnes",
+          "timestamp": "2020-01-01"
+        },
+        {
+          "name": "Domestic supply quantity",
+          "stage": 2,
+          "value": 2328.72,
+          "unit": "tonnes",
+          "timestamp": "2020-02-01"
+        },
+        {
+          "name": "Processing",
+          "stage": 3,
+          "value": 3319.02,
+          "unit": "tonnes",
+          "timestamp": "2020-03-01"
+        },
+        {
+          "name": "Losses",
+          "stage": 5,
+          "value": 73.5,
+          "unit": "tonnes",
+          "timestamp": "2020-05-01"
+        }
+      ],
+      "duration_years": 1,
+      "total_value": 9027.31
+    },
+    {
+      "process_id": "Germany_Wheat",
+      "trace_id": "Germany_Wheat",
+      "activities": [
+        {
+          "name": "Production",
+          "stage": 1,
+          "value": 83.57,
+          "unit": "tonnes",
+          "timestamp": "2020-01-01"
+        },
+        {
+          "name": "Domestic supply quantity",
+          "stage": 2,
+          "value": 1509.59,
+          "unit": "tonnes",
+          "timestamp": "2020-02-01"
+        },
+        {
+          "name": "Processing",
+          "stage": 3,
+          "value": 1023.05,
+          "unit": "tonnes",
+          "timestamp": "2020-03-01"
+        },
+        {
+          "name": "Food supply quantity (kg/capita/yr)",
+          "stage": 4,
+          "value": 3175.22,
+          "unit": "kg/capita/yr",
+          "timestamp": "2020-04-01"
+        }
+      ],
+      "duration_years": 1,
+      "total_value": 5791.429999999999
+    },
+    {
+      "process_id": "Germany_Rice",
+      "trace_id": "Germany_Rice",
+      "activities": [
+        {
+          "name": "Production",
+          "stage": 1,
+          "value": 1257.99,
+          "unit": "tonnes",
+          "timestamp": "2020-01-01"
+        },
+        {
+          "name": "Domestic supply quantity",
+          "stage": 2,
+          "value": 1142.31,
+          "unit": "tonnes",
+          "timestamp": "2020-02-01"
+        },
+        {
+          "name": "Processing",
+          "stage": 3,
+          "value": 308.89,
+          "unit": "tonnes",
+          "timestamp": "2020-03-01"
+        },
+        {
+          "name": "Food supply quantity (kg/capita/yr)",
+          "stage": 4,
+          "value": 763.71,
+          "unit": "kg/capita/yr",
+          "timestamp": "2020-04-01"
+        },
+        {
+          "name": "Losses",
+          "stage": 5,
+          "value": 4341.37,
+          "unit": "tonnes",
+          "timestamp": "2020-05-01"
+        }
+      ],
+      "duration_years": 1,
+      "total_value": 7814.2699999999995
+    },
+    {
+      "process_id": "Germany_Maize",
+      "trace_id": "Germany_Maize",
+      "activities": [
+        {
+          "name": "Production",
+          "stage": 1,
+          "value": 598.12,
+          "unit": "tonnes",
+          "timestamp": "2020-01-01"
+        },
+        {
+          "name": "Domestic supply quantity",
+          "stage": 2,
+          "value": 128.76,
+          "unit": "tonnes",
+          "timestamp": "2020-02-01"
+        },
+        {
+          "name": "Processing",
+          "stage": 3,
+          "value": 7893.34,
+          "unit": "tonnes",
+          "timestamp": "2020-03-01"
+        },
+        {
+          "name": "Food supply quantity (kg/capita/yr)",
+          "stage": 4,
+          "value": 477.23,
+          "unit": "kg/capita/yr",
+          "timestamp": "2020-04-01"
+        },
+        {
+          "name": "Losses",
+          "stage": 5,
+          "value": 55.56,
+          "unit": "tonnes",
+          "timestamp": "2020-05-01"
+        }
+      ],
+      "duration_years": 1,
+      "total_value": 9153.01
+    },
+    {
+      "process_id": "Germany_Soybeans",
+      "trace_id": "Germany_Soybeans",
+      "activities": [
+        {
+          "name": "Production",
+          "stage": 1,
+          "value": 1660.24,
+          "unit": "tonnes",
+          "timestamp": "2020-01-01"
+        },
+        {
+          "name": "Domestic supply quantity",
+          "stage": 2,
+          "value": 248.84,
+          "unit": "tonnes",
+          "timestamp": "2020-02-01"
+        },
+        {
+          "name": "Food supply quantity (kg/capita/yr)",
+          "stage": 4,
+          "value": 1033.02,
+          "unit": "kg/capita/yr",
+          "timestamp": "2020-04-01"
+        },
+        {
+          "name": "Losses",
+          "stage": 5,
+          "value": 263.9,
+          "unit": "tonnes",
+          "timestamp": "2020-05-01"
+        }
+      ],
+      "duration_years": 1,
+      "total_value": 3206.0
+    },
+    {
+      "process_id": "Germany_Apples",
+      "trace_id": "Germany_Apples",
+      "activities": [
+        {
+          "name": "Production",
+          "stage": 1,
+          "value": 1151.13,
+          "unit": "tonnes",
+          "timestamp": "2020-01-01"
+        },
+        {
+          "name": "Domestic supply quantity",
+          "stage": 2,
+          "value": 1017.38,
+          "unit": "tonnes",
+          "timestamp": "2020-02-01"
+        },
+        {
+          "name": "Processing",
+          "stage": 3,
+          "value": 138.79,
+          "unit": "tonnes",
+          "timestamp": "2020-03-01"
+        },
+        {
+          "name": "Food supply quantity (kg/capita/yr)",
+          "stage": 4,
+          "value": 295.48,
+          "unit": "kg/capita/yr",
+          "timestamp": "2020-04-01"
+        },
+        {
+          "name": "Losses",
+          "stage": 5,
+          "value": 709.64,
+          "unit": "tonnes",
+          "timestamp": "2020-05-01"
+        }
+      ],
+      "duration_years": 1,
+      "total_value": 3312.42
+    },
+    {
+      "process_id": "Brazil_Wheat",
+      "trace_id": "Brazil_Wheat",
+      "activities": [
+        {
+          "name": "Production",
+          "stage": 1,
+          "value": 1898.77,
+          "unit": "tonnes",
+          "timestamp": "2020-01-01"
+        },
+        {
+          "name": "Domestic supply quantity",
+          "stage": 2,
+          "value": 266.71,
+          "unit": "tonnes",
+          "timestamp": "2020-02-01"
+        },
+        {
+          "name": "Processing",
+          "stage": 3,
+          "value": 1157.46,
+          "unit": "tonnes",
+          "timestamp": "2020-03-01"
+        },
+        {
+          "name": "Food supply quantity (kg/capita/yr)",
+          "stage": 4,
+          "value": 954.63,
+          "unit": "kg/capita/yr",
+          "timestamp": "2020-04-01"
+        }
+      ],
+      "duration_years": 1,
+      "total_value": 4277.57
+    },
+    {
+      "process_id": "Brazil_Rice",
+      "trace_id": "Brazil_Rice",
+      "activities": [
+        {
+          "name": "Production",
+          "stage": 1,
+          "value": 4879.24,
+          "unit": "tonnes",
+          "timestamp": "2020-01-01"
+        },
+        {
+          "name": "Domestic supply quantity",
+          "stage": 2,
+          "value": 970.85,
+          "unit": "tonnes",
+          "timestamp": "2020-02-01"
+        },
+        {
+          "name": "Food supply quantity (kg/capita/yr)",
+          "stage": 4,
+          "value": 4535.57,
+          "unit": "kg/capita/yr",
+          "timestamp": "2020-04-01"
+        }
+      ],
+      "duration_years": 1,
+      "total_value": 10385.66
+    },
+    {
+      "process_id": "Brazil_Maize",
+      "trace_id": "Brazil_Maize",
+      "activities": [
+        {
+          "name": "Production",
+          "stage": 1,
+          "value": 541.73,
+          "unit": "tonnes",
+          "timestamp": "2020-01-01"
+        },
+        {
+          "name": "Domestic supply quantity",
+          "stage": 2,
+          "value": 707.38,
+          "unit": "tonnes",
+          "timestamp": "2020-02-01"
+        },
+        {
+          "name": "Processing",
+          "stage": 3,
+          "value": 1062.58,
+          "unit": "tonnes",
+          "timestamp": "2020-03-01"
+        },
+        {
+          "name": "Losses",
+          "stage": 5,
+          "value": 1106.98,
+          "unit": "tonnes",
+          "timestamp": "2020-05-01"
+        }
+      ],
+      "duration_years": 1,
+      "total_value": 3418.67
+    },
+    {
+      "process_id": "Brazil_Soybeans",
+      "trace_id": "Brazil_Soybeans",
+      "activities": [
+        {
+          "name": "Production",
+          "stage": 1,
+          "value": 61.75,
+          "unit": "tonnes",
+          "timestamp": "2020-01-01"
+        },
+        {
+          "name": "Domestic supply quantity",
+          "stage": 2,
+          "value": 2229.02,
+          "unit": "tonnes",
+          "timestamp": "2020-02-01"
+        },
+        {
+          "name": "Processing",
+          "stage": 3,
+          "value": 2015.19,
+          "unit": "tonnes",
+          "timestamp": "2020-03-01"
+        },
+        {
+          "name": "Losses",
+          "stage": 5,
+          "value": 193.61,
+          "unit": "tonnes",
+          "timestamp": "2020-05-01"
+        }
+      ],
+      "duration_years": 1,
+      "total_value": 4499.57
+    },
+    {
+      "process_id": "Brazil_Apples",
+      "trace_id": "Brazil_Apples",
+      "activities": [
+        {
+          "name": "Domestic supply quantity",
+          "stage": 2,
+          "value": 2006.73,
+          "unit": "tonnes",
+          "timestamp": "2020-02-01"
+        },
+        {
+          "name": "Processing",
+          "stage": 3,
+          "value": 473.26,
+          "unit": "tonnes",
+          "timestamp": "2020-03-01"
+        },
+        {
+          "name": "Food supply quantity (kg/capita/yr)",
+          "stage": 4,
+          "value": 1237.99,
+          "unit": "kg/capita/yr",
+          "timestamp": "2020-04-01"
+        },
+        {
+          "name": "Losses",
+          "stage": 5,
+          "value": 1807.22,
+          "unit": "tonnes",
+          "timestamp": "2020-05-01"
+        }
+      ],
+      "duration_years": 1,
+      "total_value": 5525.2
+    },
+    {
+      "process_id": "India_Wheat",
+      "trace_id": "India_Wheat",
+      "activities": [
+        {
+          "name": "Production",
+          "stage": 1,
+          "value": 444.39,
+          "unit": "tonnes",
+          "timestamp": "2020-01-01"
+        },
+        {
+          "name": "Domestic supply quantity",
+          "stage": 2,
+          "value": 719.32,
+          "unit": "tonnes",
+          "timestamp": "2020-02-01"
+        },
+        {
+          "name": "Processing",
+          "stage": 3,
+          "value": 256.84,
+          "unit": "tonnes",
+          "timestamp": "2020-03-01"
+        },
+        {
+          "name": "Food supply quantity (kg/capita/yr)",
+          "stage": 4,
+          "value": 2923.39,
+          "unit": "kg/capita/yr",
+          "timestamp": "2020-04-01"
+        },
+        {
+          "name": "Losses",
+          "stage": 5,
+          "value": 321.45,
+          "unit": "tonnes",
+          "timestamp": "2020-05-01"
+        }
+      ],
+      "duration_years": 1,
+      "total_value": 4665.389999999999
+    },
+    {
+      "process_id": "India_Rice",
+      "trace_id": "India_Rice",
+      "activities": [
+        {
+          "name": "Production",
+          "stage": 1,
+          "value": 1237.78,
+          "unit": "tonnes",
+          "timestamp": "2020-01-01"
+        },
+        {
+          "name": "Domestic supply quantity",
+          "stage": 2,
+          "value": 162.12,
+          "unit": "tonnes",
+          "timestamp": "2020-02-01"
+        },
+        {
+          "name": "Processing",
+          "stage": 3,
+          "value": 193.8,
+          "unit": "tonnes",
+          "timestamp": "2020-03-01"
+        },
+        {
+          "name": "Food supply quantity (kg/capita/yr)",
+          "stage": 4,
+          "value": 542.72,
+          "unit": "kg/capita/yr",
+          "timestamp": "2020-04-01"
+        },
+        {
+          "name": "Losses",
+          "stage": 5,
+          "value": 876.73,
+          "unit": "tonnes",
+          "timestamp": "2020-05-01"
+        }
+      ],
+      "duration_years": 1,
+      "total_value": 3013.15
+    },
+    {
+      "process_id": "India_Maize",
+      "trace_id": "India_Maize",
+      "activities": [
+        {
+          "name": "Production",
+          "stage": 1,
+          "value": 640.89,
+          "unit": "tonnes",
+          "timestamp": "2020-01-01"
+        },
+        {
+          "name": "Domestic supply quantity",
+          "stage": 2,
+          "value": 108.03,
+          "unit": "tonnes",
+          "timestamp": "2020-02-01"
+        },
+        {
+          "name": "Processing",
+          "stage": 3,
+          "value": 1776.93,
+          "unit": "tonnes",
+          "timestamp": "2020-03-01"
+        },
+        {
+          "name": "Food supply quantity (kg/capita/yr)",
+          "stage": 4,
+          "value": 592.71,
+          "unit": "kg/capita/yr",
+          "timestamp": "2020-04-01"
+        }
+      ],
+      "duration_years": 1,
+      "total_value": 3118.56
+    },
+    {
+      "process_id": "India_Soybeans",
+      "trace_id": "India_Soybeans",
+      "activities": [
+        {
+          "name": "Production",
+          "stage": 1,
+          "value": 1278.44,
+          "unit": "tonnes",
+          "timestamp": "2020-01-01"
+        },
+        {
+          "name": "Domestic supply quantity",
+          "stage": 2,
+          "value": 22.32,
+          "unit": "tonnes",
+          "timestamp": "2020-02-01"
+        },
+        {
+          "name": "Processing",
+          "stage": 3,
+          "value": 1641.57,
+          "unit": "tonnes",
+          "timestamp": "2020-03-01"
+        },
+        {
+          "name": "Food supply quantity (kg/capita/yr)",
+          "stage": 4,
+          "value": 2392.47,
+          "unit": "kg/capita/yr",
+          "timestamp": "2020-04-01"
+        },
+        {
+          "name": "Losses",
+          "stage": 5,
+          "value": 1185.98,
+          "unit": "tonnes",
+          "timestamp": "2020-05-01"
+        }
+      ],
+      "duration_years": 1,
+      "total_value": 6520.78
+    },
+    {
+      "process_id": "India_Apples",
+      "trace_id": "India_Apples",
+      "activities": [
+        {
+          "name": "Production",
+          "stage": 1,
+          "value": 322.52,
+          "unit": "tonnes",
+          "timestamp": "2020-01-01"
+        },
+        {
+          "name": "Domestic supply quantity",
+          "stage": 2,
+          "value": 889.72,
+          "unit": "tonnes",
+          "timestamp": "2020-02-01"
+        },
+        {
+          "name": "Processing",
+          "stage": 3,
+          "value": 133.14,
+          "unit": "tonnes",
+          "timestamp": "2020-03-01"
+        },
+        {
+          "name": "Food supply quantity (kg/capita/yr)",
+          "stage": 4,
+          "value": 1883.0,
+          "unit": "kg/capita/yr",
+          "timestamp": "2020-04-01"
+        },
+        {
+          "name": "Losses",
+          "stage": 5,
+          "value": 470.6,
+          "unit": "tonnes",
+          "timestamp": "2020-05-01"
+        }
+      ],
+      "duration_years": 1,
+      "total_value": 3698.98
+    }
+  ],
+  "process_statistics": {
+    "total_traces": 25,
+    "total_activities": 125,
+    "unique_activities": 5,
+    "most_common_activities": {
+      "Production": 25,
+      "Domestic supply quantity": 23,
+      "Processing": 20,
+      "Food supply quantity (kg/capita/yr)": 22,
+      "Losses": 18
+    },
+    "average_trace_length": 4.2,
+    "process_variants": 12
+  },
+  "conformance_analysis": {
+    "fitness_score": 0.78,
+    "precision": 0.82,
+    "compliance_rate": 0.76,
+    "deviations": [
+      {
+        "trace_id": "India_Apples",
+        "missing_activities": [],
+        "extra_activities": [],
+        "severity": "medium"
+      },
+      {
+        "trace_id": "Brazil_Wheat",
+        "missing_activities": [
+          "Production"
+        ],
+        "extra_activities": [],
+        "severity": "high"
+      },
+      {
+        "trace_id": "Germany_Rice",
+        "missing_activities": [],
+        "extra_activities": [
+          "Quality Control"
+        ],
+        "severity": "low"
+      },
+      {
+        "trace_id": "Brazil_Rice",
+        "missing_activities": [
+          "Processing"
+        ],
+        "extra_activities": [
+          "Quality Control"
+        ],
+        "severity": "high"
+      },
+      {
+        "trace_id": "China_Soybeans",
+        "missing_activities": [],
+        "extra_activities": [],
+        "severity": "high"
+      },
+      {
+        "trace_id": "Germany_Soybeans",
+        "missing_activities": [],
+        "extra_activities": [],
+        "severity": "low"
+      },
+      {
+        "trace_id": "Brazil_Wheat",
+        "missing_activities": [
+          "Domestic supply quantity"
+        ],
+        "extra_activities": [
+          "Quality Control"
+        ],
+        "severity": "low"
+      },
+      {
+        "trace_id": "China_Soybeans",
+        "missing_activities": [
+          "Losses"
+        ],
+        "extra_activities": [],
+        "severity": "low"
+      }
+    ]
+  },
+  "enhancement_opportunities": [
+    {
+      "type": "Loss Reduction",
+      "description": "Reduce post-harvest losses in grain storage",
+      "impact": "High",
+      "current_loss": 15.2,
+      "potential_savings": "4.6 tonnes/year",
+      "implementation": "Improve storage infrastructure"
+    },
+    {
+      "type": "Production Optimization",
+      "description": "Optimize irrigation efficiency",
+      "impact": "Medium",
+      "current_avg": 2.3,
+      "benchmark_avg": 3.1,
+      "potential_improvement": "34.8%",
+      "implementation": "Implement precision agriculture"
+    },
+    {
+      "type": "Supply Chain Enhancement",
+      "description": "Streamline distribution networks",
+      "impact": "Medium",
+      "current_efficiency": 67,
+      "target_efficiency": 85,
+      "time_savings": "2.3 days",
+      "implementation": "Digital supply chain management"
+    }
+  ],
+  "network_analysis": {
+    "nodes": [
+      {
+        "id": "United States",
+        "name": "United States",
+        "type": "country",
+        "production": 4205.0,
+        "size": 14
+      },
+      {
+        "id": "China",
+        "name": "China",
+        "type": "country",
+        "production": 19763.0,
+        "size": 39
+      },
+      {
+        "id": "Germany",
+        "name": "Germany",
+        "type": "country",
+        "production": 25459.0,
+        "size": 45
+      },
+      {
+        "id": "Brazil",
+        "name": "Brazil",
+        "type": "country",
+        "production": 17355.0,
+        "size": 30
+      },
+      {
+        "id": "India",
+        "name": "India",
+        "type": "country",
+        "production": 1705.0,
+        "size": 25
+      }
+    ],
+    "links": [
+      {
+        "source": "United States",
+        "target": "China",
+        "weight": 1312.0,
+        "type": "trade"
+      },
+      {
+        "source": "China",
+        "target": "Germany",
+        "weight": 1875.0,
+        "type": "trade"
+      },
+      {
+        "source": "China",
+        "target": "Brazil",
+        "weight": 98.0,
+        "type": "trade"
+      },
+      {
+        "source": "China",
+        "target": "India",
+        "weight": 468.0,
+        "type": "trade"
+      },
+      {
+        "source": "Germany",
+        "target": "Brazil",
+        "weight": 490.0,
+        "type": "trade"
+      }
+    ]
+  }
+}

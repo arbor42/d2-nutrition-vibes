@@ -1,6 +1,7 @@
 import { ref, computed, watch, nextTick } from 'vue'
-import { useD3, useD3Data, useD3Chart } from './useD3.js'
 import * as d3 from 'd3'
+
+import { useD3, useD3Data, useD3Chart } from './useD3.js'
 
 /**
  * Enhanced visualization composable with reactive updates
@@ -38,7 +39,7 @@ export function useVisualization(containerRef, options = {}) {
 
     const update = {
       fn: updateFn,
-      data: data,
+      data,
       timestamp: Date.now()
     }
 

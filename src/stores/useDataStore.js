@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
+
 import dataService from '@/services/dataService'
 
 export const useDataStore = defineStore('data', () => {

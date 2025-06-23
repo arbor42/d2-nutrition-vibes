@@ -228,7 +228,7 @@ export const criticalCSS = {
         return usedSelectors.has(selector) || this.isSelectorUsed(selector)
       })
       
-      criticalStyleElement.textContent = usedRules.join('}') + '}'
+      criticalStyleElement.textContent = `${usedRules.join('}')  }}`
     }
   },
 

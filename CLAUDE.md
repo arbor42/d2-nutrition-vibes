@@ -353,4 +353,6 @@ For questions about this codebase or suggestions for improvements to this guide,
 
 ---
 
-*This guide is maintained as part of Phase 9 (Documentation & Maintenance) and should be updated as the codebase evolves.*
+# Mock Data
+
+NEVER USE MOCK DATA, NEVER

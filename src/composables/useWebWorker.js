@@ -53,7 +53,7 @@ export function useWebWorker(workerScript) {
     
     // Reject all pending tasks
     pendingTasks.value.forEach(({ reject }) => {
-      reject(new Error('Web Worker error: ' + error.message))
+      reject(new Error(`Web Worker error: ${  error.message}`))
     })
     pendingTasks.value.clear()
     isProcessing.value = false

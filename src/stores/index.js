@@ -148,7 +148,7 @@ export const storePersistence = {
     // Save to localStorage first (smaller, faster)
     try {
       const config = persistenceConfig[storeId]
-      if (config && config.include) {
+      if (config?.include) {
         const filteredData = {}
         config.include.forEach(key => {
           if (data[key] !== undefined) {

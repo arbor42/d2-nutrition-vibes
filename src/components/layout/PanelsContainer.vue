@@ -22,7 +22,7 @@ const currentComponent = computed(() => {
     '/simulation': SimulationPanel,
     '/ml-predictions': MLPanel,
     '/structural': StructuralPanel,
-    '/process': ProcessPanel
+    '/process-mining': ProcessPanel
   }
   
   return componentMap[route.path] || DashboardPanel
@@ -41,7 +41,7 @@ const panelTitle = computed(() => {
     '/simulation': 'Simulationen',
     '/ml-predictions': 'ML Prognosen',
     '/structural': 'Strukturanalyse',
-    '/process': 'Process Mining'
+    '/process-mining': 'Process Mining'
   }
   
   return titleMap[route.path] || 'Dashboard'
@@ -54,7 +54,7 @@ const panelDescription = computed(() => {
     '/simulation': 'Szenario-basierte Simulationen und Prognosen',
     '/ml-predictions': 'Machine Learning gestützte Vorhersagen und Analysen',
     '/structural': 'Strukturelle Analyse von Datenmustern und Zusammenhängen',
-    '/process': 'Analyse und Optimierung von Geschäftsprozessen'
+    '/process-mining': 'Analyse und Optimierung von Geschäftsprozessen'
   }
   
   return descriptionMap[route.path] || 'Dashboard'

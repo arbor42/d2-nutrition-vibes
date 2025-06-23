@@ -52,7 +52,7 @@ const navigationItems = [
   },
   {
     name: 'Process Mining',
-    path: '/process',
+    path: '/process-mining',
     icon: 'flow',
     description: 'Prozessanalyse und -optimierung'
   }

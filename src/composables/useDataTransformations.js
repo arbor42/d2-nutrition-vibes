@@ -1,7 +1,8 @@
 import { ref, computed, watch, reactive } from 'vue'
+import * as d3 from 'd3'
+
 import { useDataStore } from '@/stores/useDataStore'
 import { useVisualizationStore } from '@/stores/useVisualizationStore'
-import * as d3 from 'd3'
 
 // Enhanced reactive data transformations for Phase 5
 export function useDataTransformations() {

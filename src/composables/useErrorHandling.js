@@ -1,4 +1,5 @@
 import { ref, computed, watch, onErrorCaptured } from 'vue'
+
 import { useUIStore } from '@/stores/useUIStore'
 
 // Enhanced error handling composable for Phase 5
@@ -275,7 +276,7 @@ export function useErrorHandling(options = {}) {
   // Retry operation
   const retryOperation = async (errorId) => {
     const error = errors.value.find(e => e.id === errorId)
-    if (!error || !error.context.retryFn) return
+    if (!error?.context.retryFn) return
     
     const retryKey = `${error.type}_${error.message.substring(0, 30)}`
     const retryCount = retryHistory.value.get(retryKey) || 0

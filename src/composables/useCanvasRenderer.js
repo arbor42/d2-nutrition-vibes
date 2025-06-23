@@ -28,8 +28,8 @@ export function useCanvasRenderer(options = {}) {
     canvas.height = height * devicePixelRatio
     
     // Scale back down using CSS
-    canvas.style.width = width + 'px'
-    canvas.style.height = height + 'px'
+    canvas.style.width = `${width  }px`
+    canvas.style.height = `${height  }px`
     
     // Scale the drawing context so everything draws at the correct size
     ctx.scale(devicePixelRatio, devicePixelRatio)

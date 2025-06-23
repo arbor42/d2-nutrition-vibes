@@ -21,8 +21,8 @@ export function useD3(containerRef, options = {}) {
   // Internal state
   let resizeObserver = null
   let resizeTimeout = null
-  let d3Selections = new Map()
-  let eventListeners = new Map()
+  const d3Selections = new Map()
+  const eventListeners = new Map()
 
   /**
    * Initialize D3.js container and setup

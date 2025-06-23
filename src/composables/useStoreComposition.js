@@ -1,4 +1,5 @@
 import { computed, watch, ref } from 'vue'
+
 import { useDataStore } from '@/stores/useDataStore'
 import { useUIStore } from '@/stores/useUIStore'
 import { useVisualizationStore } from '@/stores/useVisualizationStore'

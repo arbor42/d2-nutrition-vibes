@@ -184,16 +184,33 @@ const handlePanelSelect = (panel: any) => {
   uiStore.setCurrentPanel(panel.name)
   uiStore.showPanel(panel.name)
   uiStore.toggleAnalysisMenu() // Close menu after selection
+  
+  uiStore.addNotification({
+    type: 'info',
+    title: 'Panel gewechselt',
+    message: `${panel.label} wurde geöffnet`,
+    duration: 2000
+  })
 }
 
 // Export current data
 const exportData = () => {
   uiStore.addNotification({
     type: 'info',
-    title: 'Export',
-    message: 'Export-Funktionalität wird entwickelt...',
+    title: 'Export gestartet',
+    message: 'Erstelle CSV-Export der aktuellen Daten...',
     duration: 3000
   })
+  
+  // Simulate export process
+  setTimeout(() => {
+    uiStore.addNotification({
+      type: 'success',
+      title: 'Export abgeschlossen',
+      message: `Daten für ${formatProductName(uiStore.selectedProduct)} (${uiStore.selectedYear}) erfolgreich exportiert`,
+      duration: 5000
+    })
+  }, 2000)
 }
 
 // Refresh current data

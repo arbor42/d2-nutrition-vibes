@@ -18,37 +18,6 @@
       </div>
     </div>
 
-    <!-- Notifications -->
-    <div class="fixed top-4 right-4 z-40 space-y-2">
-      <div
-        v-for="notification in uiStore.notifications"
-        :key="notification.id"
-        class="bg-white dark:bg-gray-800 border-l-4 p-4 rounded-lg shadow-lg max-w-sm"
-        :class="{
-          'border-blue-500': notification.type === 'info',
-          'border-green-500': notification.type === 'success',
-          'border-yellow-500': notification.type === 'warning',
-          'border-red-500': notification.type === 'error'
-        }"
-      >
-        <div class="flex justify-between items-start">
-          <div class="flex-1">
-            <p class="text-gray-900 dark:text-gray-100 font-medium">
-              {{ notification.title }}
-            </p>
-            <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">
-              {{ notification.message }}
-            </p>
-          </div>
-          <button
-            class="ml-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
-            @click="uiStore.removeNotification(notification.id)"
-          >
-            ×
-          </button>
-        </div>
-      </div>
-    </div>
 
     <!-- Main App Content -->
     <router-view />
@@ -106,12 +75,26 @@ const handleKeydown = (event) => {
   if ((event.ctrlKey || event.metaKey) && event.key === 'd') {
     event.preventDefault()
     uiStore.toggleDarkMode()
+    
+    uiStore.addNotification({
+      type: 'info',
+      title: `${uiStore.darkMode ? 'Dunkel' : 'Hell'}-Modus aktiviert`,
+      message: `Darstellung wurde zu ${uiStore.darkMode ? 'dunkler' : 'heller'} Ansicht gewechselt`,
+      duration: 3000
+    })
   }
   
   // Toggle sidebar with Ctrl/Cmd + S
   if ((event.ctrlKey || event.metaKey) && event.key === 's') {
     event.preventDefault()
     uiStore.toggleSidebar()
+    
+    uiStore.addNotification({
+      type: 'info',
+      title: 'Navigation umgeschaltet',
+      message: `Seitenleiste ${uiStore.sidebarOpen ? 'geöffnet' : 'geschlossen'}`,
+      duration: 2000
+    })
   }
 }
 

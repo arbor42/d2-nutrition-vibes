@@ -123,15 +123,16 @@ let zoom: d3.ZoomBehavior<SVGElement, unknown>
 
 // High contrast green color scheme for production data
 const greenColorScheme = [
-  '#f7fcf5',  // Almost white for zero/very low values
-  '#e5f5e0',  // Very light green
-  '#a8dba8',  // Light green
-  '#7bc96f',  // Light-medium green
-  '#4eb157',  // Medium green
-  '#2e8b3e',  // Medium-dark green
-  '#1b7828',  // Dark green
-  '#0d5814',  // Very dark green
-  '#003300'   // Almost black green for highest values
+  '#f7fcf5',  // Very light green (lowest values)
+  '#e5f5e0',  // Light green
+  '#c7e9c0',  // Light green
+  '#a1d99b',  // Medium light green
+  '#74c476',  // Medium green
+  '#41ab5d',  // Medium green
+  '#238b45',  // Medium-dark green
+  '#006d2c',  // Dark green
+  '#00441b',  // Very dark green
+  '#002912'   // Darkest green (highest values)
 ]
 
 // Computed properties
@@ -510,6 +511,7 @@ const createLegend = (svg) => {
   
   // Add color stops for each color in the scheme
   if (legendScale.value && legendScale.value.quantiles) {
+    // Handle quantile scales
     const quantiles = [0, ...legendScale.value.quantiles(), legendDomain.value[1]]
     
     greenColorScheme.forEach((color, i) => {
@@ -529,7 +531,7 @@ const createLegend = (svg) => {
       }
     })
   } else {
-    // Fallback: linear gradient
+    // Linear gradient for sequential scales (including logarithmic)
     greenColorScheme.forEach((color, i) => {
       gradient.append('stop')
         .attr('offset', `${(i / (greenColorScheme.length - 1)) * 100}%`)
@@ -537,9 +539,30 @@ const createLegend = (svg) => {
     })
   }
   
+  // Create appropriate tick values based on scale type
+  let tickValues
+  if (legendDomain.value[1] > legendDomain.value[0] * 1000) {
+    // For highly skewed data, use logarithmic tick positions
+    const logMin = Math.log10(Math.max(legendDomain.value[0], 1))
+    const logMax = Math.log10(legendDomain.value[1])
+    const logTicks = d3.range(Math.ceil(logMin), Math.floor(logMax) + 1)
+    tickValues = logTicks.map(d => Math.pow(10, d))
+    // Add the actual min and max if they're not already included
+    if (!tickValues.includes(legendDomain.value[0])) {
+      tickValues.unshift(legendDomain.value[0])
+    }
+    if (!tickValues.includes(legendDomain.value[1])) {
+      tickValues.push(legendDomain.value[1])
+    }
+  }
+  
   const legendAxis = d3.axisBottom(legendScaleLinear)
-    .ticks(5)
+    .ticks(tickValues ? tickValues.length : 5)
     .tickFormat(createD3AxisFormatter('1000 t'))
+  
+  if (tickValues) {
+    legendAxis.tickValues(tickValues)
+  }
   
   const legendTextColor = isDarkMode ? '#D1D5DB' : '#374151' // gray-300 : gray-700
   
@@ -1026,31 +1049,91 @@ const applyProductionDataDirect = (container, data) => {
   
   console.log('🗺️ WorldMap: Data maps created - Countries:', dataByCountry.size, 'Codes:', dataByCountryCode.size)
 
-  // Create color scale with fixed domain for consistency across years
+  // Create adaptive color scale based on data distribution
   const values = data.filter(d => d.value > 0).map(d => d.value)
   if (values.length > 0) {
-    // Update legend domain if needed
-    const maxValue = d3.max(values)
-    const minValue = d3.min(values)
-    
-    // Create domain with better distribution
-    legendDomain.value = [0, maxValue]
-    
-    console.log('🎨 WorldMap: Color scale domain:', legendDomain.value)
-    console.log('🎨 WorldMap: Min value:', minValue, 'Max value:', maxValue)
-    
-    // Use quantile scale for better distribution of colors
-    // This ensures equal number of countries in each color bin
+    // Sort values for analysis
     const sortedValues = values.sort((a, b) => a - b)
+    const minValue = sortedValues[0]
+    const maxValue = sortedValues[sortedValues.length - 1]
     
-    colorScale = d3.scaleQuantile()
-      .domain(sortedValues)
-      .range(greenColorScheme)
+    console.log('🎨 WorldMap: Value range:', minValue, 'to', maxValue)
     
-    console.log('🎨 WorldMap: Quantile thresholds:', colorScale.quantiles())
+    // Analyze data distribution for optimal scale selection
+    const range = maxValue - minValue
+    const median = d3.median(sortedValues)
+    const q1 = d3.quantile(sortedValues, 0.25)
+    const q3 = d3.quantile(sortedValues, 0.75)
+    const iqr = q3 - q1
     
-    // Test the scale
-    console.log('🎨 WorldMap: Test colors - 0:', colorScale(0), maxValue/2 + ':', colorScale(maxValue/2), maxValue + ':', colorScale(maxValue))
+    // Detect skewness - highly skewed if max is much larger than median
+    const isHighlySkewed = (maxValue - median) > 3 * iqr
+    
+    console.log('🎨 WorldMap: Data analysis:', {
+      count: values.length, range, median, q1, q3, iqr, isHighlySkewed
+    })
+    
+    // Choose optimal scale type based on data characteristics
+    if (isHighlySkewed && values.length > 20) {
+      // For highly skewed data, use logarithmic scale for better visual distribution
+      console.log('🎨 WorldMap: Using logarithmic scale (highly skewed data)')
+      
+      // Use log scale with base 10, but handle zero values
+      const logMin = Math.log10(Math.max(minValue, 1))
+      const logMax = Math.log10(maxValue)
+      
+      colorScale = d3.scaleSequential()
+        .domain([logMin, logMax])
+        .interpolator((t) => {
+          const index = Math.floor(t * (greenColorScheme.length - 1))
+          const nextIndex = Math.min(index + 1, greenColorScheme.length - 1)
+          const localT = (t * (greenColorScheme.length - 1)) - index
+          
+          if (localT === 0) return greenColorScheme[index]
+          
+          // Simple interpolation between adjacent colors
+          return d3.interpolateRgb(greenColorScheme[index], greenColorScheme[nextIndex])(localT)
+        })
+      
+      // Transform values using log10 for the scale
+      const originalColorScale = colorScale
+      colorScale = (value) => {
+        if (value <= 0) return greenColorScheme[0]
+        return originalColorScale(Math.log10(value))
+      }
+      
+      legendDomain.value = [minValue, maxValue]
+    } else if (values.length > 10) {
+      // For moderate datasets, use quantize scale with smart breaks
+      console.log('🎨 WorldMap: Using quantize scale (moderate dataset)')
+      
+      // Create smart domain that accounts for outliers
+      const domain = minValue === 0 ? [0, maxValue] : [minValue * 0.9, maxValue * 1.1]
+      
+      colorScale = d3.scaleQuantize()
+        .domain(domain)
+        .range(greenColorScheme)
+      
+      legendDomain.value = domain
+    } else {
+      // For small datasets, use linear scale for simple interpolation
+      console.log('🎨 WorldMap: Using linear scale (small dataset)')
+      colorScale = d3.scaleLinear()
+        .domain([minValue, maxValue])
+        .range([greenColorScheme[0], greenColorScheme[greenColorScheme.length - 1]])
+        .interpolate(d3.interpolateRgb)
+      
+      legendDomain.value = [minValue, maxValue]
+    }
+    
+    console.log('🎨 WorldMap: Adaptive color scale created with domain:', legendDomain.value)
+    
+    // Test the scale with a few sample values for verification
+    if (colorScale.quantiles) {
+      console.log('🎨 WorldMap: Quantile thresholds:', colorScale.quantiles())
+    }
+    const testValues = [minValue, median, maxValue]
+    console.log('🎨 WorldMap: Test colors:', testValues.map(v => ({ value: v, color: colorScale(v) })))
     
     // Update legend scale
     legendScale.value = colorScale
@@ -1112,84 +1195,7 @@ const updateMapWithProductionData = () => {
   }
 }
 
-// Apply production data to map
-const applyProductionData = (container, data) => {
-  if (!data || !Array.isArray(data)) return
-
-  console.log('🗺️ WorldMap: Applying production data to map:', data)
-
-  // Create data lookup by both country name and country code for better matching
-  const dataByCountry = new Map()
-  const dataByCountryCode = new Map()
-  const dataByNormalizedName = new Map()
-  
-  data.forEach(d => {
-    if (d.value > 0) {
-      // Store by original name (lowercase)
-      dataByCountry.set(d.country.toLowerCase(), d.value)
-      // Store by country code
-      dataByCountryCode.set(d.countryCode, d.value)
-      // Store by normalized name (lowercase)
-      const normalizedName = normalizeCountryName(d.country).toLowerCase()
-      dataByNormalizedName.set(normalizedName, d.value)
-    }
-  })
-
-  console.log('🗺️ WorldMap: Data lookup maps created:', { 
-    countryNames: Array.from(dataByCountry.keys()), 
-    countryCodes: Array.from(dataByCountryCode.keys()),
-    normalizedNames: Array.from(dataByNormalizedName.keys())
-  })
-
-  // Create color scale
-  const values = Array.from(dataByCountry.values()).filter(v => v > 0)
-  if (values.length > 0) {
-    const extent = d3.extent(values)
-    const colorScheme = mapConfig.value.colorScheme
-    
-    colorScale = d3.scaleQuantize()
-      .domain(extent)
-      .range(colorScheme)
-      
-    console.log('🗺️ WorldMap: Color scale created with domain:', extent)
-  }
-
-  // Update country colors with smooth transition
-  const countries = container.selectAll('.country')
-  console.log('🗺️ WorldMap: Found', countries.size(), 'country elements to update')
-  
-  countries.transition()
-    .duration(750)
-    .attr('fill', (d) => {
-      // Try multiple properties for country identification
-      const countryName = (d.properties.name || d.properties.NAME || d.properties.admin || '').toLowerCase()
-      const countryCode = d.properties.iso_a3 || d.properties.adm0_a3
-      const normalizedName = normalizeCountryName(d.properties.name || d.properties.admin || '').toLowerCase()
-      
-      // Look up by country code first, then by normalized name, then by original name
-      const value = dataByCountryCode.get(countryCode) || 
-                  dataByNormalizedName.get(normalizedName) ||
-                  dataByCountry.get(countryName)
-      
-      if (value && colorScale) {
-        console.log(`🗺️ WorldMap: Coloring ${countryName}/${countryCode} with value ${value}`)
-        return colorScale(value)
-      }
-      // Return theme-appropriate default color for countries without data
-      const isDarkMode = document.documentElement.classList.contains('dark')
-      return isDarkMode ? '#374151' : '#e5e7eb' // gray-700 : gray-200
-    })
-    .attr('opacity', (d) => {
-      const countryName = (d.properties.name || d.properties.NAME || d.properties.admin || '').toLowerCase()
-      const countryCode = d.properties.iso_a3 || d.properties.adm0_a3
-      const normalizedName = normalizeCountryName(d.properties.name || d.properties.admin || '').toLowerCase()
-      
-      const hasData = dataByCountryCode.has(countryCode) || 
-                      dataByNormalizedName.has(normalizedName) ||
-                      dataByCountry.has(countryName)
-      return hasData ? 1 : 0.6
-    })
-}
+// Legacy function removed - using applyProductionDataDirect with adaptive color scaling instead
 
 // Event handlers
 const handleCountryClick = (event, d) => {

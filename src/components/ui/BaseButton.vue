@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 
 interface Props {
-  variant?: 'primary' | 'secondary' | 'danger' | 'success' | 'warning' | 'ghost'
+  variant?: 'primary' | 'secondary' | 'danger' | 'success' | 'warning' | 'ghost' | 'outline-primary' | 'outline-secondary'
   size?: 'sm' | 'md' | 'lg'
   disabled?: boolean
   loading?: boolean
@@ -116,6 +116,32 @@ const buttonClasses = computed(() => {
       'border-transparent',
       'hover:border-gray-300',
       'dark:hover:border-gray-600'
+    ],
+    'outline-primary': [
+      'bg-transparent',
+      'text-primary-600',
+      'hover:bg-primary-50',
+      'focus:ring-primary-500',
+      'active:bg-primary-100',
+      'dark:text-primary-400',
+      'dark:hover:bg-primary-950',
+      'dark:active:bg-primary-900',
+      'border-2',
+      'border-primary-500',
+      'hover:border-primary-600'
+    ],
+    'outline-secondary': [
+      'bg-transparent',
+      'text-secondary-600',
+      'hover:bg-secondary-50',
+      'focus:ring-secondary-500',
+      'active:bg-secondary-100',
+      'dark:text-secondary-400',
+      'dark:hover:bg-secondary-950',
+      'dark:active:bg-secondary-900',
+      'border-2',
+      'border-secondary-500',
+      'hover:border-secondary-600'
     ]
   }
 

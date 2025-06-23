@@ -92,20 +92,13 @@ export function useD3(containerRef, options = {}) {
    * Get a registered D3.js selection
    */
   const getSelection = (key) => {
-    const selection = d3Selections.get(key)
-    console.log(`🔍 useD3: getSelection('${key}'):`, selection ? 'found' : 'not found')
-    if (selection) {
-      console.log(`🔍 useD3: Selection node:`, selection.node())
-    }
-    return selection
+    return d3Selections.get(key)
   }
 
   /**
    * Create SVG element with proper setup
    */
   const createSVG = (options = {}) => {
-    console.log('🖼️ useD3: createSVG called with options:', options)
-    
     const {
       width = dimensions.value.width,
       height = dimensions.value.height,
@@ -114,9 +107,6 @@ export function useD3(containerRef, options = {}) {
       preserveAspectRatio = 'xMidYMid meet'
     } = options
 
-    console.log('🖼️ useD3: SVG dimensions:', { width, height })
-    console.log('🖼️ useD3: containerRef.value:', containerRef.value)
-
     if (!containerRef.value) {
       console.error('❌ useD3: No container reference available')
       return null
@@ -124,11 +114,9 @@ export function useD3(containerRef, options = {}) {
 
     // Remove existing SVG
     const existingSvg = d3.select(containerRef.value).select('svg')
-    console.log('🖼️ useD3: Existing SVG found:', !existingSvg.empty())
     existingSvg.remove()
 
     // Create new SVG
-    console.log('🖼️ useD3: Creating new SVG...')
     const svg = d3.select(containerRef.value)
       .append('svg')
       .attr('class', className)
@@ -137,20 +125,14 @@ export function useD3(containerRef, options = {}) {
       .attr('viewBox', `0 0 ${width} ${height}`)
       .attr('preserveAspectRatio', preserveAspectRatio)
 
-    console.log('🖼️ useD3: SVG created:', svg.node())
-
     // Create main group with margins
     const g = svg.append('g')
       .attr('class', 'chart-container')
       .attr('transform', `translate(${margin.left}, ${margin.top})`)
 
-    console.log('🖼️ useD3: Container group created:', g.node())
-
     // Store selections
     d3Selections.set('svg', svg)
     d3Selections.set('container', g)
-    
-    console.log('✅ useD3: SVG setup complete')
 
     return { svg, g, width, height, margin }
   }

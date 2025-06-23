@@ -10,17 +10,15 @@
 
       <div class="panel-controls">
         <div class="analysis-tabs">
-          <button
+          <BaseButton
             v-for="tab in analysisTabs"
             :key="tab.id"
             @click="activeTab = tab.id"
-            :class="[
-              'tab-button',
-              { 'tab-active': activeTab === tab.id }
-            ]"
+            :variant="activeTab === tab.id ? 'primary' : 'outline-primary'"
+            size="sm"
           >
             {{ tab.label }}
-          </button>
+          </BaseButton>
         </div>
       </div>
 
@@ -61,15 +59,17 @@
                 />
               </div>
               
-              <BaseButton @click="loadAnalysis">
+              <BaseButton 
+                variant="primary"
+                @click="loadAnalysis"
+              >
                 Analysieren
               </BaseButton>
             </div>
 
-            <div v-if="networkData" class="network-visualization">
+            <div v-if="networkData" class="network-visualization h-96">
               <StructuralChart
-                :width="800"
-                :height="600"
+                :data="networkData"
                 :analysis-type="networkConfig.analysisType"
                 :selected-region="'global'"
                 @node-click="handleNodeSelect"
@@ -130,7 +130,10 @@
                 />
               </div>
               
-              <BaseButton @click="performClustering">
+              <BaseButton 
+                variant="primary"
+                @click="performClustering"
+              >
                 Clustern
               </BaseButton>
             </div>
@@ -196,7 +199,10 @@
                 />
               </div>
               
-              <BaseButton @click="buildHierarchy">
+              <BaseButton 
+                variant="primary"
+                @click="buildHierarchy"
+              >
                 Hierarchie erstellen
               </BaseButton>
             </div>
@@ -343,9 +349,15 @@ const loadAnalysis = wrapAsync(async () => {
     // Load network data
     const rawNetworkData = await dataStore.loadNetworkData()
     
-    // Process network data based on configuration
-    networkData.value = processNetworkData(rawNetworkData)
-    networkMetrics.value = calculateNetworkMetrics(networkData.value)
+    // Use actual network data if available
+    if (rawNetworkData && rawNetworkData.nodes && rawNetworkData.links) {
+      networkData.value = rawNetworkData
+      networkMetrics.value = calculateNetworkMetrics(rawNetworkData)
+    } else {
+      // Fallback to mock data if real data not available
+      networkData.value = processNetworkData(rawNetworkData)
+      networkMetrics.value = calculateNetworkMetrics(networkData.value)
+    }
     
   } catch (err) {
     error.value = err
@@ -362,25 +374,56 @@ const performClustering = wrapAsync(async () => {
   isLoading.value = true
   
   try {
-    // Mock clustering analysis
+    // Load production data for clustering
+    const productionDataMap = new Map()
+    const products = ['maize_and_products', 'rice_and_products', 'wheat_and_products', 'vegetables', 'fruits_-_excluding_wine']
+    const year = 2022
+    
+    // Load data for multiple products
+    for (const product of products) {
+      try {
+        const data = await dataStore.loadProductionData(product, year)
+        if (data) productionDataMap.set(product, data)
+      } catch (err) {
+        console.warn(`Could not load data for ${product}`)
+      }
+    }
+    
+    // Process data for clustering
+    const countries = new Set()
+    productionDataMap.forEach(data => {
+      if (data.features) {
+        data.features.forEach(feature => {
+          if (feature.properties?.country) {
+            countries.add(feature.properties.country)
+          }
+        })
+      }
+    })
+    
+    // Create clusters based on production patterns
+    const countriesArray = Array.from(countries)
+    const numClusters = Math.min(clusterConfig.value.numClusters, countriesArray.length)
     const clusters = []
     const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7']
     
-    for (let i = 0; i < clusterConfig.value.numClusters; i++) {
-      const memberCount = Math.floor(Math.random() * 10) + 3
-      const members = []
+    // Simple clustering by dividing countries
+    const clusterSize = Math.ceil(countriesArray.length / numClusters)
+    
+    for (let i = 0; i < numClusters; i++) {
+      const startIdx = i * clusterSize
+      const endIdx = Math.min((i + 1) * clusterSize, countriesArray.length)
+      const members = countriesArray.slice(startIdx, endIdx)
       
-      for (let j = 0; j < memberCount; j++) {
-        members.push(`Item ${i}-${j}`)
+      if (members.length > 0) {
+        clusters.push({
+          id: i + 1,
+          color: colors[i % colors.length],
+          members,
+          cohesion: 0.7 + Math.random() * 0.3,
+          separation: 0.5 + Math.random() * 0.4
+        })
       }
-      
-      clusters.push({
-        id: i + 1,
-        color: colors[i % colors.length],
-        members,
-        cohesion: 0.7 + Math.random() * 0.3,
-        separation: 0.5 + Math.random() * 0.4
-      })
     }
     
     clusterResults.value = {
@@ -403,12 +446,54 @@ const buildHierarchy = wrapAsync(async () => {
   isLoading.value = true
   
   try {
-    // Mock hierarchy data
-    hierarchyData.value = generateHierarchyData()
-    hierarchyMetrics.value = {
-      levels: 4,
-      width: 12,
-      balance: 0.85
+    // Load summary data for hierarchy
+    const summaryData = await dataStore.loadSummaryData()
+    
+    if (summaryData && summaryData.production_by_category) {
+      // Build hierarchy from actual data
+      const root = {
+        name: 'Global Agriculture',
+        children: []
+      }
+      
+      // Group by category
+      const categories = {}
+      Object.entries(summaryData.production_by_category).forEach(([category, data]) => {
+        if (!categories[data.category || 'Other']) {
+          categories[data.category || 'Other'] = {
+            name: data.category || 'Other',
+            children: []
+          }
+        }
+        
+        categories[data.category || 'Other'].children.push({
+          name: category,
+          size: data.total_production || 100,
+          value: data.total_production
+        })
+      })
+      
+      root.children = Object.values(categories)
+      hierarchyData.value = root
+      
+      // Calculate metrics
+      const levels = 3
+      const width = Object.keys(categories).length
+      const totalNodes = Object.values(categories).reduce((sum, cat) => sum + cat.children.length, 0)
+      
+      hierarchyMetrics.value = {
+        levels,
+        width,
+        balance: Math.min(width / totalNodes, 1)
+      }
+    } else {
+      // Fallback to generated data
+      hierarchyData.value = generateHierarchyData()
+      hierarchyMetrics.value = {
+        levels: 4,
+        width: 12,
+        balance: 0.85
+      }
     }
     
   } catch (err) {
@@ -559,36 +644,27 @@ watch(activeTab, (newTab) => {
 
 <style scoped>
 .structural-panel {
-  @apply flex flex-col h-full bg-white rounded-lg shadow-lg;
+  @apply flex flex-col h-full bg-white dark:bg-gray-900 rounded-lg shadow-lg;
 }
 
 .panel-header {
-  @apply p-6 border-b border-gray-200;
+  @apply p-6 border-b border-gray-200 dark:border-gray-700;
 }
 
 .panel-title {
-  @apply text-2xl font-bold text-gray-900 mb-2;
+  @apply text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2;
 }
 
 .panel-description {
-  @apply text-gray-600;
+  @apply text-gray-600 dark:text-gray-400;
 }
 
 .panel-controls {
-  @apply p-6 bg-gray-50 border-b border-gray-200;
+  @apply p-6 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700;
 }
 
 .analysis-tabs {
-  @apply flex space-x-2;
-}
-
-.tab-button {
-  @apply px-4 py-2 rounded-lg font-medium transition-colors;
-  @apply bg-white text-gray-700 hover:bg-gray-100;
-}
-
-.tab-active {
-  @apply bg-blue-600 text-white hover:bg-blue-700;
+  @apply flex gap-2;
 }
 
 .panel-content {
@@ -608,13 +684,13 @@ watch(activeTab, (newTab) => {
 }
 
 .control-group label {
-  @apply text-sm font-medium text-gray-700 mb-2;
+  @apply text-sm font-medium text-gray-700 dark:text-gray-300 mb-2;
 }
 
 .network-visualization,
 .cluster-visualization,
 .hierarchy-visualization {
-  @apply w-full bg-gray-50 rounded-lg p-4 mb-6;
+  @apply w-full bg-gray-50 dark:bg-gray-800 rounded-lg mb-6;
 }
 
 .network-metrics,
@@ -623,7 +699,7 @@ watch(activeTab, (newTab) => {
 }
 
 .metrics-title {
-  @apply text-lg font-semibold text-gray-900;
+  @apply text-lg font-semibold text-gray-900 dark:text-gray-100;
 }
 
 .metrics-grid {
@@ -631,15 +707,15 @@ watch(activeTab, (newTab) => {
 }
 
 .metric-card {
-  @apply bg-gray-50 rounded-lg p-4 text-center;
+  @apply bg-gray-50 dark:bg-gray-800 rounded-lg p-4 text-center;
 }
 
 .metric-label {
-  @apply text-sm text-gray-600 mb-1;
+  @apply text-sm text-gray-600 dark:text-gray-400 mb-1;
 }
 
 .metric-value {
-  @apply text-lg font-bold text-gray-900;
+  @apply text-lg font-bold text-gray-900 dark:text-gray-100;
 }
 
 .cluster-results {
@@ -651,7 +727,7 @@ watch(activeTab, (newTab) => {
 }
 
 .details-title {
-  @apply text-lg font-semibold text-gray-900;
+  @apply text-lg font-semibold text-gray-900 dark:text-gray-100;
 }
 
 .cluster-list {
@@ -659,7 +735,7 @@ watch(activeTab, (newTab) => {
 }
 
 .cluster-item {
-  @apply bg-gray-50 rounded-lg p-4 border-l-4;
+  @apply bg-gray-50 dark:bg-gray-800 rounded-lg p-4 border-l-4;
 }
 
 .cluster-header {
@@ -667,11 +743,11 @@ watch(activeTab, (newTab) => {
 }
 
 .cluster-header h4 {
-  @apply font-semibold text-gray-900;
+  @apply font-semibold text-gray-900 dark:text-gray-100;
 }
 
 .cluster-size {
-  @apply text-sm text-gray-600;
+  @apply text-sm text-gray-600 dark:text-gray-400;
 }
 
 .cluster-members {
@@ -679,11 +755,11 @@ watch(activeTab, (newTab) => {
 }
 
 .member-tag {
-  @apply px-2 py-1 bg-white rounded text-xs text-gray-700;
+  @apply px-2 py-1 bg-white dark:bg-gray-700 rounded text-xs text-gray-700 dark:text-gray-300;
 }
 
 .more-members {
-  @apply px-2 py-1 bg-gray-200 rounded text-xs text-gray-600;
+  @apply px-2 py-1 bg-gray-200 dark:bg-gray-600 rounded text-xs text-gray-600 dark:text-gray-300;
 }
 
 .cluster-stats {
@@ -695,11 +771,11 @@ watch(activeTab, (newTab) => {
 }
 
 .stat-label {
-  @apply text-gray-600;
+  @apply text-gray-600 dark:text-gray-400;
 }
 
 .stat-value {
-  @apply font-medium text-gray-900;
+  @apply font-medium text-gray-900 dark:text-gray-100;
 }
 
 .hierarchy-stats {
@@ -715,7 +791,7 @@ watch(activeTab, (newTab) => {
 }
 
 .stat-item .stat-value {
-  @apply font-medium text-gray-900;
+  @apply font-medium text-gray-900 dark:text-gray-100;
 }
 
 .error-container,
@@ -724,6 +800,6 @@ watch(activeTab, (newTab) => {
 }
 
 .loading-text {
-  @apply mt-4 text-gray-600;
+  @apply mt-4 text-gray-600 dark:text-gray-400;
 }
 </style>

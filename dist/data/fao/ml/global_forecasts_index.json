@@ -1,0 +1,673 @@
+{
+  "count": 111,
+  "files": [
+    "global_cereals___excluding_beer_forecast.json",
+    "global_sugar_crops_forecast.json",
+    "global_sugar_cane_forecast.json",
+    "global_milk___excluding_butter_forecast.json",
+    "global_vegetables_forecast.json",
+    "global_maize_and_products_forecast.json",
+    "global_vegetables_other_forecast.json",
+    "global_oilcrops_forecast.json",
+    "global_starchy_roots_forecast.json",
+    "global_rice_and_products_forecast.json",
+    "global_fruits___excluding_wine_forecast.json",
+    "global_wheat_and_products_forecast.json",
+    "global_potatoes_and_products_forecast.json",
+    "global_meat_forecast.json",
+    "global_cassava_and_products_forecast.json",
+    "global_palm_kernels_forecast.json",
+    "global_sugar_&_sweeteners_forecast.json",
+    "global_soyabeans_forecast.json",
+    "global_sugar_beet_forecast.json",
+    "global_fruits_other_forecast.json",
+    "global_vegetable_oils_forecast.json",
+    "global_beer_forecast.json",
+    "global_tomatoes_and_products_forecast.json",
+    "global_sugar_raw_equivalent_forecast.json",
+    "global_fish_seafood_forecast.json",
+    "global_eggs_forecast.json",
+    "global_barley_and_products_forecast.json",
+    "global_bananas_forecast.json",
+    "global_pigmeat_forecast.json",
+    "global_poultry_meat_forecast.json",
+    "global_sweet_potatoes_forecast.json",
+    "global_sweeteners_other_forecast.json",
+    "global_oranges_mandarines_forecast.json",
+    "global_onions_forecast.json",
+    "global_pulses_forecast.json",
+    "global_apples_and_products_forecast.json",
+    "global_grapes_and_products_excl_wine_forecast.json",
+    "global_rape_and_mustardseed_forecast.json",
+    "global_bovine_meat_forecast.json",
+    "global_sorghum_and_products_forecast.json",
+    "global_yams_forecast.json",
+    "global_freshwater_fish_forecast.json",
+    "global_palm_oil_forecast.json",
+    "global_coconuts___incl_copra_forecast.json",
+    "global_groundnuts_forecast.json",
+    "global_soyabean_oil_forecast.json",
+    "global_pulses_other_and_products_forecast.json",
+    "global_plantains_forecast.json",
+    "global_sunflower_seed_forecast.json",
+    "global_cottonseed_forecast.json",
+    "global_animal_fats_forecast.json",
+    "global_stimulants_forecast.json",
+    "global_cereals_other_forecast.json",
+    "global_pelagic_fish_forecast.json",
+    "global_millet_and_products_forecast.json",
+    "global_aquatic_products_other_forecast.json",
+    "global_aquatic_plants_forecast.json",
+    "global_beverages_fermented_forecast.json",
+    "global_beans_forecast.json",
+    "global_oilcrops_oil_other_forecast.json",
+    "global_wine_forecast.json",
+    "global_fats_animals_raw_forecast.json",
+    "global_pineapples_and_products_forecast.json",
+    "global_rape_and_mustard_oil_forecast.json",
+    "global_roots_other_forecast.json",
+    "global_olives_including_preserved_forecast.json",
+    "global_oats_forecast.json",
+    "global_offals_forecast.json",
+    "global_offals_edible_forecast.json",
+    "global_demersal_fish_forecast.json",
+    "global_tea_including_mate_forecast.json",
+    "global_molluscs_other_forecast.json",
+    "global_treenuts_forecast.json",
+    "global_nuts_and_products_forecast.json",
+    "global_lemons_limes_and_products_forecast.json",
+    "global_mutton_&_goat_meat_forecast.json",
+    "global_sunflowerseed_oil_forecast.json",
+    "global_crustaceans_forecast.json",
+    "global_citrus_other_forecast.json",
+    "global_oilcrops_other_forecast.json",
+    "global_rye_and_products_forecast.json",
+    "global_spices_forecast.json",
+    "global_peas_forecast.json",
+    "global_butter_ghee_forecast.json",
+    "global_marine_fish_other_forecast.json",
+    "global_coffee_and_products_forecast.json",
+    "global_sugar_non_centrifugal_forecast.json",
+    "global_grapefruit_and_products_forecast.json",
+    "global_spices_other_forecast.json",
+    "global_dates_forecast.json",
+    "global_sesame_seed_forecast.json",
+    "global_meat_other_forecast.json",
+    "global_palmkernel_oil_forecast.json",
+    "global_groundnut_oil_forecast.json",
+    "global_cocoa_beans_and_products_forecast.json",
+    "global_cottonseed_oil_forecast.json",
+    "global_pimento_forecast.json",
+    "global_cephalopods_forecast.json",
+    "global_cream_forecast.json",
+    "global_olive_oil_forecast.json",
+    "global_coconut_oil_forecast.json",
+    "global_maize_germ_oil_forecast.json",
+    "global_honey_forecast.json",
+    "global_aquatic_animals_others_forecast.json",
+    "global_sesameseed_oil_forecast.json",
+    "global_fish_body_oil_forecast.json",
+    "global_ricebran_oil_forecast.json",
+    "global_pepper_forecast.json",
+    "global_miscellaneous_forecast.json",
+    "global_cloves_forecast.json",
+    "global_fish_liver_oil_forecast.json"
+  ],
+  "items": [
+    {
+      "scenario": "global_cereals___excluding_beer",
+      "title": "Globale Cereals - Excluding Beer Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_sugar_crops",
+      "title": "Globale Sugar Crops Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_sugar_cane",
+      "title": "Globale Sugar cane Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_milk___excluding_butter",
+      "title": "Globale Milk - Excluding Butter Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_vegetables",
+      "title": "Globale Vegetables Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_maize_and_products",
+      "title": "Globale Maize and products Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_vegetables_other",
+      "title": "Globale Vegetables, other Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_oilcrops",
+      "title": "Globale Oilcrops Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_starchy_roots",
+      "title": "Globale Starchy Roots Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_rice_and_products",
+      "title": "Globale Rice and products Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_fruits___excluding_wine",
+      "title": "Globale Fruits - Excluding Wine Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_wheat_and_products",
+      "title": "Globale Wheat and products Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_potatoes_and_products",
+      "title": "Globale Potatoes and products Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_meat",
+      "title": "Globale Meat Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_cassava_and_products",
+      "title": "Globale Cassava and products Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_palm_kernels",
+      "title": "Globale Palm kernels Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_sugar_&_sweeteners",
+      "title": "Globale Sugar & Sweeteners Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_soyabeans",
+      "title": "Globale Soyabeans Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_sugar_beet",
+      "title": "Globale Sugar beet Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_fruits_other",
+      "title": "Globale Fruits, other Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_vegetable_oils",
+      "title": "Globale Vegetable Oils Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_beer",
+      "title": "Globale Beer Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_tomatoes_and_products",
+      "title": "Globale Tomatoes and products Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_sugar_raw_equivalent",
+      "title": "Globale Sugar (Raw Equivalent) Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_fish_seafood",
+      "title": "Globale Fish, Seafood Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_eggs",
+      "title": "Globale Eggs Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_barley_and_products",
+      "title": "Globale Barley and products Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_bananas",
+      "title": "Globale Bananas Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_pigmeat",
+      "title": "Globale Pigmeat Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_poultry_meat",
+      "title": "Globale Poultry Meat Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_sweet_potatoes",
+      "title": "Globale Sweet potatoes Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_sweeteners_other",
+      "title": "Globale Sweeteners, Other Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_oranges_mandarines",
+      "title": "Globale Oranges, Mandarines Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_onions",
+      "title": "Globale Onions Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_pulses",
+      "title": "Globale Pulses Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_apples_and_products",
+      "title": "Globale Apples and products Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_grapes_and_products_excl_wine",
+      "title": "Globale Grapes and products (excl wine) Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_rape_and_mustardseed",
+      "title": "Globale Rape and Mustardseed Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_bovine_meat",
+      "title": "Globale Bovine Meat Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_sorghum_and_products",
+      "title": "Globale Sorghum and products Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_yams",
+      "title": "Globale Yams Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_freshwater_fish",
+      "title": "Globale Freshwater Fish Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_palm_oil",
+      "title": "Globale Palm Oil Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_coconuts___incl_copra",
+      "title": "Globale Coconuts - Incl Copra Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_groundnuts",
+      "title": "Globale Groundnuts Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_soyabean_oil",
+      "title": "Globale Soyabean Oil Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_pulses_other_and_products",
+      "title": "Globale Pulses, Other and products Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_plantains",
+      "title": "Globale Plantains Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_sunflower_seed",
+      "title": "Globale Sunflower seed Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_cottonseed",
+      "title": "Globale Cottonseed Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_animal_fats",
+      "title": "Globale Animal fats Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_stimulants",
+      "title": "Globale Stimulants Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_cereals_other",
+      "title": "Globale Cereals, other Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_pelagic_fish",
+      "title": "Globale Pelagic Fish Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_millet_and_products",
+      "title": "Globale Millet and products Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_aquatic_products_other",
+      "title": "Globale Aquatic Products, Other Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_aquatic_plants",
+      "title": "Globale Aquatic Plants Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_beverages_fermented",
+      "title": "Globale Beverages, Fermented Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_beans",
+      "title": "Globale Beans Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_oilcrops_oil_other",
+      "title": "Globale Oilcrops Oil, Other Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_wine",
+      "title": "Globale Wine Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_fats_animals_raw",
+      "title": "Globale Fats, Animals, Raw Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_pineapples_and_products",
+      "title": "Globale Pineapples and products Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_rape_and_mustard_oil",
+      "title": "Globale Rape and Mustard Oil Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_roots_other",
+      "title": "Globale Roots, Other Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_olives_including_preserved",
+      "title": "Globale Olives (including preserved) Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_oats",
+      "title": "Globale Oats Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_offals",
+      "title": "Globale Offals Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_offals_edible",
+      "title": "Globale Offals, Edible Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_demersal_fish",
+      "title": "Globale Demersal Fish Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_tea_including_mate",
+      "title": "Globale Tea (including mate) Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_molluscs_other",
+      "title": "Globale Molluscs, Other Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_treenuts",
+      "title": "Globale Treenuts Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_nuts_and_products",
+      "title": "Globale Nuts and products Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_lemons_limes_and_products",
+      "title": "Globale Lemons, Limes and products Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_mutton_&_goat_meat",
+      "title": "Globale Mutton & Goat Meat Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_sunflowerseed_oil",
+      "title": "Globale Sunflowerseed Oil Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_crustaceans",
+      "title": "Globale Crustaceans Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_citrus_other",
+      "title": "Globale Citrus, Other Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_oilcrops_other",
+      "title": "Globale Oilcrops, Other Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_rye_and_products",
+      "title": "Globale Rye and products Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_spices",
+      "title": "Globale Spices Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_peas",
+      "title": "Globale Peas Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_butter_ghee",
+      "title": "Globale Butter, Ghee Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_marine_fish_other",
+      "title": "Globale Marine Fish, Other Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_coffee_and_products",
+      "title": "Globale Coffee and products Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_sugar_non_centrifugal",
+      "title": "Globale Sugar non-centrifugal Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_grapefruit_and_products",
+      "title": "Globale Grapefruit and products Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_spices_other",
+      "title": "Globale Spices, Other Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_dates",
+      "title": "Globale Dates Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_sesame_seed",
+      "title": "Globale Sesame seed Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_meat_other",
+      "title": "Globale Meat, Other Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_palmkernel_oil",
+      "title": "Globale Palmkernel Oil Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_groundnut_oil",
+      "title": "Globale Groundnut Oil Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_cocoa_beans_and_products",
+      "title": "Globale Cocoa Beans and products Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_cottonseed_oil",
+      "title": "Globale Cottonseed Oil Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_pimento",
+      "title": "Globale Pimento Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_cephalopods",
+      "title": "Globale Cephalopods Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_cream",
+      "title": "Globale Cream Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_olive_oil",
+      "title": "Globale Olive Oil Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_coconut_oil",
+      "title": "Globale Coconut Oil Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_maize_germ_oil",
+      "title": "Globale Maize Germ Oil Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_honey",
+      "title": "Globale Honey Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_aquatic_animals_others",
+      "title": "Globale Aquatic Animals, Others Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_sesameseed_oil",
+      "title": "Globale Sesameseed Oil Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_fish_body_oil",
+      "title": "Globale Fish, Body Oil Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_ricebran_oil",
+      "title": "Globale Ricebran Oil Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_pepper",
+      "title": "Globale Pepper Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_miscellaneous",
+      "title": "Globale Miscellaneous Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_cloves",
+      "title": "Globale Cloves Produktion",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "global_fish_liver_oil",
+      "title": "Globale Fish, Liver Oil Produktion",
+      "unit": "1000 t"
+    }
+  ]
+}

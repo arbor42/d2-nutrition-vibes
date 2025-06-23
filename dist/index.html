@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- DNS prefetch for external resources -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    
+    <!-- Preconnect to font sources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Optimized font loading -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
+    
+    <!-- Material Icons with optimized loading -->
+    <link rel="preload" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"></noscript>
+    
+    <!-- Critical CSS will be inlined here by the build process -->
+    <style>
+      /* Critical CSS for initial render */
+      html { font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; }
+      body { margin: 0; line-height: 1.6; color: #1f2937; background: #ffffff; }
+      .loading-fallback { 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        height: 100vh; 
+        font-size: 1.125rem; 
+        color: #6b7280; 
+      }
+      .spinner {
+        border: 2px solid #e5e7eb;
+        border-top: 2px solid #3b82f6;
+        border-radius: 50%;
+        width: 2rem;
+        height: 2rem;
+        animation: spin 1s linear infinite;
+        margin-right: 0.75rem;
+      }
+      @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+    
+    <title>D2 Nutrition Vibes - Vue.js App</title>
+    
+    <!-- Performance monitoring -->
+    <script>
+      // Mark page start for performance monitoring
+      performance.mark('page-start');
+      
+      // Font loading optimization
+      if ('fonts' in document) {
+        document.fonts.ready.then(() => {
+          performance.mark('fonts-loaded');
+        });
+      }
+    </script>
+    
+  <script type="module" crossorigin src="/assets/main-DyE8_b-B.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/vue-vendor-DKeBeTOX.js">
+  <link rel="modulepreload" crossorigin href="/assets/pinia-vendor-D_zwxMF-.js">
+  <link rel="modulepreload" crossorigin href="/assets/vendor-EN_QrI4H.js">
+  <link rel="modulepreload" crossorigin href="/assets/stores-D-2ZrdBw.js">
+  <link rel="modulepreload" crossorigin href="/assets/ui-components-BBmjzzY0.js">
+  <link rel="modulepreload" crossorigin href="/assets/d3-vendor-D3zeXOrT.js">
+  <link rel="modulepreload" crossorigin href="/assets/composables-DOD5TLdC.js">
+  <link rel="modulepreload" crossorigin href="/assets/visualizations-BgLsdJQH.js">
+  <link rel="modulepreload" crossorigin href="/assets/panels-HNJlyK_X.js">
+  <link rel="stylesheet" crossorigin href="/assets/panels-CaUqyTWp.css">
+  <link rel="stylesheet" crossorigin href="/assets/ui-components-GpyDc0vM.css">
+  <link rel="stylesheet" crossorigin href="/assets/visualizations-xRhLmbCJ.css">
+  <link rel="stylesheet" crossorigin href="/assets/main-Dvi69NQ2.css">
+</head>
+<body>
+    <div id="app">
+      <!-- Loading fallback while Vue app initializes -->
+      <div class="loading-fallback">
+        <div class="spinner"></div>
+        <span>Lade D2 Nutrition Vibes...</span>
+      </div>
+    </div>
+</body>
+</html>
+

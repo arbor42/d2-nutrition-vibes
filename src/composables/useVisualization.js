@@ -30,10 +30,6 @@ export function useVisualization(containerRef, options = {}) {
    * Queue an update operation
    */
   const queueUpdate = (updateFn, data = null, immediate = false) => {
-    console.log('🎯 useVisualization: queueUpdate called')
-    console.log('🎯 useVisualization: updateFn type:', typeof updateFn)
-    console.log('🎯 useVisualization: immediate:', immediate)
-    console.log('🎯 useVisualization: data:', data ? 'provided' : 'null')
     
     if (typeof updateFn !== 'function') {
       console.error('❌ useVisualization: updateFn is not a function:', updateFn)
@@ -47,10 +43,8 @@ export function useVisualization(containerRef, options = {}) {
     }
 
     if (immediate) {
-      console.log('⚡ useVisualization: Executing update immediately')
       executeUpdate(update)
     } else {
-      console.log('⏰ useVisualization: Queuing update for later')
       updateQueue.value.push(update)
       scheduleUpdate()
     }
@@ -99,32 +93,20 @@ export function useVisualization(containerRef, options = {}) {
    * Execute a single update operation
    */
   const executeUpdate = async (update) => {
-    console.log('🔧 useVisualization: executeUpdate called')
-    console.log('🔧 useVisualization: d3Chart.isReady.value:', d3Chart.isReady.value)
-    
     if (!d3Chart.isReady.value) {
-      console.warn('⚠️ useVisualization: d3Chart not ready, skipping update')
       return
     }
 
     await nextTick()
-    console.log('🔧 useVisualization: After nextTick')
 
     try {
       const container = d3Chart.getSelection('container')
-      console.log('🔧 useVisualization: Container:', container ? 'found' : 'not found')
-      console.log('🔧 useVisualization: Container node:', container?.node())
       
       if (container) {
-        console.log('🚀 useVisualization: Calling update function...')
         await update.fn(container, update.data, d3Chart.chartState.value)
-        console.log('✅ useVisualization: Update function completed')
-      } else {
-        console.error('❌ useVisualization: No container found for update')
       }
     } catch (error) {
       console.error('❌ useVisualization: Error executing update:', error)
-      console.error('❌ useVisualization: Error stack:', error.stack)
     }
   }
 

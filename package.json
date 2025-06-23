@@ -31,6 +31,7 @@
     "@vueuse/core": "^13.3.0",
     "d3": "^7.8.5",
     "pinia": "^2.1.0",
+    "terser": "^5.43.1",
     "topojson-client": "^3.1.0",
     "vee-validate": "^4.15.1",
     "vue": "^3.4.0",

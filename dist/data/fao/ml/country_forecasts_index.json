@@ -1,0 +1,301 @@
+{
+  "count": 49,
+  "files": [
+    "world_cereals___excluding_beer_forecast.json",
+    "world_sugar_crops_forecast.json",
+    "world_sugar_cane_forecast.json",
+    "world_milk___excluding_butter_forecast.json",
+    "world_vegetables_forecast.json",
+    "world_maize_and_products_forecast.json",
+    "world_oilcrops_forecast.json",
+    "world_vegetables_other_forecast.json",
+    "world_starchy_roots_forecast.json",
+    "south_america_sugar_crops_forecast.json",
+    "south_america_sugar_cane_forecast.json",
+    "world_rice_and_products_forecast.json",
+    "brazil_sugar_crops_forecast.json",
+    "brazil_sugar_cane_forecast.json",
+    "world_wheat_and_products_forecast.json",
+    "world_fruits___excluding_wine_forecast.json",
+    "china_vegetables_forecast.json",
+    "china_mainland_vegetables_forecast.json",
+    "china_cereals___excluding_beer_forecast.json",
+    "china_vegetables_other_forecast.json",
+    "china_mainland_vegetables_other_forecast.json",
+    "world_potatoes_and_products_forecast.json",
+    "northern_america_maize_and_products_forecast.json",
+    "world_palm_kernels_forecast.json",
+    "united_states_of_america_maize_and_products_forecast.json",
+    "world_meat_forecast.json",
+    "world_soyabeans_forecast.json",
+    "world_sugar_&_sweeteners_forecast.json",
+    "world_cassava_and_products_forecast.json",
+    "world_sugar_beet_forecast.json",
+    "indonesia_oilcrops_forecast.json",
+    "world_fruits_other_forecast.json",
+    "china_rice_and_products_forecast.json",
+    "indonesia_palm_kernels_forecast.json",
+    "net_food_importing_developing_countries_starchy_roots_forecast.json",
+    "south_america_soyabeans_forecast.json",
+    "china_fruits___excluding_wine_forecast.json",
+    "china_mainland_fruits___excluding_wine_forecast.json",
+    "european_union_27_wheat_and_products_forecast.json",
+    "net_food_importing_developing_countries_cassava_and_products_forecast.json",
+    "northern_america_soyabeans_forecast.json",
+    "european_union_27_sugar_beet_forecast.json",
+    "united_states_of_america_soyabeans_forecast.json",
+    "least_developed_countries_cassava_and_products_forecast.json",
+    "malaysia_palm_kernels_forecast.json",
+    "china_potatoes_and_products_forecast.json",
+    "china_meat_forecast.json",
+    "south_america_sugar_&_sweeteners_forecast.json",
+    "china_fruits_other_forecast.json"
+  ],
+  "items": [
+    {
+      "scenario": "world_cereals___excluding_beer",
+      "title": "Cereals - Excluding Beer Produktion in World",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "world_sugar_crops",
+      "title": "Sugar Crops Produktion in World",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "world_sugar_cane",
+      "title": "Sugar cane Produktion in World",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "world_milk___excluding_butter",
+      "title": "Milk - Excluding Butter Produktion in World",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "world_vegetables",
+      "title": "Vegetables Produktion in World",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "world_maize_and_products",
+      "title": "Maize and products Produktion in World",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "world_oilcrops",
+      "title": "Oilcrops Produktion in World",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "world_vegetables_other",
+      "title": "Vegetables, other Produktion in World",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "world_starchy_roots",
+      "title": "Starchy Roots Produktion in World",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "south_america_sugar_crops",
+      "title": "Sugar Crops Produktion in South America",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "south_america_sugar_cane",
+      "title": "Sugar cane Produktion in South America",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "world_rice_and_products",
+      "title": "Rice and products Produktion in World",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "brazil_sugar_crops",
+      "title": "Sugar Crops Produktion in Brazil",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "brazil_sugar_cane",
+      "title": "Sugar cane Produktion in Brazil",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "world_wheat_and_products",
+      "title": "Wheat and products Produktion in World",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "world_fruits___excluding_wine",
+      "title": "Fruits - Excluding Wine Produktion in World",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "china_vegetables",
+      "title": "Vegetables Produktion in China",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "china_mainland_vegetables",
+      "title": "Vegetables Produktion in China, mainland",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "china_cereals___excluding_beer",
+      "title": "Cereals - Excluding Beer Produktion in China",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "china_vegetables_other",
+      "title": "Vegetables, other Produktion in China",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "china_mainland_vegetables_other",
+      "title": "Vegetables, other Produktion in China, mainland",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "world_potatoes_and_products",
+      "title": "Potatoes and products Produktion in World",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "northern_america_maize_and_products",
+      "title": "Maize and products Produktion in Northern America",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "world_palm_kernels",
+      "title": "Palm kernels Produktion in World",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "united_states_of_america_maize_and_products",
+      "title": "Maize and products Produktion in United States of America",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "world_meat",
+      "title": "Meat Produktion in World",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "world_soyabeans",
+      "title": "Soyabeans Produktion in World",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "world_sugar_&_sweeteners",
+      "title": "Sugar & Sweeteners Produktion in World",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "world_cassava_and_products",
+      "title": "Cassava and products Produktion in World",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "world_sugar_beet",
+      "title": "Sugar beet Produktion in World",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "indonesia_oilcrops",
+      "title": "Oilcrops Produktion in Indonesia",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "world_fruits_other",
+      "title": "Fruits, other Produktion in World",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "china_rice_and_products",
+      "title": "Rice and products Produktion in China",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "indonesia_palm_kernels",
+      "title": "Palm kernels Produktion in Indonesia",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "net_food_importing_developing_countries_starchy_roots",
+      "title": "Starchy Roots Produktion in Net Food Importing Developing Countries",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "south_america_soyabeans",
+      "title": "Soyabeans Produktion in South America",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "china_fruits___excluding_wine",
+      "title": "Fruits - Excluding Wine Produktion in China",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "china_mainland_fruits___excluding_wine",
+      "title": "Fruits - Excluding Wine Produktion in China, mainland",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "european_union_27_wheat_and_products",
+      "title": "Wheat and products Produktion in European Union (27)",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "net_food_importing_developing_countries_cassava_and_products",
+      "title": "Cassava and products Produktion in Net Food Importing Developing Countries",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "northern_america_soyabeans",
+      "title": "Soyabeans Produktion in Northern America",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "european_union_27_sugar_beet",
+      "title": "Sugar beet Produktion in European Union (27)",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "united_states_of_america_soyabeans",
+      "title": "Soyabeans Produktion in United States of America",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "least_developed_countries_cassava_and_products",
+      "title": "Cassava and products Produktion in Least Developed Countries",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "malaysia_palm_kernels",
+      "title": "Palm kernels Produktion in Malaysia",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "china_potatoes_and_products",
+      "title": "Potatoes and products Produktion in China",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "china_meat",
+      "title": "Meat Produktion in China",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "south_america_sugar_&_sweeteners",
+      "title": "Sugar & Sweeteners Produktion in South America",
+      "unit": "1000 t"
+    },
+    {
+      "scenario": "china_fruits_other",
+      "title": "Fruits, other Produktion in China",
+      "unit": "1000 t"
+    }
+  ]
+}

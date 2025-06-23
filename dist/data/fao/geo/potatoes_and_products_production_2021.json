@@ -1,0 +1,1262 @@
+{
+  "Bhutan": {
+    "value": 39.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Comoros": {
+    "value": 3.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Timor-Leste": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Afghanistan": {
+    "value": 879.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Turkmenistan": {
+    "value": 536.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Iceland": {
+    "value": 6.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "French Polynesia": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Cabo Verde": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Libya": {
+    "value": 329.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Sudan": {
+    "value": 504.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Kuwait": {
+    "value": 29.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Jordan": {
+    "value": 189.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Lao People's Democratic Republic": {
+    "value": 4.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Finland": {
+    "value": 559.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Congo": {
+    "value": 7.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Albania": {
+    "value": 259.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Iraq": {
+    "value": 466.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Haiti": {
+    "value": 35.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Cuba": {
+    "value": 97.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Chad": {
+    "value": 36.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Mongolia": {
+    "value": 183.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Mauritius": {
+    "value": 13.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Israel": {
+    "value": 523.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Central African Republic": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Armenia": {
+    "value": 365.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Dominican Republic": {
+    "value": 91.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Lesotho": {
+    "value": 130.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Lebanon": {
+    "value": 659.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Papua New Guinea": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Costa Rica": {
+    "value": 42.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Tajikistan": {
+    "value": 1041.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Malta": {
+    "value": 7.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "United Arab Emirates": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Panama": {
+    "value": 27.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Paraguay": {
+    "value": 4.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Norway": {
+    "value": 369.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Polynesia": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Algeria": {
+    "value": 4361.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Mauritania": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Guinea": {
+    "value": 350.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Eswatini": {
+    "value": 8.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Viet Nam": {
+    "value": 324.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Cyprus": {
+    "value": 99.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Ireland": {
+    "value": 408.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Oman": {
+    "value": 12.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Croatia": {
+    "value": 128.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Denmark": {
+    "value": 2375.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Nicaragua": {
+    "value": 78.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Azerbaijan": {
+    "value": 1062.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Iran (Islamic Republic of)": {
+    "value": 2599.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Argentina": {
+    "value": 2950.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Belgium": {
+    "value": 3871.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Jamaica": {
+    "value": 17.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Kyrgyzstan": {
+    "value": 1289.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Czechia": {
+    "value": 672.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Burundi": {
+    "value": 350.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "El Salvador": {
+    "value": 9.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Syrian Arab Republic": {
+    "value": 595.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Luxembourg": {
+    "value": 16.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "North Macedonia": {
+    "value": 180.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Georgia": {
+    "value": 235.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Philippines": {
+    "value": 103.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Angola": {
+    "value": 485.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Austria": {
+    "value": 770.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Belarus": {
+    "value": 3405.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Estonia": {
+    "value": 66.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Uzbekistan": {
+    "value": 3286.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Bosnia and Herzegovina": {
+    "value": 340.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Chile": {
+    "value": 995.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Montenegro": {
+    "value": 28.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Belize": {
+    "value": 1.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Saudi Arabia": {
+    "value": 578.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Venezuela (Bolivarian Republic of)": {
+    "value": 474.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Latvia": {
+    "value": 115.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Sweden": {
+    "value": 826.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Bulgaria": {
+    "value": 196.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Poland": {
+    "value": 7081.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Greece": {
+    "value": 382.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "United Kingdom of Great Britain and Northern Ireland": {
+    "value": 5127.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Republic of Moldova": {
+    "value": 218.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Netherlands (Kingdom of the)": {
+    "value": 6676.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "New Zealand": {
+    "value": 552.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Italy": {
+    "value": 1362.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Serbia": {
+    "value": 614.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "France": {
+    "value": 8987.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Myanmar": {
+    "value": 442.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "New Caledonia": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Namibia": {
+    "value": 14.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Burkina Faso": {
+    "value": 27.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Lithuania": {
+    "value": 200.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Brazil": {
+    "value": 3853.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Slovenia": {
+    "value": 64.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Slovakia": {
+    "value": 151.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Yemen": {
+    "value": 347.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Uruguay": {
+    "value": 93.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "China, Taiwan Province of": {
+    "value": 62.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Democratic Republic of the Congo": {
+    "value": 105.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Tunisia": {
+    "value": 450.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Ecuador": {
+    "value": 245.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Cameroon": {
+    "value": 320.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Canada": {
+    "value": 6153.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Bangladesh": {
+    "value": 9887.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Romania": {
+    "value": 1398.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Niger": {
+    "value": 340.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Germany": {
+    "value": 11312.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Indonesia": {
+    "value": 1361.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Switzerland": {
+    "value": 343.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Thailand": {
+    "value": 120.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Madagascar": {
+    "value": 250.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Botswana": {
+    "value": 2.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "T\u00fcrkiye": {
+    "value": 5100.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Portugal": {
+    "value": 413.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "India": {
+    "value": 54230.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Malawi": {
+    "value": 1420.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Hungary": {
+    "value": 240.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Australia": {
+    "value": 1268.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Peru": {
+    "value": 5702.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Colombia": {
+    "value": 2597.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Guatemala": {
+    "value": 585.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Honduras": {
+    "value": 27.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Pakistan": {
+    "value": 5873.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Mexico": {
+    "value": 1948.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Ethiopia": {
+    "value": 1310.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Nigeria": {
+    "value": 1217.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Mali": {
+    "value": 218.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Bolivia (Plurinational State of)": {
+    "value": 1273.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Republic of Korea": {
+    "value": 555.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Senegal": {
+    "value": 144.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Mozambique": {
+    "value": 58.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Rwanda": {
+    "value": 938.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Japan": {
+    "value": 2228.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Sri Lanka": {
+    "value": 76.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "United Republic of Tanzania": {
+    "value": 1070.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Spain": {
+    "value": 2081.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Uganda": {
+    "value": 241.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Egypt": {
+    "value": 6274.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Morocco": {
+    "value": 1642.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Kazakhstan": {
+    "value": 4032.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "United States of America": {
+    "value": 18590.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Russian Federation": {
+    "value": 18296.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Zambia": {
+    "value": 62.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Zimbabwe": {
+    "value": 12.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Nepal": {
+    "value": 3325.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Northern Europe": {
+    "value": 10051.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "China, mainland": {
+    "value": 94300.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Northern America": {
+    "value": 24742.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Western Europe": {
+    "value": 31975.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "South Africa": {
+    "value": 2595.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Kenya": {
+    "value": 2108.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Australia and New Zealand": {
+    "value": 1820.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Melanesia": {
+    "value": 4.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Ukraine": {
+    "value": 21356.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "China": {
+    "value": 94362.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Caribbean": {
+    "value": 240.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Central Asia": {
+    "value": 10184.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Middle Africa": {
+    "value": 955.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "South America": {
+    "value": 18185.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "South-eastern Asia": {
+    "value": 2355.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Southern Africa": {
+    "value": 2750.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Southern Asia": {
+    "value": 76908.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Western Africa": {
+    "value": 2300.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Eastern Europe": {
+    "value": 53013.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Northern Africa": {
+    "value": 13560.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Small Island Developing States": {
+    "value": 265.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Central America": {
+    "value": 2718.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Western Asia": {
+    "value": 10332.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Southern Europe": {
+    "value": 5857.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Eastern Africa": {
+    "value": 7835.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Oceania": {
+    "value": 1824.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Eastern Asia": {
+    "value": 97973.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Europe": {
+    "value": 100896.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "European Union (27)": {
+    "value": 50455.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Least Developed Countries": {
+    "value": 22967.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Asia": {
+    "value": 197751.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Americas": {
+    "value": 45885.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Africa": {
+    "value": 27401.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Low Income Food Deficit Countries": {
+    "value": 21466.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "World": {
+    "value": 373757.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Net Food Importing Developing Countries": {
+    "value": 46255.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  },
+  "Land Locked Developing Countries": {
+    "value": 22811.0,
+    "unit": "1000 t",
+    "item": "Potatoes and products",
+    "year": 2021,
+    "element": "Production"
+  }
+}

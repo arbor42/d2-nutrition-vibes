@@ -1,0 +1,46 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2024-01-01",
+  "description": "D2 Nutrition Vibes Data Index",
+  "datasets": {
+    "geo": {
+      "path": "/data/geo",
+      "description": "Geographic data files",
+      "files": {
+        "world": "/data/geo/world.geojson",
+        "world_simplified": "/data/geo/world_simplified.geojson", 
+        "geo": "/data/geo/geo.json"
+      }
+    },
+    "fao": {
+      "path": "/data/fao",
+      "description": "FAO agricultural production data",
+      "index": "/data/fao/index.json",
+      "metadata": "/data/fao/metadata.json",
+      "summary": "/data/fao/summary.json",
+      "timeseries": "/data/fao/timeseries.json",
+      "production_rankings": "/data/fao/production_rankings.json",
+      "trade_balance": "/data/fao/trade_balance.json",
+      "network": "/data/fao/network.json",
+      "geo_data": "/data/fao/geo",
+      "ml_forecasts": "/data/fao/ml"
+    }
+  },
+  "products": [
+    "cassava_and_products",
+    "fruits_-_excluding_wine", 
+    "maize_and_products",
+    "milk_-_excluding_butter",
+    "nuts_and_products",
+    "potatoes_and_products",
+    "pulses",
+    "rice_and_products", 
+    "sugar_and_sweeteners",
+    "vegetables",
+    "wheat_and_products"
+  ],
+  "years": [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022],
+  "metrics": [
+    "production"
+  ]
+}

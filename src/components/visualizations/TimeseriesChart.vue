@@ -4,6 +4,7 @@ import { useDataStore } from '@/stores/useDataStore'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 import * as d3 from 'd3'
+import { createD3AxisFormatter, createD3TooltipFormatter } from '@/utils/formatters'
 
 interface Props {
   width?: number
@@ -174,11 +175,11 @@ const setupResizeObserver = () => {
 // Get metric label for Y-axis
 const getMetricLabel = () => {
   switch (props.selectedMetric) {
-    case 'production': return 'Produktion (t)'
-    case 'import_quantity': return 'Import (t)'
-    case 'export_quantity': return 'Export (t)'
-    case 'domestic_supply_quantity': return 'Inlandsversorgung (t)'
-    default: return 'Wert (t)'
+    case 'production': return 'Produktion (Mio. t)'
+    case 'import_quantity': return 'Import (Mio. t)'
+    case 'export_quantity': return 'Export (Mio. t)'
+    case 'domestic_supply_quantity': return 'Inlandsversorgung (Mio. t)'
+    default: return 'Wert (Mio. t)'
   }
 }
 
@@ -351,7 +352,7 @@ const updateChart = () => {
     .tickFormat(d3.timeFormat('%Y'))
     .tickSizeOuter(0)
   const yAxis = d3.axisLeft(yScale)
-    .tickFormat(d3.format('.2s'))
+    .tickFormat(createD3AxisFormatter('1000 t'))
     .tickSizeOuter(0)
 
   const xAxisSelection = g.select('.x-axis')
@@ -473,7 +474,7 @@ const handlePointMouseover = (event: MouseEvent, d: any) => {
     .html(`
       <strong>${d.country || 'Global'}</strong><br/>
       Jahr: ${d.year}<br/>
-      ${getMetricLabel()}: ${d3.format(',.0f')(d.value)} ${d.unit || 't'}
+      ${getMetricLabel().replace('(Mio. t)', '')}: ${createD3TooltipFormatter('1000 t')(d.value)}
     `)
     .style('left', (event.pageX + 10) + 'px')
     .style('top', (event.pageY - 10) + 'px')

@@ -1,4 +1,5 @@
 // Utility functions for the FAO application
+// DEPRECATED: This file is legacy code. Use /src/utils/formatters.js for new implementations.
 
 // Format numbers with appropriate units
 function formatNumber(value, unit = '') {

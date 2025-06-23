@@ -3,6 +3,7 @@ import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import * as d3 from 'd3'
 import { useD3 } from '@/composables/useD3'
 import { useUIStore } from '@/stores/useUIStore'
+import { createD3AxisFormatter, createD3TooltipFormatter } from '@/utils/formatters'
 
 const props = defineProps({
   data: {
@@ -229,7 +230,7 @@ const drawChart = () => {
     .call(d3.axisBottom(xScale).tickFormat(d3.format('d')))
   
   const yAxis = gRef.value.append('g')
-    .call(d3.axisLeft(yScale).tickFormat(d3.format('.2s')))
+    .call(d3.axisLeft(yScale).tickFormat(createD3AxisFormatter('1000 t')))
   
   // Add axis labels
   xAxis.append('text')
@@ -247,7 +248,7 @@ const drawChart = () => {
     .style('text-anchor', 'middle')
     .style('fill', 'currentColor')
     .attr('class', 'axis-label')
-    .text('Produktion (1000 t)')
+    .text('Produktion (Mio. t)')
   
   // Add grid lines
   gRef.value.append('g')
@@ -364,10 +365,11 @@ const drawChart = () => {
         // Apply confidence interval corrections for tooltip
         const corrected = correctConfidenceInterval(d)
         
+        const tooltipFormatter = createD3TooltipFormatter('1000 t')
         tooltip.html(`
           <strong>Jahr ${d.year}</strong><br/>
-          Prognose: ${d3.format(',.0f')(corrected.predicted_value)}<br/>
-          Konfidenz: ${d3.format(',.0f')(corrected.confidence_lower)} - ${d3.format(',.0f')(corrected.confidence_upper)}<br/>
+          Prognose: ${tooltipFormatter(corrected.predicted_value)}<br/>
+          Konfidenz: ${tooltipFormatter(corrected.confidence_lower)} - ${tooltipFormatter(corrected.confidence_upper)}<br/>
           Unsicherheit: ${d.uncertainty_percent?.toFixed(1) || 'N/A'}%
         `)
         .style('left', (event.pageX + 10) + 'px')

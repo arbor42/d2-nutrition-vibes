@@ -8,6 +8,7 @@
 import { ref, watch, onMounted, onUnmounted } from 'vue'
 import * as d3 from 'd3'
 import { useTooltip } from '@/composables/useVisualization'
+import { formatTooltipValue } from '@/utils/formatters'
 
 const props = defineProps({
   data: {
@@ -118,7 +119,7 @@ const createTreeLayout = (width, height) => {
       tooltip.show({
         content: `
           <strong>${d.data.name}</strong><br>
-          ${d.value ? `Value: ${d.value.toLocaleString()}` : ''}
+          ${d.value ? `Wert: ${formatTooltipValue(d.value, '1000 t')}` : ''}
         `,
         event
       })
@@ -178,7 +179,7 @@ const createSunburstLayout = (width, height) => {
       tooltip.show({
         content: `
           <strong>${d.data.name}</strong><br>
-          ${d.value ? `Value: ${d.value.toLocaleString()}` : ''}
+          ${d.value ? `Wert: ${formatTooltipValue(d.value, '1000 t')}` : ''}
         `,
         event
       })
@@ -233,7 +234,7 @@ const createTreemapLayout = (width, height) => {
       tooltip.show({
         content: `
           <strong>${d.data.name}</strong><br>
-          Value: ${d.value.toLocaleString()}<br>
+          Wert: ${formatTooltipValue(d.value, '1000 t')}<br>
           Parent: ${d.parent.data.name}
         `,
         event
@@ -259,7 +260,7 @@ const createTreemapLayout = (width, height) => {
     .style('font-size', '10px')
     .style('fill', '#fff')
     .style('opacity', 0.8)
-    .text(d => d.value.toLocaleString())
+    .text(d => formatTooltipValue(d.value, '1000 t'))
 }
 
 // Watchers

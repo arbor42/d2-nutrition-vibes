@@ -3,6 +3,7 @@ import { ref, computed, watch, nextTick, onMounted, onUnmounted } from 'vue'
 import { useVisualizationStore } from '@/stores/useVisualizationStore'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 import * as d3 from 'd3'
+import { createD3AxisFormatter } from '@/utils/formatters'
 
 interface Props {
   data?: any[]
@@ -171,7 +172,7 @@ const setupChart = async () => {
 
   g.append('g')
     .attr('class', 'y-axis')
-    .call(d3.axisLeft(yScale).tickFormat(d => d3.format('.2s')(d)))
+    .call(d3.axisLeft(yScale).tickFormat(createD3AxisFormatter('1000 t')))
     .selectAll('text')
     .style('fill', 'currentColor')
     

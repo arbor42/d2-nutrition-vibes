@@ -8,6 +8,7 @@ import BaseButton from '@/components/ui/BaseButton.vue'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 import * as d3 from 'd3'
 import * as topojson from 'topojson-client'
+import { createD3AxisFormatter, createD3TooltipFormatter, getAxisUnitLabel } from '@/utils/formatters'
 
 interface Props {
   width?: number
@@ -538,11 +539,7 @@ const createLegend = (svg) => {
   
   const legendAxis = d3.axisBottom(legendScaleLinear)
     .ticks(5)
-    .tickFormat(d => {
-      if (d >= 1000000) return d3.format('.1s')(d)
-      if (d >= 1000) return d3.format('.0s')(d)
-      return d3.format('.0f')(d)
-    })
+    .tickFormat(createD3AxisFormatter('1000 t'))
   
   const legendTextColor = isDarkMode ? '#D1D5DB' : '#374151' // gray-300 : gray-700
   
@@ -568,10 +565,10 @@ const createLegend = (svg) => {
     .style('font-size', '11px')
     .style('font-weight', '500')
     .style('fill', legendTextColor)
-    .text(props.selectedMetric === 'production' ? 'Produktion (t)' : 
-          props.selectedMetric === 'import_quantity' ? 'Import (t)' :
-          props.selectedMetric === 'export_quantity' ? 'Export (t)' :
-          'Versorgung (t)')
+    .text(props.selectedMetric === 'production' ? 'Produktion (Mio. t)' : 
+          props.selectedMetric === 'import_quantity' ? 'Import (Mio. t)' :
+          props.selectedMetric === 'export_quantity' ? 'Export (Mio. t)' :
+          'Versorgung (Mio. t)')
 }
 
 // Setup map with D3.js (keeping original for compatibility)
@@ -1228,16 +1225,17 @@ const handleCountryMouseover = (event, d) => {
   )
   
   // Format tooltip content
+  const tooltipFormatter = createD3TooltipFormatter('1000 t')
   let content = `<strong>${countryName}</strong><br/>`
   if (countryData && countryData.value > 0) {
-    const formattedValue = d3.format(',.0f')(countryData.value)
+    const formattedValue = tooltipFormatter(countryData.value)
     const productName = props.selectedProduct?.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) || 'Produkt'
     const metricLabel = props.selectedMetric === 'production' ? 'Produktion' :
                        props.selectedMetric === 'import_quantity' ? 'Import' :
                        props.selectedMetric === 'export_quantity' ? 'Export' :
                        'Inlandsversorgung'
     content += `<span style="color: #fbbf24">${productName}</span><br/>`
-    content += `${metricLabel}: <strong>${formattedValue}</strong> ${countryData.unit || 't'}<br/>`
+    content += `${metricLabel}: <strong>${formattedValue}</strong><br/>`
     content += `<span style="color: #9ca3af; font-size: 12px">Jahr: ${props.selectedYear}</span>`
   } else {
     content += '<span style="color: #ef4444">Keine Daten verfügbar</span>'

@@ -240,6 +240,7 @@ import { ref, computed, watch, onMounted } from 'vue'
 import { useDataStore } from '@/stores/useDataStore'
 import { useErrorHandling } from '@/composables/useErrorHandling'
 import { getMLGermanName, productMappings } from '@/utils/productMappings'
+import { formatAgricultureValue } from '@/utils/formatters'
 import ErrorBoundary from '@/components/ui/ErrorBoundary.vue'
 import ErrorDisplay from '@/components/ui/ErrorDisplay.vue'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
@@ -538,9 +539,7 @@ const getFormattedForecastTitle = () => {
 }
 
 const formatValue = (value) => {
-  return new Intl.NumberFormat('de-DE', {
-    maximumFractionDigits: 0
-  }).format(value)
+  return formatAgricultureValue(value, { unit: '1000 t', showUnit: false })
 }
 
 const formatTrend = (trend) => {

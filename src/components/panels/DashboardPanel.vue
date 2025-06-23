@@ -6,6 +6,7 @@ import WorldMap from '@/components/visualizations/WorldMap.vue'
 import WorldMapSimple from '@/components/visualizations/WorldMapSimple.vue'
 import TimeseriesChart from '@/components/visualizations/TimeseriesChart.vue'
 import ProductSelector from '@/components/ui/ProductSelector.vue'
+import { formatAgricultureValue } from '@/utils/formatters'
 
 const dataStore = useDataStore()
 const uiStore = useUIStore()
@@ -40,7 +41,7 @@ const getCountriesArray = () => {
       return {
         country,
         value: yearData ? (yearData[metricKey] || 0) : 0,
-        unit: yearData?.unit || 't',
+        unit: yearData?.unit || '1000 t',
         year: currentYear
       }
     }).filter(item => item.value > 0)
@@ -130,7 +131,7 @@ const globalStats = computed(() => {
   const currentMetric = uiStore.selectedMetric
   const hasTimeseries = !!dataStore.timeseriesData
   if (!currentProduct || !currentYear) {
-    return { total: 0, countries: 0, topProducer: null, unit: 't' }
+    return { total: 0, countries: 0, topProducer: null, unit: '1000 t' }
   }
   
   let rawData = null
@@ -157,7 +158,7 @@ const globalStats = computed(() => {
       return {
         country,
         value: yearData ? (yearData[metricKey] || 0) : 0,
-        unit: yearData?.unit || 't',
+        unit: yearData?.unit || '1000 t',
         year: currentYear
       }
     }).filter(item => item.value > 0)
@@ -172,7 +173,7 @@ const globalStats = computed(() => {
     rawData = dataStore.getProductionData(currentProduct, currentYear)
   }
   
-  if (!rawData && dataArray.length === 0) return { total: 0, countries: 0, topProducer: null, unit: 't' }
+  if (!rawData && dataArray.length === 0) return { total: 0, countries: 0, topProducer: null, unit: '1000 t' }
   
   // Handle different data structures (object with country keys vs array) - only if we used production data
   if (rawData && dataArray.length === 0) {
@@ -185,7 +186,7 @@ const globalStats = computed(() => {
       dataArray = Object.entries(rawData).map(([country, data]) => ({
         country,
         value: data.value || 0,
-        unit: data.unit || 't',
+        unit: data.unit || '1000 t',
         year: data.year || currentYear
       }))
     }
@@ -237,7 +238,7 @@ const globalStats = computed(() => {
     total, 
     countries: countryData.length, // Use filtered country count instead of all data
     topProducer: topProducer?.country,
-    unit: topProducer?.unit || 't'
+    unit: topProducer?.unit || '1000 t'
   }
 })
 
@@ -343,10 +344,10 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
                   'Inlandsversorgung' }} {{ uiStore.selectedYear || new Date().getFullYear() }}
               </h3>
               <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                {{ (globalStats?.total || 0).toLocaleString('de-DE') }}
+                {{ formatAgricultureValue(globalStats?.total || 0, { unit: globalStats?.unit || '1000 t', showUnit: true }) }}
               </p>
               <p class="text-sm text-gray-500 dark:text-gray-400">
-                {{ globalStats.unit }} - {{ uiStore.selectedProduct?.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) || 'Alle Produkte' }}
+                {{ uiStore.selectedProduct?.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) || 'Alle Produkte' }}
               </p>
             </div>
           </div>
@@ -435,10 +436,7 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
           <div class="text-center">
             <p class="text-sm text-gray-600 dark:text-gray-400">Produktion</p>
             <p class="text-xl font-bold text-primary-600 dark:text-primary-400">
-              {{ selectedCountryData.value.toLocaleString('de-DE') }}
-            </p>
-            <p class="text-xs text-gray-500 dark:text-gray-400">
-              {{ selectedCountryData.unit || 'Tonnen' }}
+              {{ formatAgricultureValue(selectedCountryData.value, { unit: selectedCountryData.unit || '1000 t', showUnit: true }) }}
             </p>
           </div>
           <div class="text-center">
@@ -577,7 +575,7 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
                     </span>
                   </div>
                   <span class="text-sm text-gray-600 dark:text-gray-400">
-                    {{ item.value.toLocaleString('de-DE') }}
+                    {{ formatAgricultureValue(item.value, { unit: item.unit || '1000 t', showUnit: true }) }}
                   </span>
                 </div>
               </div>
@@ -592,7 +590,7 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
                 <div class="flex justify-between">
                   <span class="text-sm text-gray-600 dark:text-gray-400">Durchschnitt/Land:</span>
                   <span class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                    {{ globalStats.countries > 0 ? Math.round(globalStats.total / globalStats.countries).toLocaleString('de-DE') : '0' }}
+                    {{ globalStats.countries > 0 ? formatAgricultureValue(Math.round(globalStats.total / globalStats.countries), { unit: globalStats.unit || '1000 t', showUnit: true }) : '0' }}
                   </span>
                 </div>
                 <div class="flex justify-between">

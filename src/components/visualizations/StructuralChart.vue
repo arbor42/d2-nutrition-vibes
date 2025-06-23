@@ -6,6 +6,7 @@ import { useVisualizationStore } from '@/stores/useVisualizationStore'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 import * as d3 from 'd3'
+import { formatTooltipValue } from '@/utils/formatters'
 
 interface Props {
   data?: any
@@ -225,7 +226,7 @@ const setupChart = () => {
       tooltip.show({
         content: `
           <strong>${d.id}</strong><br>
-          Trade Volume: ${d.total_trade_volume?.toLocaleString() || 'N/A'}
+          Handelsvolumen: ${d.total_trade_volume ? formatTooltipValue(d.total_trade_volume, '1000 t') : 'N/A'}
         `,
         event
       })

@@ -8,6 +8,7 @@
 import { ref, watch, onMounted, onUnmounted } from 'vue'
 import * as d3 from 'd3'
 import { useVisualization, useTooltip } from '@/composables/useVisualization'
+import { formatTooltipValue } from '@/utils/formatters'
 
 const props = defineProps({
   data: {
@@ -123,8 +124,8 @@ const createForceLayout = (width, height) => {
       tooltip.show({
         content: `
           <strong>${d.name}</strong><br>
-          Volume: ${d.total_trade_volume.toLocaleString()}<br>
-          Balance: ${d.trade_balance.toLocaleString()}
+          Volume: ${formatTooltipValue(d.total_trade_volume, '1000 t')}<br>
+          Balance: ${formatTooltipValue(d.trade_balance, '1000 t')}
         `,
         event
       })
@@ -207,8 +208,8 @@ const createCircularLayout = (width, height) => {
       tooltip.show({
         content: `
           <strong>${d.name}</strong><br>
-          Volume: ${d.total_trade_volume.toLocaleString()}<br>
-          Balance: ${d.trade_balance.toLocaleString()}
+          Volume: ${formatTooltipValue(d.total_trade_volume, '1000 t')}<br>
+          Balance: ${formatTooltipValue(d.trade_balance, '1000 t')}
         `,
         event
       })

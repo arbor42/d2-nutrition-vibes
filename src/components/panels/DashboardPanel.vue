@@ -493,7 +493,7 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
       </div>
       <div class="card-body">
         <!-- World Map View -->
-        <div v-if="selectedVisualization === 'world-map'" class="h-[600px] w-full relative">
+        <div v-if="selectedVisualization === 'world-map'" class="h-[600px] w-full relative" data-tour="world-map">
           <WorldMap
             :selected-product="uiStore.selectedProduct"
             :selected-year="uiStore.selectedYear"

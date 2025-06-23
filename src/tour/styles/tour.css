@@ -1,0 +1,445 @@
+/* D2 Nutrition Vibes Tour System Styles */
+
+/* Z-Index Hierarchy:
+ * 9996: tour-controls (control buttons - lowest priority)
+ * 9997: tour-overlay, tour-backdrop (background layer)
+ * 9998: tour-highlight, tour-spotlight, tour-progress-bar (highlighted elements and progress)
+ * 9999: tour-tooltip (always on top)
+ */
+
+/* Tour overlay base styles */
+.tour-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9997; /* Base layer for tour system */
+  pointer-events: none; /* Allow clicks through to highlighted elements */
+}
+
+.tour-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  /* Removed backdrop-filter to prevent blur */
+  transition: all 0.3s ease;
+  pointer-events: auto; /* Allow clicks on backdrop to close */
+  z-index: 9997; /* Background layer - below highlights and tooltip */
+}
+
+/* Spotlight styles */
+.tour-spotlight {
+  position: absolute;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 9998; /* Same as highlighted elements */
+}
+
+.tour-spotlight-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  /* Box-shadow creates the spotlight effect without blur */
+  box-shadow: 
+    0 0 0 9999px rgba(0, 0, 0, 0.6);
+  border: 2px solid rgba(59, 130, 246, 0.8);
+  pointer-events: none; /* Ensure no interaction blocking */
+}
+
+/* Tour tooltip styles */
+.tour-tooltip {
+  position: fixed !important; /* Always fixed positioning */
+  background: white;
+  border-radius: 12px;
+  box-shadow: 
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+  max-width: 400px;
+  z-index: 9999 !important; /* Highest z-index to stay on top */
+  animation: tourTooltipAppear 0.3s ease-out;
+  pointer-events: auto;
+}
+
+.dark .tour-tooltip {
+  background: rgb(31, 41, 55);
+  box-shadow: 
+    0 20px 25px -5px rgba(0, 0, 0, 0.3),
+    0 10px 10px -5px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+@keyframes tourTooltipAppear {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Tour progress bar styles */
+.tour-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9998; /* Below tooltip but above highlights */
+  backdrop-filter: blur(10px);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Step indicators */
+.step-indicator {
+  position: relative;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.step-indicator:hover {
+  transform: scale(1.1);
+}
+
+.step-indicator:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+.step-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+  border: 2px solid;
+  transition: all 0.2s ease;
+}
+
+.step-indicator.completed .step-circle {
+  background-color: rgb(59, 130, 246);
+  border-color: rgb(59, 130, 246);
+  color: white;
+}
+
+.step-indicator.current .step-circle {
+  background-color: rgb(59, 130, 246);
+  border-color: rgb(59, 130, 246);
+  color: white;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+}
+
+.step-indicator.upcoming .step-circle {
+  background-color: rgb(243, 244, 246);
+  border-color: rgb(209, 213, 219);
+  color: rgb(107, 114, 128);
+}
+
+.dark .step-indicator.upcoming .step-circle {
+  background-color: rgb(55, 65, 81);
+  border-color: rgb(75, 85, 99);
+  color: rgb(156, 163, 175);
+}
+
+.step-connector {
+  position: absolute;
+  top: 50%;
+  left: 32px;
+  width: calc(100% - 32px);
+  height: 2px;
+  background-color: rgb(209, 213, 219);
+  z-index: -1;
+  transition: background-color 0.2s ease;
+}
+
+.dark .step-connector {
+  background-color: rgb(75, 85, 99);
+}
+
+.step-connector.completed {
+  background-color: rgb(59, 130, 246);
+}
+
+/* Element highlighting */
+.tour-highlight {
+  position: relative !important;
+  z-index: 9998 !important; /* Above backdrop but below tooltip */
+  pointer-events: auto !important; /* Ensure element remains interactive */
+}
+
+/* Visual highlight without affecting element itself */
+.tour-highlight-ring {
+  position: absolute;
+  inset: -4px;
+  border: 2px solid rgb(59, 130, 246);
+  border-radius: 8px;
+  pointer-events: none;
+  animation: tourPulse 2s infinite;
+}
+
+@keyframes tourPulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
+/* Tour controls */
+.tour-control-btn {
+  backdrop-filter: blur(10px);
+  transition: all 0.2s ease;
+}
+
+.tour-control-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Button styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+}
+
+.btn:focus {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.btn-primary {
+  background-color: rgb(59, 130, 246);
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: rgb(37, 99, 235);
+}
+
+.btn-secondary {
+  background-color: rgb(243, 244, 246);
+  color: rgb(55, 65, 81);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: rgb(229, 231, 235);
+}
+
+.dark .btn-secondary {
+  background-color: rgb(55, 65, 81);
+  color: rgb(229, 231, 235);
+}
+
+.dark .btn-secondary:hover:not(:disabled) {
+  background-color: rgb(75, 85, 99);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: rgb(107, 114, 128);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background-color: rgb(243, 244, 246);
+  color: rgb(55, 65, 81);
+}
+
+.dark .btn-ghost {
+  color: rgb(156, 163, 175);
+}
+
+.dark .btn-ghost:hover:not(:disabled) {
+  background-color: rgb(55, 65, 81);
+  color: rgb(229, 231, 235);
+}
+
+/* Keyboard hints */
+.kbd-hint {
+  display: inline-block;
+  background-color: rgb(229, 231, 235);
+  color: rgb(107, 114, 128);
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-weight: 500;
+}
+
+.dark .kbd-hint {
+  background-color: rgb(75, 85, 99);
+  color: rgb(209, 213, 219);
+}
+
+/* Progress bar animations */
+.progress-bar-fill {
+  background: linear-gradient(to right, rgb(59, 130, 246), rgb(16, 185, 129));
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .tour-tooltip {
+    max-width: calc(100vw - 2rem);
+    margin: 0 1rem;
+  }
+  
+  .tour-progress-bar {
+    padding: 12px 16px;
+  }
+  
+  .step-circle {
+    width: 24px;
+    height: 24px;
+    font-size: 10px;
+  }
+  
+  .step-connector {
+    top: 12px;
+    left: 24px;
+  }
+  
+  .btn {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .tour-tooltip {
+    max-width: 350px;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .tour-overlay,
+  .tour-spotlight,
+  .tour-tooltip,
+  .tour-progress-bar,
+  .step-indicator,
+  .tour-highlight,
+  .tour-control-btn,
+  .btn {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .tour-highlight::before {
+    animation: none !important;
+  }
+  
+  .progress-bar-fill::after {
+    animation: none !important;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .tour-backdrop {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  
+  .tour-tooltip {
+    border: 2px solid currentColor;
+  }
+  
+  .tour-highlight {
+    outline-width: 3px !important;
+  }
+  
+  .btn {
+    border: 1px solid currentColor;
+  }
+}
+
+/* Focus management */
+.tour-overlay :focus {
+  outline: 2px solid rgb(59, 130, 246);
+  outline-offset: 2px;
+}
+
+/* Loading states */
+.tour-loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.tour-loading .tour-tooltip {
+  cursor: wait;
+}
+
+/* Error states */
+.tour-error {
+  border-color: rgb(239, 68, 68) !important;
+  background-color: rgb(254, 242, 242) !important;
+}
+
+.dark .tour-error {
+  background-color: rgb(127, 29, 29) !important;
+}
+
+/* Success states */
+.tour-success {
+  border-color: rgb(16, 185, 129) !important;
+  background-color: rgb(240, 253, 244) !important;
+}
+
+.dark .tour-success {
+  background-color: rgb(6, 78, 59) !important;
+}

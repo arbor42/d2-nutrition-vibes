@@ -4,6 +4,11 @@ import { createPinia } from 'pinia'
 import router from './router'
 import App from './App.vue'
 import './assets/styles/tailwind.css'
+import './tour/styles/tour.css'
+
+// Import tour system
+import TourPlugin from './tour'
+import { availableTours } from './tour/config/tourSteps'
 
 // Create Pinia store
 const pinia = createPinia()
@@ -38,4 +43,12 @@ app.config.warnHandler = (msg, instance, trace) => {
 
 app.use(router)
 app.use(pinia)
+
+// Initialize tour system
+app.use(TourPlugin, {
+  tours: availableTours,
+  autoStart: false // Don't auto-start tour
+})
+
+
 app.mount('#app')

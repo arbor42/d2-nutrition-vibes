@@ -233,7 +233,7 @@
             </div>
 
             <!-- Simulation Chart -->
-            <div class="chart-container">
+            <div class="chart-container" data-tour="simulation-chart">
               <SimulationChart
                 :data="simulationResults.timeSeriesData"
                 :config="chartConfig"

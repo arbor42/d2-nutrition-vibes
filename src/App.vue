@@ -21,6 +21,9 @@
 
     <!-- Main App Content -->
     <router-view />
+    
+    <!-- Tour Overlay -->
+    <TourOverlay />
   </div>
 </template>
 
@@ -28,6 +31,7 @@
 import { onMounted, onBeforeUnmount } from 'vue'
 import { useDataStore } from '@/stores/useDataStore'
 import { useUIStore } from '@/stores/useUIStore'
+import TourOverlay from '@/tour/components/TourOverlay.vue'
 
 // Stores
 const dataStore = useDataStore()

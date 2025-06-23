@@ -64,7 +64,7 @@ const panelDescription = computed(() => {
 <template>
   <div :class="containerClasses">
     <!-- Page Header -->
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6" data-tour="dashboard-overview">
       <div class="flex items-center justify-between">
         <div>
           <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100">
@@ -76,7 +76,7 @@ const panelDescription = computed(() => {
         </div>
         
         <!-- Quick Stats -->
-        <div class="flex items-center space-x-6 text-sm">
+        <div class="flex items-center space-x-6 text-sm" data-tour="dashboard-stats">
           <div class="text-center">
             <p class="text-2xl font-bold text-primary-600 dark:text-primary-400">
               {{ dataStore.availableYears?.length || 0 }}

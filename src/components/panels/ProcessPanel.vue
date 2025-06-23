@@ -171,7 +171,7 @@
               </div>
             </div>
 
-            <div v-if="processFlows && processFlows.length > 0" class="visualization-container">
+            <div v-if="processFlows && processFlows.length > 0" class="visualization-container" data-tour="process-chart">
               <div class="visualization-header">
                 <h4 class="visualization-title">Analyseergebnisse</h4>
                 <div class="visualization-info">

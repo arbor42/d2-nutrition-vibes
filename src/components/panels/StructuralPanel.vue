@@ -74,13 +74,14 @@
               </div>
             </div>
 
-            <div class="visualization-container">
+            <div class="visualization-container" data-tour="structural-chart">
               <NetworkVisualization
                 v-if="networkData"
                 :data="filteredNetworkData"
                 :layout="networkView"
                 @node-click="handleNodeClick"
                 @node-hover="handleNodeHover"
+                data-tour="network-visualization"
               />
             </div>
 

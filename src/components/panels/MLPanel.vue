@@ -137,7 +137,7 @@
           </div>
 
           <!-- Predictions Chart -->
-          <div class="chart-container">
+          <div class="chart-container" data-tour="ml-chart">
             <MLChart
               :data="chartData"
               :config="chartConfig"

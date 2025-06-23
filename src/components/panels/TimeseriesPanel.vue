@@ -30,7 +30,7 @@
             />
           </div>
           
-          <div class="filter-group">
+          <div class="filter-group" data-tour="year-selector">
             <SearchableSelect
               v-model="selectedMetric"
               :options="metricOptions"
@@ -70,7 +70,7 @@
           <p class="loading-text">Lade Zeitreihendaten...</p>
         </div>
 
-        <div v-else-if="chartData.length > 0" class="chart-container">
+        <div v-else-if="chartData.length > 0" class="chart-container" data-tour="timeseries-chart">
           <TimeseriesChart
             :width="800"
             :height="500"

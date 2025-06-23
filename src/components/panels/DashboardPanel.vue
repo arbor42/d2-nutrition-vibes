@@ -263,9 +263,18 @@ onMounted(async () => {
     await dataStore.initializeApp()
   }
   
-  // Load initial production data
+  // Check if we need to load production data or if timeseries is sufficient
   try {
-    await dataStore.loadProductionData(uiStore.selectedProduct, uiStore.selectedYear)
+    // Wait a bit for timeseries data to be loaded
+    await new Promise(resolve => setTimeout(resolve, 100))
+    
+    if (dataStore.timeseriesData && dataStore.timeseriesData[uiStore.selectedProduct]) {
+      console.log('📊 DashboardPanel: Using timeseries data for', uiStore.selectedProduct)
+      // Timeseries data is available, no need to load production data
+    } else {
+      console.log('📊 DashboardPanel: Loading production data for', uiStore.selectedProduct)
+      await dataStore.loadProductionData(uiStore.selectedProduct, uiStore.selectedYear)
+    }
   } catch (error) {
     console.error('Failed to load initial production data:', error)
   }
@@ -296,7 +305,14 @@ onUnmounted(() => {
 watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([product, year]) => {
   if (product && year) {
     try {
-      await dataStore.loadProductionData(product, year)
+      // Check if timeseries data is available for this product
+      if (dataStore.timeseriesData && dataStore.timeseriesData[product]) {
+        console.log('📊 DashboardPanel watcher: Using timeseries data for', product)
+        // Timeseries data is available, no need to load production data
+      } else {
+        console.log('📊 DashboardPanel watcher: Loading production data for', product)
+        await dataStore.loadProductionData(product, year)
+      }
     } catch (error) {
       console.error('Failed to load production data:', error)
     }

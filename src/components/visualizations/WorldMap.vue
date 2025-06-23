@@ -143,6 +143,16 @@ const mapConfig = computed(() => ({
 // Initialize map
 const initializeMap = async () => {
   console.log('🚀 WorldMap: initializeMap called')
+  console.log('🔍 WorldMap: Props:', {
+    selectedProduct: props.selectedProduct,
+    selectedYear: props.selectedYear,
+    selectedMetric: props.selectedMetric
+  })
+  console.log('🔍 WorldMap: Store values:', {
+    uiStoreProduct: uiStore.selectedProduct,
+    uiStoreYear: uiStore.selectedYear,
+    uiStoreMetric: uiStore.selectedMetric
+  })
   console.log('🔍 WorldMap: containerRef.value:', containerRef.value)
   console.log('🔍 WorldMap: svgContainerRef.value:', svgContainerRef.value)
   console.log('🔍 WorldMap: isInitialized:', isInitialized.value)
@@ -176,7 +186,7 @@ const initializeMap = async () => {
     
     // Initialize map with direct D3 approach (working solution)
     console.log('🚀 WorldMap: Creating map directly...')
-    createMapDirect(loadedGeoData)
+    await createMapDirect(loadedGeoData)
 
   } catch (err) {
     error.value = 'Fehler beim Laden der Karte'
@@ -192,7 +202,7 @@ const initializeMap = async () => {
 }
 
 // Create map directly (working approach from WorldMapSimple)
-const createMapDirect = (data) => {
+const createMapDirect = async (data) => {
   console.log('🎨 WorldMap: createMapDirect called')
   
   if (!svgContainerRef.value) {
@@ -294,6 +304,94 @@ const createMapDirect = (data) => {
   // Draw countries directly
   drawCountriesDirect(g, data.features)
 
+  // Simulate exact manual product selection flow
+  console.log('🔄 WorldMap: === STARTING MANUAL PRODUCT SELECTION SIMULATION ===')
+  console.log('🔄 WorldMap: Current state before simulation:', {
+    selectedProduct: props.selectedProduct,
+    selectedYear: props.selectedYear,
+    uiStoreProduct: uiStore.selectedProduct,
+    uiStoreYear: uiStore.selectedYear,
+    hasTimeseriesData: !!dataStore.timeseriesData,
+    productionDataLength: productionDataStatic?.length || 0
+  })
+  
+  // Simulate the exact handleProductChange flow from ProductSelector
+  const selectedProduct = props.selectedProduct
+  const selectedYear = props.selectedYear
+  
+  if (selectedProduct && selectedYear) {
+    console.log('🔄 WorldMap: Setting selected product in store...')
+    // This is exactly what handleProductChange does
+    uiStore.setSelectedProduct(selectedProduct)
+    
+    console.log('🔄 WorldMap: Waiting for Vue reactivity...')
+    // Force Vue reactivity to update
+    await nextTick()
+    
+    console.log('🔄 WorldMap: Store values after setting:', {
+      uiStoreProduct: uiStore.selectedProduct,
+      uiStoreYear: uiStore.selectedYear
+    })
+    
+    // Simulate the ProductSelector watcher logic
+    try {
+      // Wait for timeseries data to be available
+      console.log('🔄 WorldMap: Checking for timeseries data...')
+      let retries = 0
+      while (!dataStore.timeseriesData && retries < 10) {
+        console.log(`🔄 WorldMap: Waiting for timeseries data (attempt ${retries + 1})...`)
+        await new Promise(resolve => setTimeout(resolve, 200))
+        retries++
+      }
+      
+      if (dataStore.timeseriesData && dataStore.timeseriesData[selectedProduct]) {
+        console.log(`🔄 WorldMap: Found timeseries data for ${selectedProduct}`)
+        // Timeseries data is available, no need to load production data
+      } else if (dataStore.timeseriesData) {
+        console.log('🔄 WorldMap: Timeseries available but no data for product, using fallback...')
+        // Try to load production data as fallback
+        try {
+          await dataStore.loadProductionData(selectedProduct, selectedYear)
+          console.log('🔄 WorldMap: DataStore loading completed')
+        } catch (error) {
+          console.warn('🔄 WorldMap: Production data loading failed, will use timeseries fallback')
+        }
+      } else {
+        console.warn('🔄 WorldMap: No timeseries data available after waiting')
+      }
+      
+      // Force another Vue update cycle
+      console.log('🔄 WorldMap: Second Vue reactivity wait...')
+      await nextTick()
+      
+      // Now force map update immediately
+      console.log('🔄 WorldMap: Forcing immediate local data load...')
+      await loadProductionData()
+      
+      console.log('🔄 WorldMap: Production data after load:', {
+        productionDataLength: productionDataStatic?.length || 0,
+        sampleData: productionDataStatic?.slice(0, 3)
+      })
+      
+      // Force map color update
+      console.log('🔄 WorldMap: Looking for map container...')
+      const container = d3.select(svgContainerRef.value).select('.map-container')
+      if (!container.empty()) {
+        console.log('🔄 WorldMap: Found container, forcing direct update...')
+        updateMapWithProductionDataDirect(container)
+      } else {
+        console.warn('🔄 WorldMap: No map container found!')
+      }
+      
+    } catch (error) {
+      console.error('🔄 WorldMap: Error during init simulation:', error)
+    }
+  } else {
+    console.warn('🔄 WorldMap: Missing selectedProduct or selectedYear')
+  }
+  
+  console.log('🔄 WorldMap: === MANUAL PRODUCT SELECTION SIMULATION COMPLETE ===')
+  
   // Update with production data if available
   const processedData = getProcessedProductionData()
   if (processedData.length > 0) {
@@ -579,7 +677,17 @@ const drawCountries = (container, features) => {
 
 // Load production data
 const loadProductionData = async () => {
-  if (!props.selectedProduct || !props.selectedYear) return
+  console.log('🗺️ WorldMap: loadProductionData called')
+  console.log('🗺️ WorldMap: Props check:', {
+    selectedProduct: props.selectedProduct,
+    selectedYear: props.selectedYear,
+    selectedMetric: props.selectedMetric
+  })
+  
+  if (!props.selectedProduct || !props.selectedYear) {
+    console.warn('🗺️ WorldMap: Missing required props, returning early')
+    return
+  }
 
   try {
     console.log(`🗺️ WorldMap: Loading data for ${props.selectedProduct} ${props.selectedYear} - Metric: ${props.selectedMetric}`)
@@ -879,12 +987,19 @@ const updateMapWithProductionDataDirect = (container) => {
 
 // Static version for non-reactive updates
 const updateMapWithProductionDataStatic = () => {
+  console.log('🎨 WorldMap: updateMapWithProductionDataStatic called')
   const containerElement = svgContainerRef.value
-  if (!containerElement) return
+  if (!containerElement) {
+    console.warn('🎨 WorldMap: No container element available')
+    return
+  }
   
   const container = d3.select(containerElement).select('.map-container')
   if (!container.empty()) {
+    console.log('🎨 WorldMap: Found map container, updating...')
     updateMapWithProductionDataDirect(container)
+  } else {
+    console.warn('🎨 WorldMap: Map container not found')
   }
 }
 
@@ -1226,8 +1341,21 @@ const handleResize = () => {
 
 // Watchers
 watch([() => props.selectedProduct, () => props.selectedYear, () => props.selectedMetric], async () => {
-  console.log('🔄 WorldMap: Product/Year/Metric changed, reloading data...')
-  await loadProductionData()
+  console.log('🔄 WorldMap WATCHER: Product/Year/Metric changed')
+  console.log('🔄 WorldMap WATCHER: Current values:', {
+    product: props.selectedProduct,
+    year: props.selectedYear,
+    metric: props.selectedMetric,
+    isInitialized: isInitialized.value
+  })
+  
+  // Only reload if map is already initialized
+  if (isInitialized.value) {
+    console.log('🔄 WorldMap WATCHER: Map is initialized, loading data...')
+    await loadProductionData()
+  } else {
+    console.log('🔄 WorldMap WATCHER: Map not initialized yet, skipping...')
+  }
 }, { immediate: true })
 
 // Removed watcher - using static updates instead
@@ -1256,8 +1384,6 @@ onMounted(async () => {
           svgContainerSize: svgContainerRef.value?.getBoundingClientRect()
         })
         await initializeMap()
-        console.log('📊 WorldMap: Loading production data from onMounted...')
-        await loadProductionData()
         
         // Start observing theme changes
         if (document.documentElement) {

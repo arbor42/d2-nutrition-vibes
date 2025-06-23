@@ -48,7 +48,7 @@
           <ErrorDisplay
             :error="error"
             title="Fehler in der Simulation"
-            :showRetry="true"
+            :show-retry="true"
             @retry="runSimulation"
           />
         </div>
@@ -142,12 +142,12 @@
             
             <div class="config-actions">
               <div class="action-buttons">
-                <BaseButton @click="runSimulation" :disabled="isLoading" variant="primary">
+                <BaseButton :disabled="isLoading" variant="primary" @click="runSimulation">
                   <LoadingSpinner v-if="isLoading" size="sm" />
                   {{ isLoading ? 'Simuliert...' : 'Simulation starten' }}
                 </BaseButton>
                 
-                <BaseButton @click="resetConfig" variant="outline">
+                <BaseButton variant="outline" @click="resetConfig">
                   Zurücksetzen
                 </BaseButton>
               </div>
@@ -169,7 +169,7 @@
                 <span class="meta-item">
                   <strong>Methode:</strong> {{ simulationResults.dataSource }}
                 </span>
-                <span class="meta-item" v-if="simulationResults.simulationDetails">
+                <span v-if="simulationResults.simulationDetails" class="meta-item">
                   <strong>Details:</strong> 
                   {{ simulationResults.simulationDetails.totalPaths }} Pfade, 
                   {{ simulationResults.simulationDetails.confidenceLevel }} Konfidenz, 

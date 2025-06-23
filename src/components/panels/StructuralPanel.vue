@@ -16,11 +16,11 @@
           <button
             v-for="tab in tabs"
             :key="tab.id"
-            @click="activeTab = tab.id"
             :class="[
               'tab-button',
               activeTab === tab.id ? 'active' : ''
             ]"
+            @click="activeTab = tab.id"
           >
             <component :is="tab.icon" class="tab-icon" />
             <span>{{ tab.label }}</span>
@@ -38,7 +38,7 @@
           <ErrorDisplay
             :error="error"
             title="Fehler beim Laden der Daten"
-            :showRetry="true"
+            :show-retry="true"
             @retry="loadData"
           />
         </div>
@@ -63,8 +63,8 @@
               <div class="control-group">
                 <label>Filter nach Volumen</label>
                 <input
-                  type="range"
                   v-model.number="volumeThreshold"
+                  type="range"
                   min="0"
                   max="10000"
                   step="100"
@@ -160,7 +160,7 @@
                 </div>
                 <div class="cluster-members">
                   <span
-                    v-for="(member, idx) in cluster.members.slice(0, 8)"
+                    v-for="member in cluster.members.slice(0, 8)"
                     :key="member"
                     class="member-chip"
                   >

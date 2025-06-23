@@ -288,9 +288,9 @@ onUnmounted(() => {
       <div class="text-center">
         <p class="text-error-600 dark:text-error-400 mb-3">{{ error }}</p>
         <BaseButton
-          @click="initializeChart"
           variant="danger"
           size="sm"
+          @click="initializeChart"
         >
           Erneut versuchen
         </BaseButton>
@@ -298,7 +298,7 @@ onUnmounted(() => {
     </div>
 
     <!-- Chart Header -->
-    <div class="p-4 border-b border-gray-200 dark:border-gray-700" v-if="data && data.length > 0">
+    <div v-if="data && data.length > 0" class="p-4 border-b border-gray-200 dark:border-gray-700">
       <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
         Simulationsergebnisse
       </h3>
@@ -308,7 +308,7 @@ onUnmounted(() => {
     </div>
 
     <!-- Chart SVG Container -->
-    <div class="p-4 min-h-[400px]" v-if="data && data.length > 0" />
+    <div v-if="data && data.length > 0" class="p-4 min-h-[400px]" />
 
     <!-- Placeholder content -->
     <div v-if="!data || data.length === 0" class="absolute inset-0 flex items-center justify-center text-gray-500 dark:text-gray-400 pointer-events-none">

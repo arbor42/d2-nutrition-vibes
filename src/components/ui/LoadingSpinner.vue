@@ -12,6 +12,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   size: 'md',
   color: 'primary',
+  text: undefined,
   centered: false,
   overlay: false
 })

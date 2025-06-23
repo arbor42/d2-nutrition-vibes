@@ -596,9 +596,9 @@ defineExpose({
       <div class="text-center">
         <p class="text-error-600 dark:text-error-400 mb-3">{{ error }}</p>
         <BaseButton
-          @click="loadData"
           variant="danger"
           size="sm"
+          @click="loadData"
         >
           Erneut versuchen
         </BaseButton>

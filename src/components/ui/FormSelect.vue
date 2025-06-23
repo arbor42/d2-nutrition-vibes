@@ -23,6 +23,9 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   placeholder: 'Auswählen...',
   disabled: false,
+  error: undefined,
+  label: undefined,
+  hint: undefined,
   required: false,
   size: 'md',
   multiple: false

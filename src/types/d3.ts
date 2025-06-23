@@ -139,7 +139,7 @@ export interface D3NetworkComposable extends D3ChartComposable {
 export interface AnimationConfig {
   duration: number
   delay: number
-  ease: d3.EasingFunction
+  ease: (t: number) => number
   stagger: number
 }
 

@@ -14,6 +14,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  title: undefined,
   size: 'md',
   closable: true,
   closeOnBackdrop: true,
@@ -220,9 +221,9 @@ onUnmounted(() => {
             
             <button
               v-if="closable"
-              @click="closeModal"
               class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
               :aria-label="'Modal schließen'"
+              @click="closeModal"
             >
               <svg
                 class="w-5 h-5"

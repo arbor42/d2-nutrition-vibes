@@ -118,9 +118,9 @@ const getIconSvg = (iconName: string) => {
       
       <!-- Toggle Button -->
       <button
-        @click="emit('toggle')"
         class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
         :title="collapsed ? 'Sidebar erweitern' : 'Sidebar einklappen'"
+        @click="emit('toggle')"
       >
         <svg 
           class="w-5 h-5 text-gray-600 dark:text-gray-400 transition-transform"
@@ -142,7 +142,6 @@ const getIconSvg = (iconName: string) => {
         class="relative"
       >
         <button
-          @click="navigateTo(item.path)"
           :class="[
             'w-full flex items-center rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 group',
             isActive(item.path)
@@ -150,6 +149,7 @@ const getIconSvg = (iconName: string) => {
               : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-gray-100'
           ]"
           :title="collapsed ? item.description : ''"
+          @click="navigateTo(item.path)"
         >
           <!-- Icon -->
           <svg 
@@ -197,12 +197,12 @@ const getIconSvg = (iconName: string) => {
     <div class="p-4 border-t border-gray-200 dark:border-gray-700">
       <!-- Dark Mode Toggle -->
       <button
-        @click="uiStore.toggleDarkMode"
         :class="[
           'w-full flex items-center rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200',
           'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
         ]"
         :title="collapsed ? (uiStore.darkMode ? 'Hell-Modus' : 'Dunkel-Modus') : ''"
+        @click="uiStore.toggleDarkMode"
       >
         <svg 
           class="w-5 h-5 flex-shrink-0"

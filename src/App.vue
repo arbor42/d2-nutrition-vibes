@@ -41,8 +41,8 @@
             </p>
           </div>
           <button
-            @click="uiStore.removeNotification(notification.id)"
             class="ml-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+            @click="uiStore.removeNotification(notification.id)"
           >
             ×
           </button>

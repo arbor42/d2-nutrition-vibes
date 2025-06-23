@@ -21,7 +21,7 @@
         <slot 
           :item="item.data" 
           :index="item.index"
-          :isVisible="true"
+          :is-visible="true"
         />
       </div>
     </div>

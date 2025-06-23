@@ -1,4 +1,5 @@
 import { ref, nextTick } from 'vue'
+import * as d3 from 'd3'
 
 /**
  * Progressive rendering composable for handling large datasets

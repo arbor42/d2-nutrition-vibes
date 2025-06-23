@@ -26,6 +26,8 @@ const props = withDefaults(defineProps<Props>(), {
   placeholder: 'Auswählen...',
   searchPlaceholder: 'Suchen...',
   disabled: false,
+  error: undefined,
+  label: undefined,
   required: false,
   size: 'md',
   clearable: false,

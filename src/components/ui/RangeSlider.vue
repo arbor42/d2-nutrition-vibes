@@ -19,7 +19,9 @@ const props = withDefaults(defineProps<Props>(), {
   max: 100,
   step: 1,
   disabled: false,
+  label: undefined,
   showValue: true,
+  formatValue: undefined,
   size: 'md',
   color: 'primary'
 })

@@ -19,10 +19,15 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   type: 'text',
+  placeholder: undefined,
   disabled: false,
   readonly: false,
+  error: undefined,
+  label: undefined,
+  hint: undefined,
   required: false,
   size: 'md',
+  icon: undefined,
   iconPosition: 'left',
   clearable: false
 })

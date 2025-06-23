@@ -21,19 +21,19 @@
       
       <div v-if="showRetry" class="error-actions">
         <BaseButton 
-          @click="handleRetry"
           variant="outline"
           size="sm"
           class="mr-2"
+          @click="handleRetry"
         >
           Try Again
         </BaseButton>
         
         <BaseButton 
           v-if="showReport"
-          @click="handleReport"
           variant="ghost"
           size="sm"
+          @click="handleReport"
         >
           Report Issue
         </BaseButton>

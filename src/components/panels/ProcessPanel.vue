@@ -11,10 +11,10 @@
           </div>
           <div class="header-actions">
             <BaseButton 
-              @click="showHelp = !showHelp" 
-              variant="outline"
+              variant="outline" 
               size="sm"
               title="Hilfe anzeigen"
+              @click="showHelp = !showHelp"
             >
               <QuestionMarkCircleIcon class="w-5 h-5" />
               <span class="ml-2 hidden sm:inline">Hilfe</span>
@@ -85,12 +85,12 @@
             <button
               v-for="tab in processTabs"
               :key="tab.id"
-              @click="activeTab = tab.id"
               :class="[
                 'tab-button',
                 { 'tab-active': activeTab === tab.id }
               ]"
               :title="tab.description"
+              @click="activeTab = tab.id"
             >
               <component :is="tab.icon" class="tab-icon" />
               <span class="tab-content">
@@ -102,21 +102,21 @@
           </div>
           <div class="control-actions">
             <BaseButton 
-              @click="refreshData" 
-              :disabled="isLoading"
+              :disabled="isLoading" 
               variant="outline"
               size="sm"
               title="Daten aktualisieren"
+              @click="refreshData"
             >
               <RefreshIcon class="w-4 h-4" />
               <span class="hidden lg:inline ml-2">Aktualisieren</span>
             </BaseButton>
             <BaseButton 
-              @click="exportResults" 
-              :disabled="!hasResults"
+              :disabled="!hasResults" 
               variant="secondary"
               size="sm"
               title="Ergebnisse exportieren"
+              @click="exportResults"
             >
               <DownloadIcon class="w-4 h-4" />
               <span class="hidden lg:inline ml-2">Export</span>
@@ -130,7 +130,7 @@
           <ErrorDisplay
             :error="error"
             title="Fehler beim Process Mining"
-            :showRetry="true"
+            :show-retry="true"
             @retry="loadProcessData"
           />
         </div>
@@ -183,7 +183,7 @@
               <div class="process-summary">
                 <div class="summary-grid">
                   <div 
-                    v-for="(flow, index) in displayedProcesses" 
+                    v-for="flow in displayedProcesses" 
                     :key="flow.process_id"
                     class="process-card"
                     :class="{ 'selected': selectedProcess === flow.process_id }"
@@ -212,7 +212,7 @@
                         <span class="metric-label">Gesamtwert:</span>
                         <span class="metric-value">{{ formatValue(flow.total_value) }}</span>
                       </div>
-                      <div class="metric" v-if="getLosses(flow) > 0">
+                      <div v-if="getLosses(flow) > 0" class="metric">
                         <span class="metric-label">Verluste:</span>
                         <span class="metric-value loss">{{ formatValue(getLosses(flow)) }}</span>
                       </div>
@@ -307,7 +307,7 @@
               </div>
               
               <!-- Most Common Activities Chart -->
-              <div class="activity-chart" v-if="processData.process_statistics.most_common_activities">
+              <div v-if="processData.process_statistics.most_common_activities" class="activity-chart">
                 <h4 class="chart-title">Häufigste Aktivitäten</h4>
                 <div class="activity-bars">
                   <div 
@@ -399,7 +399,7 @@
                 </div>
               </div>
 
-              <div class="deviations-section" v-if="conformanceData.deviations && conformanceData.deviations.length > 0">
+              <div v-if="conformanceData.deviations && conformanceData.deviations.length > 0" class="deviations-section">
                 <div class="deviations-header">
                   <h4 class="deviations-title">Erkannte Abweichungen</h4>
                   <div class="deviation-summary">
@@ -431,8 +431,8 @@
                         </div>
                       </div>
                       <button 
-                        @click="toggleDeviationDetails(index)"
                         class="deviation-toggle"
+                        @click="toggleDeviationDetails(index)"
                       >
                         <ChevronDownIcon class="w-4 h-4" :class="{ 'rotate-180': expandedDeviations.includes(index) }" />
                       </button>
@@ -461,8 +461,8 @@
                         <span class="impact-label">Auswirkung:</span>
                         <span class="impact-badge" :class="getSeverityClass(deviation.severity)">
                           {{ deviation.severity === 'high' ? 'Hoch - Sofortige Maßnahmen erforderlich' : 
-                               deviation.severity === 'medium' ? 'Mittel - Zeitnahe Überprüfung empfohlen' : 
-                               'Niedrig - Monitoring ausreichend' }}
+                            deviation.severity === 'medium' ? 'Mittel - Zeitnahe Überprüfung empfohlen' : 
+                            'Niedrig - Monitoring ausreichend' }}
                         </span>
                       </div>
                     </div>
@@ -521,15 +521,15 @@
                     <div class="action-content">
                       <h6 class="action-title">{{ action.description }}</h6>
                       <div class="action-details">
-                        <span class="detail-item" v-if="action.current_loss">
+                        <span v-if="action.current_loss" class="detail-item">
                           <span class="detail-label">Aktuelle Verluste:</span>
                           <span class="detail-value">{{ action.current_loss }} t/Jahr</span>
                         </span>
-                        <span class="detail-item" v-if="action.potential_savings">
+                        <span v-if="action.potential_savings" class="detail-item">
                           <span class="detail-label">Einsparung:</span>
                           <span class="detail-value highlight">{{ action.potential_savings }}</span>
                         </span>
-                        <span class="detail-item" v-if="action.time_savings">
+                        <span v-if="action.time_savings" class="detail-item">
                           <span class="detail-label">Zeitersparnis:</span>
                           <span class="detail-value">{{ action.time_savings }}</span>
                         </span>
@@ -570,9 +570,9 @@
                   Führen Sie zuerst eine Prozessanalyse durch, um Optimierungspotenziale zu identifizieren.
                 </p>
                 <BaseButton 
-                  @click="activeTab = 'discovery'"
                   variant="primary"
                   class="mt-4"
+                  @click="activeTab = 'discovery'"
                 >
                   Zur Prozessanalyse
                 </BaseButton>
@@ -612,25 +612,25 @@
                     </div>
                     
                     <div class="suggestion-metrics">
-                      <div class="metric-row" v-if="suggestion.current_loss">
+                      <div v-if="suggestion.current_loss" class="metric-row">
                         <div class="metric">
                           <span class="metric-label">Aktuelle Verluste:</span>
                           <span class="metric-value">{{ suggestion.current_loss }} t</span>
                         </div>
                       </div>
-                      <div class="metric-row" v-if="suggestion.potential_savings">
+                      <div v-if="suggestion.potential_savings" class="metric-row">
                         <div class="metric">
                           <span class="metric-label">Potenzielle Einsparungen:</span>
                           <span class="metric-value positive">{{ suggestion.potential_savings }}</span>
                         </div>
                       </div>
-                      <div class="metric-row" v-if="suggestion.potential_improvement">
+                      <div v-if="suggestion.potential_improvement" class="metric-row">
                         <div class="metric">
                           <span class="metric-label">Verbesserung:</span>
                           <span class="metric-value positive">{{ suggestion.potential_improvement }}</span>
                         </div>
                       </div>
-                      <div class="metric-row" v-if="suggestion.time_savings">
+                      <div v-if="suggestion.time_savings" class="metric-row">
                         <div class="metric">
                           <span class="metric-label">Zeitersparnis:</span>
                           <span class="metric-value positive">{{ suggestion.time_savings }}</span>
@@ -668,7 +668,7 @@
           <div class="roi-modal" @click.stop>
             <div class="roi-modal-header">
               <h3 class="roi-modal-title">ROI-Analyse</h3>
-              <button @click="closeROIModal" class="roi-close-button">
+              <button class="roi-close-button" @click="closeROIModal">
                 <XIcon class="w-6 h-6" />
               </button>
             </div>
@@ -760,10 +760,10 @@
             </div>
             
             <div class="roi-modal-footer">
-              <BaseButton @click="closeROIModal" variant="outline">
+              <BaseButton variant="outline" @click="closeROIModal">
                 Schließen
               </BaseButton>
-              <BaseButton @click="markAsPlanned(selectedROI.action); closeROIModal()" variant="primary">
+              <BaseButton variant="primary" @click="markAsPlanned(selectedROI.action); closeROIModal()">
                 Für später merken
               </BaseButton>
             </div>
@@ -1202,7 +1202,7 @@ const toggleShowAllProcesses = () => {
 
 const prioritizedActions = computed(() => {
   if (!enhancementData.value) return []
-  return enhancementData.value
+  return [...enhancementData.value]
     .sort((a, b) => {
       const impactOrder = { 'High': 3, 'Medium': 2, 'Low': 1 }
       return (impactOrder[b.impact] || 0) - (impactOrder[a.impact] || 0)

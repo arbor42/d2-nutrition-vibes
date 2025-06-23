@@ -592,9 +592,9 @@ defineExpose({
       <div class="text-center">
         <p class="text-error-600 dark:text-error-400 mb-3">{{ error }}</p>
         <BaseButton
-          @click="initializeChart"
           variant="danger"
           size="sm"
+          @click="initializeChart"
         >
           Erneut versuchen
         </BaseButton>
@@ -614,10 +614,10 @@ defineExpose({
         </div>
         
         <BaseButton
-          @click="startAnalysis"
           :disabled="isAnalyzing"
           variant="primary"
           size="sm"
+          @click="startAnalysis"
         >
           {{ isAnalyzing ? 'Analysiert...' : 'Analyse starten' }}
         </BaseButton>

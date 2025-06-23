@@ -1170,7 +1170,7 @@ const applyProductionData = (container, data) => {
       const normalizedName = normalizeCountryName(d.properties.name || d.properties.admin || '').toLowerCase()
       
       // Look up by country code first, then by normalized name, then by original name
-      let value = dataByCountryCode.get(countryCode) || 
+      const value = dataByCountryCode.get(countryCode) || 
                   dataByNormalizedName.get(normalizedName) ||
                   dataByCountry.get(countryName)
       
@@ -1442,9 +1442,9 @@ defineExpose({
       <div class="text-center">
         <p class="text-error-600 dark:text-error-400 mb-3">{{ error }}</p>
         <BaseButton
-          @click="initializeMap"
           variant="danger"
           size="sm"
+          @click="initializeMap"
         >
           Erneut versuchen
         </BaseButton>
@@ -1454,12 +1454,12 @@ defineExpose({
     <!-- Map controls -->
     <div class="absolute top-4 right-4 z-20 flex flex-col space-y-2">
       <BaseButton
-        @click="resetZoom"
         variant="secondary"
         size="sm"
         :icon="true"
         class="!p-2"
         title="Zoom zurücksetzen"
+        @click="resetZoom"
       >
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />

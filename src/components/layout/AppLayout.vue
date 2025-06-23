@@ -2,8 +2,8 @@
   <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
     <!-- Application Header -->
     <AppHeader 
-      @toggle-sidebar="toggleSidebar"
       :sidebar-collapsed="sidebarCollapsed"
+      @toggle-sidebar="toggleSidebar"
     />
     
     <!-- Sidebar Navigation -->
@@ -121,8 +121,8 @@
             <!-- Close Button -->
             <div class="ml-4 flex-shrink-0 flex">
               <button
-                @click="uiStore.removeNotification(notification.id)"
                 class="bg-white dark:bg-gray-800 rounded-md inline-flex text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                @click="uiStore.removeNotification(notification.id)"
               >
                 <span class="sr-only">Schließen</span>
                 <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">

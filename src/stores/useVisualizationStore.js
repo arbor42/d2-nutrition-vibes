@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
-import { ref, computed, watch } from 'vue'
+import { ref, computed } from 'vue'
+import * as d3 from 'd3'
 
 export const useVisualizationStore = defineStore('visualization', () => {
   // Enhanced state for Phase 5
@@ -332,6 +333,12 @@ export const useVisualizationStore = defineStore('visualization', () => {
     const serializer = new XMLSerializer()
     const svgString = serializer.serializeToString(svgElement)
     return `data:image/svg+xml;charset=utf-8,${  encodeURIComponent(svgString)}`
+  }
+
+  const exportToPDF = (svgElement) => {
+    // PDF export not implemented yet - fallback to PNG
+    console.warn('PDF export not implemented, falling back to PNG')
+    return exportToPNG(svgElement)
   }
 
   // Cleanup function

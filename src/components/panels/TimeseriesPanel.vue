@@ -42,11 +42,11 @@
 
           <div class="filter-group">
             <BaseButton 
-              @click="loadData" 
-              :disabled="isLoading"
+              :disabled="isLoading" 
               variant="primary"
               size="md"
               class="mt-6"
+              @click="loadData"
             >
               <LoadingSpinner v-if="isLoading" size="sm" />
               {{ isLoading ? 'Lädt...' : 'Daten laden' }}
@@ -60,7 +60,7 @@
           <ErrorDisplay
             :error="error"
             title="Fehler beim Laden der Zeitreihendaten"
-            :showRetry="true"
+            :show-retry="true"
             @retry="loadData"
           />
         </div>

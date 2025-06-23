@@ -2,6 +2,7 @@
  * Data streaming utilities for handling large files
  * Provides efficient loading and processing of large datasets
  */
+import { ref } from 'vue'
 
 /**
  * Stream reader for chunked data loading

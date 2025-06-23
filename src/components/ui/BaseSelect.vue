@@ -22,7 +22,9 @@ const props = withDefaults(defineProps<Props>(), {
   placeholder: 'Auswählen...',
   disabled: false,
   required: false,
-  size: 'md'
+  size: 'md',
+  error: undefined,
+  label: undefined
 })
 
 const emit = defineEmits<{

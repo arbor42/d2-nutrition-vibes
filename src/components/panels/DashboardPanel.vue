@@ -338,9 +338,9 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
             <div class="ml-4">
               <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400">
                 {{ uiStore.selectedMetric === 'production' ? 'Gesamtproduktion' : 
-                   uiStore.selectedMetric === 'import_quantity' ? 'Gesamtimport' :
-                   uiStore.selectedMetric === 'export_quantity' ? 'Gesamtexport' :
-                   'Inlandsversorgung' }} {{ uiStore.selectedYear || new Date().getFullYear() }}
+                  uiStore.selectedMetric === 'import_quantity' ? 'Gesamtimport' :
+                  uiStore.selectedMetric === 'export_quantity' ? 'Gesamtexport' :
+                  'Inlandsversorgung' }} {{ uiStore.selectedYear || new Date().getFullYear() }}
               </h3>
               <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">
                 {{ (globalStats?.total || 0).toLocaleString('de-DE') }}
@@ -367,18 +367,18 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
             <div class="ml-4">
               <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400">
                 {{ uiStore.selectedMetric === 'production' ? 'Produzierende Länder' :
-                   uiStore.selectedMetric === 'import_quantity' ? 'Importierende Länder' :
-                   uiStore.selectedMetric === 'export_quantity' ? 'Exportierende Länder' :
-                   'Länder mit Daten' }}
+                  uiStore.selectedMetric === 'import_quantity' ? 'Importierende Länder' :
+                  uiStore.selectedMetric === 'export_quantity' ? 'Exportierende Länder' :
+                  'Länder mit Daten' }}
               </h3>
               <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">
                 {{ globalStats?.countries || 0 }}
               </p>
               <p class="text-sm text-gray-500 dark:text-gray-400">
                 mit {{ uiStore.selectedMetric === 'production' ? 'Produktionsdaten' :
-                       uiStore.selectedMetric === 'import_quantity' ? 'Importdaten' :
-                       uiStore.selectedMetric === 'export_quantity' ? 'Exportdaten' :
-                       'Versorgungsdaten' }}
+                  uiStore.selectedMetric === 'import_quantity' ? 'Importdaten' :
+                  uiStore.selectedMetric === 'export_quantity' ? 'Exportdaten' :
+                  'Versorgungsdaten' }}
               </p>
             </div>
           </div>
@@ -399,9 +399,9 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
             <div class="ml-4">
               <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400">
                 {{ uiStore.selectedMetric === 'production' ? 'Größter Produzent' :
-                   uiStore.selectedMetric === 'import_quantity' ? 'Größter Importeur' :
-                   uiStore.selectedMetric === 'export_quantity' ? 'Größter Exporteur' :
-                   'Größter Verbraucher' }}
+                  uiStore.selectedMetric === 'import_quantity' ? 'Größter Importeur' :
+                  uiStore.selectedMetric === 'export_quantity' ? 'Größter Exporteur' :
+                  'Größter Verbraucher' }}
               </h3>
               <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">
                 {{ globalStats.topProducer || 'N/A' }}
@@ -422,8 +422,8 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
           {{ uiStore.selectedCountry }} - Detailansicht
         </h3>
         <button
-          @click="uiStore.setSelectedCountry('')"
           class="btn btn-ghost btn-sm"
+          @click="uiStore.setSelectedCountry('')"
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -482,13 +482,13 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
           <button
             v-for="option in visualizationOptions"
             :key="option.value"
-            @click="selectedVisualization = option.value"
             :class="[
               'btn btn-sm transition-colors duration-200',
               selectedVisualization === option.value
                 ? 'bg-primary-600 text-white border-primary-600 hover:bg-primary-700'
                 : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600'
             ]"
+            @click="selectedVisualization = option.value"
           >
             {{ option.label }}
           </button>

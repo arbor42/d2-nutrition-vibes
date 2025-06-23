@@ -38,9 +38,9 @@
         <div class="flex items-center space-x-4">
           <!-- Dark Mode Toggle -->
           <button
-            @click="uiStore.toggleDarkMode"
             class="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-lg transition-colors"
             title="Dark Mode umschalten"
+            @click="uiStore.toggleDarkMode"
           >
             <svg v-if="!uiStore.darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
@@ -52,9 +52,9 @@
 
           <!-- Notification Bell -->
           <button
-            @click="showNotifications = !showNotifications"
             class="relative p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-lg transition-colors"
             title="Benachrichtigungen"
+            @click="showNotifications = !showNotifications"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
@@ -67,9 +67,9 @@
 
           <!-- Mobile Menu Button -->
           <button
-            @click="uiStore.toggleSidebar"
             class="md:hidden p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-lg transition-colors"
             title="Menü öffnen"
+            @click="uiStore.toggleSidebar"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -89,11 +89,11 @@
           v-for="route in navigationRoutes"
           :key="route.name"
           :to="route.path"
-          @click="uiStore.setSidebarOpen(false)"
           class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 transition-colors"
           :class="{
             'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20': $route.name === route.name
           }"
+          @click="uiStore.setSidebarOpen(false)"
         >
           {{ route.label }}
         </router-link>
@@ -111,8 +111,8 @@
             Benachrichtigungen
           </h3>
           <button
-            @click="uiStore.clearNotifications"
             class="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300"
+            @click="uiStore.clearNotifications"
           >
             Alle löschen
           </button>
@@ -140,8 +140,8 @@
               </p>
             </div>
             <button
-              @click="uiStore.removeNotification(notification.id)"
               class="ml-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+              @click="uiStore.removeNotification(notification.id)"
             >
               ×
             </button>
@@ -153,7 +153,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useUIStore } from '@/stores/useUIStore'
 
 const uiStore = useUIStore()

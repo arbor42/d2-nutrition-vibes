@@ -16,7 +16,7 @@
               v-model="selectedForecastType"
               :options="forecastTypeOptions"
               placeholder="Prognosentyp auswählen..."
-              @update:modelValue="loadAvailableForecasts"
+              @update:model-value="loadAvailableForecasts"
             />
           </div>
           
@@ -41,7 +41,7 @@
 
           <div class="filter-group">
             <label class="invisible">Aktion</label>
-            <BaseButton @click="loadPredictions" :disabled="isLoading || !selectedForecast" class="w-full">
+            <BaseButton :disabled="isLoading || !selectedForecast" class="w-full" @click="loadPredictions">
               <LoadingSpinner v-if="isLoading" size="sm" />
               {{ isLoading ? 'Lädt...' : 'Prognosen laden' }}
             </BaseButton>
@@ -54,7 +54,7 @@
           <ErrorDisplay
             :error="error"
             title="Fehler beim Laden der ML-Prognosen"
-            :showRetry="true"
+            :show-retry="true"
             @retry="loadPredictions"
           />
         </div>

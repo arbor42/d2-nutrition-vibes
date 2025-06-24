@@ -121,18 +121,28 @@ let path: d3.GeoPath
 let colorScale: d3.ScaleQuantize<string>
 let zoom: d3.ZoomBehavior<SVGElement, unknown>
 
-// High contrast green color scheme for production data
+// Viridis color scheme for production data
 const greenColorScheme = [
-  '#f7fcf5',  // Very light green (lowest values)
-  '#e5f5e0',  // Light green
-  '#c7e9c0',  // Light green
-  '#a1d99b',  // Medium light green
-  '#74c476',  // Medium green
-  '#41ab5d',  // Medium green
-  '#238b45',  // Medium-dark green
-  '#006d2c',  // Dark green
-  '#00441b',  // Very dark green
-  '#002912'   // Darkest green (highest values)
+  '#440154',  // Dark purple (lowest values)
+  '#471365',  // Purple
+  '#481F70',  // Purple
+  '#482878',  // Purple
+  '#46337E',  // Purple
+  '#423E85',  // Purple-blue
+  '#3E4A89',  // Blue
+  '#39558C',  // Blue
+  '#32608D',  // Blue
+  '#2D6B8E',  // Blue-teal
+  '#29768E',  // Teal
+  '#25818E',  // Teal
+  '#228C8D',  // Teal
+  '#20978C',  // Teal-green
+  '#20A386',  // Green
+  '#2AB07E',  // Green
+  '#41BD72',  // Light green
+  '#5DC863',  // Light green
+  '#7DD151',  // Yellow-green
+  '#FDE725'   // Yellow (highest values)
 ]
 
 // Computed properties
@@ -509,52 +519,37 @@ const createLegend = (svg) => {
   // Update gradient with smooth transition
   gradient.selectAll('stop').remove()
   
-  // Add color stops for each color in the scheme
-  if (legendScale.value && legendScale.value.quantiles) {
-    // Handle quantile scales
-    const quantiles = [0, ...legendScale.value.quantiles(), legendDomain.value[1]]
+  // Add color stops for each color in the scheme with equal steps
+  greenColorScheme.forEach((color, i) => {
+    const startPos = (i / greenColorScheme.length) * 100
+    const endPos = ((i + 1) / greenColorScheme.length) * 100
     
-    greenColorScheme.forEach((color, i) => {
-      if (i < quantiles.length - 1) {
-        const startPos = legendScaleLinear(quantiles[i]) / legendWidth
-        const endPos = legendScaleLinear(quantiles[i + 1]) / legendWidth
-        
-        gradient.append('stop')
-          .attr('offset', `${startPos * 100}%`)
-          .attr('stop-color', color)
-        
-        if (i < greenColorScheme.length - 1) {
-          gradient.append('stop')
-            .attr('offset', `${endPos * 100}%`)
-            .attr('stop-color', color)
-        }
-      }
-    })
-  } else {
-    // Linear gradient for sequential scales (including logarithmic)
-    greenColorScheme.forEach((color, i) => {
+    // Add start stop
+    gradient.append('stop')
+      .attr('offset', `${startPos}%`)
+      .attr('stop-color', color)
+    
+    // Add end stop (except for the last color)
+    if (i < greenColorScheme.length - 1) {
       gradient.append('stop')
-        .attr('offset', `${(i / (greenColorScheme.length - 1)) * 100}%`)
+        .attr('offset', `${endPos}%`)
         .attr('stop-color', color)
-    })
+    }
+  })
+  
+  // Create tick values for the legend with 19 intervals (20 colors)
+  let tickValues = []
+  const stepSize = (legendDomain.value[1] - legendDomain.value[0]) / (greenColorScheme.length - 1)
+  
+  // Show min, max, and a few intermediate values
+  tickValues.push(legendDomain.value[0]) // Min value
+  
+  // Add 4 intermediate values (at positions 5, 10, 15)
+  for (let i of [5, 10, 15]) {
+    tickValues.push(legendDomain.value[0] + (stepSize * i))
   }
   
-  // Create appropriate tick values based on scale type
-  let tickValues
-  if (legendDomain.value[1] > legendDomain.value[0] * 1000) {
-    // For highly skewed data, use logarithmic tick positions
-    const logMin = Math.log10(Math.max(legendDomain.value[0], 1))
-    const logMax = Math.log10(legendDomain.value[1])
-    const logTicks = d3.range(Math.ceil(logMin), Math.floor(logMax) + 1)
-    tickValues = logTicks.map(d => Math.pow(10, d))
-    // Add the actual min and max if they're not already included
-    if (!tickValues.includes(legendDomain.value[0])) {
-      tickValues.unshift(legendDomain.value[0])
-    }
-    if (!tickValues.includes(legendDomain.value[1])) {
-      tickValues.push(legendDomain.value[1])
-    }
-  }
+  tickValues.push(legendDomain.value[1]) // Max value
   
   const legendAxis = d3.axisBottom(legendScaleLinear)
     .ticks(tickValues ? tickValues.length : 5)
@@ -1050,6 +1045,23 @@ const applyProductionDataDirect = (container, data) => {
 
   console.log('📊 WorldMap: Applying production data:', data.length, 'entries')
   console.log('📊 WorldMap: Sample data:', data.slice(0, 5))
+  
+  // Debug: Show the actual values we're working with
+  const debugValues = data.filter(d => d.value > 0).map(d => ({ 
+    country: d.country, 
+    value: d.value,
+    unit: d.unit 
+  }))
+  console.log('🔍 WorldMap: Top 5 values:', debugValues.sort((a, b) => b.value - a.value).slice(0, 5))
+  
+  // Check for aggregate regions that might skew the data
+  const aggregateRegions = ['World', 'Europe', 'Asia', 'Africa', 'Americas', 'Oceania', 'European Union']
+  const suspiciousEntries = data.filter(d => 
+    aggregateRegions.some(region => d.country.toLowerCase().includes(region.toLowerCase()))
+  )
+  if (suspiciousEntries.length > 0) {
+    console.warn('⚠️ WorldMap: Found aggregate regions in data:', suspiciousEntries)
+  }
 
   // Create data lookup
   const dataByCountry = new Map()
@@ -1071,7 +1083,12 @@ const applyProductionDataDirect = (container, data) => {
   console.log('🗺️ WorldMap: Data maps created - Countries:', dataByCountry.size, 'Codes:', dataByCountryCode.size)
 
   // Create adaptive color scale based on data distribution
-  const values = data.filter(d => d.value > 0).map(d => d.value)
+  // Filter out aggregate regions to get accurate country-level min/max
+  const countryData = data.filter(d => 
+    d.value > 0 && 
+    !aggregateRegions.some(region => d.country.toLowerCase().includes(region.toLowerCase()))
+  )
+  const values = countryData.map(d => d.value)
   if (values.length > 0) {
     // Sort values for analysis
     const sortedValues = values.sort((a, b) => a - b)
@@ -1079,6 +1096,7 @@ const applyProductionDataDirect = (container, data) => {
     const maxValue = sortedValues[sortedValues.length - 1]
     
     console.log('🎨 WorldMap: Value range:', minValue, 'to', maxValue)
+    console.log('🎨 WorldMap: All values:', sortedValues)
     
     // Analyze data distribution for optimal scale selection
     const range = maxValue - minValue
@@ -1094,58 +1112,56 @@ const applyProductionDataDirect = (container, data) => {
       count: values.length, range, median, q1, q3, iqr, isHighlySkewed
     })
     
-    // Choose optimal scale type based on data characteristics
-    if (isHighlySkewed && values.length > 20) {
-      // For highly skewed data, use logarithmic scale for better visual distribution
-      console.log('🎨 WorldMap: Using logarithmic scale (highly skewed data)')
-      
-      // Use log scale with base 10, but handle zero values
-      const logMin = Math.log10(Math.max(minValue, 1))
-      const logMax = Math.log10(maxValue)
-      
-      colorScale = d3.scaleSequential()
-        .domain([logMin, logMax])
-        .interpolator((t) => {
-          const index = Math.floor(t * (greenColorScheme.length - 1))
-          const nextIndex = Math.min(index + 1, greenColorScheme.length - 1)
-          const localT = (t * (greenColorScheme.length - 1)) - index
-          
-          if (localT === 0) return greenColorScheme[index]
-          
-          // Simple interpolation between adjacent colors
-          return d3.interpolateRgb(greenColorScheme[index], greenColorScheme[nextIndex])(localT)
-        })
-      
-      // Transform values using log10 for the scale
-      const originalColorScale = colorScale
-      colorScale = (value) => {
-        if (value <= 0) return greenColorScheme[0]
-        return originalColorScale(Math.log10(value))
-      }
-      
-      legendDomain.value = [minValue, maxValue]
-    } else if (values.length > 10) {
-      // For moderate datasets, use quantize scale with smart breaks
-      console.log('🎨 WorldMap: Using quantize scale (moderate dataset)')
-      
-      // Create smart domain that accounts for outliers
-      const domain = minValue === 0 ? [0, maxValue] : [minValue * 0.9, maxValue * 1.1]
-      
-      colorScale = d3.scaleQuantize()
-        .domain(domain)
-        .range(greenColorScheme)
-      
-      legendDomain.value = domain
-    } else {
-      // For small datasets, use linear scale for simple interpolation
-      console.log('🎨 WorldMap: Using linear scale (small dataset)')
-      colorScale = d3.scaleLinear()
-        .domain([minValue, maxValue])
-        .range([greenColorScheme[0], greenColorScheme[greenColorScheme.length - 1]])
-        .interpolate(d3.interpolateRgb)
-      
-      legendDomain.value = [minValue, maxValue]
+    // Always use all 20 colors with min at first color and max at last color
+    console.log('🎨 WorldMap: Using all 20 colors with equal steps')
+    
+    // Calculate step size for 19 intervals (20 colors = 19 steps)
+    const stepSize = (maxValue - minValue) / (greenColorScheme.length - 1)
+    const valueRanges = []
+    const thresholds = []
+    
+    // Create value thresholds for each color transition
+    for (let i = 0; i < greenColorScheme.length - 1; i++) {
+      const threshold = minValue + (stepSize * (i + 1))
+      thresholds.push(threshold)
     }
+    
+    // Create value ranges for logging
+    for (let i = 0; i < greenColorScheme.length; i++) {
+      const rangeStart = i === 0 ? minValue : thresholds[i - 1]
+      const rangeEnd = i === greenColorScheme.length - 1 ? maxValue : thresholds[i]
+      valueRanges.push({
+        min: rangeStart,
+        max: rangeEnd,
+        color: greenColorScheme[i]
+      })
+    }
+    
+    console.log('🎨 WorldMap: Value ranges:', valueRanges)
+    console.log('🎨 WorldMap: Thresholds between colors:', thresholds)
+    
+    // Create a custom scale function that maps values to colors
+    colorScale = (value) => {
+      // Edge cases
+      if (value <= minValue) return greenColorScheme[0]
+      if (value >= maxValue) return greenColorScheme[greenColorScheme.length - 1]
+      
+      // Find which color index the value maps to
+      // Using (length - 1) because we have 19 intervals for 20 colors
+      const normalizedPosition = (value - minValue) / (maxValue - minValue)
+      const colorIndex = Math.floor(normalizedPosition * (greenColorScheme.length - 1))
+      
+      // Ensure we don't exceed array bounds
+      const clampedIndex = Math.min(colorIndex, greenColorScheme.length - 1)
+      return greenColorScheme[clampedIndex]
+    }
+    
+    // Store thresholds for legend
+    colorScale.thresholds = () => thresholds
+    colorScale.range = () => greenColorScheme
+    colorScale.domain = () => [minValue, maxValue]
+    
+    legendDomain.value = [minValue, maxValue]
     
     console.log('🎨 WorldMap: Adaptive color scale created with domain:', legendDomain.value)
     

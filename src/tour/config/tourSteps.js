@@ -422,7 +422,7 @@ export const mainTour = {
           const { useUIStore } = await import('@/stores/useUIStore')
           const uiStore = useUIStore()
           uiStore.selectedProduct = 'Palm oil'
-          uiStore.selectedCountry = 'Indonesia'
+          // uiStore.selectedCountry = 'Indonesia' // Removed to prevent automatic Indonesia selection
           uiStore.selectedMetric = 'export_quantity'
           uiStore.selectedYearRange = { start: 2015, end: 2022 }
         }

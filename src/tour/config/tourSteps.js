@@ -436,9 +436,28 @@ export const expertTour = {
   category: 'advanced',
   difficulty: 'expert',
   steps: [
-    // Expert-level steps would include methodology explanations,
-    // advanced statistical concepts, data quality discussions, etc.
-    // Implementation would follow similar pattern as main tour
+    {
+      id: 'expert-coming-soon',
+      title: 'Expertentour in Entwicklung',
+      content: `
+        Die <strong>Expertentour</strong> wird in Kürze verfügbar sein. Sie wird tiefere Einblicke in:
+        <ul>
+          <li>• Datenverarbeitungsmethoden</li>
+          <li>• Statistische Analyseverfahren</li>
+          <li>• Machine Learning Modelle</li>
+          <li>• Datenqualitätsbewertungen</li>
+        </ul>
+        bieten. Nutzen Sie bis dahin gerne die Haupttour oder Schnelltour!
+      `,
+      route: '/',
+      target: '[data-tour="dashboard-stats"]',
+      position: 'center',
+      actions: {
+        onEnter: () => {
+          console.log('Expert tour placeholder shown')
+        }
+      }
+    }
   ]
 }
 

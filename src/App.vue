@@ -49,20 +49,9 @@ onMounted(async () => {
     uiStore.addLoadingMessage('Initialisiere Anwendung...')
     await dataStore.initializeApp()
     
-    uiStore.addNotification({
-      type: 'success',
-      title: 'Willkommen!',
-      message: 'D2 Nutrition Vibes wurde erfolgreich geladen.',
-      duration: 3000
-    })
   } catch (error) {
     console.error('App initialization failed:', error)
-    uiStore.addNotification({
-      type: 'error',
-      title: 'Fehler beim Laden',
-      message: 'Einige Daten konnten nicht geladen werden.',
-      duration: 8000
-    })
+    console.error('Einige Daten konnten nicht geladen werden.')
   } finally {
     uiStore.clearLoadingMessages()
   }
@@ -80,12 +69,6 @@ const handleKeydown = (event) => {
     event.preventDefault()
     uiStore.toggleDarkMode()
     
-    uiStore.addNotification({
-      type: 'info',
-      title: `${uiStore.darkMode ? 'Dunkel' : 'Hell'}-Modus aktiviert`,
-      message: `Darstellung wurde zu ${uiStore.darkMode ? 'dunkler' : 'heller'} Ansicht gewechselt`,
-      duration: 3000
-    })
   }
   
   // Toggle sidebar with Ctrl/Cmd + S
@@ -93,12 +76,6 @@ const handleKeydown = (event) => {
     event.preventDefault()
     uiStore.toggleSidebar()
     
-    uiStore.addNotification({
-      type: 'info',
-      title: 'Navigation umgeschaltet',
-      message: `Seitenleiste ${uiStore.sidebarOpen ? 'geöffnet' : 'geschlossen'}`,
-      duration: 2000
-    })
   }
 }
 

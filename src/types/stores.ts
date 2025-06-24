@@ -51,7 +51,6 @@ export interface UIStoreState {
   activePanel: Ref<string>
   theme: Ref<'light' | 'dark' | 'auto'>
   language: Ref<string>
-  notifications: Ref<Notification[]>
   modals: Ref<Modal[]>
   loading: Ref<boolean>
   globalError: Ref<string | null>
@@ -59,22 +58,6 @@ export interface UIStoreState {
   panelStates: Ref<Record<string, PanelState>>
 }
 
-export interface Notification {
-  id: string
-  type: 'success' | 'error' | 'warning' | 'info'
-  title: string
-  message: string
-  duration?: number
-  actions?: NotificationAction[]
-  timestamp: Date
-  read: boolean
-}
-
-export interface NotificationAction {
-  text: string
-  action: () => void
-  style?: 'primary' | 'secondary' | 'danger'
-}
 
 export interface Modal {
   id: string
@@ -227,8 +210,6 @@ export interface DataStoreActions {
 export interface UIStoreActions {
   toggleSidebar: () => void
   setActivePanel: (panel: string) => void
-  addNotification: (notification: Omit<Notification, 'id' | 'timestamp' | 'read'>) => void
-  removeNotification: (id: string) => void
   openModal: (id: string, component: string, props?: Record<string, any>) => void
   closeModal: (id: string) => void
   setTheme: (theme: 'light' | 'dark' | 'auto') => void
@@ -257,7 +238,6 @@ export interface DataStoreGetters {
 }
 
 export interface UIStoreGetters {
-  unreadNotifications: Ref<Notification[]>
   activeModals: Ref<Modal[]>
   currentTheme: Ref<string>
   isDarkMode: Ref<boolean>

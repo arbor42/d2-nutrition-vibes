@@ -15,56 +15,14 @@
         sidebarCollapsed ? 'md:ml-16' : 'md:ml-64'
       ]"
     >
-      <!-- Application Header -->
-      <AppHeader 
-        :sidebar-collapsed="sidebarCollapsed"
-        @toggle-sidebar="toggleSidebar"
-      />
-      
       <!-- Main Content Area -->
       <main class="flex-1 overflow-y-auto overflow-x-hidden">
-        <div class="min-h-full pt-4">
-          <!-- Page Content Container -->
-          <div class="px-6 py-6 w-full">
-            <!-- Breadcrumb Navigation -->
-            <nav class="mb-6" aria-label="Breadcrumb">
-              <ol class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
-                <li>
-                  <router-link 
-                    to="/" 
-                    class="hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
-                  >
-                    Dashboard
-                  </router-link>
-                </li>
-                <li v-if="$route.name !== 'home'" class="flex items-center">
-                  <svg class="w-4 h-4 mx-2" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                  </svg>
-                  <span class="capitalize">{{ $route.name }}</span>
-                </li>
-              </ol>
-            </nav>
-            
-            <!-- Page Title -->
-            <div class="mb-6">
-              <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                D2 Nutrition Vibes
-              </h1>
-              <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                Analyse und Visualisierung von Ernährungsdaten
-              </p>
-            </div>
-            
-            <!-- Main Panels Container -->
-            <PanelsContainer />
-          </div>
+        <div class="min-h-full px-6 py-6">
+          <!-- Main Panels Container -->
+          <PanelsContainer />
         </div>
       </main>
     </div>
-    
-    <!-- Global Notifications -->
-    <NotificationContainer />
     
     <!-- Global Loading Overlay -->
     <div
@@ -89,12 +47,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useUIStore } from '@/stores/useUIStore'
-import AppHeader from './AppHeader.vue'
 import NavigationSidebar from './NavigationSidebar.vue'
 import PanelsContainer from './PanelsContainer.vue'
-import NotificationContainer from '@/components/ui/NotificationContainer.vue'
 
 const uiStore = useUIStore()
 

@@ -185,29 +185,13 @@ const handlePanelSelect = (panel: any) => {
   uiStore.showPanel(panel.name)
   uiStore.toggleAnalysisMenu() // Close menu after selection
   
-  uiStore.addNotification({
-    type: 'info',
-    title: 'Panel gewechselt',
-    message: `${panel.label} wurde geöffnet`,
-    duration: 2000
-  })
 }
 
 // Export current data
 const exportData = () => {
-  uiStore.addNotification({
-    type: 'info',
-    title: 'Export gestartet',
-    message: 'Erstelle CSV-Export der aktuellen Daten...',
-    duration: 3000
-  })
   
   // Simulate export process
   setTimeout(() => {
-    uiStore.addNotification({
-      type: 'success',
-      title: 'Export abgeschlossen',
-      message: `Daten für ${formatProductName(uiStore.selectedProduct)} (${uiStore.selectedYear}) erfolgreich exportiert`,
       duration: 5000
     })
   }, 2000)
@@ -221,19 +205,7 @@ const refreshData = async () => {
     uiStore.addLoadingMessage('Aktualisiere Daten...')
     await dataStore.initializeApp()
     
-    uiStore.addNotification({
-      type: 'success',
-      title: 'Erfolgreich',
-      message: 'Daten wurden aktualisiert.',
-      duration: 3000
-    })
   } catch (error) {
-    uiStore.addNotification({
-      type: 'error',
-      title: 'Fehler',
-      message: 'Daten konnten nicht aktualisiert werden.',
-      duration: 5000
-    })
   } finally {
     uiStore.clearLoadingMessages()
   }
@@ -244,12 +216,6 @@ const resetView = () => {
   uiStore.resetUI()
   router.push('/')
   
-  uiStore.addNotification({
-    type: 'info',
-    title: 'Zurückgesetzt',
-    message: 'Ansicht wurde zurückgesetzt.',
-    duration: 2000
-  })
 }
 
 // Simple icon components (inline SVGs)

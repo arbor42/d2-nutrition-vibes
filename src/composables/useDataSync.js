@@ -353,12 +353,6 @@ export function useDataSync() {
             priority: 'high',
             action: async () => {
               if (dataStore.error) {
-                uiStore.addNotification({
-                  type: 'error',
-                  title: 'Data Error',
-                  message: dataStore.error,
-                  duration: 10000
-                })
               }
             }
           }

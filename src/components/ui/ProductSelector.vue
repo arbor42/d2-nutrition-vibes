@@ -74,36 +74,18 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
       if (dataStore.timeseriesData && dataStore.timeseriesData[product]) {
         console.log(`Selected individual product: ${product} for year ${year}`)
         // No need to load additional data as timeseries contains all products
-        uiStore.addNotification({
-          type: 'success',
-          title: 'Produkt ausgewählt',
-          message: `${getGermanName(product)} für ${year} geladen`,
-          duration: 2000
-        })
       } else {
         // Fallback to production data loading for grouped products
         await dataStore.loadProductionData(product, year)
       }
     } catch (error) {
       console.error('Failed to load product data:', error)
-      uiStore.addNotification({
-        type: 'error',
-        title: 'Fehler',
-        message: 'Produktdaten konnten nicht geladen werden.',
-        duration: 5000
-      })
     }
   }
 })
 
 // Action buttons methods
 const exportData = () => {
-  uiStore.addNotification({
-    type: 'info',
-    title: 'Export',
-    message: 'Export-Funktionalität wird entwickelt...',
-    duration: 3000
-  })
 }
 
 const refreshData = async () => {
@@ -113,19 +95,7 @@ const refreshData = async () => {
     uiStore.addLoadingMessage('Aktualisiere Daten...')
     await dataStore.initializeApp()
     
-    uiStore.addNotification({
-      type: 'success',
-      title: 'Erfolgreich',
-      message: 'Daten wurden aktualisiert.',
-      duration: 3000
-    })
   } catch (error) {
-    uiStore.addNotification({
-      type: 'error',
-      title: 'Fehler',
-      message: 'Daten konnten nicht aktualisiert werden.',
-      duration: 5000
-    })
   } finally {
     uiStore.clearLoadingMessages()
   }
@@ -135,12 +105,6 @@ const resetView = () => {
   uiStore.resetUI()
   router.push('/')
   
-  uiStore.addNotification({
-    type: 'info',
-    title: 'Zurückgesetzt',
-    message: 'Ansicht wurde zurückgesetzt.',
-    duration: 2000
-  })
 }
 </script>
 

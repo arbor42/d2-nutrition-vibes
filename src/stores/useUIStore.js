@@ -15,7 +15,6 @@ export const useUIStore = defineStore('ui', () => {
   const mapZoom = ref(1)
   const mapCenter = ref([0, 0])
   const darkMode = ref(false)
-  const notifications = ref([])
   const loadingMessages = ref([])
   
   // Enhanced UI state
@@ -118,18 +117,6 @@ export const useUIStore = defineStore('ui', () => {
     return panelStates.value[panelName]?.error || null
   })
   
-  const hasNotifications = computed(() => 
-    notifications.value.some(n => !n.read && !n.dismissed)
-  )
-  const unreadNotifications = computed(() => 
-    notifications.value.filter(n => !n.read).length
-  )
-  const activeNotifications = computed(() => 
-    notifications.value.filter(n => !n.dismissed)
-  )
-  const dismissedNotifications = computed(() => 
-    notifications.value.filter(n => n.dismissed)
-  )
   const isLoading = computed(() => 
     loading.value || 
     loadingMessages.value.length > 0 || 
@@ -224,57 +211,6 @@ export const useUIStore = defineStore('ui', () => {
     }
   }
 
-  const addNotification = (notification) => {
-    const id = Date.now() + Math.random()
-    const notif = {
-      id,
-      type: 'info',
-      duration: 5000, // Default auto-dismiss after 5 seconds
-      read: false,
-      dismissed: false, // false = visible popup, true = history only
-      timestamp: Date.now(),
-      startTime: null, // Will be set when timer starts
-      ...notification
-    }
-    notifications.value.push(notif)
-
-    return id
-  }
-
-  const dismissNotification = (id) => {
-    const notification = notifications.value.find(n => n.id === id)
-    if (notification) {
-      notification.dismissed = true
-    }
-  }
-
-  const removeNotification = (id) => {
-    const index = notifications.value.findIndex(n => n.id === id)
-    if (index > -1) {
-      notifications.value.splice(index, 1)
-    }
-  }
-
-  const clearNotifications = () => {
-    notifications.value = []
-  }
-
-  const clearReadNotifications = () => {
-    notifications.value = notifications.value.filter(n => !n.read || !n.dismissed)
-  }
-
-  const markNotificationAsRead = (id) => {
-    const notification = notifications.value.find(n => n.id === id)
-    if (notification) {
-      notification.read = true
-    }
-  }
-
-  const markAllNotificationsAsRead = () => {
-    notifications.value.forEach(notification => {
-      notification.read = true
-    })
-  }
 
   const addLoadingMessage = (message) => {
     const id = Date.now() + Math.random()
@@ -311,7 +247,6 @@ export const useUIStore = defineStore('ui', () => {
     showAnalysisMenu.value = false
     mapZoom.value = 1
     mapCenter.value = [0, 0]
-    notifications.value = []
     loadingMessages.value = []
     
     // Reset panel states
@@ -340,16 +275,6 @@ export const useUIStore = defineStore('ui', () => {
       }
     }
 
-    // Load notification history from localStorage
-    const savedNotifications = localStorage.getItem('notificationHistory')
-    if (savedNotifications) {
-      try {
-        const notificationHistory = JSON.parse(savedNotifications)
-        notifications.value = notificationHistory
-      } catch (error) {
-        console.warn('Failed to load notification history from localStorage:', error)
-      }
-    }
   }
 
   // Save preferences to localStorage
@@ -358,8 +283,6 @@ export const useUIStore = defineStore('ui', () => {
     localStorage.setItem('theme', theme.value)
     localStorage.setItem('uiFilters', JSON.stringify(getSelectedFilters.value))
     localStorage.setItem('uiPreferences', JSON.stringify(preferences.value))
-    // Save notification history
-    localStorage.setItem('notificationHistory', JSON.stringify(notifications.value))
   }
 
   // Enhanced actions for Phase 5
@@ -502,12 +425,6 @@ export const useUIStore = defineStore('ui', () => {
     loading.value = isLoading
   }
 
-  // Watch notifications for auto-save
-  watch(notifications, () => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('notificationHistory', JSON.stringify(notifications.value))
-    }
-  }, { deep: true })
 
   // Initialize viewport on client side
   if (typeof window !== 'undefined') {
@@ -529,7 +446,6 @@ export const useUIStore = defineStore('ui', () => {
     mapZoom,
     mapCenter,
     darkMode,
-    notifications,
     loadingMessages,
     panelStates,
     loading,
@@ -561,10 +477,6 @@ export const useUIStore = defineStore('ui', () => {
     isPanelExpanded,
     isPanelLoading,
     getPanelError,
-    hasNotifications,
-    unreadNotifications,
-    activeNotifications,
-    dismissedNotifications,
     isLoading,
     hasErrors,
 
@@ -592,13 +504,6 @@ export const useUIStore = defineStore('ui', () => {
     setPanelLoading,
     setPanelError,
     clearPanelError,
-    addNotification,
-    dismissNotification,
-    removeNotification,
-    clearNotifications,
-    clearReadNotifications,
-    markNotificationAsRead,
-    markAllNotificationsAsRead,
     addLoadingMessage,
     removeLoadingMessage,
     clearLoadingMessages,

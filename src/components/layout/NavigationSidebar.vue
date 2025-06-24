@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useUIStore } from '@/stores/useUIStore'
+import { useTourStore } from '@/tour/stores/useTourStore'
 
 interface Props {
   collapsed?: boolean
@@ -18,6 +19,15 @@ const emit = defineEmits<{
 const route = useRoute()
 const router = useRouter()
 const uiStore = useUIStore()
+const tourStore = useTourStore()
+
+const isNewUser = ref(false)
+
+onMounted(() => {
+  const hasCompletedTour = localStorage.getItem('tourCompleted') === 'true'
+  const hasSeenTour = localStorage.getItem('tourSeen') === 'true'
+  isNewUser.value = !hasCompletedTour && !hasSeenTour
+})
 
 const navigationItems = [
   {
@@ -100,15 +110,17 @@ const getIconSvg = (iconName: string) => {
 }
 
 const toggleDarkModeWithNotification = () => {
-  const previousMode = uiStore.darkMode
   uiStore.toggleDarkMode()
-  
-  uiStore.addNotification({
-    type: 'info',
-    title: `${uiStore.darkMode ? 'Dunkler' : 'Heller'} Modus`,
-    message: `Darstellung zu ${uiStore.darkMode ? 'dunklem' : 'hellem'} Design gewechselt`,
-    duration: 2000
-  })
+}
+
+const startTour = () => {
+  localStorage.setItem('tourSeen', 'true')
+  isNewUser.value = false
+  tourStore.startTour('main')
+}
+
+const resumeTour = () => {
+  tourStore.resumeTour()
 }
 </script>
 
@@ -211,7 +223,53 @@ const toggleDarkModeWithNotification = () => {
     </nav>
     
     <!-- Sidebar Footer -->
-    <div class="p-2 border-t border-gray-200 dark:border-gray-700">
+    <div class="p-2 border-t border-gray-200 dark:border-gray-700 space-y-2">
+      <!-- Tour Button -->
+      <button
+        :class="[
+          'w-full flex items-center rounded-lg transition-all duration-200 relative',
+          collapsed ? 'px-2 py-2 justify-center' : 'px-3 py-2 text-sm font-medium',
+          'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+        ]"
+        :title="collapsed ? 'Tour starten' : ''"
+        @click="tourStore.isActive ? resumeTour() : startTour()"
+      >
+        <!-- Pulse animation for new users -->
+        <div 
+          v-if="isNewUser && !tourStore.isActive"
+          class="absolute inset-0 rounded-lg"
+        >
+          <div class="absolute inset-0 bg-primary-500 opacity-20 rounded-lg animate-pulse"></div>
+        </div>
+        
+        <svg 
+          class="flex-shrink-0 relative"
+          :class="collapsed ? 'w-5 h-5' : 'w-4 h-4 mr-3'"
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path 
+            stroke-linecap="round" 
+            stroke-linejoin="round" 
+            stroke-width="2" 
+            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+          />
+        </svg>
+        
+        <span v-if="!collapsed" class="text-sm relative">
+          {{ tourStore.isActive ? 'Tour läuft...' : 'Tour starten' }}
+        </span>
+        
+        <!-- New user indicator -->
+        <span 
+          v-if="isNewUser && !tourStore.isActive && !collapsed" 
+          class="ml-auto bg-primary-500 text-white text-xs px-2 py-0.5 rounded-full animate-pulse"
+        >
+          NEU
+        </span>
+      </button>
+
       <!-- Dark Mode Toggle -->
       <button
         :class="[
@@ -249,7 +307,6 @@ const toggleDarkModeWithNotification = () => {
           {{ uiStore.darkMode ? 'Hell-Modus' : 'Dunkel-Modus' }}
         </span>
       </button>
-      
     </div>
   </aside>
 </template>

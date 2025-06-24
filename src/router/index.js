@@ -3,61 +3,60 @@ import { createRouter, createWebHistory } from 'vue-router'
 const routes = [
   {
     path: '/',
-    name: 'home',
     component: () => import('@/components/layout/AppLayout.vue'),
-    meta: {
-      title: 'D2 Nutrition Vibes - Home',
-      preload: true
-    }
-  },
-  {
-    path: '/dashboard',
-    name: 'dashboard',
-    component: () => import(/* webpackChunkName: "dashboard" */ '@/components/panels/DashboardPanel.vue'),
-    meta: {
-      title: 'Dashboard - D2 Nutrition Vibes',
-      preload: true
-    }
-  },
-  {
-    path: '/timeseries',
-    name: 'timeseries',
-    component: () => import(/* webpackChunkName: "timeseries" */ '@/components/panels/TimeseriesPanel.vue'),
-    meta: {
-      title: 'Zeitreihen - D2 Nutrition Vibes'
-    }
-  },
-  {
-    path: '/simulation',
-    name: 'simulation',
-    component: () => import(/* webpackChunkName: "simulation" */ '@/components/panels/SimulationPanel.vue'),
-    meta: {
-      title: 'Simulation - D2 Nutrition Vibes'
-    }
-  },
-  {
-    path: '/ml-predictions',
-    name: 'ml-predictions',
-    component: () => import(/* webpackChunkName: "ml-predictions" */ '@/components/panels/MLPanel.vue'),
-    meta: {
-      title: 'ML Prognosen - D2 Nutrition Vibes'
-    }
-  },
-  {
-    path: '/structural',
-    name: 'structural',
-    component: () => import(/* webpackChunkName: "structural" */ '@/components/panels/StructuralPanel.vue'),
-    meta: {
-      title: 'Strukturanalyse - D2 Nutrition Vibes'
-    }
-  },
-  {
-    path: '/process-mining',
-    name: 'process-mining',
-    component: () => import(/* webpackChunkName: "process-mining" */ '@/components/panels/ProcessPanel.vue'),
-    meta: {
-      title: 'Process Mining - D2 Nutrition Vibes'
-    }
+    children: [
+      {
+        path: '',
+        name: 'home',
+        meta: {
+          title: 'D2 Nutrition Vibes - Home',
+          preload: true
+        }
+      },
+      {
+        path: '/dashboard',
+        name: 'dashboard',
+        meta: {
+          title: 'Dashboard - D2 Nutrition Vibes',
+          preload: true
+        }
+      },
+      {
+        path: '/timeseries',
+        name: 'timeseries',
+        meta: {
+          title: 'Zeitreihen - D2 Nutrition Vibes'
+        }
+      },
+      {
+        path: '/simulation',
+        name: 'simulation',
+        meta: {
+          title: 'Simulation - D2 Nutrition Vibes'
+        }
+      },
+      {
+        path: '/ml-predictions',
+        name: 'ml-predictions',
+        meta: {
+          title: 'ML Prognosen - D2 Nutrition Vibes'
+        }
+      },
+      {
+        path: '/structural',
+        name: 'structural',
+        meta: {
+          title: 'Strukturanalyse - D2 Nutrition Vibes'
+        }
+      },
+      {
+        path: '/process-mining',
+        name: 'process-mining',
+        meta: {
+          title: 'Process Mining - D2 Nutrition Vibes'
+        }
+      }
+    ]
   },
   {
     path: '/:pathMatch(.*)*',
@@ -82,9 +81,19 @@ const router = createRouter({
 })
 
 // Preloader for critical routes
-const preloadRoutes = routes
-  .filter(route => route.meta?.preload)
-  .map(route => route.component)
+const preloadRoutes = []
+routes.forEach(route => {
+  if (route.component && route.meta?.preload) {
+    preloadRoutes.push(route.component)
+  }
+  if (route.children) {
+    route.children.forEach(childRoute => {
+      if (childRoute.meta?.preload && route.component) {
+        preloadRoutes.push(route.component)
+      }
+    })
+  }
+})
 
 Promise.all(preloadRoutes.map(componentLoader => componentLoader()))
   .catch(err => console.warn('Failed to preload some routes:', err))

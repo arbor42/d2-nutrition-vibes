@@ -18,6 +18,7 @@ const dataStore = useDataStore()
 const currentComponent = computed(() => {
   const componentMap: Record<string, any> = {
     '/': DashboardPanel,
+    '/dashboard': DashboardPanel,
     '/timeseries': TimeseriesPanel,
     '/simulation': SimulationPanel,
     '/ml-predictions': MLPanel,
@@ -26,6 +27,10 @@ const currentComponent = computed(() => {
   }
   
   return componentMap[route.path] || DashboardPanel
+})
+
+const isDashboard = computed(() => {
+  return route.path === '/' || route.path === '/dashboard'
 })
 
 const containerClasses = computed(() => [
@@ -37,6 +42,7 @@ const containerClasses = computed(() => [
 const panelTitle = computed(() => {
   const titleMap: Record<string, string> = {
     '/': 'Dashboard',
+    '/dashboard': 'Dashboard',
     '/timeseries': 'Zeitreihenanalyse',
     '/simulation': 'Simulationen',
     '/ml-predictions': 'ML Prognosen',
@@ -50,6 +56,7 @@ const panelTitle = computed(() => {
 const panelDescription = computed(() => {
   const descriptionMap: Record<string, string> = {
     '/': 'Überblick über alle wichtigen Metriken und Visualisierungen',
+    '/dashboard': 'Überblick über alle wichtigen Metriken und Visualisierungen',
     '/timeseries': 'Zeitliche Entwicklung von Produktions- und Verbrauchsdaten',
     '/simulation': 'Szenario-basierte Simulationen und Prognosen',
     '/ml-predictions': 'Machine Learning gestützte Vorhersagen und Analysen',
@@ -57,7 +64,7 @@ const panelDescription = computed(() => {
     '/process-mining': 'Analyse und Optimierung von Geschäftsprozessen'
   }
   
-  return descriptionMap[route.path] || 'Dashboard'
+  return descriptionMap[route.path] || 'Überblick über alle wichtigen Metriken und Visualisierungen'
 })
 </script>
 
@@ -99,8 +106,8 @@ const panelDescription = computed(() => {
       </div>
     </div>
     
-    <!-- Global Controls Panel -->
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+    <!-- Global Controls Panel - Only show on Dashboard -->
+    <div v-if="isDashboard" class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
       <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
         Globale Steuerung
       </h3>

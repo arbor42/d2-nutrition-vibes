@@ -498,12 +498,6 @@ export function useDataLoader(options = {}) {
       return result
     } catch (err) {
       error.value = err.message || 'Failed to load data'
-      uiStore.addNotification({
-        type: 'error',
-        title: 'Data Loading Error',
-        message: err.message,
-        duration: 5000
-      })
       throw err
     } finally {
       loading.value = false

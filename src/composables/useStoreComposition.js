@@ -249,12 +249,6 @@ export function useUICoordination() {
     const setError = (error) => {
       uiStore.setPanelError(panelId, error)
       if (error) {
-        uiStore.addNotification({
-          type: 'error',
-          title: `${panelId} Panel Error`,
-          message: error,
-          duration: 10000
-        })
       }
     }
     

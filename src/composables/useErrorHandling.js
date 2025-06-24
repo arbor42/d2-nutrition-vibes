@@ -243,22 +243,6 @@ export function useErrorHandling(options = {}) {
         break
     }
     
-    uiStore.addNotification({
-      type,
-      title,
-      message: errorObj.message,
-      duration,
-      actions: errorObj.severity !== ERROR_SEVERITY.LOW ? [
-        {
-          text: 'Details',
-          action: () => showErrorDetails(errorObj.id)
-        },
-        {
-          text: 'Retry',
-          action: () => retryOperation(errorObj.id)
-        }
-      ] : undefined
-    })
   }
 
   // Show error details
@@ -282,12 +266,6 @@ export function useErrorHandling(options = {}) {
     const retryCount = retryHistory.value.get(retryKey) || 0
     
     if (retryCount >= retryAttempts) {
-      uiStore.addNotification({
-        type: 'warning',
-        title: 'Retry Limit Reached',
-        message: 'Maximum retry attempts exceeded for this operation',
-        duration: 5000
-      })
       return
     }
     
@@ -306,12 +284,6 @@ export function useErrorHandling(options = {}) {
       // Mark error as resolved
       resolveError(errorId)
       
-      uiStore.addNotification({
-        type: 'success',
-        title: 'Operation Successful',
-        message: 'The operation was completed successfully after retry',
-        duration: 3000
-      })
       
     } catch (retryError) {
       handleError(retryError, {

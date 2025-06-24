@@ -249,11 +249,6 @@ const onCountryClick = (countryCode: string) => {
   
   if (countryData) {
     uiStore.setSelectedCountry(countryData.country)
-    uiStore.addNotification({
-      type: 'info',
-      title: 'Land ausgewählt',
-      message: `${countryData.country} wurde ausgewählt`
-    })
   }
 }
 

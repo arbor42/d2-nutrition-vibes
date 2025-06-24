@@ -47,6 +47,9 @@ let geoDataStatic = null // Non-reactive
 let productionDataStatic = [] // Non-reactive
 const isInitialized = ref(false)
 
+// Click debouncing to prevent unwanted country detail views
+let lastClickTime = 0
+
 // Legend state
 const legendScale = ref(null)
 const legendDomain = ref([0, 100000000]) // Static domain across years
@@ -1268,10 +1271,27 @@ const handleCountryClick = (event, d) => {
   
   console.log('🖱️ WorldMap: Country clicked:', { countryName, countryCode })
   
+  // Guard: Check if this is a valid, intentional user click
+  if (!countryName || !countryCode) {
+    console.warn('🚫 WorldMap: Invalid country data, ignoring click')
+    return
+  }
+  
+  // Guard: Prevent rapid duplicate clicks (debounce)
+  const now = Date.now()
+  if (lastClickTime && now - lastClickTime < 300) {
+    console.log('🚫 WorldMap: Click too soon after previous, ignoring')
+    return
+  }
+  lastClickTime = now
+  
   // Only set selected country if it's different from current
   if (uiStore.selectedCountry !== countryName) {
+    console.log('🎯 WorldMap: Setting selected country:', countryName)
     uiStore.setSelectedCountry(countryName)
     emit('countryClick', countryCode)
+  } else {
+    console.log('🔄 WorldMap: Country already selected, just zooming')
   }
   
   // Zoom to country

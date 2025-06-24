@@ -322,12 +322,28 @@ const globalStats = computed(() => {
 
 
 const onCountryClick = (countryCode: string) => {
+  console.log('🖱️ DashboardPanel: Country click received:', countryCode)
+  
+  // Guard: Validate country code
+  if (!countryCode || typeof countryCode !== 'string') {
+    console.warn('🚫 DashboardPanel: Invalid country code, ignoring click')
+    return
+  }
+  
   // Find country name from data
   const data = dataStore.getProductionData(uiStore.selectedProduct, uiStore.selectedYear)
   const countryData = data?.data?.find(item => item.countryCode === countryCode)
   
   if (countryData) {
-    uiStore.setSelectedCountry(countryData.country)
+    // Only set if different to prevent unnecessary updates
+    if (uiStore.selectedCountry !== countryData.country) {
+      console.log('🎯 DashboardPanel: Setting selected country:', countryData.country)
+      uiStore.setSelectedCountry(countryData.country)
+    } else {
+      console.log('🔄 DashboardPanel: Country already selected:', countryData.country)
+    }
+  } else {
+    console.warn('🚫 DashboardPanel: Country data not found for code:', countryCode)
   }
 }
 

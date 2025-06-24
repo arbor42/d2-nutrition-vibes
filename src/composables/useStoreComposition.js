@@ -117,11 +117,16 @@ export function useStoreComposition() {
     }
   })
   
+  // DISABLED: Automatic region->country sync to fix unwanted country detail views
+  // This watcher was causing country details to appear when dataStore.selectedRegion
+  // changed during data loading, even when user didn't click on any country
+  /*
   watch(() => dataStore.selectedRegion, (newRegion) => {
     if (newRegion !== uiStore.selectedCountry) {
       uiStore.setSelectedCountry(newRegion)
     }
   })
+  */
 
   return {
     // Stores

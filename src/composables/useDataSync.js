@@ -201,7 +201,10 @@ export function useDataSync() {
       )
     )
 
-    // 2. Region selection synchronization
+    // 2. Region selection synchronization - DISABLED to fix unwanted country detail views
+    // NOTE: This bidirectional sync was causing country details to appear automatically
+    // when dataStore.selectedRegion changed during data loading operations
+    /*
     synchronizations.push(
       createBidirectionalSync(
         dataStore, 'selectedRegion',
@@ -212,6 +215,7 @@ export function useDataSync() {
         }
       )
     )
+    */
 
     // 3. Theme synchronization
     synchronizations.push(

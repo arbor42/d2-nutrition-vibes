@@ -1,0 +1,1563 @@
+[
+  {
+    "country": "Israel",
+    "value": 3923.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "United States of America",
+    "value": 3912.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Ireland",
+    "value": 3911.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Belgium",
+    "value": 3909.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Northern America",
+    "value": 3881.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "T\u00fcrkiye",
+    "value": 3861.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Austria",
+    "value": 3812.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Italy",
+    "value": 3703.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Iceland",
+    "value": 3677.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Romania",
+    "value": 3623.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Poland",
+    "value": 3616.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Western Europe",
+    "value": 3615.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Serbia",
+    "value": 3612.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Canada",
+    "value": 3606.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Germany",
+    "value": 3604.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "France",
+    "value": 3595.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Denmark",
+    "value": 3592.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Montenegro",
+    "value": 3574.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "European Union (27)",
+    "value": 3555.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Qatar",
+    "value": 3540.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Netherlands (Kingdom of the)",
+    "value": 3536.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Southern Europe",
+    "value": 3519.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Portugal",
+    "value": 3510.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Kuwait",
+    "value": 3508.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Bahrain",
+    "value": 3506.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Norway",
+    "value": 3505.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Luxembourg",
+    "value": 3483.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Tunisia",
+    "value": 3472.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Australia",
+    "value": 3471.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Europe",
+    "value": 3471.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Algeria",
+    "value": 3468.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Russian Federation",
+    "value": 3454.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Switzerland",
+    "value": 3453.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "China, mainland",
+    "value": 3452.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Republic of Korea",
+    "value": 3442.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "China",
+    "value": 3441.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Kazakhstan",
+    "value": 3440.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Hungary",
+    "value": 3430.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Czechia",
+    "value": 3426.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Australia and New Zealand",
+    "value": 3417.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Lithuania",
+    "value": 3407.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Northern Europe",
+    "value": 3402.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Greece",
+    "value": 3398.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Americas",
+    "value": 3392.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Albania",
+    "value": 3390.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Finland",
+    "value": 3378.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Spain",
+    "value": 3375.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Eastern Europe",
+    "value": 3375.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Bosnia and Herzegovina",
+    "value": 3368.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Eastern Asia",
+    "value": 3361.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "United Kingdom of Great Britain and Northern Ireland",
+    "value": 3355.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Argentina",
+    "value": 3347.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Belarus",
+    "value": 3330.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Azerbaijan",
+    "value": 3328.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Morocco",
+    "value": 3328.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Sweden",
+    "value": 3328.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Mexico",
+    "value": 3326.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "United Arab Emirates",
+    "value": 3321.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Croatia",
+    "value": 3317.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Latvia",
+    "value": 3313.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Uruguay",
+    "value": 3307.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Brazil",
+    "value": 3305.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Estonia",
+    "value": 3298.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Malta",
+    "value": 3298.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Armenia",
+    "value": 3277.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Saudi Arabia",
+    "value": 3276.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Uzbekistan",
+    "value": 3272.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Cuba",
+    "value": 3270.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Marshall Islands",
+    "value": 3270.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Guyana",
+    "value": 3253.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Dominican Republic",
+    "value": 3228.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Seychelles",
+    "value": 3222.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Bhutan",
+    "value": 3215.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Barbados",
+    "value": 3198.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Libya",
+    "value": 3195.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Central America",
+    "value": 3173.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Lao People's Democratic Republic",
+    "value": 3169.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Central Asia",
+    "value": 3169.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "North Macedonia",
+    "value": 3148.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "New Zealand",
+    "value": 3147.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Northern Africa",
+    "value": 3142.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Western Asia",
+    "value": 3128.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Egypt",
+    "value": 3116.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Colombia",
+    "value": 3112.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Mauritius",
+    "value": 3111.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "South America",
+    "value": 3111.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Chile",
+    "value": 3106.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Georgia",
+    "value": 3106.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Ghana",
+    "value": 3102.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Oceania",
+    "value": 3101.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Kiribati",
+    "value": 3096.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Slovenia",
+    "value": 3094.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Mongolia",
+    "value": 3088.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Viet Nam",
+    "value": 3072.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Oman",
+    "value": 3064.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Samoa",
+    "value": 3063.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Panama",
+    "value": 3061.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Paraguay",
+    "value": 3056.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Bulgaria",
+    "value": 3055.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Cyprus",
+    "value": 3037.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Dominica",
+    "value": 3013.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Malaysia",
+    "value": 3003.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Mauritania",
+    "value": 3000.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "China, Hong Kong SAR",
+    "value": 2996.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Nauru",
+    "value": 2993.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "World",
+    "value": 2985.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Slovakia",
+    "value": 2983.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Tuvalu",
+    "value": 2972.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Tonga",
+    "value": 2966.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Saint Vincent and the Grenadines",
+    "value": 2963.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Polynesia",
+    "value": 2959.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "China, Taiwan Province of",
+    "value": 2957.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "New Caledonia",
+    "value": 2956.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "C\u00f4te d'Ivoire",
+    "value": 2953.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Fiji",
+    "value": 2949.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Asia",
+    "value": 2944.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Costa Rica",
+    "value": 2942.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "China, Macao SAR",
+    "value": 2937.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Micronesia",
+    "value": 2937.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Nepal",
+    "value": 2931.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Jamaica",
+    "value": 2928.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Lebanon",
+    "value": 2926.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Trinidad and Tobago",
+    "value": 2916.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Guinea",
+    "value": 2913.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Republic of Moldova",
+    "value": 2889.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "French Polynesia",
+    "value": 2880.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "South-eastern Asia",
+    "value": 2880.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Iran (Islamic Republic of)",
+    "value": 2879.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Thailand",
+    "value": 2878.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Saint Kitts and Nevis",
+    "value": 2867.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Ukraine",
+    "value": 2851.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Philippines",
+    "value": 2849.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Cameroon",
+    "value": 2840.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "El Salvador",
+    "value": 2836.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Turkmenistan",
+    "value": 2835.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Indonesia",
+    "value": 2830.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Caribbean",
+    "value": 2828.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Senegal",
+    "value": 2826.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Belize",
+    "value": 2815.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Myanmar",
+    "value": 2807.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Peru",
+    "value": 2805.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Sri Lanka",
+    "value": 2802.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Mali",
+    "value": 2792.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Guatemala",
+    "value": 2791.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Benin",
+    "value": 2786.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Vanuatu",
+    "value": 2786.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Tajikistan",
+    "value": 2768.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Djibouti",
+    "value": 2766.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Kyrgyzstan",
+    "value": 2761.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "South Africa",
+    "value": 2761.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Micronesia (Federated States of)",
+    "value": 2755.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Cambodia",
+    "value": 2724.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Saint Lucia",
+    "value": 2721.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Southern Africa",
+    "value": 2713.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Small Island Developing States",
+    "value": 2696.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Nicaragua",
+    "value": 2694.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Japan",
+    "value": 2693.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Iraq",
+    "value": 2685.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Burkina Faso",
+    "value": 2675.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Honduras",
+    "value": 2654.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Maldives",
+    "value": 2653.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Suriname",
+    "value": 2652.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Sudan",
+    "value": 2648.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Western Africa",
+    "value": 2644.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Malawi",
+    "value": 2643.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Cabo Verde",
+    "value": 2642.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Niger",
+    "value": 2631.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Botswana",
+    "value": 2622.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Bahamas",
+    "value": 2620.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Grenada",
+    "value": 2613.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Togo",
+    "value": 2596.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "India",
+    "value": 2589.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Namibia",
+    "value": 2586.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Southern Asia",
+    "value": 2584.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Bangladesh",
+    "value": 2581.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Land Locked Developing Countries",
+    "value": 2570.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Africa",
+    "value": 2567.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Jordan",
+    "value": 2557.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Eswatini",
+    "value": 2553.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Gabon",
+    "value": 2552.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Ecuador",
+    "value": 2549.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Net Food Importing Developing Countries",
+    "value": 2532.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Nigeria",
+    "value": 2503.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Ethiopia",
+    "value": 2481.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Antigua and Barbuda",
+    "value": 2458.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Gambia",
+    "value": 2452.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Pakistan",
+    "value": 2443.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Least Developed Countries",
+    "value": 2436.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Angola",
+    "value": 2435.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Comoros",
+    "value": 2416.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "South Sudan",
+    "value": 2415.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Low Income Food Deficit Countries",
+    "value": 2394.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Syrian Arab Republic",
+    "value": 2387.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Sao Tome and Principe",
+    "value": 2377.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "United Republic of Tanzania",
+    "value": 2358.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Bolivia (Plurinational State of)",
+    "value": 2331.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Venezuela (Bolivarian Republic of)",
+    "value": 2318.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Sierra Leone",
+    "value": 2316.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Rwanda",
+    "value": 2315.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Melanesia",
+    "value": 2314.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Middle Africa",
+    "value": 2312.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Solomon Islands",
+    "value": 2306.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Guinea-Bissau",
+    "value": 2291.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Timor-Leste",
+    "value": 2269.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Eastern Africa",
+    "value": 2263.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Afghanistan",
+    "value": 2243.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Papua New Guinea",
+    "value": 2223.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Central African Republic",
+    "value": 2210.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Congo",
+    "value": 2191.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Chad",
+    "value": 2184.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Uganda",
+    "value": 2166.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Zambia",
+    "value": 2158.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Mozambique",
+    "value": 2155.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Democratic Republic of the Congo",
+    "value": 2150.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Liberia",
+    "value": 2103.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Kenya",
+    "value": 2100.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Yemen",
+    "value": 2083.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Zimbabwe",
+    "value": 2041.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Madagascar",
+    "value": 1979.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Haiti",
+    "value": 1978.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Somalia",
+    "value": 1833.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Lesotho",
+    "value": 1806.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  },
+  {
+    "country": "Burundi",
+    "value": 1755.0,
+    "metric": "food_supply_kcal",
+    "year": 2022,
+    "unit": "kcal/capita/day"
+  }
+]

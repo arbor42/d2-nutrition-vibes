@@ -29,8 +29,13 @@ export function formatAgricultureValue(value, options = {}) {
   let formattedNumber;
   let displayUnit = unit;
   
+  // Special handling for calorie data
+  if (unit === "kcal/capita/day") {
+    formattedNumber = value.toFixed(precision ?? 0);
+    displayUnit = longForm ? "kcal/Person/Tag" : "kcal";
+  }
   // FAO data is in "1000 t", so we need to consider the actual scale
-  if (unit === "1000 t") {
+  else if (unit === "1000 t") {
     if (absValue >= 1000000) {
       // >= 1 billion tonnes actual weight
       formattedNumber = (value / 1000000).toFixed(precision ?? 1);

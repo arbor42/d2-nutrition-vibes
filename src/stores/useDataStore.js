@@ -13,6 +13,7 @@ export const useDataStore = defineStore('data', () => {
   const summaryData = ref(null)
   const dataIndex = ref(null)
   const faoMetadata = ref(null)
+  const calorieData = ref(null)
   
   // ML-specific state
   const mlIndex = ref(null)
@@ -436,6 +437,30 @@ export const useDataStore = defineStore('data', () => {
     }
   }
 
+  // Load calorie data
+  const loadCalorieData = async () => {
+    const key = 'calorie-data'
+    console.log('🍎 DataStore: Loading calorie data...')
+    setLoading(key, true)
+    try {
+      const response = await fetch('/data/processed/calorie_supply.json')
+      if (!response.ok) {
+        throw new Error(`Failed to load calorie data: ${response.statusText}`)
+      }
+      const data = await response.json()
+      calorieData.value = data.data
+      console.log('✅ DataStore: Calorie data loaded successfully')
+      errors.value.delete(key)
+      return data
+    } catch (error) {
+      console.error('❌ DataStore: Error loading calorie data:', error)
+      setError(key, error.message)
+      throw error
+    } finally {
+      setLoading(key, false)
+    }
+  }
+
   // Initialize critical data
   const initializeApp = async () => {
     console.log('🚀 DataStore: Starting app initialization...')
@@ -455,6 +480,10 @@ export const useDataStore = defineStore('data', () => {
       console.log('📈 DataStore: Loading timeseries data...')
       const timeseriesResult = await loadTimeseriesData()
       console.log('✅ DataStore: Timeseries data loaded:', timeseriesResult ? 'Success' : 'Failed')
+      
+      console.log('🍎 DataStore: Loading calorie data...')
+      const calorieResult = await loadCalorieData()
+      console.log('✅ DataStore: Calorie data loaded:', calorieResult ? 'Success' : 'Failed')
       
       console.log('🎉 DataStore: App initialization completed successfully!')
     } catch (error) {
@@ -669,6 +698,7 @@ export const useDataStore = defineStore('data', () => {
     summaryData,
     dataIndex,
     faoMetadata,
+    calorieData,
     loading,
     errors,
     
@@ -710,6 +740,7 @@ export const useDataStore = defineStore('data', () => {
     loadTimeseriesData,
     loadNetworkData,
     loadSummaryData,
+    loadCalorieData,
     initializeApp,
     getProductionData,
     getForecastData,

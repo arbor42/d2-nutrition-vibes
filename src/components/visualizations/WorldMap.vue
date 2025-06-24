@@ -711,12 +711,15 @@ const loadProductionData = async () => {
 
   try {
     console.log(`🗺️ WorldMap: Loading data for ${props.selectedProduct} ${props.selectedYear} - Metric: ${props.selectedMetric}`)
+    console.log('🔍 WorldMap: Checking if timeseries data exists for this product...')
+    console.log('🔍 WorldMap: Available timeseries products:', dataStore.timeseriesData ? Object.keys(dataStore.timeseriesData).slice(0, 10) : 'No timeseries data')
     
     let productionData = null
     
     // Check if we have timeseries data for this product (individual products)
     if (dataStore.timeseriesData && dataStore.timeseriesData[props.selectedProduct]) {
       console.log('🗺️ WorldMap: Using timeseries data for individual product')
+      console.log('🔍 WorldMap: Found product in timeseries:', props.selectedProduct)
       const timeseriesData = dataStore.getTimeseriesDataForProduct(props.selectedProduct, props.selectedYear)
       
       if (timeseriesData) {
@@ -725,13 +728,23 @@ const loadProductionData = async () => {
                            props.selectedMetric === 'import_quantity' ? 'imports' :
                            props.selectedMetric === 'export_quantity' ? 'exports' :
                            props.selectedMetric === 'domestic_supply_quantity' ? 'domestic_supply' :
+                           props.selectedMetric === 'feed' ? 'feed' :
+                           props.selectedMetric === 'food_supply_kcal' ? 'food_supply_kcal' :
                            'production'
+          
+          const value = data[metricKey] || 0
+          let unit = data.unit || 't'
+          
+          // Override unit for specific metrics
+          if (props.selectedMetric === 'food_supply_kcal') {
+            unit = 'kcal/capita/day'
+          }
           
           return {
             country: country,
             countryCode: getCountryCode(country),
-            value: data[metricKey] || 0,
-            unit: data.unit || 't',
+            value: value,
+            unit: unit,
             year: props.selectedYear,
             element: props.selectedMetric
           }
@@ -740,10 +753,18 @@ const loadProductionData = async () => {
     } else {
       // Fallback to production data for grouped products
       console.log('🗺️ WorldMap: Using production data for grouped product')
-      productionData = await dataStore.loadProductionData(
-        props.selectedProduct, 
-        props.selectedYear
-      )
+      
+      // For feed and calorie metrics, only try to load if we're sure the product doesn't exist in timeseries
+      if (props.selectedMetric === 'feed' || props.selectedMetric === 'food_supply_kcal') {
+        console.warn('🗺️ WorldMap: Feed/Calorie metric selected but product not found in timeseries data')
+        console.warn('🗺️ WorldMap: This suggests the product should have individual data. Setting empty array.')
+        productionData = []
+      } else {
+        productionData = await dataStore.loadProductionData(
+          props.selectedProduct, 
+          props.selectedYear
+        )
+      }
     }
     
     console.log('🗺️ WorldMap: Raw production data:', productionData)
@@ -1199,11 +1220,19 @@ const updateMapWithProductionData = () => {
 
 // Event handlers
 const handleCountryClick = (event, d) => {
+  event.stopPropagation()
+  event.preventDefault()
+  
   const countryName = d.properties.name
   const countryCode = d.properties.iso_a3
   
-  uiStore.setSelectedCountry(countryName)
-  emit('countryClick', countryCode)
+  console.log('🖱️ WorldMap: Country clicked:', { countryName, countryCode })
+  
+  // Only set selected country if it's different from current
+  if (uiStore.selectedCountry !== countryName) {
+    uiStore.setSelectedCountry(countryName)
+    emit('countryClick', countryCode)
+  }
   
   // Zoom to country
   zoomToCountry(d)
@@ -1230,8 +1259,13 @@ const handleCountryMouseover = (event, d) => {
              item.country.toLowerCase() === normalizedName?.toLowerCase()
   )
   
-  // Format tooltip content
-  const tooltipFormatter = createD3TooltipFormatter('1000 t')
+  // Format tooltip content with proper unit handling
+  let unit = countryData?.unit || '1000 t'
+  if (props.selectedMetric === 'food_supply_kcal') {
+    unit = 'kcal/capita/day'
+  }
+  
+  const tooltipFormatter = createD3TooltipFormatter(unit)
   let content = `<strong>${countryName}</strong><br/>`
   if (countryData && countryData.value > 0) {
     const formattedValue = tooltipFormatter(countryData.value)
@@ -1239,6 +1273,9 @@ const handleCountryMouseover = (event, d) => {
     const metricLabel = props.selectedMetric === 'production' ? 'Produktion' :
                        props.selectedMetric === 'import_quantity' ? 'Import' :
                        props.selectedMetric === 'export_quantity' ? 'Export' :
+                       props.selectedMetric === 'domestic_supply_quantity' ? 'Inlandsversorgung' :
+                       props.selectedMetric === 'feed' ? 'Tierfutter' :
+                       props.selectedMetric === 'food_supply_kcal' ? 'Kalorienversorgung' :
                        'Inlandsversorgung'
     content += `<span style="color: #fbbf24">${productName}</span><br/>`
     content += `${metricLabel}: <strong>${formattedValue}</strong><br/>`

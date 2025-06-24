@@ -32,7 +32,9 @@ const metricOptions = [
   { value: 'production', label: 'Produktion' },
   { value: 'import_quantity', label: 'Import' },
   { value: 'export_quantity', label: 'Export' },
-  { value: 'domestic_supply_quantity', label: 'Inlandsversorgung' }
+  { value: 'domestic_supply_quantity', label: 'Inlandsversorgung' },
+  { value: 'food_supply_kcal', label: 'Kalorienversorgung' },
+  { value: 'feed', label: 'Tierfutter' }
 ]
 
 // Year options  
@@ -109,7 +111,7 @@ const resetView = () => {
 </script>
 
 <template>
-  <div class="flex flex-wrap gap-4 items-end">
+  <div class="flex flex-wrap gap-4 items-end" data-tour="product-selector">
     <!-- Product Selector -->
     <div class="flex-1 min-w-[200px]">
       <SearchableSelect

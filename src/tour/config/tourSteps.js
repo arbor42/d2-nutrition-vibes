@@ -4,8 +4,8 @@
 export const mainTour = {
   id: 'main',
   title: 'Ernährung im Wandel der Zeit',
-  description: 'Entdecken Sie Zusammenhänge zwischen Weltgeschehen und Ernährungsdaten',
-  estimatedDuration: '15 Minuten',
+  description: 'Entdecken Sie wie Weltgeschehen unsere Ernährung prägt - von COVID-19 über den Ukraine-Krieg bis zu Klimaextremen',
+  estimatedDuration: '12-15 Minuten',
   category: 'overview',
   difficulty: 'beginner',
   steps: [
@@ -13,9 +13,9 @@ export const mainTour = {
       id: 'welcome',
       title: 'Willkommen bei D2 Nutrition Vibes',
       content: `
-        Diese Tour zeigt Ihnen, wie <strong>Weltgeschehen unsere Ernährung prägt</strong>. 
-        Wir beginnen mit einem Überblick über die enormen regionalen Unterschiede in der 
-        globalen Nahrungsmittelversorgung.
+        Diese Tour führt Sie durch <strong>13 Jahre globaler Ernährungsdaten</strong> (2010-2022). 
+        Sie werden sehen, wie Pandemien, Kriege und Klimaextreme unsere Nahrungsmittelversorgung 
+        beeinflussen. Die <strong>Zeitleiste unten</strong> begleitet uns dabei durch alle wichtigen Ereignisse.
       `,
       route: '/',
       target: '[data-tour="dashboard-stats"]',
@@ -25,32 +25,64 @@ export const mainTour = {
       },
       actions: {
         onEnter: async () => {
-          // Ensure we're showing global overview
+          const { useUIStore } = await import('@/stores/useUIStore')
+          const { useTourStore } = await import('@/tour/stores/useTourStore')
+          const uiStore = useUIStore()
+          const tourStore = useTourStore()
+          uiStore.selectedProduct = 'Grand Total'
+          uiStore.selectedYear = 2022
+          uiStore.selectedMetric = 'food_supply_kcal'
+          // Set tour mode
+          tourStore.isLoading = false
+        }
+      },
+      dataHighlight: {
+        label: 'Globale Versorgung 2022',
+        value: '2.985 kcal/Person/Tag'
+      },
+      insights: [
+        'Stetiger Anstieg trotz globaler Krisen',
+        'Von 2.832 kcal (2010) auf 2.985 kcal (2022)',
+        'Aber große regionale Unterschiede bleiben'
+      ]
+    },
+
+    {
+      id: 'timeline-introduction',
+      title: 'Die wichtigsten Weltereignisse',
+      content: `
+        In unserer Datenanalyse sehen Sie die Auswirkungen wichtiger <strong>Weltereignisse</strong> 
+        auf die globale Ernährung. Von El Niño 2015/16 über COVID-19 bis zum Ukraine-Krieg 2022 - 
+        jedes Ereignis hinterließ messbare Spuren.
+      `,
+      route: '/',
+      target: '[data-tour="dashboard-stats"]',
+      position: 'bottom',
+      highlightOptions: {
+        padding: 8
+      },
+      actions: {
+        onEnter: async () => {
           const { useUIStore } = await import('@/stores/useUIStore')
           const uiStore = useUIStore()
           uiStore.selectedProduct = 'Grand Total'
           uiStore.selectedYear = 2022
-          uiStore.selectedMetric = 'production'
         }
       },
-      dataHighlight: {
-        label: 'Regionale Disparität (2022)',
-        value: 'Nordamerika: 3.881 vs. Afrika: 2.567 kcal/Tag'
-      },
       insights: [
-        'Die App analysiert 13 Jahre FAO-Daten (2010-2022)',
-        'Über 245 Länder und 200+ Nahrungsmittelprodukte',
-        'Daten zeigen direkte Auswirkungen von COVID-19 und Ukraine-Krieg'
+        'Klimaereignisse: El Niño, Dürren, Frost',
+        'Pandemie: COVID-19 ab März 2020',
+        'Konflikte: Ukraine-Krieg Februar 2022'
       ]
     },
     
     {
-      id: 'world-map-overview',
+      id: 'regional-disparities',
       title: 'Die Welt isst unterschiedlich',
       content: `
-        Diese <strong>interaktive Weltkarte</strong> zeigt die Kalorienversorgung pro Land. 
-        Die Farbgebung verdeutlicht extreme Unterschiede: Während Menschen in Nordamerika 
-        durchschnittlich 3.881 kcal/Tag zur Verfügung haben, sind es in Afrika nur 2.567 kcal.
+        Diese Weltkarte zeigt extreme <strong>regionale Unterschiede</strong>. Während Nordamerika 
+        mit 3.880 kcal/Tag im Überfluss lebt, kämpft Afrika mit nur 2.567 kcal/Tag. 
+        Die WHO empfiehlt mindestens 2.100 kcal für Erwachsene.
       `,
       route: '/',
       target: '[data-tour="world-map"]',
@@ -60,32 +92,31 @@ export const mainTour = {
       },
       actions: {
         onEnter: async () => {
-          // Ensure world map is visible and focused on calorie data
           const { useUIStore } = await import('@/stores/useUIStore')
           const uiStore = useUIStore()
           uiStore.selectedProduct = 'Grand Total'
-          uiStore.selectedMetric = 'production'
+          uiStore.selectedMetric = 'food_supply_kcal'
           uiStore.selectedYear = 2022
         }
       },
       dataHighlight: {
-        label: 'Höchste vs. Niedrigste Versorgung',
-        value: 'USA: 3.880 kcal/Tag vs. Chad: 1.620 kcal/Tag'
+        label: 'Größte Kluft weltweit',
+        value: 'USA: 3.880 vs. Tschad: 1.620 kcal/Tag'
       },
       insights: [
-        'Klicken Sie auf Länder für detaillierte Informationen',
-        'Die WHO empfiehlt mindestens 2.100 kcal/Tag für Erwachsene',
-        'Farbskala zeigt Unter- bis Überversorgung an'
+        'Europa & Nordamerika: Über 3.400 kcal/Tag',
+        'Asien holt auf: +9% seit 2010',
+        'Afrika stagniert: Nur +0,3% in 12 Jahren'
       ]
     },
-    
+
     {
-      id: 'ukraine-crisis-transition',
-      title: 'Krieg und Hunger - Ukraine als Beispiel',
+      id: 'covid-impact-intro',
+      title: 'COVID-19: Die erste globale Krise',
       content: `
-        Der <strong>Ukraine-Krieg 2022</strong> führte zu dramatischen Veränderungen im 
-        globalen Getreidehandel. Lassen Sie uns die konkreten Auswirkungen in den 
-        Zeitreihen-Daten betrachten.
+        März 2020 - die Welt steht still. <strong>Lockdowns und Grenzschließungen</strong> 
+        bedrohen die globale Nahrungsmittelversorgung. Schauen wir uns die konkreten 
+        Auswirkungen in den Zeitreihen an.
       `,
       route: '/timeseries',
       target: '[data-tour="timeseries-chart"]',
@@ -95,301 +126,257 @@ export const mainTour = {
       },
       actions: {
         onEnter: async () => {
-          // Switch to Ukraine wheat export data
+          const { useUIStore } = await import('@/stores/useUIStore')
+          const { useTourStore } = await import('@/tour/stores/useTourStore')
+          const uiStore = useUIStore()
+          const tourStore = useTourStore()
+          uiStore.selectedProduct = 'Rice and products'
+          uiStore.selectedCountry = 'Vietnam'
+          uiStore.selectedMetric = 'export_quantity'
+          // Focus on COVID years
+          uiStore.selectedYearRange = { start: 2019, end: 2021 }
+        }
+      },
+      dataHighlight: {
+        label: 'Vietnam Reis-Exportstopp',
+        value: 'März-April 2020: Temporärer Exportstopp'
+      },
+      insights: [
+        'Panik-Reaktionen: Exportverbote in Asien',
+        'Aber: Schnelle Erholung dank guter Ernten',
+        'Globale Versorgung blieb überraschend stabil'
+      ]
+    },
+
+    {
+      id: 'covid-stockpiling',
+      title: 'Hamstern auf Staatsebene',
+      content: `
+        Während der Pandemie bauten viele Länder <strong>strategische Reserven</strong> auf. 
+        Besonders Entwicklungsländer legten ungewöhnlich hohe Vorräte an Reis und Mais an - 
+        eine Vorsichtsmaßnahme gegen unsichere Zeiten.
+      `,
+      route: '/timeseries',
+      target: '[data-tour="metric-selector"]',
+      position: 'bottom',
+      actions: {
+        onEnter: async () => {
           const { useUIStore } = await import('@/stores/useUIStore')
           const uiStore = useUIStore()
+          uiStore.selectedProduct = 'Rice and products'
+          uiStore.selectedCountry = 'Philippines'
+          uiStore.selectedMetric = 'stock_variation'
+          uiStore.selectedYearRange = { start: 2019, end: 2021 }
+        }
+      },
+      dataHighlight: {
+        label: 'Lageraufbau 2020/21',
+        value: 'Philippinen: +35% Reislager'
+      },
+      insights: [
+        'Positive Stock Variation = Lageraufbau',
+        'Europa baute hingegen Lager ab (-9 Mio t)',
+        'China hortete weiter: 50% der Weltreserven'
+      ]
+    },
+
+    {
+      id: 'ukraine-crisis-wheat',
+      title: 'Ukraine-Krieg: Die Kornkammer brennt',
+      content: `
+        Februar 2022 - Russlands Invasion erschüttert die Getreidemärkte. 
+        Die Ukraine exportierte vor dem Krieg <strong>10% des Weltweizens</strong>. 
+        Die Auswirkungen sind dramatisch.
+      `,
+      route: '/timeseries',
+      target: '[data-tour="timeseries-chart"]',
+      position: 'top',
+      actions: {
+        onEnter: async () => {
+          const { useUIStore } = await import('@/stores/useUIStore')
+          const { useTourStore } = await import('@/tour/stores/useTourStore')
+          const uiStore = useUIStore()
+          const tourStore = useTourStore()
           uiStore.selectedProduct = 'Wheat and products'
           uiStore.selectedCountry = 'Ukraine'
           uiStore.selectedMetric = 'export_quantity'
-          uiStore.selectedYear = 2022
+          uiStore.selectedYearRange = { start: 2020, end: 2022 }
+          // Highlight Ukraine crisis
+          uiStore.setSelectedYear(2022)
         }
       },
       dataHighlight: {
-        label: 'Ukraine Weizen-Export Kollaps',
-        value: '2021: 19.768 → 2022: 11.444 Tausend Tonnen (-42%)'
+        label: 'Weizenexport-Kollaps',
+        value: '2021: 19.768 → 2022: 11.444 Tsd. Tonnen (-42%)'
       },
       insights: [
-        'Ukraine war vor dem Krieg einer der Top-5 Weizenexporteure',
-        'Der Exportrückgang betraf besonders Afrika und Nahost',
-        'Globale Weizenpreise stiegen 2022 um über 40%'
+        'Hafenblockaden im Schwarzen Meer',
+        'Getreidekorridore nur teilweise wirksam',
+        'Weltweite Getreidepreise explodierten'
       ]
     },
-    
+
     {
-      id: 'timeseries-exploration',
-      title: 'Zeitreise durch die Krisen',
+      id: 'feed-problem',
+      title: 'Das Tierfutter-Dilemma',
       content: `
-        Diese <strong>Zeitreihen-Visualisierung</strong> zeigt die Entwicklung über 13 Jahre. 
-        Beachten Sie: Trotz COVID-19 Pandemie blieb die globale Nahrungsmittelversorgung 
-        erstaunlich stabil - ein Zeichen für die Resilienz der Weltwirtschaft.
+        Ein kritischer Trend: <strong>41% des weltweiten Getreides</strong> landet in 
+        Futtertrögen statt auf Tellern. Seit 2010 stieg der Futterverbrauch um 40% - 
+        während Menschen hungern.
       `,
-      route: '/timeseries',
-      target: '[data-tour="year-selector"]',
-      position: 'bottom',
-      highlightOptions: {
-        padding: 8
-      },
-      actions: {
-        onEnter: async () => {
-          // Show global food supply timeline
-          const { useUIStore } = await import('@/stores/useUIStore')
-          const uiStore = useUIStore()
-          uiStore.selectedProduct = 'Grand Total'
-          uiStore.selectedCountry = 'World'
-          uiStore.selectedMetric = 'production'
-        }
-      },
-      dataHighlight: {
-        label: 'COVID-19 Resilienz (Globale Versorgung)',
-        value: '2019: 2.947 → 2020: 2.958 → 2022: 2.985 kcal/Tag'
-      },
-      insights: [
-        'Verwenden Sie den Zeitregler für interaktive Exploration',
-        'COVID-19 führte zu kurzfristigen Handelsstörungen, aber nicht zu Versorgungsengpässen',
-        'Technologischer Fortschritt kompensierte viele Probleme'
-      ]
-    },
-    
-    {
-      id: 'feed-vs-food-transition',
-      title: 'Tiere fressen, Menschen hungern?',
-      content: `
-        Ein kritischer Trend: Immer mehr Nahrungsmittel werden als <strong>Tierfutter</strong> 
-        statt für direkten menschlichen Konsum verwendet. Die Strukturanalyse zeigt 
-        diese besorgniserregenden Entwicklungen.
-      `,
-      route: '/structural',
-      target: '[data-tour="structural-chart"]',
+      route: '/',
+      target: '[data-tour="feed-usage"]',
       position: 'left',
       highlightOptions: {
         padding: 12
       },
       actions: {
         onEnter: async () => {
-          // Focus on maize feed vs food usage
           const { useUIStore } = await import('@/stores/useUIStore')
           const uiStore = useUIStore()
           uiStore.selectedProduct = 'Maize and products'
-          uiStore.selectedCountry = 'World'
+          uiStore.selectedMetric = 'feed'
           uiStore.selectedYear = 2022
         }
       },
       dataHighlight: {
-        label: 'Mais Feed/Food Verhältnis Anstieg',
-        value: '2010: 4,06 → 2022: 5,28 (mehr Tierfutter pro Nahrung)'
+        label: 'Mais als Tierfutter',
+        value: '2022: 717 Mio. Tonnen (+47% seit 2010)'
       },
       insights: [
-        'Weltweit gehen 717 Mio. Tonnen Mais an Tiere, nur 136 Mio. an Menschen',
-        'Eine Kuh produziert nur 10% der Kalorien, die sie frisst',
-        'Effizienzsteigerungen könnten Millionen Menschen zusätzlich ernähren'
+        'China verfüttert 222 Mio. t Mais (2022)',
+        'USA: 138 Mio. t - gleichbleibend hoch',
+        'Nur 48% des Getreides für Menschen'
       ]
     },
-    
-    {
-      id: 'structural-analysis',
-      title: 'Versteckte Strukturen entdecken',
-      content: `
-        Die <strong>Strukturanalyse</strong> offenbart komplexe Zusammenhänge zwischen 
-        Produktion, Import, Export und Verbrauch. Netzwerk-Visualisierungen zeigen, 
-        wie einzelne Länder voneinander abhängig sind.
-      `,
-      route: '/structural',
-      target: '[data-tour="network-visualization"]',
-      position: 'bottom',
-      highlightOptions: {
-        padding: 10
-      },
-      actions: {
-        onEnter: async () => {
-          // Show trade networks
-          const { useUIStore } = await import('@/stores/useUIStore')
-          const uiStore = useUIStore()
-          uiStore.selectedProduct = 'Wheat and products'
-          uiStore.selectedYear = 2022
-        }
-      },
-      dataHighlight: {
-        label: 'Handelsabhängigkeiten',
-        value: 'Top 5 Exporteure kontrollieren 77% des Welthandels'
-      },
-      insights: [
-        'Knoten zeigen Länder, Verbindungen zeigen Handelsströme',
-        'Dicke der Linien entspricht Handelsvolumen',
-        'Kritische Abhängigkeiten werden sofort sichtbar'
-      ]
-    },
-    
-    {
-      id: 'climate-simulation',
-      title: 'Klima prägt Ernten - Simulation',
-      content: `
-        <strong>Klimawandel</strong> wird immer spürbarer. Thailand's Zuckerrohr-Produktion 
-        halbierte sich durch Dürre. Simulationen helfen, zukünftige Risiken zu verstehen 
-        und Anpassungsstrategien zu entwickeln.
-      `,
-      route: '/simulation',
-      target: '[data-tour="simulation-chart"]',
-      position: 'right',
-      highlightOptions: {
-        padding: 14
-      },
-      actions: {
-        onEnter: async () => {
-          // Focus on Thailand sugar cane climate impact
-          const { useUIStore } = await import('@/stores/useUIStore')
-          const uiStore = useUIStore()
-          uiStore.selectedProduct = 'Sugar cane'
-          uiStore.selectedCountry = 'Thailand'
-          uiStore.selectedYear = 2021
-        }
-      },
-      dataHighlight: {
-        label: 'Thailand Zuckerrohr-Kollaps durch Dürre',
-        value: '2018: 135.074 → 2021: 66.725 Tausend Tonnen (-51%)'
-      },
-      insights: [
-        'Testen Sie verschiedene Klimaszenarien',
-        'Brasilien verlor 2021 ebenfalls 17% der Zuckerproduktion durch Dürre',
-        'Wetterextreme werden durch Klimawandel häufiger'
-      ]
-    },
-    
+
     {
       id: 'ml-predictions',
-      title: 'Die Zukunft vorhersagen mit KI',
+      title: 'KI blickt in die Zukunft',
       content: `
-        <strong>Machine Learning</strong> analysiert historische Muster und erstellt 
-        Prognosen für zukünftige Entwicklungen. Algorithmen erkennen komplexe 
-        Zusammenhänge, die Menschen übersehen würden.
+        Unsere <strong>Machine Learning Modelle</strong> prognostizieren die Entwicklung 
+        bis 2025. Die Vorhersagen berücksichtigen Klimawandel, Bevölkerungswachstum 
+        und historische Trends.
       `,
       route: '/ml-predictions',
       target: '[data-tour="ml-chart"]',
       position: 'top',
-      highlightOptions: {
-        padding: 12
-      },
       actions: {
         onEnter: async () => {
-          // Show ML predictions for key products
           const { useUIStore } = await import('@/stores/useUIStore')
           const uiStore = useUIStore()
           uiStore.selectedProduct = 'Wheat and products'
-          uiStore.selectedCountry = 'World'
+          uiStore.selectedMetric = 'production'
         }
       },
       dataHighlight: {
-        label: 'KI-Prognose Genauigkeit',
-        value: '91% Trefferquote bei 2-Jahres-Vorhersagen'
+        label: 'Weizenproduktion 2025',
+        value: 'Prognose: +3,2% gegenüber 2022'
       },
       insights: [
-        'Konfidenzintervalle zeigen Unsicherheitsbereiche',
-        'Modelle berücksichtigen Klimadaten, Handelspolitik und mehr',
-        'Frühwarnsysteme können Hungerkrisen verhindern'
+        'Unsicherheit durch Klimaextreme steigt',
+        'Technologischer Fortschritt als Hoffnung',
+        'Regionale Verschiebungen erwartet'
       ]
     },
-    
+
     {
-      id: 'process-mining',
-      title: 'Prozesse verstehen - Von der Farm zum Teller',
+      id: 'simulation-scenarios',
+      title: 'Was wäre wenn...?',
       content: `
-        <strong>Process Mining</strong> analysiert die kompletten Lieferketten von der 
-        Produktion bis zum Verbrauch. Wo entstehen Engpässe? Welche Prozesse können 
-        optimiert werden?
+        Im <strong>Simulationspanel</strong> können Sie Szenarien durchspielen: 
+        Was wenn 20% weniger Getreide verfüttert würde? Wie viele Menschen könnten 
+        zusätzlich ernährt werden?
+      `,
+      route: '/simulation',
+      target: '[data-tour="simulation-chart"]',
+      position: 'right',
+      actions: {
+        onEnter: async () => {
+          const { useUIStore } = await import('@/stores/useUIStore')
+          const uiStore = useUIStore()
+          uiStore.selectedProduct = 'Cereals - Excluding Beer'
+          uiStore.selectedMetric = 'food_supply_kcal'
+        }
+      },
+      dataHighlight: {
+        label: 'Szenario-Rechnung',
+        value: '20% weniger Futter = 500 Mio. Menschen mehr ernährt'
+      },
+      insights: [
+        'Enorme Effizienzpotenziale vorhanden',
+        'Ernährungsumstellung als Schlüssel',
+        'Politik und Verbraucher gefragt'
+      ]
+    },
+
+    {
+      id: 'structural-analysis',
+      title: 'Globale Handelsströme verstehen',
+      content: `
+        Die <strong>Strukturanalyse</strong> zeigt Abhängigkeiten im Welthandel. 
+        Wer exportiert wohin? Welche Länder sind besonders verwundbar bei 
+        Lieferausfällen?
+      `,
+      route: '/structural',
+      target: '[data-tour="network-visualization"]',
+      position: 'left',
+      actions: {
+        onEnter: async () => {
+          const { useUIStore } = await import('@/stores/useUIStore')
+          const uiStore = useUIStore()
+          uiStore.selectedProduct = 'Wheat and products'
+          uiStore.selectedMetric = 'export_quantity'
+        }
+      },
+      dataHighlight: {
+        label: 'Kritische Abhängigkeiten',
+        value: 'Nordafrika: 60% Weizenimporte aus Russland/Ukraine'
+      },
+      insights: [
+        'Konzentration auf wenige Exporteure',
+        'Verwundbare Importregionen identifiziert',
+        'Diversifizierung dringend nötig'
+      ]
+    },
+
+    {
+      id: 'climate-extremes',
+      title: 'Klimaextreme nehmen zu',
+      content: `
+        <strong>Dürren, Überschwemmungen, Frost</strong> - Extremwetter trifft die 
+        Landwirtschaft immer härter. Lassen Sie uns konkrete Beispiele im Process Mining 
+        Panel analysieren.
       `,
       route: '/process-mining',
-      target: '[data-tour="process-chart"]',
-      position: 'left',
-      highlightOptions: {
-        padding: 16
-      },
-      actions: {
-        onEnter: async () => {
-          // Show supply chain analysis
-          const { useUIStore } = await import('@/stores/useUIStore')
-          const uiStore = useUIStore()
-          uiStore.selectedProduct = 'Wheat and products'
-          uiStore.selectedYear = 2022
-        }
-      },
-      dataHighlight: {
-        label: 'Lieferketten-Effizienz',
-        value: '23% Verluste zwischen Produktion und Verbrauch'
-      },
-      insights: [
-        'Flussdiagramme zeigen kritische Pfade',
-        'Optimierungen können Millionen Tonnen Nahrung retten',
-        'Digitalisierung verbessert Transparenz und Effizienz'
-      ]
-    },
-    
-    {
-      id: 'tour-completion',
-      title: 'Ihre Entdeckungsreise beginnt jetzt',
-      content: `
-        <strong>Herzlichen Glückwunsch!</strong> Sie haben die wichtigsten Features 
-        von D2 Nutrition Vibes kennengelernt. Jetzt sind Sie bereit für eigene 
-        Entdeckungen in den komplexen Zusammenhängen der globalen Ernährung.
-      `,
-      route: '/',
-      target: '[data-tour="dashboard-overview"]',
+      target: '.process-panel',
       position: 'center',
-      highlightOptions: {
-        padding: 20
-      },
       actions: {
         onEnter: async () => {
-          // Return to dashboard overview
           const { useUIStore } = await import('@/stores/useUIStore')
           const uiStore = useUIStore()
-          uiStore.selectedProduct = 'Grand Total'
-          uiStore.selectedCountry = 'World'
-          uiStore.selectedYear = 2022
+          // Show climate events period
+          uiStore.selectedYear = 2021
         }
       },
       dataHighlight: {
-        label: 'Tour abgeschlossen',
-        value: 'Alle Features erfolgreich erkundet!'
+        label: 'Klimaschäden 2015-2022',
+        value: 'Thailand Zucker -50%, Brasilien -17%, Palmöl -10%'
       },
       insights: [
-        'Nutzen Sie die Navigation für detaillierte Analysen',
-        'Experimentieren Sie mit verschiedenen Produkten und Jahren',
-        'Teilen Sie interessante Erkenntnisse mit anderen'
+        '2015/16: El Niño verwüstet Südostasien',
+        '2019/20: Thailand verliert halbe Zuckerernte',
+        '2021: Brasilien - Dürre + Frost = Katastrophe'
       ]
-    }
-  ]
-}
-
-// Quick Tour (5 minutes) - Essential features only
-export const quickTour = {
-  id: 'quick',
-  title: 'Schnelltour: Die Essentials',
-  description: 'Die wichtigsten Features in 5 Minuten',
-  estimatedDuration: '5 Minuten',
-  category: 'overview',
-  difficulty: 'beginner',
-  steps: [
-    {
-      id: 'quick-welcome',
-      title: 'Willkommen zur Schnelltour',
-      content: `
-        In nur <strong>5 Minuten</strong> lernen Sie die wichtigsten Features kennen. 
-        Wir konzentrieren uns auf die Ukraine-Krise und COVID-19 Auswirkungen.
-      `,
-      route: '/',
-      target: '[data-tour="dashboard-stats"]',
-      position: 'bottom',
-      dataHighlight: {
-        label: 'Schnelltour-Modus',
-        value: '3 Kernfeatures in 5 Minuten'
-      }
     },
-    
+
     {
-      id: 'quick-ukraine',
-      title: 'Ukraine-Krieg Auswirkungen',
+      id: 'brazil-sugar-crisis',
+      title: 'Fallstudie: Brasiliens Zuckerkrise',
       content: `
-        Der <strong>dramatische Einbruch</strong> der ukrainischen Weizenexporte 
-        um 42% zeigt die direkten Auswirkungen des Krieges auf die globale Ernährung.
+        2021 traf Brasilien eine <strong>Jahrhundertdürre gefolgt von Frost</strong>. 
+        Die Zuckerrohrproduktion brach um 17% ein - mit globalen Folgen, da Brasilien 
+        der größte Zuckerexporteur ist.
       `,
       route: '/timeseries',
       target: '[data-tour="timeseries-chart"]',
@@ -397,80 +384,101 @@ export const quickTour = {
       actions: {
         onEnter: async () => {
           const { useUIStore } = await import('@/stores/useUIStore')
+          const { useTourStore } = await import('@/tour/stores/useTourStore')
           const uiStore = useUIStore()
-          uiStore.selectedProduct = 'Wheat and products'
-          uiStore.selectedCountry = 'Ukraine'
-          uiStore.selectedMetric = 'export_quantity'
+          const tourStore = useTourStore()
+          uiStore.selectedProduct = 'Sugar cane'
+          uiStore.selectedCountry = 'Brazil'
+          uiStore.selectedMetric = 'production'
+          uiStore.selectedYearRange = { start: 2019, end: 2022 }
+          // Focus on Brazil frost year
+          uiStore.setSelectedYear(2021)
         }
       },
       dataHighlight: {
-        label: 'Kriegsauswirkung auf Weizen',
-        value: '2021: 19.768 → 2022: 11.444 Tausend Tonnen'
-      }
+        label: 'Produktionseinbruch',
+        value: '2021: -13,3% auf 525 Mio. Tonnen'
+      },
+      insights: [
+        'Niedrigste Erträge seit 2003',
+        'Weltmarkt-Zuckerpreise auf 4-Jahres-Hoch',
+        'Mehr Zuckerrohr musste zu Ethanol werden'
+      ]
     },
-    
+
     {
-      id: 'quick-exploration',
-      title: 'Jetzt sind Sie dran!',
+      id: 'palm-oil-volatility',
+      title: 'Palmöl: Spielball des Klimas',
       content: `
-        <strong>Entdecken Sie selbst</strong> weitere Zusammenhänge! Die vollständige 
-        Tour bietet tiefere Einblicke in alle verfügbaren Analysetools.
+        Palmöl aus Indonesien und Malaysia versorgt die Welt. Doch <strong>El Niño</strong> 
+        und andere Klimaphänomene machen die Produktion unberechenbar. 2022 verhängte 
+        Indonesien sogar einen Exportstopp.
+      `,
+      route: '/timeseries',
+      target: '[data-tour="year-selector"]',
+      position: 'bottom',
+      actions: {
+        onEnter: async () => {
+          const { useUIStore } = await import('@/stores/useUIStore')
+          const uiStore = useUIStore()
+          uiStore.selectedProduct = 'Palm oil'
+          uiStore.selectedCountry = 'Indonesia'
+          uiStore.selectedMetric = 'export_quantity'
+          uiStore.selectedYearRange = { start: 2015, end: 2022 }
+        }
+      },
+      dataHighlight: {
+        label: '2022 Exportstopp',
+        value: 'April-Mai: Kompletter Exportstopp'
+      },
+      insights: [
+        '2016: El Niño -10% Produktion',
+        '2020: Arbeitskräftemangel durch COVID',
+        'Preisvolatilität bedroht Ernährungssicherheit'
+      ]
+    },
+
+    {
+      id: 'conclusion',
+      title: 'Lehren für die Zukunft',
+      content: `
+        Unsere Datenreise zeigt: Die globale Ernährung ist <strong>resilienter als gedacht</strong>, 
+        aber auch verwundbarer durch Klimawandel und Konflikte. Positive Trends existieren, 
+        doch die Herausforderungen wachsen.
       `,
       route: '/',
       target: '[data-tour="dashboard-overview"]',
       position: 'center',
-      dataHighlight: {
-        label: 'Bereit für mehr?',
-        value: 'Starten Sie die vollständige Tour für alle Features'
-      }
-    }
-  ]
-}
-
-// Expert Tour (20+ minutes) - Advanced features and methodology
-export const expertTour = {
-  id: 'expert',
-  title: 'Experten-Tour: Methoden & Details',
-  description: 'Tiefere Einblicke in Datenverarbeitung und Analysemethoden',
-  estimatedDuration: '20+ Minuten',
-  category: 'advanced',
-  difficulty: 'expert',
-  steps: [
-    {
-      id: 'expert-coming-soon',
-      title: 'Expertentour in Entwicklung',
-      content: `
-        Die <strong>Expertentour</strong> wird in Kürze verfügbar sein. Sie wird tiefere Einblicke in:
-        <ul>
-          <li>• Datenverarbeitungsmethoden</li>
-          <li>• Statistische Analyseverfahren</li>
-          <li>• Machine Learning Modelle</li>
-          <li>• Datenqualitätsbewertungen</li>
-        </ul>
-        bieten. Nutzen Sie bis dahin gerne die Haupttour oder Schnelltour!
-      `,
-      route: '/',
-      target: '[data-tour="dashboard-stats"]',
-      position: 'center',
       actions: {
-        onEnter: () => {
-          console.log('Expert tour placeholder shown')
+        onEnter: async () => {
+          const { useUIStore } = await import('@/stores/useUIStore')
+          const { useTourStore } = await import('@/tour/stores/useTourStore')
+          const uiStore = useUIStore()
+          const tourStore = useTourStore()
+          uiStore.selectedProduct = 'Grand Total'
+          uiStore.selectedYear = 2022
+          // Reset to current year
+          uiStore.setSelectedYear(2022)
         }
-      }
+      },
+      dataHighlight: {
+        label: 'Kernbotschaft',
+        value: 'Daten ermöglichen bessere Entscheidungen'
+      },
+      insights: [
+        '✅ Resiliente Lieferketten bewährten sich',
+        '⚠️ Klimarisiken nehmen dramatisch zu',
+        '🌍 Regionale Ungleichheiten bleiben kritisch',
+        '🔄 Nachhaltige Transformation ist möglich'
+      ]
     }
   ]
 }
 
-// Export all available tours
-export const availableTours = [
-  mainTour,
-  quickTour,
-  expertTour
-]
+// Export only the main tour
+export const availableTours = [mainTour]
 
 export default {
   mainTour,
-  quickTour,
-  expertTour,
   availableTours
 }

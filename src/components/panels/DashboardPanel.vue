@@ -32,15 +32,26 @@ const getCountriesArray = () => {
     const metricKey = currentMetric === 'production' ? 'production' :
                       currentMetric === 'import_quantity' ? 'imports' :
                       currentMetric === 'export_quantity' ? 'exports' :
+                      currentMetric === 'feed' ? 'feed' :
+                      currentMetric === 'food_supply_kcal' ? 'food_supply_kcal' :
+                      currentMetric === 'domestic_supply_quantity' ? 'domestic_supply' :
                       'domestic_supply'
     
     const productTimeseries = dataStore.timeseriesData[currentProduct]
     return Object.entries(productTimeseries).map(([country, countryData]) => {
       const yearData = countryData.find(d => d.year === currentYear)
+      const value = yearData ? (yearData[metricKey] || 0) : 0
+      let unit = yearData?.unit || '1000 t'
+      
+      // Override unit for specific metrics
+      if (currentMetric === 'food_supply_kcal') {
+        unit = 'kcal/capita/day'
+      }
+      
       return {
         country,
-        value: yearData ? (yearData[metricKey] || 0) : 0,
-        unit: yearData?.unit || '1000 t',
+        value: value,
+        unit: unit,
         year: currentYear
       }
     }).filter(item => item.value > 0)
@@ -123,6 +134,50 @@ const topCountries = computed(() => {
     .slice(0, 10)
 })
 
+// Feed usage calculation - dynamically detects if product has feed data
+const feedUsage = computed(() => {
+  const currentProduct = uiStore.selectedProduct
+  const currentYear = uiStore.selectedYear
+  
+  if (!currentProduct || !currentYear) {
+    return { percentage: 0, amount: 0, unit: '1000 t' }
+  }
+  
+  // Get timeseries data for feed metric
+  if (dataStore.timeseriesData && dataStore.timeseriesData[currentProduct]) {
+    const productData = dataStore.timeseriesData[currentProduct]
+    let totalProduction = 0
+    let totalFeed = 0
+    let hasFeedData = false
+    
+    Object.values(productData).forEach(countryData => {
+      const yearData = countryData.find(d => d.year === currentYear)
+      if (yearData) {
+        totalProduction += yearData.production || 0
+        const feedValue = yearData.feed || 0
+        totalFeed += feedValue
+        
+        // Check if this product actually has feed data
+        if (feedValue > 0) {
+          hasFeedData = true
+        }
+      }
+    })
+    
+    // Only calculate percentage if we actually found feed data for this product
+    if (hasFeedData && totalProduction > 0) {
+      const percentage = Math.round((totalFeed / totalProduction) * 100)
+      return {
+        percentage,
+        amount: totalFeed,
+        unit: '1000 t'
+      }
+    }
+  }
+  
+  return { percentage: 0, amount: 0, unit: '1000 t' }
+})
+
 const globalStats = computed(() => {
   // Force reactivity on these dependencies
   const currentProduct = uiStore.selectedProduct
@@ -142,6 +197,9 @@ const globalStats = computed(() => {
     const metricKey = currentMetric === 'production' ? 'production' :
                       currentMetric === 'import_quantity' ? 'imports' :
                       currentMetric === 'export_quantity' ? 'exports' :
+                      currentMetric === 'feed' ? 'feed' :
+                      currentMetric === 'food_supply_kcal' ? 'food_supply_kcal' :
+                      currentMetric === 'domestic_supply_quantity' ? 'domestic_supply' :
                       'domestic_supply'
     
     console.log(`📊 DashboardPanel: Looking for timeseries data - Product: "${currentProduct}", Metric: "${metricKey}"`)
@@ -154,10 +212,18 @@ const globalStats = computed(() => {
     
     dataArray = Object.entries(productTimeseries).map(([country, countryData]) => {
       const yearData = countryData.find(d => d.year === currentYear)
+      const value = yearData ? (yearData[metricKey] || 0) : 0
+      let unit = yearData?.unit || '1000 t'
+      
+      // Override unit for specific metrics
+      if (currentMetric === 'food_supply_kcal') {
+        unit = 'kcal/capita/day'
+      }
+      
       return {
         country,
-        value: yearData ? (yearData[metricKey] || 0) : 0,
-        unit: yearData?.unit || '1000 t',
+        value: value,
+        unit: unit,
         year: currentYear
       }
     }).filter(item => item.value > 0)
@@ -192,7 +258,12 @@ const globalStats = computed(() => {
   }
   
   const validData = dataArray.filter(item => item && item.value > 0)
-  const total = validData.reduce((sum, item) => sum + (item.value || 0), 0)
+  
+  // For per-capita metrics, calculate average instead of sum
+  const isPerCapitaMetric = uiStore.selectedMetric === 'food_supply_kcal'
+  const total = isPerCapitaMetric 
+    ? validData.length > 0 ? validData.reduce((sum, item) => sum + (item.value || 0), 0) / validData.length : 0
+    : validData.reduce((sum, item) => sum + (item.value || 0), 0)
   
   console.log(`📊 DashboardPanel globalStats: validData count: ${validData.length}`)
   console.log(`📊 DashboardPanel globalStats: sample data:`, validData.slice(0, 3))
@@ -233,11 +304,19 @@ const globalStats = computed(() => {
     (item.value || 0) > (max?.value || 0) ? item : max, null
   ) : null
   
+  // Determine the correct unit based on metric
+  let unit = '1000 t'
+  if (currentMetric === 'food_supply_kcal') {
+    unit = 'kcal/capita/day'
+  } else if (validData.length > 0 && validData[0].unit) {
+    unit = validData[0].unit
+  }
+  
   return { 
     total, 
     countries: countryData.length, // Use filtered country count instead of all data
     topProducer: topProducer?.country,
-    unit: topProducer?.unit || '1000 t'
+    unit: unit
   }
 })
 
@@ -318,7 +397,7 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
 <template>
   <div class="space-y-6">
     <!-- Dashboard Header with Stats -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       <!-- Total Production Card -->
       <div class="card">
         <div class="card-body">
@@ -335,7 +414,10 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
                 {{ uiStore.selectedMetric === 'production' ? 'Gesamtproduktion' : 
                   uiStore.selectedMetric === 'import_quantity' ? 'Gesamtimport' :
                   uiStore.selectedMetric === 'export_quantity' ? 'Gesamtexport' :
-                  'Inlandsversorgung' }} {{ uiStore.selectedYear || new Date().getFullYear() }}
+                  uiStore.selectedMetric === 'domestic_supply_quantity' ? 'Inlandsversorgung' :
+                  uiStore.selectedMetric === 'food_supply_kcal' ? 'Kalorienversorgung' :
+                  uiStore.selectedMetric === 'feed' ? 'Tierfutterverbrauch' :
+                  'Gesamt' }} {{ uiStore.selectedYear || new Date().getFullYear() }}
               </h3>
               <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">
                 {{ formatAgricultureValue(globalStats?.total || 0, { unit: globalStats?.unit || '1000 t', showUnit: true }) }}
@@ -364,6 +446,9 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
                 {{ uiStore.selectedMetric === 'production' ? 'Produzierende Länder' :
                   uiStore.selectedMetric === 'import_quantity' ? 'Importierende Länder' :
                   uiStore.selectedMetric === 'export_quantity' ? 'Exportierende Länder' :
+                  uiStore.selectedMetric === 'domestic_supply_quantity' ? 'Versorgte Länder' :
+                  uiStore.selectedMetric === 'food_supply_kcal' ? 'Länder mit Kaloriendaten' :
+                  uiStore.selectedMetric === 'feed' ? 'Länder mit Futterdaten' :
                   'Länder mit Daten' }}
               </h3>
               <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">
@@ -373,7 +458,10 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
                 mit {{ uiStore.selectedMetric === 'production' ? 'Produktionsdaten' :
                   uiStore.selectedMetric === 'import_quantity' ? 'Importdaten' :
                   uiStore.selectedMetric === 'export_quantity' ? 'Exportdaten' :
-                  'Versorgungsdaten' }}
+                  uiStore.selectedMetric === 'domestic_supply_quantity' ? 'Versorgungsdaten' :
+                  uiStore.selectedMetric === 'food_supply_kcal' ? 'Kalorienwerten' :
+                  uiStore.selectedMetric === 'feed' ? 'Futterdaten' :
+                  'Daten' }}
               </p>
             </div>
           </div>
@@ -396,13 +484,50 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
                 {{ uiStore.selectedMetric === 'production' ? 'Größter Produzent' :
                   uiStore.selectedMetric === 'import_quantity' ? 'Größter Importeur' :
                   uiStore.selectedMetric === 'export_quantity' ? 'Größter Exporteur' :
-                  'Größter Verbraucher' }}
+                  uiStore.selectedMetric === 'domestic_supply_quantity' ? 'Größter Verbraucher' :
+                  uiStore.selectedMetric === 'food_supply_kcal' ? 'Höchste Kalorienversorgung' :
+                  uiStore.selectedMetric === 'feed' ? 'Größter Futterverbraucher' :
+                  'Spitzenreiter' }}
               </h3>
               <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">
                 {{ globalStats.topProducer || 'N/A' }}
               </p>
               <p class="text-sm text-gray-500 dark:text-gray-400">
                 {{ uiStore.selectedYear }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Feed Usage Card -->
+      <div class="card" data-tour="feed-usage">
+        <div class="card-body">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <div class="w-12 h-12 bg-warning-100 dark:bg-warning-900/20 rounded-lg flex items-center justify-center">
+                <svg class="w-6 h-6 text-warning-600 dark:text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+                </svg>
+              </div>
+            </div>
+            <div class="ml-4">
+              <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400">
+                Als Tierfutter
+              </h3>
+              <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                {{ feedUsage.percentage > 0 ? feedUsage.percentage + '%' : 
+                   feedUsage.percentage === 0 && ['Maize and products', 'Wheat and products', 'Barley and products', 
+                   'Sorghum and products', 'Cereals - Excluding Beer', 'Grand Total'].includes(uiStore.selectedProduct) 
+                   ? '0%' : 'N/A' }}
+              </p>
+              <p class="text-sm text-gray-500 dark:text-gray-400">
+                {{ feedUsage.amount > 0 
+                   ? formatAgricultureValue(feedUsage.amount, { unit: feedUsage.unit, showUnit: true })
+                   : feedUsage.percentage === 0 && ['Maize and products', 'Wheat and products', 'Barley and products', 
+                     'Sorghum and products', 'Cereals - Excluding Beer', 'Grand Total'].includes(uiStore.selectedProduct)
+                   ? 'Keine Futternutzung'
+                   : 'Nicht als Futter genutzt' }}
               </p>
             </div>
           </div>
@@ -550,7 +675,7 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
             </div>
             
             <!-- Top Countries List -->
-            <div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 overflow-hidden">
+            <div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 overflow-hidden" data-tour="top-countries">
               <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                 Top 10 Länder
               </h4>
@@ -613,7 +738,7 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
     </div>
     
     <!-- Quick Actions -->
-    <div class="card">
+    <div class="card" data-tour="quick-actions">
       <div class="card-header">
         <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
           Schnellaktionen

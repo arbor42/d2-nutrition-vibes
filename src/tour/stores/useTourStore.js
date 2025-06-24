@@ -23,6 +23,17 @@ export const useTourStore = defineStore('tour', () => {
   const tooltipPosition = ref({ top: 0, left: 0 })
   const spotlightBounds = ref(null)
   
+  // Neue Tooltip-Positionierungs-States
+  const tooltipDimensions = ref({ width: 400, height: 'auto' })
+  const tooltipConstraints = ref({ 
+    minWidth: 300, 
+    maxWidth: 600, 
+    minHeight: 200,
+    maxHeight: 500 
+  })
+  const floatingMode = ref(false) // Wenn keine Position ohne Überlappung möglich
+  const positioningMetadata = ref(null) // Debug-Informationen zur letzten Positionierung
+  
   // User-Präferenzen (persistent)
   const hasSeenIntro = ref(localStorage.getItem('tour-seen-intro') === 'true')
   const completedTours = ref(JSON.parse(localStorage.getItem('tour-completed') || '[]'))
@@ -109,6 +120,11 @@ export const useTourStore = defineStore('tour', () => {
     stepHistory.value = []
     isPaused.value = false
     isLoading.value = false
+    
+    // Reset neue Tooltip-States
+    tooltipDimensions.value = { width: 400, height: 'auto' }
+    floatingMode.value = false
+    positioningMetadata.value = null
   }
   
   const pauseTour = () => {
@@ -176,6 +192,22 @@ export const useTourStore = defineStore('tour', () => {
   
   const setTooltipPosition = (position) => {
     tooltipPosition.value = position
+  }
+  
+  const setTooltipDimensions = (dimensions) => {
+    tooltipDimensions.value = dimensions
+  }
+  
+  const setTooltipConstraints = (constraints) => {
+    tooltipConstraints.value = { ...tooltipConstraints.value, ...constraints }
+  }
+  
+  const setFloatingMode = (isFloating) => {
+    floatingMode.value = isFloating
+  }
+  
+  const setPositioningMetadata = (metadata) => {
+    positioningMetadata.value = metadata
   }
   
   const markTourCompleted = (tourId) => {
@@ -269,6 +301,12 @@ export const useTourStore = defineStore('tour', () => {
     skipAnimations,
     userPreferences,
     
+    // Neue Tooltip-Positionierungs-States
+    tooltipDimensions,
+    tooltipConstraints,
+    floatingMode,
+    positioningMetadata,
+    
     // Computed
     progress,
     canGoPrevious,
@@ -288,6 +326,10 @@ export const useTourStore = defineStore('tour', () => {
     registerTour,
     setHighlightedElement,
     setTooltipPosition,
+    setTooltipDimensions,
+    setTooltipConstraints,
+    setFloatingMode,
+    setPositioningMetadata,
     markTourCompleted,
     markIntroSeen,
     setUserPreference,

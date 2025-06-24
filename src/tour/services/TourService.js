@@ -2,6 +2,7 @@ import { useTourStore } from '../stores/useTourStore'
 import { useRouter } from 'vue-router'
 import { nextTick } from 'vue'
 import { useHighlightTracker } from '../composables/useHighlightTracker'
+import { calculateOptimalPosition, createPositionUpdateCallback, cacheManager } from '../utils/tooltipPositioning'
 
 class TourService {
   constructor() {
@@ -12,6 +13,21 @@ class TourService {
     this.isInitialized = false
     this.manualTooltipPosition = null
     this.highlightTracker = null
+    this.positionUpdateCallback = null
+    this.lastCalculatedPosition = null
+    this.tooltipResizeObserver = null
+    
+    // Performance Tracking
+    this.performanceMetrics = {
+      positionCalculations: 0,
+      cacheHits: 0,
+      averageCalculationTime: 0,
+      lastCalculationTime: 0
+    }
+    
+    // RAF-basierte Update-Queue
+    this.updateQueue = new Set()
+    this.rafUpdateId = null
   }
   
   // Initialize service with Vue app context
@@ -25,6 +41,12 @@ class TourService {
     
     // Initialize highlight tracker
     this.highlightTracker = useHighlightTracker()
+    
+    // Initialize throttled position update callback
+    this.positionUpdateCallback = createPositionUpdateCallback(
+      (bounds, element) => this.handleElementBoundsUpdate(bounds, element),
+      16 // 60fps
+    )
     
     this.isInitialized = true
     
@@ -110,7 +132,14 @@ class TourService {
     this.store.stopTour(reason)
     this.clearHighlights()
     this.cancelPendingAnimations()
+    this.cleanupTooltipObservers()
+    this.cancelPendingUpdates()
     this.manualTooltipPosition = null // Reset manual position
+    this.lastCalculatedPosition = null
+    
+    // Performance: Log metrics on tour end
+    this.logPerformanceMetrics()
+    
     console.log(`[TourService] Stopped tour (${reason})`)
   }
   
@@ -296,6 +325,8 @@ class TourService {
       (bounds, element) => {
         // Update store with new bounds
         this.store.setHighlightedElement(selector, bounds)
+        // Trigger tooltip position recalculation
+        this.positionUpdateCallback(bounds, element)
       },
       {
         padding: options.padding || 8,
@@ -340,7 +371,10 @@ class TourService {
     this.store.setHighlightedElement(null, null)
   }
   
-  async updateTooltipPosition(element = null, preferredPosition = 'bottom') {
+  async updateTooltipPosition(element = null, preferredPosition = 'auto') {
+    // Performance: Start timing
+    const startTime = performance.now()
+    
     // If user has manually positioned the tooltip, keep that position
     if (this.manualTooltipPosition) {
       this.store.setTooltipPosition(this.manualTooltipPosition)
@@ -356,148 +390,89 @@ class TourService {
     // Wait for next tick to ensure DOM is updated
     await nextTick()
     
-    const rect = element.getBoundingClientRect()
+    const elementBounds = element.getBoundingClientRect()
     const viewport = {
       width: window.innerWidth,
       height: window.innerHeight
     }
     
-    // Dynamic tooltip sizing based on content
-    const tooltipEl = document.querySelector('.tour-tooltip')
-    let tooltipWidth = 400
-    let tooltipHeight = 300
+    // Get current tooltip content size
+    const contentSize = this.getTooltipContentSize()
     
-    if (tooltipEl) {
-      const tooltipRect = tooltipEl.getBoundingClientRect()
-      tooltipWidth = tooltipRect.width || 400
-      tooltipHeight = tooltipRect.height || 300
+    // Get current tooltip constraints from store
+    const constraints = this.store.tooltipConstraints || {
+      minWidth: 300,
+      maxWidth: 600,
+      minHeight: 200,
+      maxHeight: 500
     }
     
-    // Ensure responsive sizing
-    tooltipWidth = Math.min(tooltipWidth, viewport.width - 40)
-    tooltipHeight = Math.min(tooltipHeight, viewport.height - 40)
-    
-    const spacing = 20
-    const padding = 20
-    
-    let position = { top: 0, left: 0 }
-    
-    // Smart positioning based on available space
-    const spaceAbove = rect.top - padding
-    const spaceBelow = viewport.height - rect.bottom - padding
-    const spaceLeft = rect.left - padding
-    const spaceRight = viewport.width - rect.right - padding
-    
-    // Choose best position based on available space
-    if (preferredPosition === 'center') {
-      position.top = Math.max(padding, (viewport.height - tooltipHeight) / 2)
-      position.left = Math.max(padding, (viewport.width - tooltipWidth) / 2)
-    } else if (preferredPosition === 'bottom' && spaceBelow >= tooltipHeight) {
-      position.top = rect.bottom + spacing
-      position.left = rect.left + (rect.width / 2) - (tooltipWidth / 2)
-    } else if (preferredPosition === 'top' && spaceAbove >= tooltipHeight) {
-      position.top = rect.top - tooltipHeight - spacing
-      position.left = rect.left + (rect.width / 2) - (tooltipWidth / 2)
-    } else if (preferredPosition === 'right' && spaceRight >= tooltipWidth) {
-      position.top = rect.top + (rect.height / 2) - (tooltipHeight / 2)
-      position.left = rect.right + spacing
-    } else if (preferredPosition === 'left' && spaceLeft >= tooltipWidth) {
-      position.top = rect.top + (rect.height / 2) - (tooltipHeight / 2)
-      position.left = rect.left - tooltipWidth - spacing
-    } else {
-      // Fallback: Find best available position
-      if (spaceBelow >= tooltipHeight) {
-        position.top = rect.bottom + spacing
-        position.left = rect.left + (rect.width / 2) - (tooltipWidth / 2)
-      } else if (spaceAbove >= tooltipHeight) {
-        position.top = rect.top - tooltipHeight - spacing
-        position.left = rect.left + (rect.width / 2) - (tooltipWidth / 2)
-      } else if (spaceRight >= tooltipWidth) {
-        position.top = rect.top + (rect.height / 2) - (tooltipHeight / 2)
-        position.left = rect.right + spacing
-      } else if (spaceLeft >= tooltipWidth) {
-        position.top = rect.top + (rect.height / 2) - (tooltipHeight / 2)
-        position.left = rect.left - tooltipWidth - spacing
-      } else {
-        // Last resort: center on screen
-        position.top = Math.max(padding, (viewport.height - tooltipHeight) / 2)
-        position.left = Math.max(padding, (viewport.width - tooltipWidth) / 2)
+    // Calculate optimal position and size
+    const result = calculateOptimalPosition(
+      elementBounds,
+      contentSize,
+      viewport,
+      {
+        preferredPosition,
+        constraints,
+        adaptive: true,
+        useCache: true // Enable caching for performance
       }
-    }
-    
-    // Constrain to viewport with padding
-    position.left = Math.max(padding, Math.min(position.left, viewport.width - tooltipWidth - padding))
-    position.top = Math.max(padding, Math.min(position.top, viewport.height - tooltipHeight - padding))
-    
-    this.store.setTooltipPosition(position)
-  }
-  
-  calculateBestPosition(rect, tooltipWidth, tooltipHeight, spacing) {
-    const viewport = {
-      width: window.innerWidth,
-      height: window.innerHeight
-    }
-    
-    // Check available space in each direction
-    const spaces = {
-      top: rect.top - spacing,
-      bottom: viewport.height - rect.bottom - spacing,
-      left: rect.left - spacing,
-      right: viewport.width - rect.right - spacing
-    }
-    
-    // Find best position with most space
-    const bestDirection = Object.keys(spaces).reduce((a, b) => 
-      spaces[a] > spaces[b] ? a : b
     )
     
-    return this.calculatePositionForDirection(rect, tooltipWidth, tooltipHeight, spacing, bestDirection)
+    // Performance: Track metrics
+    const calculationTime = performance.now() - startTime
+    this.updatePerformanceMetrics(calculationTime, result.fromCache)
+    
+    // Update store with new position and dimensions
+    this.store.setTooltipPosition({
+      top: result.position.top,
+      left: result.position.left
+    })
+    
+    this.store.setTooltipDimensions(result.size)
+    
+    // Update floating mode state
+    this.store.setFloatingMode(result.metadata.isFloating || false)
+    
+    // Store positioning metadata for debugging and future optimizations
+    this.store.setPositioningMetadata({
+      position: result.metadata.position,
+      isOptimal: result.metadata.isOptimal,
+      hasOverlap: result.metadata.hasOverlap,
+      isVisible: result.metadata.isVisible,
+      wasResized: result.metadata.wasResized,
+      originalSize: result.metadata.originalSize,
+      timestamp: Date.now()
+    })
+    
+    // Store calculation result for debugging
+    this.lastCalculatedPosition = {
+      ...result,
+      timestamp: Date.now(),
+      elementBounds,
+      viewport
+    }
+    
+    // Log positioning info for debugging
+    if (result.metadata.isFloating) {
+      console.log('[TourService] Using floating position:', result.metadata.position)
+    }
+    
+    if (result.metadata.wasResized) {
+      console.log('[TourService] Tooltip was resized:', {
+        original: result.metadata.originalSize,
+        final: result.size
+      })
+    }
+    
+    if (result.metadata.hasOverlap) {
+      console.warn('[TourService] Tooltip still overlaps with element despite calculations')
+    }
+    
+    return result
   }
   
-  calculatePositionForDirection(rect, tooltipWidth, tooltipHeight, spacing, direction) {
-    const position = { top: 0, left: 0 }
-    
-    switch (direction) {
-      case 'top':
-        position.top = rect.top - tooltipHeight - spacing
-        position.left = rect.left + (rect.width / 2) - (tooltipWidth / 2)
-        break
-      case 'bottom':
-        position.top = rect.bottom + spacing
-        position.left = rect.left + (rect.width / 2) - (tooltipWidth / 2)
-        break
-      case 'left':
-        position.top = rect.top + (rect.height / 2) - (tooltipHeight / 2)
-        position.left = rect.left - tooltipWidth - spacing
-        break
-      case 'right':
-        position.top = rect.top + (rect.height / 2) - (tooltipHeight / 2)
-        position.left = rect.right + spacing
-        break
-    }
-    
-    return position
-  }
-  
-  constrainToViewport(position, width, height) {
-    const padding = 20
-    
-    // Constrain horizontal
-    if (position.left < padding) {
-      position.left = padding
-    } else if (position.left + width > window.innerWidth - padding) {
-      position.left = window.innerWidth - width - padding
-    }
-    
-    // Constrain vertical
-    if (position.top < padding) {
-      position.top = padding
-    } else if (position.top + height > window.innerHeight - padding) {
-      position.top = window.innerHeight - height - padding
-    }
-    
-    return position
-  }
   
   // Tour Registration
   registerTour(tour) {
@@ -538,6 +513,322 @@ class TourService {
   
   resetManualTooltipPosition() {
     this.manualTooltipPosition = null
+  }
+  
+  // New helper methods for intelligent positioning
+  
+  /**
+   * Handles real-time element bounds updates from highlightTracker
+   * @param {Object} bounds - Updated element bounds
+   * @param {Element} element - The tracked element
+   */
+  handleElementBoundsUpdate(bounds, element) {
+    if (!this.store.isActive || !this.store.tooltipVisible) return
+    
+    // Only update if bounds actually changed significantly
+    if (this.lastCalculatedPosition && this.boundsChangedSignificantly(bounds, this.lastCalculatedPosition.elementBounds)) {
+      // Check if current tooltip position now overlaps with new element bounds
+      const currentTooltipBounds = this.getCurrentTooltipBounds()
+      
+      if (currentTooltipBounds && this.checkCurrentOverlap(bounds, currentTooltipBounds)) {
+        // Immediate overlap detected, recalculate position with higher priority
+        console.log('[TourService] Overlap detected during bounds update, recalculating position')
+        this.updateTooltipPosition(element)
+      } else if (this.lastCalculatedPosition && Date.now() - this.lastCalculatedPosition.timestamp > 1000) {
+        // Periodic recalculation to ensure optimal positioning
+        this.updateTooltipPosition(element)
+      }
+    }
+  }
+  
+  /**
+   * Checks if element bounds changed significantly enough to warrant repositioning
+   * @param {Object} newBounds - New element bounds
+   * @param {Object} oldBounds - Previous element bounds
+   * @returns {boolean} True if significant change detected
+   */
+  boundsChangedSignificantly(newBounds, oldBounds) {
+    if (!oldBounds) return true
+    
+    const threshold = 5 // pixels
+    return Math.abs(newBounds.top - oldBounds.top) > threshold ||
+           Math.abs(newBounds.left - oldBounds.left) > threshold ||
+           Math.abs(newBounds.width - oldBounds.width) > threshold ||
+           Math.abs(newBounds.height - oldBounds.height) > threshold
+  }
+  
+  /**
+   * Gets the natural content size of the tooltip
+   * @returns {Object} Content size {width, height}
+   */
+  getTooltipContentSize() {
+    const tooltipEl = document.querySelector('.tour-tooltip')
+    
+    if (!tooltipEl) {
+      return { width: 400, height: 300 } // Default size
+    }
+    
+    // Get current size or measure content
+    const currentRect = tooltipEl.getBoundingClientRect()
+    
+    // If tooltip is already visible, use its current size as baseline
+    if (currentRect.width > 0 && currentRect.height > 0) {
+      return {
+        width: currentRect.width,
+        height: currentRect.height
+      }
+    }
+    
+    // Fallback: measure content by temporarily making visible
+    const originalStyle = {
+      position: tooltipEl.style.position,
+      visibility: tooltipEl.style.visibility,
+      top: tooltipEl.style.top,
+      left: tooltipEl.style.left
+    }
+    
+    tooltipEl.style.position = 'absolute'
+    tooltipEl.style.visibility = 'hidden'
+    tooltipEl.style.top = '-9999px'
+    tooltipEl.style.left = '-9999px'
+    
+    const measuredRect = tooltipEl.getBoundingClientRect()
+    const contentSize = {
+      width: measuredRect.width || 400,
+      height: measuredRect.height || 300
+    }
+    
+    // Restore original styles
+    Object.assign(tooltipEl.style, originalStyle)
+    
+    return contentSize
+  }
+  
+  /**
+   * Sets up ResizeObserver for tooltip content to detect size changes
+   * @param {Element} tooltipElement - The tooltip DOM element
+   */
+  setupTooltipResizeObserver(tooltipElement) {
+    if (!window.ResizeObserver || this.tooltipResizeObserver) return
+    
+    this.tooltipResizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.target === tooltipElement) {
+          // Content size changed, recalculate position
+          const newSize = {
+            width: entry.contentRect.width,
+            height: entry.contentRect.height
+          }
+          
+          // Only update if user hasn't manually positioned
+          if (!this.manualTooltipPosition) {
+            this.updateTooltipPosition()
+          }
+        }
+      }
+    })
+    
+    this.tooltipResizeObserver.observe(tooltipElement)
+  }
+  
+  /**
+   * Cleanup method for tooltip observers
+   */
+  cleanupTooltipObservers() {
+    if (this.tooltipResizeObserver) {
+      this.tooltipResizeObserver.disconnect()
+      this.tooltipResizeObserver = null
+    }
+  }
+  
+  /**
+   * Gets current tooltip boundaries from DOM
+   * @returns {Object|null} Current tooltip bounds
+   */
+  getCurrentTooltipBounds() {
+    const tooltipEl = document.querySelector('.tour-tooltip')
+    if (!tooltipEl) return null
+    
+    const rect = tooltipEl.getBoundingClientRect()
+    return {
+      top: rect.top,
+      left: rect.left,
+      width: rect.width,
+      height: rect.height,
+      bottom: rect.bottom,
+      right: rect.right
+    }
+  }
+  
+  /**
+   * Checks if tooltip currently overlaps with element
+   * @param {Object} elementBounds - Element boundaries
+   * @param {Object} tooltipBounds - Tooltip boundaries  
+   * @returns {boolean} True if overlap detected
+   */
+  checkCurrentOverlap(elementBounds, tooltipBounds) {
+    // Import the function at the top of the class instead
+    return !(tooltipBounds.right < elementBounds.left || 
+             tooltipBounds.left > elementBounds.right || 
+             tooltipBounds.bottom < elementBounds.top || 
+             tooltipBounds.top > elementBounds.bottom)
+  }
+  
+  /**
+   * Force recalculation of tooltip position (for edge cases)
+   * @param {string} reason - Reason for forced recalculation
+   */
+  forcePositionRecalculation(reason = 'manual') {
+    console.log(`[TourService] Forcing position recalculation: ${reason}`)
+    
+    if (!this.store.isActive || !this.store.tooltipVisible) return
+    
+    const element = this.store.highlightedElement 
+      ? document.querySelector(this.store.highlightedElement)
+      : null
+      
+    if (element) {
+      // Reset manual position temporarily to allow recalculation
+      const wasManual = this.manualTooltipPosition
+      this.manualTooltipPosition = null
+      
+      this.updateTooltipPosition(element).then(() => {
+        // Restore manual position if it was set
+        if (wasManual) {
+          setTimeout(() => {
+            this.manualTooltipPosition = wasManual
+          }, 100)
+        }
+      })
+    }
+  }
+  
+  /**
+   * Debug method to get positioning statistics
+   * @returns {Object} Positioning debug information
+   */
+  getPositioningDebugInfo() {
+    return {
+      lastCalculatedPosition: this.lastCalculatedPosition,
+      manualTooltipPosition: this.manualTooltipPosition,
+      currentTooltipBounds: this.getCurrentTooltipBounds(),
+      performanceMetrics: this.performanceMetrics,
+      cacheStats: cacheManager.getStats(),
+      store: {
+        tooltipPosition: this.store.tooltipPosition,
+        tooltipDimensions: this.store.tooltipDimensions,
+        floatingMode: this.store.floatingMode,
+        positioningMetadata: this.store.positioningMetadata
+      }
+    }
+  }
+  
+  // Performance-Optimierungs-Methoden
+  
+  /**
+   * Updates performance metrics
+   * @param {number} calculationTime - Zeit für Berechnung in ms
+   * @param {boolean} fromCache - Ob Ergebnis aus Cache kam
+   */
+  updatePerformanceMetrics(calculationTime, fromCache = false) {
+    this.performanceMetrics.lastCalculationTime = calculationTime
+    
+    if (fromCache) {
+      this.performanceMetrics.cacheHits++
+    } else {
+      this.performanceMetrics.positionCalculations++
+      
+      // Update average calculation time
+      const totalCalculations = this.performanceMetrics.positionCalculations
+      const currentAverage = this.performanceMetrics.averageCalculationTime
+      this.performanceMetrics.averageCalculationTime = 
+        (currentAverage * (totalCalculations - 1) + calculationTime) / totalCalculations
+    }
+  }
+  
+  /**
+   * Logs performance metrics
+   */
+  logPerformanceMetrics() {
+    const metrics = this.performanceMetrics
+    const cacheStats = cacheManager.getStats()
+    
+    console.log('[TourService] Performance Metrics:', {
+      calculations: metrics.positionCalculations,
+      cacheHits: metrics.cacheHits,
+      cacheHitRate: metrics.cacheHits / (metrics.positionCalculations + metrics.cacheHits) * 100,
+      avgCalculationTime: metrics.averageCalculationTime.toFixed(2) + 'ms',
+      lastCalculationTime: metrics.lastCalculationTime.toFixed(2) + 'ms',
+      cacheSize: cacheStats.size
+    })
+  }
+  
+  /**
+   * RAF-basierte Update-Queue für batch updates
+   * @param {Function} updateFn - Update-Funktion
+   */
+  queueUpdate(updateFn) {
+    this.updateQueue.add(updateFn)
+    
+    if (!this.rafUpdateId) {
+      this.rafUpdateId = requestAnimationFrame(() => {
+        // Alle queued updates ausführen
+        for (const updateFn of this.updateQueue) {
+          try {
+            updateFn()
+          } catch (error) {
+            console.error('[TourService] Error in queued update:', error)
+          }
+        }
+        
+        this.updateQueue.clear()
+        this.rafUpdateId = null
+      })
+    }
+  }
+  
+  /**
+   * Cancels all pending RAF updates
+   */
+  cancelPendingUpdates() {
+    if (this.rafUpdateId) {
+      cancelAnimationFrame(this.rafUpdateId)
+      this.rafUpdateId = null
+    }
+    this.updateQueue.clear()
+  }
+  
+  /**
+   * Optimized position update using RAF queue
+   * @param {Element} element - Target element
+   */
+  queuePositionUpdate(element) {
+    this.queueUpdate(() => {
+      this.updateTooltipPosition(element)
+    })
+  }
+  
+  /**
+   * Clear positioning cache (useful for debugging)
+   */
+  clearPositioningCache() {
+    cacheManager.clearCache()
+    console.log('[TourService] Positioning cache cleared')
+  }
+  
+  /**
+   * Enable/disable performance optimizations
+   * @param {boolean} enabled - Whether to enable optimizations
+   */
+  setPerformanceOptimizations(enabled) {
+    this.store.setUserPreference('performanceOptimizations', enabled)
+    
+    if (!enabled) {
+      this.clearPositioningCache()
+      console.log('[TourService] Performance optimizations disabled')
+    } else {
+      console.log('[TourService] Performance optimizations enabled')
+    }
   }
   
   // Data Integration Helpers (for tour content)

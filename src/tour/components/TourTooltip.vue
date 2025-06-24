@@ -3,6 +3,10 @@
     <div 
       ref="tooltipRef"
       class="tour-tooltip"
+      :class="{
+        'floating-mode': store.floatingMode,
+        'compact': store.tooltipDimensions.width < 350
+      }"
       :style="tooltipStyle"
     >
     <!-- Drag handle -->
@@ -136,8 +140,9 @@
 </template>
 
 <script setup>
-import { computed, ref, inject, watch } from 'vue'
+import { computed, ref, inject, watch, onMounted, onUnmounted } from 'vue'
 import { useDraggable } from '../composables/useDraggable'
+import { useTourStore } from '../stores/useTourStore'
 
 const props = defineProps({
   step: {
@@ -178,6 +183,11 @@ defineEmits(['next', 'previous', 'skip', 'close', 'pause'])
 
 const tooltipRef = ref(null)
 const tourService = inject('tourService')
+const store = useTourStore()
+
+// ResizeObserver für Content-Size-Tracking
+let resizeObserver = null
+let contentObserver = null
 
 // Initialize draggable functionality
 const { position: dragPosition, isDragging, hasMoved } = useDraggable(tooltipRef, {
@@ -200,12 +210,78 @@ watch(() => props.position, (newPosition) => {
 })
 
 const tooltipStyle = computed(() => {
+  const dimensions = store.tooltipDimensions
+  
   return {
     position: 'fixed',
     top: `${dragPosition.value.y}px`,
     left: `${dragPosition.value.x}px`,
+    width: typeof dimensions.width === 'number' ? `${dimensions.width}px` : dimensions.width,
+    height: typeof dimensions.height === 'number' ? `${dimensions.height}px` : dimensions.height,
+    minWidth: `${store.tooltipConstraints?.minWidth || 300}px`,
+    maxWidth: `${store.tooltipConstraints?.maxWidth || 600}px`,
+    minHeight: `${store.tooltipConstraints?.minHeight || 200}px`,
+    maxHeight: store.tooltipConstraints?.maxHeight ? `${store.tooltipConstraints.maxHeight}px` : '80vh',
     zIndex: '9999 !important',
     transition: isDragging.value ? 'none' : 'all 0.3s ease'
+  }
+})
+
+// Setup ResizeObserver für automatische Größenerkennung
+const setupResizeObserver = () => {
+  if (!window.ResizeObserver || !tooltipRef.value) return
+  
+  // Observer für den Tooltip-Container
+  resizeObserver = new ResizeObserver((entries) => {
+    for (const entry of entries) {
+      const { width, height } = entry.contentRect
+      
+      // Nur aktualisieren wenn sich die Größe tatsächlich geändert hat
+      if (width !== store.tooltipDimensions.width || 
+          height !== store.tooltipDimensions.height) {
+        
+        // Debounce rapid changes
+        clearTimeout(contentObserver)
+        contentObserver = setTimeout(() => {
+          if (!hasMoved.value && tourService && !tourService.manualTooltipPosition) {
+            // Nur neu positionieren wenn nicht manuell bewegt
+            tourService.updateTooltipPosition()
+          }
+        }, 100)
+      }
+    }
+  })
+  
+  resizeObserver.observe(tooltipRef.value)
+}
+
+const cleanupObservers = () => {
+  if (resizeObserver) {
+    resizeObserver.disconnect()
+    resizeObserver = null
+  }
+  if (contentObserver) {
+    clearTimeout(contentObserver)
+    contentObserver = null
+  }
+}
+
+// Lifecycle hooks
+onMounted(() => {
+  // Setup ResizeObserver nach dem Mount
+  setTimeout(() => {
+    setupResizeObserver()
+    // Informiere TourService über das Tooltip-Element
+    if (tourService && tooltipRef.value) {
+      tourService.setupTooltipResizeObserver(tooltipRef.value)
+    }
+  }, 50)
+})
+
+onUnmounted(() => {
+  cleanupObservers()
+  if (tourService) {
+    tourService.cleanupTooltipObservers()
   }
 })
 </script>
@@ -252,8 +328,7 @@ const tooltipStyle = computed(() => {
 /* Tour tooltip specific overrides */
 .tour-tooltip {
   @apply bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700;
-  max-width: 400px;
-  max-height: 80vh;
+  /* Dynamische Größen werden über inline-styles gesetzt */
   overflow: hidden;
   box-shadow: 
     0 20px 25px -5px rgba(0, 0, 0, 0.1),
@@ -263,6 +338,9 @@ const tooltipStyle = computed(() => {
   flex-direction: column;
   z-index: 9999 !important; /* Ensure tooltip is always on top */
   position: relative;
+  
+  /* Smooth transitions für Größenänderungen */
+  transition: width 0.3s ease, height 0.3s ease;
 }
 
 /* Drag handle styling */
@@ -309,7 +387,68 @@ const tooltipStyle = computed(() => {
 /* Responsive adjustments */
 @media (max-width: 640px) {
   .tour-tooltip {
-    max-width: calc(100vw - 2rem);
+    /* Mobile: Engere Constraints */
+    min-width: 280px !important;
+    max-width: calc(100vw - 2rem) !important;
+    max-height: calc(100vh - 4rem) !important;
   }
+  
+  /* Kleinere Schriftgrößen auf Mobile */
+  .tour-tooltip .text-lg {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+  
+  .tour-tooltip .text-base {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .tour-tooltip {
+    /* Sehr kleine Screens: Minimale Größe */
+    min-width: 260px !important;
+    font-size: 14px;
+  }
+  
+  .tour-tooltip-handle {
+    padding: 0.5rem 1rem;
+  }
+  
+  .tour-tooltip > div:not(.tour-tooltip-handle) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Floating mode indicator */
+.tour-tooltip.floating-mode {
+  border: 2px dashed rgba(59, 130, 246, 0.5);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.dark .tour-tooltip.floating-mode {
+  background: rgba(31, 41, 55, 0.95);
+}
+
+/* Adaptive content sizing */
+.tour-tooltip.compact {
+  font-size: 13px;
+}
+
+.tour-tooltip.compact .text-lg {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.tour-tooltip.compact .text-base {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.tour-tooltip.compact .btn {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.75rem;
 }
 </style>

@@ -50,6 +50,7 @@ const isInitialized = ref(false)
 // Legend state
 const legendScale = ref(null)
 const legendDomain = ref([0, 100000000]) // Static domain across years
+const legendUnit = ref('1000 t') // Unit for legend display
 
 // Tooltip implementation with D3
 let tooltipDiv = null
@@ -553,7 +554,7 @@ const createLegend = (svg) => {
   
   const legendAxis = d3.axisBottom(legendScaleLinear)
     .ticks(tickValues ? tickValues.length : 5)
-    .tickFormat(createD3AxisFormatter('1000 t'))
+    .tickFormat(createD3AxisFormatter(legendUnit.value))
   
   if (tickValues) {
     legendAxis.tickValues(tickValues)
@@ -583,10 +584,29 @@ const createLegend = (svg) => {
     .style('font-size', '11px')
     .style('font-weight', '500')
     .style('fill', legendTextColor)
-    .text(props.selectedMetric === 'production' ? 'Produktion (Mio. t)' : 
-          props.selectedMetric === 'import_quantity' ? 'Import (Mio. t)' :
-          props.selectedMetric === 'export_quantity' ? 'Export (Mio. t)' :
-          'Versorgung (Mio. t)')
+    .text(() => {
+      const metricLabels = {
+        'production': 'Produktion',
+        'import_quantity': 'Import',
+        'export_quantity': 'Export',
+        'domestic_supply': 'Versorgung'
+      }
+      const metricLabel = metricLabels[props.selectedMetric] || 'Wert'
+      
+      // Get appropriate unit label based on legendUnit
+      let unitLabel = ''
+      if (legendUnit.value === '1000 t') {
+        unitLabel = '(1000 t)'
+      } else if (legendUnit.value === 't') {
+        unitLabel = '(t)'
+      } else if (legendUnit.value === 'kg') {
+        unitLabel = '(kg)'
+      } else {
+        unitLabel = `(${legendUnit.value})`
+      }
+      
+      return `${metricLabel} ${unitLabel}`
+    })
 }
 
 // Setup map with D3.js (keeping original for compatibility)
@@ -1081,6 +1101,10 @@ const applyProductionDataDirect = (container, data) => {
   })
   
   console.log('🗺️ WorldMap: Data maps created - Countries:', dataByCountry.size, 'Codes:', dataByCountryCode.size)
+  
+  // Extract unit from data (use first valid entry)
+  const unitFromData = data.find(d => d.unit)?.unit || '1000 t'
+  legendUnit.value = unitFromData
 
   // Create adaptive color scale based on data distribution
   // Filter out aggregate regions to get accurate country-level min/max

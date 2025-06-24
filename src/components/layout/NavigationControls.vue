@@ -192,8 +192,7 @@ const exportData = () => {
   
   // Simulate export process
   setTimeout(() => {
-      duration: 5000
-    })
+    // Export logic here
   }, 2000)
 }
 

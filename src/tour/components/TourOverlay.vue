@@ -19,14 +19,6 @@
       />
       
       
-      <!-- Tour progress bar -->
-      <TourProgressBar 
-        :progress="tourStore.progress"
-        :current="tourStore.currentStepIndex + 1"
-        :total="tourStore.totalSteps"
-        :tour-title="tourStore.currentTour?.title"
-        @step-click="handleStepClick"
-      />
       
       <!-- Tour controls (minimize/maximize) -->
       <div ref="controlsRef" class="tour-controls-container" :style="controlsStyle">
@@ -81,7 +73,6 @@ import { useTourStore } from '../stores/useTourStore'
 import { useDraggable } from '../composables/useDraggable'
 import TourSpotlight from './TourSpotlight.vue'
 import TourTooltip from './TourTooltip.vue'
-import TourProgressBar from './TourProgressBar.vue'
 
 const tourStore = useTourStore()
 const tourService = inject('tourService')
@@ -126,9 +117,6 @@ const handlePause = () => {
   }
 }
 
-const handleStepClick = (stepIndex) => {
-  tourService.goToStep(stepIndex)
-}
 
 const handleBackdropClick = (event) => {
   // Only close on backdrop click if click is actually on backdrop

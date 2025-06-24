@@ -62,7 +62,7 @@ const sidebarClasses = computed(() => [
   'fixed',
   'top-0',
   'left-0',
-  'h-full',
+  'h-screen',
   'bg-white',
   'dark:bg-gray-800',
   'border-r',
@@ -71,8 +71,12 @@ const sidebarClasses = computed(() => [
   'transition-all',
   'duration-300',
   'ease-in-out',
-  'z-30',
-  props.collapsed ? 'w-16' : 'w-64'
+  'z-40', // Higher z-index to overlay content
+  'shadow-lg', // Add shadow for overlay effect
+  // Responsive width handling
+  props.collapsed 
+    ? 'w-16' 
+    : 'w-64'
 ].join(' '))
 
 const isActive = (path: string) => {
@@ -147,7 +151,7 @@ const toggleDarkModeWithNotification = () => {
     </div>
     
     <!-- Navigation Menu -->
-    <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+    <nav class="flex-1 p-2 space-y-1 overflow-y-auto">
       <div
         v-for="item in navigationItems"
         :key="item.path"
@@ -155,18 +159,19 @@ const toggleDarkModeWithNotification = () => {
       >
         <button
           :class="[
-            'w-full flex items-center rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 group',
+            'w-full flex items-center rounded-lg transition-all duration-200 group',
+            collapsed ? 'px-2 py-2 justify-center' : 'px-3 py-2 text-sm font-medium',
             isActive(item.path)
               ? 'bg-primary-100 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300'
               : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-gray-100'
           ]"
-          :title="collapsed ? item.description : ''"
+          :title="collapsed ? item.name : ''"
           @click="navigateTo(item.path)"
         >
           <!-- Icon -->
           <svg 
-            class="w-5 h-5 flex-shrink-0"
-            :class="collapsed ? 'mx-auto' : 'mr-3'"
+            class="flex-shrink-0"
+            :class="collapsed ? 'w-5 h-5' : 'w-4 h-4 mr-3'"
             fill="none" 
             stroke="currentColor" 
             viewBox="0 0 24 24"
@@ -182,7 +187,7 @@ const toggleDarkModeWithNotification = () => {
           <!-- Label -->
           <span 
             v-if="!collapsed"
-            class="truncate"
+            class="truncate text-sm"
           >
             {{ item.name }}
           </span>
@@ -190,14 +195,14 @@ const toggleDarkModeWithNotification = () => {
           <!-- Active Indicator -->
           <div
             v-if="isActive(item.path) && !collapsed"
-            class="ml-auto w-2 h-2 bg-primary-500 rounded-full"
+            class="ml-auto w-1.5 h-1.5 bg-primary-500 rounded-full"
           />
         </button>
         
         <!-- Tooltip for collapsed state -->
         <div
           v-if="collapsed"
-          class="absolute left-full top-0 ml-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity z-50 whitespace-nowrap"
+          class="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity z-50 whitespace-nowrap"
         >
           {{ item.name }}
           <div class="absolute left-0 top-1/2 transform -translate-x-1 -translate-y-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
@@ -206,19 +211,20 @@ const toggleDarkModeWithNotification = () => {
     </nav>
     
     <!-- Sidebar Footer -->
-    <div class="p-4 border-t border-gray-200 dark:border-gray-700">
+    <div class="p-2 border-t border-gray-200 dark:border-gray-700">
       <!-- Dark Mode Toggle -->
       <button
         :class="[
-          'w-full flex items-center rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200',
+          'w-full flex items-center rounded-lg transition-all duration-200',
+          collapsed ? 'px-2 py-2 justify-center' : 'px-3 py-2 text-sm font-medium',
           'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
         ]"
         :title="collapsed ? (uiStore.darkMode ? 'Hell-Modus' : 'Dunkel-Modus') : ''"
         @click="toggleDarkModeWithNotification"
       >
         <svg 
-          class="w-5 h-5 flex-shrink-0"
-          :class="collapsed ? 'mx-auto' : 'mr-3'"
+          class="flex-shrink-0"
+          :class="collapsed ? 'w-5 h-5' : 'w-4 h-4 mr-3'"
           fill="none" 
           stroke="currentColor" 
           viewBox="0 0 24 24"
@@ -239,7 +245,7 @@ const toggleDarkModeWithNotification = () => {
           />
         </svg>
         
-        <span v-if="!collapsed">
+        <span v-if="!collapsed" class="text-sm">
           {{ uiStore.darkMode ? 'Hell-Modus' : 'Dunkel-Modus' }}
         </span>
       </button>
@@ -256,26 +262,83 @@ const toggleDarkModeWithNotification = () => {
   transition-duration: 300ms;
 }
 
-/* Custom scrollbar for navigation */
-nav::-webkit-scrollbar {
-  width: 4px;
+/* Ensure sidebar doesn't cause horizontal overflow */
+aside {
+  min-width: 4rem; /* Minimum width for collapsed state */
+  max-width: 16rem; /* Maximum width for expanded state */
+  flex-shrink: 0; /* Prevent shrinking */
+  /* Stellen Sie sicher, dass erweiterte Sidebar über dem Content liegt */
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
 }
 
-nav::-webkit-scrollbar-track {
+/* Hide scrollbar completely or make it very minimal */
+nav {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+nav::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/WebKit */
+}
+
+/* Alternative: Very thin scrollbar if needed */
+nav.show-scrollbar::-webkit-scrollbar {
+  width: 2px;
+}
+
+nav.show-scrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
 
-nav::-webkit-scrollbar-thumb {
-  background: theme('colors.gray.300');
-  border-radius: 2px;
+nav.show-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.3);
+  border-radius: 1px;
 }
 
-.dark nav::-webkit-scrollbar-thumb {
-  background: theme('colors.gray.600');
+.dark nav.show-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(75, 85, 99, 0.3);
 }
 
 /* Hover effects for navigation items */
 .group:hover .opacity-0 {
   opacity: 1;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  aside {
+    /* Auf kleineren Bildschirmen als slide-in overlay */
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 50;
+  }
+  
+  aside:not(.collapsed) {
+    transform: translateX(0);
+  }
+  
+  /* Backdrop für mobile overlay wenn expanded */
+  aside:not(.collapsed)::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+    pointer-events: auto;
+  }
+}
+
+/* Prevent text selection on navigation items */
+nav button {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 </style>

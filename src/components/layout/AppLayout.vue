@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 overflow-x-hidden">
     <!-- Application Header -->
     <AppHeader 
       :sidebar-collapsed="sidebarCollapsed"
@@ -16,7 +16,7 @@
     <main :class="mainClasses">
       <div class="min-h-screen pt-16">
         <!-- Page Content Container -->
-        <div class="container-fluid py-6">
+        <div class="container-fluid py-6 max-w-full overflow-x-hidden">
           <!-- Breadcrumb Navigation -->
           <nav class="mb-6" aria-label="Breadcrumb">
             <ol class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
@@ -95,7 +95,11 @@ const mainClasses = computed(() => [
   'transition-all',
   'duration-300',
   'ease-in-out',
-  sidebarCollapsed.value ? 'ml-16' : 'ml-64'
+  'overflow-x-hidden',
+  // Permanent margin für eingeklappte Sidebar (w-16 = 64px)
+  'ml-16',
+  'w-full',
+  'max-w-full'
 ].join(' '))
 
 const toggleSidebar = () => {
@@ -109,6 +113,17 @@ const toggleSidebar = () => {
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 300ms;
+}
+
+/* Ensure layout stability */
+main {
+  min-width: 0; /* Prevent flex item from growing beyond container */
+  width: 100%;
+}
+
+/* Layout adjustments - permanent margin for collapsed sidebar */
+main {
+  margin-left: 4rem !important; /* 64px = w-16 */
 }
 
 /* Animation for sliding notifications */

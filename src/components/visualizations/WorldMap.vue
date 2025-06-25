@@ -542,14 +542,14 @@ const createLegend = (svg) => {
   })
   
   // Create tick values for the legend with 19 intervals (20 colors)
-  let tickValues = []
+  const tickValues = []
   const stepSize = (legendDomain.value[1] - legendDomain.value[0]) / (greenColorScheme.length - 1)
   
   // Show min, max, and a few intermediate values
   tickValues.push(legendDomain.value[0]) // Min value
   
   // Add 4 intermediate values (at positions 5, 10, 15)
-  for (let i of [5, 10, 15]) {
+  for (const i of [5, 10, 15]) {
     tickValues.push(legendDomain.value[0] + (stepSize * i))
   }
   

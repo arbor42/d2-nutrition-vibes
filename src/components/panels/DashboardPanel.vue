@@ -533,17 +533,17 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
               </h3>
               <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">
                 {{ feedUsage.percentage > 0 ? feedUsage.percentage + '%' : 
-                   feedUsage.percentage === 0 && ['Maize and products', 'Wheat and products', 'Barley and products', 
-                   'Sorghum and products', 'Cereals - Excluding Beer', 'Grand Total'].includes(uiStore.selectedProduct) 
-                   ? '0%' : 'N/A' }}
+                  feedUsage.percentage === 0 && ['Maize and products', 'Wheat and products', 'Barley and products', 
+                                                 'Sorghum and products', 'Cereals - Excluding Beer', 'Grand Total'].includes(uiStore.selectedProduct) 
+                    ? '0%' : 'N/A' }}
               </p>
               <p class="text-sm text-gray-500 dark:text-gray-400">
                 {{ feedUsage.amount > 0 
-                   ? formatAgricultureValue(feedUsage.amount, { unit: feedUsage.unit, showUnit: true })
-                   : feedUsage.percentage === 0 && ['Maize and products', 'Wheat and products', 'Barley and products', 
-                     'Sorghum and products', 'Cereals - Excluding Beer', 'Grand Total'].includes(uiStore.selectedProduct)
-                   ? 'Keine Futternutzung'
-                   : 'Nicht als Futter genutzt' }}
+                  ? formatAgricultureValue(feedUsage.amount, { unit: feedUsage.unit, showUnit: true })
+                  : feedUsage.percentage === 0 && ['Maize and products', 'Wheat and products', 'Barley and products', 
+                                                   'Sorghum and products', 'Cereals - Excluding Beer', 'Grand Total'].includes(uiStore.selectedProduct)
+                    ? 'Keine Futternutzung'
+                    : 'Nicht als Futter genutzt' }}
               </p>
             </div>
           </div>

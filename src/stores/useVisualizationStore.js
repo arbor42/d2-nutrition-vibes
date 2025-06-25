@@ -68,22 +68,6 @@ export const useVisualizationStore = defineStore('visualization', () => {
       baselineColor: '#6b7280',
       scenarioColor: '#ef4444'
     },
-    structural: {
-      width: 800,
-      height: 600,
-      margin: { top: 20, right: 20, bottom: 20, left: 20 },
-      nodeColor: '#3b82f6',
-      linkColor: '#6b7280',
-      highlightColor: '#ef4444'
-    },
-    process: {
-      width: 800,
-      height: 500,
-      margin: { top: 40, right: 40, bottom: 40, left: 40 },
-      primaryColor: '#3b82f6',
-      secondaryColor: '#10b981',
-      accentColor: '#f59e0b'
-    }
   })
 
   // Animation settings
@@ -101,8 +85,6 @@ export const useVisualizationStore = defineStore('visualization', () => {
     regions: ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'],
     analysis: ['#3b82f6', '#ef4444', '#f59e0b', '#10b981', '#8b5cf6', '#f97316', '#06b6d4', '#84cc16'],
     simulation: ['#6b7280', '#ef4444', '#f59e0b', '#10b981'],
-    structural: ['#3b82f6', '#6b7280', '#ef4444', '#10b981'],
-    process: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444'],
     ml: ['#3b82f6', '#ef4444', '#f59e0b']
   })
 
@@ -566,22 +548,6 @@ export const useVisualizationStore = defineStore('visualization', () => {
         baselineColor: '#6b7280',
         scenarioColor: '#ef4444'
       },
-      structural: {
-        width: 800,
-        height: 600,
-        margin: { top: 20, right: 20, bottom: 20, left: 20 },
-        nodeColor: '#3b82f6',
-        linkColor: '#6b7280',
-        highlightColor: '#ef4444'
-      },
-      process: {
-        width: 800,
-        height: 500,
-        margin: { top: 40, right: 40, bottom: 40, left: 40 },
-        primaryColor: '#3b82f6',
-        secondaryColor: '#10b981',
-        accentColor: '#f59e0b'
-      }
     }
 
     animationSettings.value = {

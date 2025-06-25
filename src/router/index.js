@@ -41,20 +41,6 @@ const routes = [
         meta: {
           title: 'ML Prognosen - D2 Nutrition Vibes'
         }
-      },
-      {
-        path: '/structural',
-        name: 'structural',
-        meta: {
-          title: 'Strukturanalyse - D2 Nutrition Vibes'
-        }
-      },
-      {
-        path: '/process-mining',
-        name: 'process-mining',
-        meta: {
-          title: 'Process Mining - D2 Nutrition Vibes'
-        }
       }
     ]
   },

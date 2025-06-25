@@ -54,18 +54,6 @@ const navigationItems = [
     icon: 'brain',
     description: 'Machine Learning Vorhersagen'
   },
-  {
-    name: 'Strukturanalyse',
-    path: '/structural',
-    icon: 'network',
-    description: 'Strukturelle Datenanalyse'
-  },
-  {
-    name: 'Process Mining',
-    path: '/process-mining',
-    icon: 'flow',
-    description: 'Prozessanalyse und -optimierung'
-  }
 ]
 
 const sidebarClasses = computed(() => [
@@ -102,9 +90,7 @@ const getIconSvg = (iconName: string) => {
     home: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6',
     'chart-line': 'M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z',
     cog: 'M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4',
-    brain: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2z',
-    network: 'M19 11H5m14-7v12a2 2 0 01-2 2H7a2 2 0 01-2-2V4a2 2 0 012-2h10a2 2 0 012 2zM9 11h6',
-    flow: 'M13 10V3L4 14h7v7l9-11h-7z'
+    brain: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2z'
   }
   return icons[iconName] || icons.home
 }

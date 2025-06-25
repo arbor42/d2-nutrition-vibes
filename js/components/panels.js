@@ -157,8 +157,6 @@ window.Panels = {
             'timeseries': () => window.TimeSeries?.updateChart?.(),
             'simulation': () => window.Simulation?.runSimulation?.(),
             'ml': () => window.MLPredictions?.loadPredictions?.(),
-            'process': () => window.ProcessMining?.performProcessMining?.(),
-            'structural': () => window.StructuralAnalysis?.updateAnalysis?.()
         };
 
         if (updates[key]) {

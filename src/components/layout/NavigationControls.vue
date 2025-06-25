@@ -205,6 +205,7 @@ const refreshData = async () => {
     await dataStore.initializeApp()
     
   } catch (error) {
+    console.error('Error refreshing data:', error)
   } finally {
     uiStore.clearLoadingMessages()
   }

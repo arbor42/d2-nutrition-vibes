@@ -38,7 +38,6 @@
         <button
           v-for="(step, index) in stepIndicators"
           :key="index"
-          @click="$emit('step-click', index)"
           class="step-indicator relative"
           :class="{
             'completed': index < current - 1,
@@ -46,6 +45,7 @@
             'upcoming': index > current - 1
           }"
           :title="`Zu Schritt ${index + 1} springen`"
+          @click="$emit('step-click', index)"
         >
           <div class="step-circle">
             <!-- Completed step -->

@@ -37,8 +37,6 @@ export const useUIStore = defineStore('ui', () => {
     timeseries: { visible: false, minimized: false, expanded: true, loading: false, error: null },
     simulation: { visible: false, minimized: false, expanded: false, loading: false, error: null },
     ml: { visible: false, minimized: false, expanded: false, loading: false, error: null },
-    structural: { visible: false, minimized: false, expanded: false, loading: false, error: null },
-    process: { visible: false, minimized: false, expanded: false, loading: false, error: null }
   })
   
   // UI preferences

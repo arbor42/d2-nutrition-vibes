@@ -7,8 +7,6 @@ import DashboardPanel from '@/components/panels/DashboardPanel.vue'
 import TimeseriesPanel from '@/components/panels/TimeseriesPanel.vue'
 import SimulationPanel from '@/components/panels/SimulationPanel.vue'
 import MLPanel from '@/components/panels/MLPanel.vue'
-import StructuralPanel from '@/components/panels/StructuralPanel.vue'
-import ProcessPanel from '@/components/panels/ProcessPanel.vue'
 import ProductSelector from '@/components/ui/ProductSelector.vue'
 
 const route = useRoute()
@@ -22,8 +20,6 @@ const currentComponent = computed(() => {
     '/timeseries': TimeseriesPanel,
     '/simulation': SimulationPanel,
     '/ml-predictions': MLPanel,
-    '/structural': StructuralPanel,
-    '/process-mining': ProcessPanel
   }
   
   return componentMap[route.path] || DashboardPanel
@@ -46,8 +42,6 @@ const panelTitle = computed(() => {
     '/timeseries': 'Zeitreihenanalyse',
     '/simulation': 'Simulationen',
     '/ml-predictions': 'ML Prognosen',
-    '/structural': 'Strukturanalyse',
-    '/process-mining': 'Process Mining'
   }
   
   return titleMap[route.path] || 'Dashboard'
@@ -60,8 +54,6 @@ const panelDescription = computed(() => {
     '/timeseries': 'Zeitliche Entwicklung von Produktions- und Verbrauchsdaten',
     '/simulation': 'Szenario-basierte Simulationen und Prognosen',
     '/ml-predictions': 'Machine Learning gestützte Vorhersagen und Analysen',
-    '/structural': 'Strukturelle Analyse von Datenmustern und Zusammenhängen',
-    '/process-mining': 'Analyse und Optimierung von Geschäftsprozessen'
   }
   
   return descriptionMap[route.path] || 'Überblick über alle wichtigen Metriken und Visualisierungen'

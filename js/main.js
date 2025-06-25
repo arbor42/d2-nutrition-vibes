@@ -35,7 +35,6 @@ class FAOApp {
             const productSelectors = [
                 'product-select',        // World map
                 'ts-product-select',     // Time series
-                'process-product-select' // Process mining
             ];
 
             // ML selector gets special treatment (only products with forecasts)
@@ -110,8 +109,6 @@ class FAOApp {
             'TimeSeries',
             'Simulation',
             'MLPredictions',
-            'StructuralAnalysis',
-            'ProcessMining',
             'Export'
         ];
 

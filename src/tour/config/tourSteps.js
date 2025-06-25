@@ -311,66 +311,6 @@ export const mainTour = {
     },
 
     {
-      id: 'structural-analysis',
-      title: 'Globale Handelsströme verstehen',
-      content: `
-        Die <strong>Strukturanalyse</strong> zeigt Abhängigkeiten im Welthandel. 
-        Wer exportiert wohin? Welche Länder sind besonders verwundbar bei 
-        Lieferausfällen?
-      `,
-      route: '/structural',
-      target: '[data-tour="network-visualization"]',
-      position: 'left',
-      actions: {
-        onEnter: async () => {
-          const { useUIStore } = await import('@/stores/useUIStore')
-          const uiStore = useUIStore()
-          uiStore.selectedProduct = 'Wheat and products'
-          uiStore.selectedMetric = 'export_quantity'
-        }
-      },
-      dataHighlight: {
-        label: 'Kritische Abhängigkeiten',
-        value: 'Nordafrika: 60% Weizenimporte aus Russland/Ukraine'
-      },
-      insights: [
-        'Konzentration auf wenige Exporteure',
-        'Verwundbare Importregionen identifiziert',
-        'Diversifizierung dringend nötig'
-      ]
-    },
-
-    {
-      id: 'climate-extremes',
-      title: 'Klimaextreme nehmen zu',
-      content: `
-        <strong>Dürren, Überschwemmungen, Frost</strong> - Extremwetter trifft die 
-        Landwirtschaft immer härter. Lassen Sie uns konkrete Beispiele im Process Mining 
-        Panel analysieren.
-      `,
-      route: '/process-mining',
-      target: '.process-panel',
-      position: 'center',
-      actions: {
-        onEnter: async () => {
-          const { useUIStore } = await import('@/stores/useUIStore')
-          const uiStore = useUIStore()
-          // Show climate events period
-          uiStore.selectedYear = 2021
-        }
-      },
-      dataHighlight: {
-        label: 'Klimaschäden 2015-2022',
-        value: 'Thailand Zucker -50%, Brasilien -17%, Palmöl -10%'
-      },
-      insights: [
-        '2015/16: El Niño verwüstet Südostasien',
-        '2019/20: Thailand verliert halbe Zuckerernte',
-        '2021: Brasilien - Dürre + Frost = Katastrophe'
-      ]
-    },
-
-    {
       id: 'brazil-sugar-crisis',
       title: 'Fallstudie: Brasiliens Zuckerkrise',
       content: `

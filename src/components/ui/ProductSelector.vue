@@ -98,6 +98,7 @@ const refreshData = async () => {
     await dataStore.initializeApp()
     
   } catch (error) {
+    console.error('Error updating data:', error)
   } finally {
     uiStore.clearLoadingMessages()
   }

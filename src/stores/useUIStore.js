@@ -8,7 +8,7 @@ export const useUIStore = defineStore('ui', () => {
   const currentPanel = ref('dashboard')
   const activePanel = ref('dashboard')
   const selectedCountry = ref('')
-  const selectedProduct = ref('Wheat and products')
+  const selectedProduct = ref('wheat_and_products')
   const selectedMetric = ref('production')
   const selectedYear = ref(2022)
   const showAnalysisMenu = ref(false)
@@ -16,6 +16,7 @@ export const useUIStore = defineStore('ui', () => {
   const mapCenter = ref([0, 0])
   const darkMode = ref(false)
   const loadingMessages = ref([])
+  const isUserInteraction = ref(false) // Track if changes come from user actions
   
   // Enhanced UI state
   const loading = ref(false)
@@ -146,20 +147,37 @@ export const useUIStore = defineStore('ui', () => {
     showAnalysisMenu.value = !showAnalysisMenu.value
   }
 
-  const setSelectedCountry = (country) => {
+  const setSelectedCountry = (country, isUser = true) => {
+    isUserInteraction.value = isUser
     selectedCountry.value = country
+    // Reset after a short delay to avoid affecting other operations
+    if (isUser) {
+      setTimeout(() => { isUserInteraction.value = false }, 100)
+    }
   }
 
-  const setSelectedProduct = (product) => {
+  const setSelectedProduct = (product, isUser = true) => {
+    isUserInteraction.value = isUser
     selectedProduct.value = product
+    if (isUser) {
+      setTimeout(() => { isUserInteraction.value = false }, 100)
+    }
   }
 
-  const setSelectedMetric = (metric) => {
+  const setSelectedMetric = (metric, isUser = true) => {
+    isUserInteraction.value = isUser
     selectedMetric.value = metric
+    if (isUser) {
+      setTimeout(() => { isUserInteraction.value = false }, 100)
+    }
   }
 
-  const setSelectedYear = (year) => {
+  const setSelectedYear = (year, isUser = true) => {
+    isUserInteraction.value = isUser
     selectedYear.value = year
+    if (isUser) {
+      setTimeout(() => { isUserInteraction.value = false }, 100)
+    }
   }
 
   const setMapView = (zoom, center) => {
@@ -239,7 +257,7 @@ export const useUIStore = defineStore('ui', () => {
   const resetUI = () => {
     currentPanel.value = 'dashboard'
     selectedCountry.value = ''
-    selectedProduct.value = 'Wheat and products'
+    selectedProduct.value = 'wheat_and_products'
     selectedMetric.value = 'production'
     selectedYear.value = 2022
     showAnalysisMenu.value = false
@@ -445,6 +463,7 @@ export const useUIStore = defineStore('ui', () => {
     mapCenter,
     darkMode,
     loadingMessages,
+    isUserInteraction,
     panelStates,
     loading,
     modals,

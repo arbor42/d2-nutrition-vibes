@@ -40,11 +40,11 @@ const vizStore = useVisualizationStore()
 const containerRef = ref<HTMLDivElement>()
 const svgContainerRef = ref<HTMLDivElement>()
 
-// State (completely isolate from Vue reactivity)
+// State with proper Vue reactivity
 const isLoading = ref(false)
 const error = ref<string | null>(null)
-let geoDataStatic = null // Non-reactive
-let productionDataStatic = [] // Non-reactive
+const geoDataStatic = shallowRef(null) // Use shallowRef for large objects
+const productionDataStatic = shallowRef([]) // Use shallowRef for arrays
 const isInitialized = ref(false)
 
 // Click debouncing to prevent unwanted country detail views
@@ -115,8 +115,8 @@ const tooltip = {
 
 // Processed production data (non-reactive)
 const getProcessedProductionData = () => {
-  if (!Array.isArray(productionDataStatic)) return []
-  return productionDataStatic.filter(d => d.value > 0)
+  if (!Array.isArray(productionDataStatic.value)) return []
+  return productionDataStatic.value.filter(d => d.value > 0)
 }
 
 // Map elements
@@ -195,7 +195,7 @@ const initializeMap = async () => {
     const loadedGeoData = await dataStore.loadGeoData('geo')
     console.log('✅ WorldMap: Geo data loaded:', loadedGeoData ? 'Success' : 'Failed')
     console.log('📊 WorldMap: Features count:', loadedGeoData?.features?.length || 'N/A')
-    geoDataStatic = loadedGeoData
+    geoDataStatic.value = loadedGeoData
 
     // Initialize tooltip
     tooltip.init()
@@ -328,7 +328,7 @@ const createMapDirect = async (data) => {
     uiStoreProduct: uiStore.selectedProduct,
     uiStoreYear: uiStore.selectedYear,
     hasTimeseriesData: !!dataStore.timeseriesData,
-    productionDataLength: productionDataStatic?.length || 0
+    productionDataLength: productionDataStatic.value?.length || 0
   })
   
   // Simulate the exact handleProductChange flow from ProductSelector
@@ -385,8 +385,8 @@ const createMapDirect = async (data) => {
       await loadProductionData()
       
       console.log('🔄 WorldMap: Production data after load:', {
-        productionDataLength: productionDataStatic?.length || 0,
-        sampleData: productionDataStatic?.slice(0, 3)
+        productionDataLength: productionDataStatic.value?.length || 0,
+        sampleData: productionDataStatic.value?.slice(0, 3)
       })
       
       // Force map color update
@@ -824,14 +824,14 @@ const loadProductionData = async () => {
       }
       
       console.log('🗺️ WorldMap: Transformed data:', transformedData)
-      productionDataStatic = transformedData
+      productionDataStatic.value = transformedData
       
       // Update map if already initialized
       updateMapWithProductionDataStatic()
     }
   } catch (err) {
     console.warn('Failed to load production data:', err)
-    productionDataStatic = []
+    productionDataStatic.value = []
   }
 }
 

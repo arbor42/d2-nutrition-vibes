@@ -8,6 +8,7 @@ const routes = [
       {
         path: '',
         name: 'home',
+        component: () => import('@/components/panels/DashboardPanel.vue'),
         meta: {
           title: 'D2 Nutrition Vibes - Home',
           preload: true
@@ -16,6 +17,7 @@ const routes = [
       {
         path: '/dashboard',
         name: 'dashboard',
+        component: () => import('@/components/panels/DashboardPanel.vue'),
         meta: {
           title: 'Dashboard - D2 Nutrition Vibes',
           preload: true
@@ -24,6 +26,7 @@ const routes = [
       {
         path: '/timeseries',
         name: 'timeseries',
+        component: () => import('@/components/panels/TimeseriesPanel.vue'),
         meta: {
           title: 'Zeitreihen - D2 Nutrition Vibes'
         }
@@ -31,6 +34,7 @@ const routes = [
       {
         path: '/simulation',
         name: 'simulation',
+        component: () => import('@/components/panels/SimulationPanel.vue'),
         meta: {
           title: 'Simulation - D2 Nutrition Vibes'
         }
@@ -38,6 +42,7 @@ const routes = [
       {
         path: '/ml-predictions',
         name: 'ml-predictions',
+        component: () => import('@/components/panels/MLPanel.vue'),
         meta: {
           title: 'ML Prognosen - D2 Nutrition Vibes'
         }

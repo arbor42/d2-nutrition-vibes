@@ -201,21 +201,22 @@ export function useDataSync() {
       )
     )
 
-    // 2. Region selection synchronization - DISABLED to fix unwanted country detail views
-    // NOTE: This bidirectional sync was causing country details to appear automatically
-    // when dataStore.selectedRegion changed during data loading operations
-    /*
+    // 2. Region selection synchronization - Fixed with proper conditions
+    // Only sync when user explicitly changes selection, not during data loading
     synchronizations.push(
       createBidirectionalSync(
         dataStore, 'selectedRegion',
         uiStore, 'selectedCountry',
         {
-          condition: () => syncState.value.active,
-          debounce: 50
+          condition: () => syncState.value.active && !dataStore.isLoading && uiStore.isUserInteraction,
+          debounce: 150, // Increased debounce to prevent rapid updates
+          transform: (value) => {
+            // Only sync valid country values, not loading states
+            return value && value !== 'loading' ? value : null
+          }
         }
       )
     )
-    */
 
     // 3. Theme synchronization
     synchronizations.push(

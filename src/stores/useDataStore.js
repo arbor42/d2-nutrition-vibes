@@ -266,12 +266,13 @@ export const useDataStore = defineStore('data', () => {
   // Alias for compatibility
   const loadMLForecast = loadForecastData
 
-  const loadTimeseriesData = async () => {
+  const loadTimeseriesData = async (onProgress = null) => {
     const key = 'timeseries'
-    console.log('📊 DataStore: Starting loadTimeseriesData...')
+    console.log('📊 DataStore: Starting loadTimeseriesData with lazy loading...')
     setLoading(key, true)
     try {
-      const data = await dataService.loadTimeseriesData()
+      // Use dataService with progress callback
+      const data = await dataService.loadTimeseriesData(onProgress)
       console.log('📊 DataStore: Raw timeseries data:', Array.isArray(data) ? `Array with ${data.length} entries` : typeof data)
       
       // Transform array structure to nested object structure
@@ -477,8 +478,10 @@ export const useDataStore = defineStore('data', () => {
       const geoResult = await loadGeoData('geo')
       console.log('✅ DataStore: Geo data loaded:', geoResult)
       
-      console.log('📈 DataStore: Loading timeseries data...')
-      const timeseriesResult = await loadTimeseriesData()
+      console.log('📈 DataStore: Loading timeseries data with progress tracking...')
+      const timeseriesResult = await loadTimeseriesData((progress) => {
+        console.log(`📈 Timeseries loading: ${progress.percentage}%`)
+      })
       console.log('✅ DataStore: Timeseries data loaded:', timeseriesResult ? 'Success' : 'Failed')
       
       console.log('🍎 DataStore: Loading calorie data...')

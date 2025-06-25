@@ -11,6 +11,7 @@ import {
   validateData,
   validateAsync
 } from '@/schemas/validation'
+import { lazyDataLoader } from '@/utils/lazyDataLoader'
 
 class DataService {
   constructor() {
@@ -171,11 +172,43 @@ class DataService {
 
   /**
    * Load timeseries data with FAO schema validation
+   * Uses lazy loader for this large file (50+ MB)
    */
-  async loadTimeseriesData() {
-    return this.loadData('/data/fao/timeseries.json', 'timeseries', faoTimeseriesSchema, {
-      throwOnValidationError: false
-    })
+  async loadTimeseriesData(onProgress = null) {
+    const url = '/data/fao/timeseries.json'
+    const cacheKey = 'timeseries'
+    
+    // Check cache first
+    if (this.cache.has(cacheKey)) {
+      console.log(`📦 DataService: Cache hit for ${cacheKey}`)
+      return this.cache.get(cacheKey)
+    }
+    
+    try {
+      // Use lazy loader for large file
+      const data = await lazyDataLoader.loadData(url, {
+        onProgress,
+        cacheKey,
+        chunkSize: 2 * 1024 * 1024 // 2MB chunks
+      })
+      
+      // Validate if enabled
+      if (this.validationEnabled && faoTimeseriesSchema) {
+        console.log('🔍 DataService: Validating timeseries data...')
+        const validation = await validateAsync(data, faoTimeseriesSchema)
+        if (!validation.valid) {
+          console.warn('⚠️ DataService: Validation failed for timeseries data:', validation.errors)
+        }
+        data._validation = validation
+      }
+      
+      // Cache the result
+      this.cache.set(cacheKey, data)
+      return data
+    } catch (error) {
+      console.error(`Error loading timeseries data:`, error)
+      throw error
+    }
   }
 
   /**

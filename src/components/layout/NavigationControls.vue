@@ -68,6 +68,18 @@
           </svg>
           <span class="hidden sm:inline">Reset</span>
         </button>
+        
+        <button
+          class="btn-primary flex items-center space-x-2"
+          :class="{ 'ring-2 ring-primary-400 ring-opacity-50': tourStore.isActive }"
+          title="Interaktive Tour starten"
+          @click="startTour"
+        >
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+          </svg>
+          <span class="hidden sm:inline">{{ tourStore.isActive ? 'Tour läuft' : 'Tour' }}</span>
+        </button>
       </div>
 
       <!-- Current Filters Display -->
@@ -96,12 +108,15 @@
 </template>
 
 <script setup lang="ts">
-import { h } from 'vue'
+import { h, inject } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUIStore } from '@/stores/useUIStore'
+import { useTourStore } from '@/tour/stores/useTourStore'
 
 const router = useRouter()
 const uiStore = useUIStore()
+const tourStore = useTourStore()
+const tourService = inject('tourService')
 
 // Analysis panel options
 const analysisOptions = [
@@ -184,6 +199,17 @@ const resetView = () => {
   uiStore.resetUI()
   router.push('/')
   
+}
+
+// Start the tour
+const startTour = async () => {
+  if (tourStore.isActive) {
+    // If tour is running, stop it
+    tourService.stopTour('user_closed')
+  } else {
+    // Start the tour
+    await tourService.startTour('main')
+  }
 }
 
 // Simple icon components (inline SVGs)

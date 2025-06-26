@@ -43,6 +43,12 @@
     
       <!-- Step content -->
       <div class="mb-6">
+        <!-- Loading indicator when data is loading -->
+        <div v-if="store.isLoading" class="flex items-center space-x-2 mb-3">
+          <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-primary-500"></div>
+          <span class="text-sm text-gray-500 dark:text-gray-400">Daten werden geladen...</span>
+        </div>
+        
         <p class="text-gray-700 dark:text-gray-300 leading-relaxed" v-html="step.content"></p>
       
         <!-- Data highlight box -->

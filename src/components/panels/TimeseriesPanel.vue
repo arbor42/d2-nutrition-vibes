@@ -66,7 +66,7 @@
             />
           </div>
           
-          <div class="filter-group" data-tour="year-selector">
+          <div class="filter-group" data-tour="metric-selector">
             <MultiSelect
               v-model="selectedMetrics"
               :options="metricOptions"

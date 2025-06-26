@@ -20,6 +20,7 @@ export const mainTour = {
       route: '/',
       target: '[data-tour="dashboard-stats"]',
       position: 'bottom',
+      fallbackPosition: { top: 200, left: window.innerWidth / 2 - 200 },
       highlightOptions: {
         padding: 12
       },
@@ -29,16 +30,16 @@ export const mainTour = {
           const { useTourStore } = await import('@/tour/stores/useTourStore')
           const uiStore = useUIStore()
           const tourStore = useTourStore()
-          uiStore.selectedProduct = 'Grand Total'
+          uiStore.selectedProduct = 'Cereals - Excluding Beer'
           uiStore.selectedYear = 2022
-          uiStore.selectedMetric = 'food_supply_kcal'
+          uiStore.selectedMetric = 'production'
           // Set tour mode
           tourStore.isLoading = false
         }
       },
       dataHighlight: {
-        label: 'Globale Versorgung 2022',
-        value: '2.985 kcal/Person/Tag'
+        label: 'Globale Getreideproduktion 2022',
+        value: 'Über 2,8 Milliarden Tonnen'
       },
       insights: [
         'Stetiger Anstieg trotz globaler Krisen',
@@ -65,7 +66,7 @@ export const mainTour = {
         onEnter: async () => {
           const { useUIStore } = await import('@/stores/useUIStore')
           const uiStore = useUIStore()
-          uiStore.selectedProduct = 'Grand Total'
+          uiStore.selectedProduct = 'Cereals - Excluding Beer'
           uiStore.selectedYear = 2022
         }
       },
@@ -87,6 +88,7 @@ export const mainTour = {
       route: '/',
       target: '[data-tour="world-map"]',
       position: 'right',
+      fallbackPosition: { top: 300, left: window.innerWidth / 2 - 200 },
       highlightOptions: {
         padding: 8
       },
@@ -94,14 +96,14 @@ export const mainTour = {
         onEnter: async () => {
           const { useUIStore } = await import('@/stores/useUIStore')
           const uiStore = useUIStore()
-          uiStore.selectedProduct = 'Grand Total'
-          uiStore.selectedMetric = 'food_supply_kcal'
+          uiStore.selectedProduct = 'Cereals - Excluding Beer'
+          uiStore.selectedMetric = 'production'
           uiStore.selectedYear = 2022
         }
       },
       dataHighlight: {
-        label: 'Größte Kluft weltweit',
-        value: 'USA: 3.880 vs. Tschad: 1.620 kcal/Tag'
+        label: 'Regionale Unterschiede',
+        value: 'Große Disparitäten zwischen Kontinenten'
       },
       insights: [
         'Europa & Nordamerika: Über 3.400 kcal/Tag',
@@ -131,10 +133,10 @@ export const mainTour = {
           const uiStore = useUIStore()
           const tourStore = useTourStore()
           uiStore.selectedProduct = 'Rice and products'
-          uiStore.selectedCountry = 'Vietnam'
+          uiStore.selectedCountry = 'Viet Nam'
           uiStore.selectedMetric = 'export_quantity'
           // Focus on COVID years
-          uiStore.selectedYearRange = { start: 2019, end: 2021 }
+          // Year range selection not supported in current UI
         }
       },
       dataHighlight: {
@@ -165,16 +167,16 @@ export const mainTour = {
           const uiStore = useUIStore()
           uiStore.selectedProduct = 'Rice and products'
           uiStore.selectedCountry = 'Philippines'
-          uiStore.selectedMetric = 'stock_variation'
-          uiStore.selectedYearRange = { start: 2019, end: 2021 }
+          uiStore.selectedMetric = 'import_quantity'
+          // Year range selection not supported in current UI
         }
       },
       dataHighlight: {
-        label: 'Lageraufbau 2020/21',
-        value: 'Philippinen: +35% Reislager'
+        label: 'Importanstieg 2020/21',
+        value: 'Philippinen: Erhöhte Reisimporte'
       },
       insights: [
-        'Positive Stock Variation = Lageraufbau',
+        'Erhöhte Importe = Vorsorgemaßnahmen',
         'Europa baute hingegen Lager ab (-9 Mio t)',
         'China hortete weiter: 50% der Weltreserven'
       ]
@@ -200,14 +202,14 @@ export const mainTour = {
           uiStore.selectedProduct = 'Wheat and products'
           uiStore.selectedCountry = 'Ukraine'
           uiStore.selectedMetric = 'export_quantity'
-          uiStore.selectedYearRange = { start: 2020, end: 2022 }
+          // Year range selection not supported in current UI
           // Highlight Ukraine crisis
-          uiStore.setSelectedYear(2022)
+          uiStore.selectedYear = 2022
         }
       },
       dataHighlight: {
         label: 'Weizenexport-Kollaps',
-        value: '2021: 19.768 → 2022: 11.444 Tsd. Tonnen (-42%)'
+        value: 'Ukraine-Krieg führte zu Exportrückgang'
       },
       insights: [
         'Hafenblockaden im Schwarzen Meer',
@@ -296,12 +298,12 @@ export const mainTour = {
           const { useUIStore } = await import('@/stores/useUIStore')
           const uiStore = useUIStore()
           uiStore.selectedProduct = 'Cereals - Excluding Beer'
-          uiStore.selectedMetric = 'food_supply_kcal'
+          uiStore.selectedMetric = 'production'
         }
       },
       dataHighlight: {
         label: 'Szenario-Rechnung',
-        value: '20% weniger Futter = 500 Mio. Menschen mehr ernährt'
+        value: 'Effizientere Nutzung von Getreide möglich'
       },
       insights: [
         'Enorme Effizienzpotenziale vorhanden',
@@ -327,17 +329,17 @@ export const mainTour = {
           const { useTourStore } = await import('@/tour/stores/useTourStore')
           const uiStore = useUIStore()
           const tourStore = useTourStore()
-          uiStore.selectedProduct = 'Sugar cane'
+          uiStore.selectedProduct = 'Sugar & Sweeteners'
           uiStore.selectedCountry = 'Brazil'
           uiStore.selectedMetric = 'production'
-          uiStore.selectedYearRange = { start: 2019, end: 2022 }
+          // Year range selection not supported in current UI
           // Focus on Brazil frost year
-          uiStore.setSelectedYear(2021)
+          uiStore.selectedYear = 2021
         }
       },
       dataHighlight: {
         label: 'Produktionseinbruch',
-        value: '2021: -13,3% auf 525 Mio. Tonnen'
+        value: 'Dürre und Frost reduzierten Produktion'
       },
       insights: [
         'Niedrigste Erträge seit 2003',
@@ -355,16 +357,16 @@ export const mainTour = {
         Indonesien sogar einen Exportstopp.
       `,
       route: '/timeseries',
-      target: '[data-tour="year-selector"]',
+      target: '[data-tour="metric-selector"]',
       position: 'bottom',
       actions: {
         onEnter: async () => {
           const { useUIStore } = await import('@/stores/useUIStore')
           const uiStore = useUIStore()
-          uiStore.selectedProduct = 'Palm oil'
+          uiStore.selectedProduct = 'Palm Oil'
           // uiStore.selectedCountry = 'Indonesia' // Removed to prevent automatic Indonesia selection
           uiStore.selectedMetric = 'export_quantity'
-          uiStore.selectedYearRange = { start: 2015, end: 2022 }
+          // Note: Year range is not supported in UIStore
         }
       },
       dataHighlight: {
@@ -395,10 +397,10 @@ export const mainTour = {
           const { useTourStore } = await import('@/tour/stores/useTourStore')
           const uiStore = useUIStore()
           const tourStore = useTourStore()
-          uiStore.selectedProduct = 'Grand Total'
+          uiStore.selectedProduct = 'Cereals - Excluding Beer'
           uiStore.selectedYear = 2022
           // Reset to current year
-          uiStore.setSelectedYear(2022)
+          uiStore.selectedYear = 2022
         }
       },
       dataHighlight: {

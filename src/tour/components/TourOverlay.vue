@@ -65,6 +65,19 @@
     @close="handleClose"
     @pause="handlePause"
   />
+  
+  <!-- Tour Progress Bar -->
+  <TourProgressBar
+    v-if="tourStore.isActive && !tourStore.isPaused"
+    :progress="tourStore.progress"
+    :current="tourStore.currentStepIndex + 1"
+    :total="tourStore.totalSteps"
+    :tour-title="tourStore.currentTour?.title"
+    @step-click="handleStepClick"
+  />
+  
+  <!-- Tour Debugger (Development only) -->
+  <TourDebugger v-if="isDevelopment" />
 </template>
 
 <script setup>
@@ -73,10 +86,15 @@ import { useTourStore } from '../stores/useTourStore'
 import { useDraggable } from '../composables/useDraggable'
 import TourSpotlight from './TourSpotlight.vue'
 import TourTooltip from './TourTooltip.vue'
+import TourProgressBar from './TourProgressBar.vue'
+import TourDebugger from './TourDebugger.vue'
 
 const tourStore = useTourStore()
 const tourService = inject('tourService')
 const controlsRef = ref(null)
+
+// Check if in development mode
+const isDevelopment = computed(() => import.meta.env.DEV)
 
 // Initialize draggable controls
 const { position: controlsPosition } = useDraggable(controlsRef, {
@@ -123,6 +141,10 @@ const handleBackdropClick = (event) => {
   if (event.target === event.currentTarget) {
     handleClose()
   }
+}
+
+const handleStepClick = (stepIndex) => {
+  tourService.goToStep(stepIndex)
 }
 </script>
 

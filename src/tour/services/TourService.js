@@ -196,10 +196,24 @@ class TourService {
         await this.navigateToRoute(step.route)
       }
       
-      // Wait for element to be available
-      let element = await this.waitForElement(step.target)
+      // Wait for element to be available with retries
+      let element = await this.waitForElement(step.target, 5000, 3)
       if (!element) {
         console.warn(`[TourService] Target element '${step.target}' not found`)
+        // Try to continue with fallback position if specified
+        if (step.fallbackPosition) {
+          console.log(`[TourService] Using fallback position for step '${step.id}'`)
+          this.store.setTooltipPosition(step.fallbackPosition)
+          this.store.overlayVisible = true
+          this.store.tooltipVisible = true
+          return
+        }
+        // Show error message to user
+        this.store.trackEvent('tour_step_error', { 
+          stepId: step.id, 
+          target: step.target,
+          error: 'element_not_found'
+        })
         return
       }
       
@@ -233,12 +247,25 @@ class TourService {
       // Position tooltip after highlighting
       await this.updateTooltipPosition(element, step.position)
       
-      // Show overlay and tooltip
+      // Show overlay and tooltip with smooth transition
       this.store.overlayVisible = true
+      
+      // Small delay for smooth transition
+      await new Promise(resolve => setTimeout(resolve, 50))
+      
       this.store.tooltipVisible = true
       
       // Final wait to ensure everything is rendered
       await nextTick()
+      
+      // Add entrance animation class
+      const tooltipEl = document.querySelector('.tour-tooltip')
+      if (tooltipEl) {
+        tooltipEl.classList.add('tour-entering')
+        setTimeout(() => {
+          tooltipEl.classList.remove('tour-entering')
+        }, 300)
+      }
       
     } catch (error) {
       console.error('[TourService] Error executing step:', error)
@@ -280,36 +307,57 @@ class TourService {
   }
   
   // Element Management
-  async waitForElement(selector, timeout = 5000) {
-    return new Promise((resolve) => {
-      const element = document.querySelector(selector)
-      if (element) {
-        resolve(element)
-        return
-      }
-      
-      // Set up observer
-      const observer = new MutationObserver(() => {
+  async waitForElement(selector, timeout = 5000, retries = 3) {
+    const attemptFind = async (remainingRetries) => {
+      return new Promise((resolve) => {
         const element = document.querySelector(selector)
         if (element) {
-          observer.disconnect()
-          clearTimeout(timeoutId)
           resolve(element)
+          return
         }
+        
+        // Set up observer
+        const observer = new MutationObserver(() => {
+          const element = document.querySelector(selector)
+          if (element) {
+            observer.disconnect()
+            clearTimeout(timeoutId)
+            resolve(element)
+          }
+        })
+        
+        // Start observing
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true,
+          attributes: true, // Also watch for attribute changes
+          attributeOldValue: true
+        })
+        
+        // Set timeout
+        const timeoutId = setTimeout(() => {
+          observer.disconnect()
+          resolve(null)
+        }, timeout)
       })
+    }
+    
+    // Try multiple times with increasing delays
+    for (let i = 0; i < retries; i++) {
+      const element = await attemptFind(retries - i)
+      if (element) {
+        return element
+      }
       
-      // Start observing
-      observer.observe(document.body, {
-        childList: true,
-        subtree: true
-      })
-      
-      // Set timeout
-      const timeoutId = setTimeout(() => {
-        observer.disconnect()
-        resolve(null)
-      }, timeout)
-    })
+      // If not last retry, wait before trying again
+      if (i < retries - 1) {
+        console.log(`[TourService] Element '${selector}' not found, retrying... (${i + 1}/${retries})`)
+        await new Promise(resolve => setTimeout(resolve, 500 * (i + 1))) // Increasing delay
+      }
+    }
+    
+    console.warn(`[TourService] Element '${selector}' not found after ${retries} retries`)
+    return null
   }
   
   highlightElement(selector, options = {}) {
@@ -341,10 +389,55 @@ class TourService {
     
     // Ensure element is above backdrop but below tooltip
     const originalZIndex = element.style.zIndex
-    element.style.zIndex = '9998'
+    const originalPosition = element.style.position
+    
+    // Store original styles for restoration
     element.setAttribute('data-original-z-index', originalZIndex || '')
+    element.setAttribute('data-original-position', originalPosition || '')
+    
+    // Apply tour-specific styling
+    element.style.zIndex = '9998'
+    
+    // Ensure element has position if needed for z-index to work
+    const computedPosition = window.getComputedStyle(element).position
+    if (computedPosition === 'static') {
+      element.style.position = 'relative'
+    }
+    
+    // Also ensure parent containers don't block the highlight
+    this.ensureParentZIndex(element)
     
     return true
+  }
+  
+  ensureParentZIndex(element) {
+    // Track modified elements for cleanup
+    if (!this.modifiedParents) {
+      this.modifiedParents = new Set()
+    }
+    
+    let parent = element.parentElement
+    while (parent && parent !== document.body) {
+      const computedStyle = window.getComputedStyle(parent)
+      const zIndex = computedStyle.zIndex
+      const position = computedStyle.position
+      
+      // Check if parent has z-index that might block our highlight
+      if (zIndex !== 'auto' && parseInt(zIndex) < 9998) {
+        parent.setAttribute('data-original-parent-z-index', zIndex)
+        parent.style.zIndex = '9997' // Just below highlight
+        this.modifiedParents.add(parent)
+      }
+      
+      // Check for overflow hidden that might clip the highlight
+      if (computedStyle.overflow === 'hidden' || computedStyle.overflowX === 'hidden' || computedStyle.overflowY === 'hidden') {
+        parent.setAttribute('data-original-overflow', computedStyle.overflow)
+        parent.style.overflow = 'visible'
+        this.modifiedParents.add(parent)
+      }
+      
+      parent = parent.parentElement
+    }
   }
   
   clearHighlights() {
@@ -353,7 +446,7 @@ class TourService {
       this.highlightTracker.stopAllTracking()
     }
     
-    // Remove highlight classes and restore z-index
+    // Remove highlight classes and restore original styles
     document.querySelectorAll('.tour-highlight').forEach(el => {
       el.classList.remove('tour-highlight')
       
@@ -365,7 +458,34 @@ class TourService {
         el.style.removeProperty('z-index')
       }
       el.removeAttribute('data-original-z-index')
+      
+      // Restore original position
+      const originalPosition = el.getAttribute('data-original-position')
+      if (originalPosition) {
+        el.style.position = originalPosition
+      } else {
+        el.style.removeProperty('position')
+      }
+      el.removeAttribute('data-original-position')
     })
+    
+    // Restore modified parent elements
+    if (this.modifiedParents) {
+      this.modifiedParents.forEach(parent => {
+        const originalZIndex = parent.getAttribute('data-original-parent-z-index')
+        if (originalZIndex) {
+          parent.style.zIndex = originalZIndex
+          parent.removeAttribute('data-original-parent-z-index')
+        }
+        
+        const originalOverflow = parent.getAttribute('data-original-overflow')
+        if (originalOverflow) {
+          parent.style.overflow = originalOverflow
+          parent.removeAttribute('data-original-overflow')
+        }
+      })
+      this.modifiedParents.clear()
+    }
     
     // Clear store
     this.store.setHighlightedElement(null, null)
@@ -867,30 +987,51 @@ class TourService {
   }
   
   // Enhanced method for multiple selections with validation
-  async setUISelections(selections = {}) {
+  async setUISelections(selections = {}, retries = 3) {
     const { useUIStore } = await import('@/stores/useUIStore')
     const uiStore = useUIStore()
     
-    // Apply all selections
-    if (selections.product !== undefined) uiStore.selectedProduct = selections.product
-    if (selections.country !== undefined) uiStore.selectedCountry = selections.country
-    if (selections.metric !== undefined) uiStore.selectedMetric = selections.metric
-    if (selections.year !== undefined) uiStore.selectedYear = selections.year
-    
-    // Wait for all reactive updates
-    await nextTick()
-    await new Promise(resolve => setTimeout(resolve, 100))
-    
-    // Validate selections were applied
-    const finalState = {
-      product: uiStore.selectedProduct,
-      country: uiStore.selectedCountry,
-      metric: uiStore.selectedMetric,
-      year: uiStore.selectedYear
+    for (let attempt = 1; attempt <= retries; attempt++) {
+      // Apply all selections
+      if (selections.product !== undefined) uiStore.selectedProduct = selections.product
+      if (selections.country !== undefined) uiStore.selectedCountry = selections.country
+      if (selections.metric !== undefined) uiStore.selectedMetric = selections.metric
+      if (selections.year !== undefined) uiStore.selectedYear = selections.year
+      
+      // Wait for all reactive updates
+      await nextTick()
+      await new Promise(resolve => setTimeout(resolve, 100 * attempt)) // Increasing delay
+      
+      // Validate selections were applied
+      const finalState = {
+        product: uiStore.selectedProduct,
+        country: uiStore.selectedCountry,
+        metric: uiStore.selectedMetric,
+        year: uiStore.selectedYear
+      }
+      
+      // Check if all selections were applied correctly
+      let allApplied = true
+      for (const [key, value] of Object.entries(selections)) {
+        if (value !== undefined && finalState[key] !== value) {
+          allApplied = false
+          console.warn(`[TourService] Selection '${key}' not applied correctly. Expected: ${value}, Got: ${finalState[key]}`)
+          break
+        }
+      }
+      
+      if (allApplied) {
+        console.log('[TourService] UI selections applied successfully:', finalState)
+        return finalState
+      }
+      
+      if (attempt < retries) {
+        console.log(`[TourService] Retrying UI selections... (${attempt}/${retries})`)
+      }
     }
     
-    console.log('[TourService] UI selections applied:', finalState)
-    return finalState
+    console.error('[TourService] Failed to apply UI selections after retries:', selections)
+    return null
   }
 }
 

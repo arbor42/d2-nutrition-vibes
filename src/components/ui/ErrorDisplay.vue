@@ -14,7 +14,7 @@
         <div v-if="showDetails && error" class="error-details">
           <details class="mt-2">
             <summary class="cursor-pointer text-sm font-medium">Technical Details</summary>
-            <pre class="mt-2 text-xs bg-gray-100 p-2 rounded overflow-auto">{{ errorDetails }}</pre>
+            <pre class="mt-2 text-xs bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-2 rounded overflow-auto">{{ errorDetails }}</pre>
           </details>
         </div>
       </div>
@@ -88,9 +88,9 @@ const emit = defineEmits(['retry', 'report'])
 const errorClasses = computed(() => {
   const base = 'border rounded-lg p-4'
   const variants = {
-    error: 'bg-red-50 border-red-200 text-red-800',
-    warning: 'bg-yellow-50 border-yellow-200 text-yellow-800',
-    info: 'bg-blue-50 border-blue-200 text-blue-800'
+    error: 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800 text-red-800 dark:text-red-200',
+    warning: 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800 text-yellow-800 dark:text-yellow-200',
+    info: 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-200'
   }
   const sizes = {
     sm: 'text-sm',

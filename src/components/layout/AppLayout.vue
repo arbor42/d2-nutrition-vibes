@@ -27,7 +27,7 @@
     <!-- Global Loading Overlay -->
     <div
       v-if="uiStore.globalLoading"
-      class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50"
+      class="fixed inset-0 bg-gray-900 bg-opacity-50 dark:bg-black dark:bg-opacity-70 flex items-center justify-center z-50"
     >
       <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-sm w-full mx-4">
         <div class="flex items-center">

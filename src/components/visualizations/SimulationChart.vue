@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, nextTick, onMounted, onUnmounted } from 'vue'
 import { useVisualizationStore } from '@/stores/useVisualizationStore'
+import { useUIStore } from '@/stores/useUIStore'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 import * as d3 from 'd3'
 import { createD3AxisFormatter } from '@/utils/formatters'
@@ -30,6 +31,7 @@ const emit = defineEmits<{
 
 // Stores
 const vizStore = useVisualizationStore()
+const uiStore = useUIStore()
 
 // Refs
 const containerRef = ref<HTMLDivElement>()
@@ -59,10 +61,13 @@ const dimensions = computed(() => {
 })
 
 // Chart configuration
-const chartConfig = computed(() => ({
-  baselineColor: '#6b7280',
-  scenarioColor: '#ef4444'
-}))
+const chartConfig = computed(() => {
+  const isDarkMode = uiStore.isDarkMode
+  return {
+    baselineColor: isDarkMode ? '#9ca3af' : '#6b7280', // gray-400 : gray-500
+    scenarioColor: isDarkMode ? '#f87171' : '#ef4444'  // red-400 : red-500
+  }
+})
 
 
 // Initialize chart

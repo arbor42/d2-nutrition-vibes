@@ -111,7 +111,7 @@ const buttonClasses = computed(() => {
       'active:bg-gray-200',
       'dark:text-gray-300',
       'dark:hover:bg-gray-800',
-      'dark:active:bg-gray-700',
+      'dark:active:bg-gray-600',
       'border',
       'border-transparent',
       'hover:border-gray-300',

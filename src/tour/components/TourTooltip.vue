@@ -429,6 +429,7 @@ onUnmounted(() => {
 }
 
 .dark .tour-tooltip.floating-mode {
+  border: 2px dashed rgba(59, 130, 246, 0.8);
   background: rgba(31, 41, 55, 0.95);
 }
 

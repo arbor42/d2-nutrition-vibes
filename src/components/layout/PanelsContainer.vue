@@ -128,7 +128,7 @@ const panelDescription = computed(() => {
     </div>
     
     <!-- Data Status Footer -->
-    <div class="bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+    <div class="bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
       <div class="flex items-center justify-between text-sm">
         <div class="flex items-center space-x-4 text-gray-600 dark:text-gray-400">
           <span>

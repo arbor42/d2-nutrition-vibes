@@ -180,6 +180,12 @@ const drawChart = () => {
   const { innerWidth, innerHeight } = chartDimensions.value
   const { predictions, historical } = processedData.value
   
+  // Get theme-aware colors
+  const darkMode = isDarkMode.value
+  const historicalColor = darkMode ? '#34d399' : '#10b981' // emerald-400 : emerald-500
+  const predictionColor = darkMode ? '#60a5fa' : '#3b82f6' // blue-400 : blue-500
+  const confidenceColor = darkMode ? '#93c5fd' : '#60a5fa' // blue-300 : blue-400
+  
   // Clear previous content
   gRef.value.selectAll('*').remove()
   
@@ -284,7 +290,7 @@ const drawChart = () => {
     if (predictionsWithConfidence.length > 0) {
       gRef.value.append('path')
         .datum(predictionsWithConfidence)
-        .attr('fill', '#60a5fa')
+        .attr('fill', confidenceColor)
         .attr('fill-opacity', 0.2)
         .attr('d', area)
     }
@@ -295,7 +301,7 @@ const drawChart = () => {
     gRef.value.append('path')
       .datum(historical)
       .attr('fill', 'none')
-      .attr('stroke', '#10b981')
+      .attr('stroke', historicalColor)
       .attr('stroke-width', 2)
       .attr('d', line)
     
@@ -307,7 +313,7 @@ const drawChart = () => {
       .attr('cx', d => xScale(d.year))
       .attr('cy', d => yScale(d.predicted_value || d.value))
       .attr('r', 4)
-      .attr('fill', '#10b981')
+      .attr('fill', historicalColor)
   }
   
   // Draw prediction line
@@ -321,7 +327,7 @@ const drawChart = () => {
     gRef.value.append('path')
       .datum(connectionData)
       .attr('fill', 'none')
-      .attr('stroke', '#3b82f6')
+      .attr('stroke', predictionColor)
       .attr('stroke-width', 2)
       .attr('stroke-dasharray', '5,5')
       .attr('d', line)
@@ -334,7 +340,7 @@ const drawChart = () => {
       .attr('cx', d => xScale(d.year))
       .attr('cy', d => yScale(d.predicted_value || d.value))
       .attr('r', 4)
-      .attr('fill', '#3b82f6')
+      .attr('fill', predictionColor)
       .style('cursor', 'pointer')
       .on('click', (event, d) => {
         emit('prediction-select', d)
@@ -398,9 +404,9 @@ const drawChart = () => {
     .attr('class', 'legend-background')
   
   const legendItems = [
-    { label: 'Historisch', color: '#10b981', dash: false },
-    { label: 'Prognose', color: '#3b82f6', dash: true },
-    { label: 'Konfidenzintervall', color: '#60a5fa', dash: false, area: true }
+    { label: 'Historisch', color: historicalColor, dash: false },
+    { label: 'Prognose', color: predictionColor, dash: true },
+    { label: 'Konfidenzintervall', color: confidenceColor, dash: false, area: true }
   ]
   
   legendItems.forEach((item, i) => {

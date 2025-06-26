@@ -101,15 +101,15 @@ const triggerClasses = computed(() => {
       ]
     : isOpen.value
     ? [
-        'border-primary-500',
+        'border-emerald-500',
         'ring-2',
-        'ring-primary-500'
+        'ring-emerald-500'
       ]
     : [
         'border-gray-300',
         'dark:border-gray-600',
-        'focus:border-primary-500',
-        'focus:ring-primary-500'
+        'focus:border-emerald-500',
+        'focus:ring-emerald-500'
       ]
 
   return [
@@ -143,7 +143,7 @@ const optionClasses = (option: Option, isSelected: boolean, isHighlighted: boole
   'transition-colors',
   'duration-150',
   isSelected
-    ? 'bg-primary-500 text-white'
+    ? 'bg-emerald-500 text-white'
     : isHighlighted
     ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100'
     : 'text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700',
@@ -327,7 +327,7 @@ watch(filteredOptions, () => {
             v-model="searchQuery"
             type="text"
             :placeholder="searchPlaceholder"
-            class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
+            class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500"
             @keydown="handleKeydown"
           />
         </div>

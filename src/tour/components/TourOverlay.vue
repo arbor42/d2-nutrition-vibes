@@ -23,7 +23,7 @@
       <!-- Tour controls (minimize/maximize) -->
       <div ref="controlsRef" class="tour-controls-container" :style="controlsStyle">
         <button
-          class="tour-control-btn bg-gray-800 hover:bg-gray-700 text-white p-2 rounded-lg shadow-lg transition-colors"
+          class="tour-control-btn bg-gray-800 hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 text-white p-2 rounded-lg shadow-lg transition-colors"
           title="Tour pausieren"
           @click="handlePause"
         >
@@ -36,7 +36,7 @@
         </button>
         
         <button
-          class="tour-control-btn bg-red-600 hover:bg-red-500 text-white p-2 rounded-lg shadow-lg transition-colors"
+          class="tour-control-btn bg-red-600 hover:bg-red-500 dark:bg-red-700 dark:hover:bg-red-600 text-white p-2 rounded-lg shadow-lg transition-colors"
           title="Tour beenden"
           @click="handleClose"
         >

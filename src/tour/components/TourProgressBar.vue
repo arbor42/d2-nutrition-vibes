@@ -132,7 +132,7 @@ const stepIndicators = computed(() => {
 }
 
 .step-indicator.current .step-circle {
-  @apply bg-primary-500 border-primary-500 text-primary-500 ring-4 ring-primary-200 dark:ring-primary-800;
+  @apply bg-primary-500 border-primary-500 text-white ring-4 ring-primary-200 dark:ring-primary-800;
 }
 
 .step-indicator.upcoming .step-circle {

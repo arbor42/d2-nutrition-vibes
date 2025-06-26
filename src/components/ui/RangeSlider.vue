@@ -230,7 +230,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 input[type="range"]::-moz-range-track {
-  @apply w-full h-2 bg-gray-200 rounded-lg;
+  @apply w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg;
 }
 
 /* Small size */

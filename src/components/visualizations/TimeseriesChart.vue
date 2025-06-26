@@ -140,15 +140,18 @@ const initializeChart = () => {
     .style('font-size', '12px')
     .style('fill', labelColor)
 
-  // Create tooltip with green theme
+  // Create tooltip with theme-aware colors
+  const tooltipBg = isDarkMode ? 'rgba(31, 41, 55, 0.95)' : 'rgba(6, 78, 59, 0.95)' // gray-800 : emerald-800
+  const tooltipBorder = isDarkMode ? '#6B7280' : '#10b981' // gray-500 : emerald-500
+  
   tooltip = d3.select('body')
     .append('div')
     .attr('class', 'timeseries-tooltip')
     .style('position', 'absolute')
     .style('padding', '8px 12px')
-    .style('background', 'rgba(6, 78, 59, 0.95)') // emerald-800 with opacity
+    .style('background', tooltipBg)
     .style('color', 'white')
-    .style('border', '1px solid #10b981') // emerald-500
+    .style('border', `1px solid ${tooltipBorder}`)
     .style('border-radius', '6px')
     .style('font-size', '12px')
     .style('font-weight', '500')
@@ -606,28 +609,57 @@ const updateThemeStyles = () => {
   g.select('.x-label').style('fill', axisColor)
   g.select('.y-label').style('fill', axisColor)
   
-  // Update legend
+  // Update legend - legend is attached to svg, not g
   const legendBackgroundColor = isDarkMode ? 'rgba(31, 41, 55, 0.9)' : 'rgba(255, 255, 255, 0.95)'
-  const legendStrokeColor = isDarkMode ? 'rgba(75, 85, 99, 0.5)' : 'rgba(209, 213, 219, 0.8)'
+  const legendStrokeColor = isDarkMode ? 'rgba(75, 85, 99, 0.7)' : 'rgba(209, 213, 219, 0.8)' // Improved stroke opacity
   const legendTextColor = isDarkMode ? '#E5E7EB' : '#1F2937'
+  const legendBoxStroke = isDarkMode ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.2)'
+  const legendBoxStrokeWidth = isDarkMode ? 1 : 0.5
   
-  g.selectAll('.legend rect').each(function(d, i) {
-    const rect = d3.select(this)
-    // Check if this is the background rect (first rect in each legend item)
-    if (i % 2 === 0) {
-      rect.attr('fill', legendBackgroundColor)
-          .attr('stroke', legendStrokeColor)
-    }
-  })
+  // Update legend on svg, not g
+  if (svg) {
+    svg.selectAll('.legend g').each(function() {
+      const legendItem = d3.select(this)
+      const rects = legendItem.selectAll('rect')
+      
+      // First rect is background
+      rects.filter((d, i) => i === 0)
+        .attr('fill', legendBackgroundColor)
+        .attr('stroke', legendStrokeColor)
+      
+      // Second rect is color box
+      rects.filter((d, i) => i === 1)
+        .attr('stroke', legendBoxStroke)
+        .attr('stroke-width', legendBoxStrokeWidth)
+    })
+    
+    svg.selectAll('.legend text').style('fill', legendTextColor)
+  }
   
-  g.selectAll('.legend text').style('fill', legendTextColor)
+  // Update tooltip colors if it exists
+  if (tooltip) {
+    const tooltipBg = isDarkMode ? 'rgba(31, 41, 55, 0.95)' : 'rgba(6, 78, 59, 0.95)'
+    const tooltipBorder = isDarkMode ? '#6B7280' : '#10b981'
+    
+    tooltip.style('background', tooltipBg)
+           .style('border', `1px solid ${tooltipBorder}`)
+  }
 }
 
 // Watch for theme changes
 const observer = new MutationObserver((mutations) => {
   mutations.forEach((mutation) => {
     if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+      // First update the theme styles for existing elements
       updateThemeStyles()
+      
+      // If we have data, re-render the chart to update the legend properly
+      if (chartData.value.length > 0) {
+        // Small delay to ensure theme classes are applied
+        setTimeout(() => {
+          updateChart()
+        }, 50)
+      }
     }
   })
 })

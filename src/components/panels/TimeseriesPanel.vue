@@ -95,8 +95,8 @@
               <span class="warning-icon">⚠️</span>
               <span class="warning-title">Hinweis: Einige Datenkombinationen sind nicht verfügbar</span>
               <button 
-                @click="showMissingDetails = !showMissingDetails"
                 class="toggle-details-btn"
+                @click="showMissingDetails = !showMissingDetails"
               >
                 {{ showMissingDetails ? 'Details ausblenden' : 'Details anzeigen' }}
               </button>

@@ -429,7 +429,7 @@ const drawCountriesDirect = (container, features) => {
   
   // Get theme colors
   const isDarkMode = document.documentElement.classList.contains('dark')
-  const defaultFill = isDarkMode ? '#374151' : '#e5e7eb' // gray-700 : gray-200
+  const defaultFill = isDarkMode ? '#4B5563' : '#e5e7eb' // gray-600 : gray-200
   const defaultStroke = isDarkMode ? '#4B5563' : '#ffffff' // gray-600 : white
   
   const countries = container.selectAll('.country')
@@ -1234,7 +1234,7 @@ const applyProductionDataDirect = (container, data) => {
       }
       // Return theme-appropriate default color for countries without data
       const isDarkMode = document.documentElement.classList.contains('dark')
-      return isDarkMode ? '#374151' : '#e5e7eb' // gray-700 : gray-200
+      return isDarkMode ? '#4B5563' : '#e5e7eb' // gray-600 : gray-200
     })
     .attr('opacity', (d) => {
       const countryName = (d.properties.name || d.properties.NAME || d.properties.admin || '').toLowerCase()
@@ -1410,7 +1410,7 @@ const updateThemeStyles = () => {
   if (container.empty()) return
   
   const isDarkMode = document.documentElement.classList.contains('dark')
-  const defaultFill = isDarkMode ? '#374151' : '#e5e7eb' // gray-700 : gray-200
+  const defaultFill = isDarkMode ? '#4B5563' : '#e5e7eb' // gray-600 : gray-200
   const defaultStroke = isDarkMode ? '#4B5563' : '#ffffff' // gray-600 : white
   
   // Update country styling
@@ -1420,7 +1420,7 @@ const updateThemeStyles = () => {
       const currentFill = element.attr('fill')
       
       // Only update if it's the default color (not a data-driven color)
-      if (currentFill === '#e5e7eb' || currentFill === '#374151') {
+      if (currentFill === '#e5e7eb' || currentFill === '#4B5563') {
         element.attr('fill', defaultFill)
       }
       element.attr('stroke', defaultStroke)
@@ -1611,9 +1611,9 @@ defineExpose({
     <div class="absolute top-4 left-4 z-20">
       <!-- Info Toggle Button -->
       <button
-        @click="toggleInfoPanel"
         class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-3 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
         :title="infoExpanded ? 'Info schließen' : 'Karteninformationen anzeigen'"
+        @click="toggleInfoPanel"
       >
         <svg class="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
           <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />

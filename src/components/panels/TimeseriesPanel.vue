@@ -6,6 +6,40 @@
         <p class="panel-description">
           Zeitliche Entwicklung von Produktionsdaten und Trends
         </p>
+        
+        <div class="simulation-info">
+          <div class="info-section">
+            <h3 class="info-title">Was wird berechnet?</h3>
+            <p class="info-text">
+              Diese Analyse zeigt die <strong>historische Entwicklung</strong> verschiedener landwirtschaftlicher Metriken über Zeit. Die Daten stammen aus der FAO-Datenbank und umfassen Produktions-, Import-, Export- und Versorgungsdaten für verschiedene Länder und Regionen von 1961 bis heute.
+            </p>
+          </div>
+          
+          <div class="info-section">
+            <h3 class="info-title">Wie benutzt man es?</h3>
+            <div class="info-steps">
+              <div class="step">
+                <span class="step-number">1</span>
+                <span class="step-text"><strong>Produkte wählen:</strong> Wählen Sie bis zu 3 landwirtschaftliche Produkte aus der Liste</span>
+              </div>
+              <div class="step">
+                <span class="step-number">2</span>
+                <span class="step-text"><strong>Länder auswählen:</strong> Wählen Sie bis zu 5 Länder oder lassen Sie das Feld leer für globale Daten</span>
+              </div>
+              <div class="step">
+                <span class="step-number">3</span>
+                <span class="step-text"><strong>Metriken festlegen:</strong> Wählen Sie bis zu 3 Metriken wie Produktion, Import, Export oder Kalorienversorgung</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="info-section">
+            <h3 class="info-title">Berechnungsgrundlage</h3>
+            <p class="info-text">
+              Die Zeitreihendaten basieren auf offiziellen <strong>FAO-Statistiken</strong> und werden in verschiedenen Einheiten dargestellt (Tonnen, Kalorien/Person/Tag). Fehlende Daten werden als solche markiert. Globale Werte werden durch Summierung aller verfügbaren Länderdaten berechnet.
+            </p>
+          </div>
+        </div>
       </div>
 
       <div class="panel-controls">
@@ -432,7 +466,10 @@ onMounted(async () => {
 }
 
 .chart-container {
-  @apply w-full h-full min-h-[500px] bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700;
+  @apply w-full bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700;
+  min-height: 500px;
+  height: auto; /* Allow container to grow with content */
+  padding: 24px; /* Add padding around chart and legend */
 }
 
 .panel-footer {
@@ -497,5 +534,38 @@ onMounted(async () => {
 
 .missing-reason {
   @apply text-yellow-600 dark:text-yellow-400 ml-1;
+}
+
+/* Information Cards Styles */
+.simulation-info {
+  @apply grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6;
+}
+
+.info-section {
+  @apply bg-gray-50 dark:bg-gray-900 rounded-lg p-4;
+}
+
+.info-title {
+  @apply text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3;
+}
+
+.info-text {
+  @apply text-sm text-gray-600 dark:text-gray-400 leading-relaxed;
+}
+
+.info-steps {
+  @apply space-y-3;
+}
+
+.step {
+  @apply flex items-start space-x-3;
+}
+
+.step-number {
+  @apply flex-shrink-0 w-6 h-6 bg-blue-500 dark:bg-blue-600 text-white text-xs font-bold rounded-full flex items-center justify-center;
+}
+
+.step-text {
+  @apply text-sm text-gray-600 dark:text-gray-400 leading-relaxed;
 }
 </style>

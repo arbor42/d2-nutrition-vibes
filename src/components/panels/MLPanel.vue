@@ -6,6 +6,40 @@
         <p class="panel-description">
           Machine Learning Vorhersagen für landwirtschaftliche Produktion
         </p>
+        
+        <div class="simulation-info">
+          <div class="info-section">
+            <h3 class="info-title">Was wird berechnet?</h3>
+            <p class="info-text">
+              Diese ML-Modelle verwenden <strong>maschinelle Lernverfahren</strong> (Lineare & Polynomiale Regression, Ensemble-Methoden) um zukünftige landwirtschaftliche Produktionswerte basierend auf historischen FAO-Daten zu prognostizieren. Die Vorhersagen erstrecken sich von 2023 bis 2035 mit Konfidenzintervallen.
+            </p>
+          </div>
+          
+          <div class="info-section">
+            <h3 class="info-title">Wie benutzt man es?</h3>
+            <div class="info-steps">
+              <div class="step">
+                <span class="step-number">1</span>
+                <span class="step-text"><strong>Prognosentyp wählen:</strong> Wählen Sie zwischen globalen, regionalen oder länderspezifischen Prognosen</span>
+              </div>
+              <div class="step">
+                <span class="step-number">2</span>
+                <span class="step-text"><strong>Prognose auswählen:</strong> Wählen Sie ein spezifisches Produkt und eine Region für die Vorhersage</span>
+              </div>
+              <div class="step">
+                <span class="step-number">3</span>
+                <span class="step-text"><strong>Modell festlegen:</strong> Wählen Sie zwischen Linearer Regression, Polynomialer Regression oder Ensemble-Modell</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="info-section">
+            <h3 class="info-title">Berechnungsgrundlage</h3>
+            <p class="info-text">
+              Die Modelle werden auf <strong>FAO-Zeitreihendaten</strong> trainiert und verwenden statistische Regression zur Extrapolation. R²-Score misst die Modellanpassung, RMSE zeigt durchschnittliche Fehler. <strong>Ensemble-Modelle</strong> kombinieren mehrere Ansätze für robustere Vorhersagen.
+            </p>
+          </div>
+        </div>
       </div>
 
       <div class="panel-controls">
@@ -97,32 +131,52 @@
             </div>
             
             <div class="stats-grid">
-              <div class="stat-card">
-                <div class="stat-label">R² Score</div>
+              <div class="stat-card" :title="getR2Tooltip()">
+                <div class="stat-label flex items-center space-x-1">
+                  <span>R² Score</span>
+                  <svg class="w-3 h-3 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                  </svg>
+                </div>
                 <div class="stat-value" :class="getR2Class(modelStats.r2)">{{ modelStats.r2 }}</div>
-                <div v-if="selectedModel === 'ensemble'" class="stat-help text-xs text-gray-500 mt-1">
-                  Durchschnitt der Einzelmodelle
+                <div class="stat-help text-xs text-gray-500 mt-1">
+                  {{ selectedModel === 'ensemble' ? 'Durchschnitt der Einzelmodelle' : getR2Explanation(modelStats.r2) }}
                 </div>
               </div>
-              <div class="stat-card">
-                <div class="stat-label">RMSE</div>
+              <div class="stat-card" :title="getRMSETooltip()">
+                <div class="stat-label flex items-center space-x-1">
+                  <span>RMSE</span>
+                  <svg class="w-3 h-3 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                  </svg>
+                </div>
                 <div class="stat-value">{{ modelStats.rmse }}</div>
-                <div v-if="selectedModel === 'ensemble'" class="stat-help text-xs text-gray-500 mt-1">
-                  Gemittelte Wurzel der mittleren Quadratfehler
+                <div class="stat-help text-xs text-gray-500 mt-1">
+                  {{ selectedModel === 'ensemble' ? 'Gemittelte Wurzel der mittleren Quadratfehler' : 'Durchschnittlicher Vorhersagefehler' }}
                 </div>
               </div>
-              <div class="stat-card">
-                <div class="stat-label">MAE</div>
+              <div class="stat-card" :title="getMAETooltip()">
+                <div class="stat-label flex items-center space-x-1">
+                  <span>MAE</span>
+                  <svg class="w-3 h-3 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                  </svg>
+                </div>
                 <div class="stat-value">{{ modelStats.mae }}</div>
-                <div v-if="selectedModel === 'ensemble'" class="stat-help text-xs text-gray-500 mt-1">
-                  Gemittelter mittlerer absoluter Fehler
+                <div class="stat-help text-xs text-gray-500 mt-1">
+                  {{ selectedModel === 'ensemble' ? 'Gemittelter mittlerer absoluter Fehler' : 'Mittlere absolute Abweichung' }}
                 </div>
               </div>
-              <div class="stat-card">
-                <div class="stat-label">{{ selectedModel === 'ensemble' ? 'Übereinstimmung' : 'Genauigkeit' }}</div>
+              <div class="stat-card" :title="getAccuracyTooltip()">
+                <div class="stat-label flex items-center space-x-1">
+                  <span>{{ selectedModel === 'ensemble' ? 'Übereinstimmung' : 'Genauigkeit' }}</span>
+                  <svg class="w-3 h-3 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                  </svg>
+                </div>
                 <div class="stat-value text-green-600">{{ modelStats.accuracy }}%</div>
-                <div v-if="selectedModel === 'ensemble'" class="stat-help text-xs text-gray-500 mt-1">
-                  Modellübereinstimmung zwischen Linear- und Polynomialregression
+                <div class="stat-help text-xs text-gray-500 mt-1">
+                  {{ selectedModel === 'ensemble' ? 'Modellübereinstimmung zwischen Linear- und Polynomialregression' : 'Allgemeine Modellgenauigkeit' }}
                 </div>
               </div>
             </div>
@@ -588,6 +642,35 @@ const getR2Class = (r2) => {
   return 'text-red-600'
 }
 
+// Tooltip functions for ML metrics
+const getR2Tooltip = () => {
+  return 'R² (Bestimmtheitsmaß) misst wie gut das Modell die Daten erklärt. Werte von 0-1: höher = besser. Negative Werte bedeuten, dass das Modell schlechter ist als der Durchschnitt.'
+}
+
+const getRMSETooltip = () => {
+  return 'RMSE (Root Mean Square Error) ist der durchschnittliche Vorhersagefehler in der Einheit der Daten. Niedrigere Werte sind besser. Zeigt wie weit die Vorhersagen typischerweise von den tatsächlichen Werten abweichen.'
+}
+
+const getMAETooltip = () => {
+  return 'MAE (Mean Absolute Error) ist die durchschnittliche absolute Abweichung zwischen Vorhersage und tatsächlichem Wert. Einfacher zu interpretieren als RMSE, da weniger empfindlich gegenüber Ausreißern.'
+}
+
+const getAccuracyTooltip = () => {
+  return selectedModel.value === 'ensemble' 
+    ? 'Zeigt wie oft sich die Linear- und Polynomialmodelle in ihren Vorhersagen einig sind. Höhere Werte deuten auf konsistentere Prognosen hin.'
+    : 'Allgemeine Bewertung der Modellgenauigkeit basierend auf verschiedenen Metriken. Höhere Werte bedeuten zuverlässigere Vorhersagen.'
+}
+
+const getR2Explanation = (r2) => {
+  const value = parseFloat(r2)
+  if (isNaN(value)) return 'Wert nicht verfügbar'
+  if (value < 0) return 'Modell ungeeignet'
+  if (value >= 0.8) return 'Sehr gute Anpassung'
+  if (value >= 0.6) return 'Gute Anpassung'
+  if (value >= 0.3) return 'Moderate Anpassung'
+  return 'Schwache Anpassung'
+}
+
 // Insight functions
 const getGrowthInsight = () => {
   if (!predictions.value.length || !forecastData.value) return 'Keine Daten verfügbar'
@@ -1001,5 +1084,38 @@ onMounted(async () => {
 
 .model-warning p.warning-text {
   @apply text-red-600 dark:text-red-400 text-sm mt-1;
+}
+
+/* Information Cards Styles */
+.simulation-info {
+  @apply grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6;
+}
+
+.info-section {
+  @apply bg-gray-50 dark:bg-gray-900 rounded-lg p-4;
+}
+
+.info-title {
+  @apply text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3;
+}
+
+.info-text {
+  @apply text-sm text-gray-600 dark:text-gray-400 leading-relaxed;
+}
+
+.info-steps {
+  @apply space-y-3;
+}
+
+.step {
+  @apply flex items-start space-x-3;
+}
+
+.step-number {
+  @apply flex-shrink-0 w-6 h-6 bg-blue-500 dark:bg-blue-600 text-white text-xs font-bold rounded-full flex items-center justify-center;
+}
+
+.step-text {
+  @apply text-sm text-gray-600 dark:text-gray-400 leading-relaxed;
 }
 </style>

@@ -46,6 +46,7 @@ const error = ref<string | null>(null)
 const geoDataStatic = shallowRef(null) // Use shallowRef for large objects
 const productionDataStatic = shallowRef([]) // Use shallowRef for arrays
 const isInitialized = ref(false)
+const infoExpanded = ref(false) // State for collapsible info panel
 
 // Click debouncing to prevent unwanted country detail views
 let lastClickTime = 0
@@ -1461,9 +1462,47 @@ watch([() => props.selectedProduct, () => props.selectedYear, () => props.select
 
 // Removed watcher - using static updates instead
 
-// Removed - no longer needed
+// Map information helper functions
+const getMapInfoTitle = () => {
+  const metric = props.selectedMetric
+  const metricLabels = {
+    production: 'Globale Produktion',
+    import_quantity: 'Weltweite Importe',
+    export_quantity: 'Weltweite Exporte', 
+    domestic_supply_quantity: 'Inlandsversorgung',
+    food_supply_kcal: 'Kalorienversorgung',
+    feed: 'Tierfutternutzung'
+  }
+  return metricLabels[metric] || 'Weltkarte'
+}
 
-// Removed - no longer needed
+const getMapInfoDescription = () => {
+  const metric = props.selectedMetric
+  const product = props.selectedProduct
+  const year = props.selectedYear
+  
+  const descriptions = {
+    production: `Zeigt die Produktionsmengen von ${product} nach Ländern für ${year}. Hellere/gelbere Farben bedeuten höhere Produktion.`,
+    import_quantity: `Zeigt die Importmengen von ${product} nach Ländern für ${year}. Hellere Farben = höhere Importe. Klicken Sie auf ein Land für Details.`,
+    export_quantity: `Zeigt die Exportmengen von ${product} nach Ländern für ${year}. Gelbe Bereiche sind die größten Exporteure.`,
+    domestic_supply_quantity: `Zeigt die verfügbare Inlandsversorgung nach Ländern. Hellere Farben = höhere Versorgung. Berechnet als Produktion + Import - Export.`,
+    food_supply_kcal: `Zeigt die verfügbaren Kalorien pro Person pro Tag. Gelbe Bereiche = höhere Kalorienversorgung. Wichtiger Indikator für Ernährungssicherheit.`,
+    feed: `Zeigt die Mengen die als Tierfutter verwendet werden. Hellere Farben = mehr Futternutzung. Wichtig für die Fleisch- und Milchproduktion.`
+  }
+  
+  return descriptions[metric] || `Zeigt Daten für ${product} im Jahr ${year}. Hellere Farben bedeuten höhere Werte.`
+}
+
+const hasDataGaps = () => {
+  // Check if there are countries without data
+  const processedData = getProcessedProductionData()
+  return processedData.length < 180 // Assuming around 195 countries globally
+}
+
+// Toggle function for info panel
+const toggleInfoPanel = () => {
+  infoExpanded.value = !infoExpanded.value
+}
 
 // Initialize on mount with better timing
 onMounted(async () => {
@@ -1566,6 +1605,54 @@ defineExpose({
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
       </BaseButton>
+    </div>
+
+    <!-- Map Information Panel -->
+    <div class="absolute top-4 left-4 z-20">
+      <!-- Info Toggle Button -->
+      <button
+        @click="toggleInfoPanel"
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-3 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+        :title="infoExpanded ? 'Info schließen' : 'Karteninformationen anzeigen'"
+      >
+        <svg class="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+        </svg>
+      </button>
+
+      <!-- Collapsible Info Panel -->
+      <div 
+        v-if="infoExpanded"
+        class="mt-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 max-w-xs border border-gray-200 dark:border-gray-600 animate-in slide-in-from-top-2 duration-200"
+      >
+        <div class="flex items-start space-x-2">
+          <svg class="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+          </svg>
+          <div class="flex-1">
+            <h4 class="font-medium text-gray-900 dark:text-gray-100 text-sm mb-1">
+              {{ getMapInfoTitle() }}
+            </h4>
+            <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+              {{ getMapInfoDescription() }}
+            </p>
+            <div class="mt-2 text-xs text-gray-500 dark:text-gray-400">
+              <div class="flex items-center space-x-1">
+                <span>📊</span>
+                <span>Datenquelle: FAO</span>
+              </div>
+              <div class="flex items-center space-x-1 mt-1">
+                <span>📅</span>
+                <span>Jahr: {{ props.selectedYear }}</span>
+              </div>
+              <div v-if="hasDataGaps()" class="flex items-center space-x-1 mt-1 text-yellow-600 dark:text-yellow-400">
+                <span>⚠️</span>
+                <span>Graue Bereiche: Keine Daten</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Map SVG Container with explicit sizing -->

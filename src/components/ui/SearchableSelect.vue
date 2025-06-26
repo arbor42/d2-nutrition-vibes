@@ -4,6 +4,7 @@ import { computed, ref, watch, nextTick } from 'vue'
 interface Option {
   value: string | number
   label: string
+  description?: string
   disabled?: boolean
 }
 
@@ -353,7 +354,15 @@ watch(filteredOptions, () => {
             @click="selectOption(option)"
             @mouseenter="highlightedIndex = index"
           >
-            {{ option.label }}
+            <div class="flex flex-col">
+              <span class="font-medium">{{ option.label }}</span>
+              <span 
+                v-if="option.description" 
+                class="text-xs text-gray-500 dark:text-gray-400 mt-0.5"
+              >
+                {{ option.description }}
+              </span>
+            </div>
           </div>
         </div>
       </div>

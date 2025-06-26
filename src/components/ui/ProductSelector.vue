@@ -27,14 +27,38 @@ const productOptions = computed(() => {
   }
 })
 
-// Metric options
+// Metric options with descriptions
 const metricOptions = [
-  { value: 'production', label: 'Produktion' },
-  { value: 'import_quantity', label: 'Import' },
-  { value: 'export_quantity', label: 'Export' },
-  { value: 'domestic_supply_quantity', label: 'Inlandsversorgung' },
-  { value: 'food_supply_kcal', label: 'Kalorienversorgung' },
-  { value: 'feed', label: 'Tierfutter' }
+  { 
+    value: 'production', 
+    label: 'Produktion',
+    description: 'Gesamte inländische Produktion in 1000 Tonnen'
+  },
+  { 
+    value: 'import_quantity', 
+    label: 'Import',
+    description: 'Importierte Menge in 1000 Tonnen'
+  },
+  { 
+    value: 'export_quantity', 
+    label: 'Export',
+    description: 'Exportierte Menge in 1000 Tonnen'
+  },
+  { 
+    value: 'domestic_supply_quantity', 
+    label: 'Inlandsversorgung',
+    description: 'Verfügbare Menge für den inländischen Verbrauch in 1000 Tonnen'
+  },
+  { 
+    value: 'food_supply_kcal', 
+    label: 'Kalorienversorgung',
+    description: 'Verfügbare Kalorien pro Person pro Tag in kcal/Tag'
+  },
+  { 
+    value: 'feed', 
+    label: 'Tierfutter',
+    description: 'Menge die als Tierfutter verwendet wird in 1000 Tonnen'
+  }
 ]
 
 // Year options  

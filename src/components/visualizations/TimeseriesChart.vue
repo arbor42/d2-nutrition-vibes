@@ -385,8 +385,8 @@ const updateChart = () => {
   g.select('.x-label')
     .style('fill', axisColor)
     
-  // Add legend at the top
-  g.selectAll('.legend').remove()
+  // Add legend at the top (directly to SVG, not to g group)
+  svg.selectAll('.legend').remove()
   
   const legendItems = Array.from(seriesData.keys()).sort()
   
@@ -395,9 +395,8 @@ const updateChart = () => {
     const isDarkModeLegend = document.documentElement.classList.contains('dark')
     console.log('Legend Dark Mode Check:', isDarkModeLegend, 'Classes:', document.documentElement.classList.toString())
     
-    const legendGroup = g.append('g')
+    const legendGroup = svg.append('g')
       .attr('class', 'legend')
-      .attr('transform', `translate(0, -50)`)
     
     // Calculate dynamic layout for legend
     const maxLabelLength = Math.max(...legendItems.map(item => item.length))
@@ -407,24 +406,43 @@ const updateChart = () => {
     const itemsPerRow = Math.max(1, Math.floor(innerWidth / (itemWidth + padding)))
     const totalRows = Math.ceil(legendItems.length / itemsPerRow)
     
-    // Calculate legend space needed and position
-    const legendHeight = totalRows * itemHeight + 10
-    const legendOffset = Math.min(50, Math.max(30, legendHeight))
+    // Calculate legend space needed
+    const legendHeight = totalRows * itemHeight + 20 // Added extra padding
+    const requiredTopMargin = legendHeight + 50 // Space for legend plus buffer
     
-    // Dynamically adjust top margin based on legend size
-    if (totalRows > 3) {
-      margin.value.top = Math.max(80, 60 + totalRows * 15)
-      // Re-calculate inner height with new margin
-      const newInnerHeight = height - margin.value.top - margin.value.bottom
-      // Update scales and axes positions
-      yScale.range([newInnerHeight, 0])
-      g.select('.x-axis').attr('transform', `translate(0,${newInnerHeight})`)
-      g.select('.x-grid').attr('transform', `translate(0,${newInnerHeight})`)
-      g.select('.x-label').attr('y', newInnerHeight + 30)
-      g.select('.y-label').attr('x', -newInnerHeight / 2)
+    // Always adjust top margin and container size to accommodate legend
+    let adjustedHeight = height
+    if (requiredTopMargin > margin.value.top) {
+      margin.value.top = requiredTopMargin
+      
+      // Calculate new total height needed
+      adjustedHeight = Math.max(height, margin.value.top + margin.value.bottom + 300) // Minimum chart area of 300px
+      
+      // Resize the container first
+      if (svgContainerRef.value) {
+        svgContainerRef.value.style.height = `${adjustedHeight}px`
+      }
+      
+      // Update SVG dimensions
+      svg.attr('viewBox', `0 0 ${width} ${adjustedHeight}`)
+      svg.attr('height', adjustedHeight)
     }
     
-    legendGroup.attr('transform', `translate(0, -${legendOffset})`)
+    // Re-calculate inner height with final margin
+    const finalInnerHeight = adjustedHeight - margin.value.top - margin.value.bottom
+    
+    // Update main group position to account for new margin
+    g.attr('transform', `translate(${margin.value.left},${margin.value.top})`)
+    
+    // Update scales and axes positions
+    yScale.range([finalInnerHeight, 0])
+    g.select('.x-axis').attr('transform', `translate(0,${finalInnerHeight})`)
+    g.select('.x-grid').attr('transform', `translate(0,${finalInnerHeight})`)
+    g.select('.x-label').attr('y', finalInnerHeight + 30)
+    g.select('.y-label').attr('x', -finalInnerHeight / 2)
+    
+    // Position legend at the top left of the chart area (accounting for left margin)
+    legendGroup.attr('transform', `translate(${margin.value.left}, 20)`)
     
     legendItems.forEach((series, i) => {
       const row = Math.floor(i / itemsPerRow)

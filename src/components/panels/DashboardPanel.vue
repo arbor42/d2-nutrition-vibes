@@ -457,6 +457,44 @@ onUnmounted(() => {
 })
 
 // Watch for changes in selection and reload data
+// Tooltip and explanation functions
+const getTotalMetricTooltip = () => {
+  const metric = uiStore.selectedMetric
+  const unit = globalStats.value?.unit || '1000 t'
+  
+  const tooltips = {
+    production: `Zeigt die weltweite Gesamtproduktion in ${unit}. Basiert auf FAO-Daten für ${uiStore.selectedYear}.`,
+    import_quantity: `Zeigt die weltweiten Gesamtimporte in ${unit}. Umfasst alle Importe zwischen Ländern.`,
+    export_quantity: `Zeigt die weltweiten Gesamtexporte in ${unit}. Umfasst alle Exporte zwischen Ländern.`,
+    domestic_supply_quantity: `Zeigt die verfügbare Inlandsversorgung in ${unit}. Berechnet als: Produktion + Import - Export ± Lagerveränderungen.`,
+    food_supply_kcal: `Zeigt die durchschnittliche Kalorienversorgung pro Person pro Tag. Datenquelle: FAO Food Balance Sheets.`,
+    feed: `Zeigt die Menge die als Tierfutter verwendet wird in ${unit}. Wichtiger Indikator für die Fleischproduktion.`
+  }
+  
+  return tooltips[metric] || 'Gesamtwert für die ausgewählte Metrik und das Jahr.'
+}
+
+const getFeedUsageTooltip = () => {
+  return 'Zeigt den Anteil der Produktion, der als Tierfutter verwendet wird. "N/A" bedeutet, dass dieses Produkt normalerweise nicht als Tierfutter genutzt wird (z.B. Obst, Gemüse). Getreide wird häufig als Tierfutter verwendet.'
+}
+
+const getFeedUsageExplanation = () => {
+  const product = uiStore.selectedProduct
+  const percentage = feedUsage.value.percentage
+  
+  if (percentage > 50) {
+    return 'Hauptsächlich für Tierfutter verwendet'
+  } else if (percentage > 20) {
+    return 'Teilweise als Tierfutter genutzt'
+  } else if (percentage > 0) {
+    return 'Geringe Futternutzung'
+  } else if (['Maize and products', 'Wheat and products', 'Barley and products', 'Sorghum and products'].includes(product)) {
+    return 'Null Futternutzung registriert'
+  } else {
+    return 'Typischerweise nicht als Tierfutter genutzt'
+  }
+}
+
 watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([product, year]) => {
   if (product && year) {
     try {
@@ -480,7 +518,7 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
     <!-- Dashboard Header with Stats -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       <!-- Total Production Card -->
-      <div class="card">
+      <div class="card" :title="getTotalMetricTooltip()">
         <div class="card-body">
           <div class="flex items-center">
             <div class="flex-shrink-0">
@@ -491,15 +529,20 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
               </div>
             </div>
             <div class="ml-4">
-              <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400">
-                {{ uiStore.selectedMetric === 'production' ? 'Gesamtproduktion' : 
-                  uiStore.selectedMetric === 'import_quantity' ? 'Gesamtimport' :
-                  uiStore.selectedMetric === 'export_quantity' ? 'Gesamtexport' :
-                  uiStore.selectedMetric === 'domestic_supply_quantity' ? 'Inlandsversorgung' :
-                  uiStore.selectedMetric === 'food_supply_kcal' ? 'Kalorienversorgung' :
-                  uiStore.selectedMetric === 'feed' ? 'Tierfutterverbrauch' :
-                  'Gesamt' }} {{ uiStore.selectedYear || new Date().getFullYear() }}
-              </h3>
+              <div class="flex items-center space-x-1">
+                <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400">
+                  {{ uiStore.selectedMetric === 'production' ? 'Gesamtproduktion' : 
+                    uiStore.selectedMetric === 'import_quantity' ? 'Gesamtimport' :
+                    uiStore.selectedMetric === 'export_quantity' ? 'Gesamtexport' :
+                    uiStore.selectedMetric === 'domestic_supply_quantity' ? 'Inlandsversorgung' :
+                    uiStore.selectedMetric === 'food_supply_kcal' ? 'Kalorienversorgung' :
+                    uiStore.selectedMetric === 'feed' ? 'Tierfutterverbrauch' :
+                    'Gesamt' }} {{ uiStore.selectedYear || new Date().getFullYear() }}
+                </h3>
+                <svg class="w-4 h-4 text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                </svg>
+              </div>
               <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">
                 {{ formatAgricultureValue(globalStats?.total || 0, { unit: globalStats?.unit || '1000 t', showUnit: true }) }}
               </p>
@@ -582,7 +625,7 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
       </div>
       
       <!-- Feed Usage Card -->
-      <div class="card" data-tour="feed-usage">
+      <div class="card" data-tour="feed-usage" :title="getFeedUsageTooltip()">
         <div class="card-body">
           <div class="flex items-center">
             <div class="flex-shrink-0">
@@ -593,9 +636,14 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
               </div>
             </div>
             <div class="ml-4">
-              <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400">
-                Als Tierfutter
-              </h3>
+              <div class="flex items-center space-x-1">
+                <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400">
+                  Als Tierfutter
+                </h3>
+                <svg class="w-4 h-4 text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                </svg>
+              </div>
               <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">
                 {{ feedUsage.percentage > 0 ? feedUsage.percentage + '%' : 
                   feedUsage.percentage === 0 && ['Maize and products', 'Wheat and products', 'Barley and products', 
@@ -610,6 +658,9 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
                     ? 'Keine Futternutzung'
                     : 'Nicht als Futter genutzt' }}
               </p>
+              <div class="mt-1 text-xs text-gray-400 dark:text-gray-500">
+                {{ getFeedUsageExplanation() }}
+              </div>
             </div>
           </div>
         </div>

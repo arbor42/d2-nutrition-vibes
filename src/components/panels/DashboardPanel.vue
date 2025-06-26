@@ -756,15 +756,17 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
         </div>
         
         <!-- Timeseries View -->
-        <div v-else-if="selectedVisualization === 'timeseries'" class="h-96 p-4">
-          <TimeseriesChart
-            :selected-countries="uiStore.selectedCountry ? [uiStore.selectedCountry] : []"
-            :selected-products="uiStore.selectedProduct ? [uiStore.selectedProduct] : []"
-            :selected-metric="uiStore.selectedMetric"
-            :chart-data="dashboardTimeseriesData"
-            @point-hover="(data) => {}"
-            @point-click="(data) => {}"
-          />
+        <div v-else-if="selectedVisualization === 'timeseries'" class="flex flex-col p-4 min-h-[500px]">
+          <div class="flex-1 w-full">
+            <TimeseriesChart
+              :selected-countries="uiStore.selectedCountry ? [uiStore.selectedCountry] : []"
+              :selected-products="uiStore.selectedProduct ? [uiStore.selectedProduct] : []"
+              :selected-metric="uiStore.selectedMetric"
+              :chart-data="dashboardTimeseriesData"
+              @point-hover="(data) => {}"
+              @point-click="(data) => {}"
+            />
+          </div>
         </div>
         
         <!-- Overview Grid -->

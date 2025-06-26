@@ -1,21 +1,21 @@
 // Tour Steps Configuration - "Ernährung im Wandel der Zeit"
-// Integration of FAO data insights with world events
+// Datenbasierte Erzählung globaler Ernährungstrends durch Weltereignisse (basierend auf events.md)
 
 export const mainTour = {
   id: 'main',
   title: 'Ernährung im Wandel der Zeit',
-  description: 'Entdecken Sie wie Weltgeschehen unsere Ernährung prägt - von COVID-19 über den Ukraine-Krieg bis zu Klimaextremen',
+  description: 'Eine datengetriebene Reise durch 13 Jahre globaler Ernährungsgeschichte - von Pandemien über Kriege bis zu Klimaextremen',
   estimatedDuration: '12-15 Minuten',
   category: 'overview',
   difficulty: 'beginner',
   steps: [
     {
-      id: 'welcome',
-      title: 'Willkommen bei D2 Nutrition Vibes',
+      id: 'global-trends-intro',
+      title: 'Der große Aufwärtstrend trotz aller Krisen',
       content: `
-        Diese Tour führt Sie durch <strong>13 Jahre globaler Ernährungsdaten</strong> (2010-2022). 
-        Sie werden sehen, wie Pandemien, Kriege und Klimaextreme unsere Nahrungsmittelversorgung 
-        beeinflussen. Die <strong>Zeitleiste unten</strong> begleitet uns dabei durch alle wichtigen Ereignisse.
+        Seit 2010 stieg die <strong>globale Kalorienversorgung kontinuierlich</strong> von 2.832 auf 
+        2.985 kcal pro Person/Tag (2022). Selbst COVID-19 und Ukrainekrieg konnten diesen 
+        Trend nicht stoppen. Die Daten zeigen: <strong>Unsere Ernährungssysteme sind resilient</strong>.
       `,
       route: '/',
       target: '[data-tour="dashboard-stats"]',
@@ -27,63 +27,32 @@ export const mainTour = {
       actions: {
         onEnter: async () => {
           const { useUIStore } = await import('@/stores/useUIStore')
-          const { useTourStore } = await import('@/tour/stores/useTourStore')
           const uiStore = useUIStore()
-          const tourStore = useTourStore()
+          // Globale Übersicht - Getreideproduktion zeigen
           uiStore.selectedProduct = 'Cereals - Excluding Beer'
+          uiStore.selectedCountry = null // Global anzeigen
           uiStore.selectedYear = 2022
-          uiStore.selectedMetric = 'production'
-          // Set tour mode
-          tourStore.isLoading = false
+          uiStore.selectedMetric = 'Production'
         }
       },
       dataHighlight: {
-        label: 'Globale Getreideproduktion 2022',
-        value: 'Über 2,8 Milliarden Tonnen'
+        label: 'Globaler Kalorienanstieg',
+        value: '+153 kcal/Person/Tag seit 2010'
       },
       insights: [
-        'Stetiger Anstieg trotz globaler Krisen',
-        'Von 2.832 kcal (2010) auf 2.985 kcal (2022)',
-        'Aber große regionale Unterschiede bleiben'
+        '2010: 2.832 kcal → 2022: 2.985 kcal (+5%)',
+        'Auch 2020/21 (COVID) blieb Versorgung stabil',
+        'Resiliente Lieferketten bewährten sich'
       ]
     },
 
     {
-      id: 'timeline-introduction',
-      title: 'Die wichtigsten Weltereignisse',
+      id: 'regional-inequality',
+      title: 'Die gespaltene Welt: 3.880 vs 2.567 Kalorien',
       content: `
-        In unserer Datenanalyse sehen Sie die Auswirkungen wichtiger <strong>Weltereignisse</strong> 
-        auf die globale Ernährung. Von El Niño 2015/16 über COVID-19 bis zum Ukraine-Krieg 2022 - 
-        jedes Ereignis hinterließ messbare Spuren.
-      `,
-      route: '/',
-      target: '[data-tour="dashboard-stats"]',
-      position: 'bottom',
-      highlightOptions: {
-        padding: 8
-      },
-      actions: {
-        onEnter: async () => {
-          const { useUIStore } = await import('@/stores/useUIStore')
-          const uiStore = useUIStore()
-          uiStore.selectedProduct = 'Cereals - Excluding Beer'
-          uiStore.selectedYear = 2022
-        }
-      },
-      insights: [
-        'Klimaereignisse: El Niño, Dürren, Frost',
-        'Pandemie: COVID-19 ab März 2020',
-        'Konflikte: Ukraine-Krieg Februar 2022'
-      ]
-    },
-    
-    {
-      id: 'regional-disparities',
-      title: 'Die Welt isst unterschiedlich',
-      content: `
-        Diese Weltkarte zeigt extreme <strong>regionale Unterschiede</strong>. Während Nordamerika 
-        mit 3.880 kcal/Tag im Überfluss lebt, kämpft Afrika mit nur 2.567 kcal/Tag. 
-        Die WHO empfiehlt mindestens 2.100 kcal für Erwachsene.
+        Hinter den globalen Mittelwerten verbergen sich <strong>extreme regionale Unterschiede</strong>. 
+        Während Nordamerika mit 3.880 kcal/Tag im Überfluss schwelgt, kämpft Afrika mit nur 
+        2.567 kcal/Tag. Asien holt auf (+9% seit 2010), Afrika stagniert (+0,3%).
       `,
       route: '/',
       target: '[data-tour="world-map"]',
@@ -96,29 +65,31 @@ export const mainTour = {
         onEnter: async () => {
           const { useUIStore } = await import('@/stores/useUIStore')
           const uiStore = useUIStore()
+          // Zeige regionale Unterschiede - Afrika vs Europa/Nordamerika
           uiStore.selectedProduct = 'Cereals - Excluding Beer'
-          uiStore.selectedMetric = 'production'
+          uiStore.selectedCountry = 'Africa' // Fokus auf Afrika für Kontrast
           uiStore.selectedYear = 2022
+          uiStore.selectedMetric = 'Domestic supply quantity'
         }
       },
       dataHighlight: {
-        label: 'Regionale Unterschiede',
-        value: 'Große Disparitäten zwischen Kontinenten'
+        label: 'Globale Ernährungslücke',
+        value: '1.313 kcal Unterschied Nord-Süd'
       },
       insights: [
-        'Europa & Nordamerika: Über 3.400 kcal/Tag',
-        'Asien holt auf: +9% seit 2010',
-        'Afrika stagniert: Nur +0,3% in 12 Jahren'
+        'Nordamerika: 3.880 kcal (Spitze)',
+        'Europa: ~3.470 kcal (sehr hoch)',
+        'Afrika: 2.567 kcal (unter WHO-Minimum)'
       ]
     },
-
+    
     {
-      id: 'covid-impact-intro',
-      title: 'COVID-19: Die erste globale Krise',
+      id: 'covid-vietnam-rice-shock',
+      title: 'COVID-Schock: Vietnam stoppt Reisexporte',
       content: `
-        März 2020 - die Welt steht still. <strong>Lockdowns und Grenzschließungen</strong> 
-        bedrohen die globale Nahrungsmittelversorgung. Schauen wir uns die konkreten 
-        Auswirkungen in den Zeitreihen an.
+        März 2020 - Panik am Reismarkt! <strong>Vietnam verhängt Exportstopp</strong> für Reis, 
+        um die Inlandsversorgung zu sichern. Philippinen und andere Importländer reagieren 
+        sofort mit Hamsterkäufen. Die Zeitreihe zeigt: Nach wenigen Wochen Normalisierung.
       `,
       route: '/timeseries',
       target: '[data-tour="timeseries-chart"]',
@@ -129,34 +100,32 @@ export const mainTour = {
       actions: {
         onEnter: async () => {
           const { useUIStore } = await import('@/stores/useUIStore')
-          const { useTourStore } = await import('@/tour/stores/useTourStore')
           const uiStore = useUIStore()
-          const tourStore = useTourStore()
+          // Vietnam Reis Export während COVID - zeige Einbruch 2020
           uiStore.selectedProduct = 'Rice and products'
           uiStore.selectedCountry = 'Viet Nam'
-          uiStore.selectedMetric = 'export_quantity'
-          // Focus on COVID years
-          // Year range selection not supported in current UI
+          uiStore.selectedMetric = 'Export quantity'
+          uiStore.selectedYear = 2020
         }
       },
       dataHighlight: {
-        label: 'Vietnam Reis-Exportstopp',
-        value: 'März-April 2020: Temporärer Exportstopp'
+        label: 'Vietnam Reisexport-Stopp',
+        value: 'März 2020: Temporärer Exportstopp'
       },
       insights: [
-        'Panik-Reaktionen: Exportverbote in Asien',
-        'Aber: Schnelle Erholung dank guter Ernten',
-        'Globale Versorgung blieb überraschend stabil'
+        'März/April 2020: Kompletter Lieferstopp',
+        'Andere Länder stockten sofort Reserven auf',
+        'Mai 2020: Vietnam hebt Stopp wieder auf'
       ]
     },
 
     {
-      id: 'covid-stockpiling',
-      title: 'Hamstern auf Staatsebene',
+      id: 'covid-philippines-hoarding',
+      title: 'Hamsterkäufe auf Staatsebene: Philippinen',
       content: `
-        Während der Pandemie bauten viele Länder <strong>strategische Reserven</strong> auf. 
-        Besonders Entwicklungsländer legten ungewöhnlich hohe Vorräte an Reis und Mais an - 
-        eine Vorsichtsmaßnahme gegen unsichere Zeiten.
+        Die Philippinen reagierten auf Vietnams Exportstopp mit <strong>massiven Reisimporten</strong>. 
+        2020/21 kaufte das Land ungewöhnlich viel Reis ein - eine klassische Vorsichtsmaßnahme 
+        gegen drohende Versorgungsengpässe. Andere Entwicklungsländer handelten ähnlich.
       `,
       route: '/timeseries',
       target: '[data-tour="metric-selector"]',
@@ -165,30 +134,31 @@ export const mainTour = {
         onEnter: async () => {
           const { useUIStore } = await import('@/stores/useUIStore')
           const uiStore = useUIStore()
+          // Philippinen Reisimporte - strategische Bevorratung 2021
           uiStore.selectedProduct = 'Rice and products'
           uiStore.selectedCountry = 'Philippines'
-          uiStore.selectedMetric = 'import_quantity'
-          // Year range selection not supported in current UI
+          uiStore.selectedMetric = 'Import quantity'
+          uiStore.selectedYear = 2021
         }
       },
       dataHighlight: {
-        label: 'Importanstieg 2020/21',
-        value: 'Philippinen: Erhöhte Reisimporte'
+        label: 'Strategische Bevorratung',
+        value: 'Philippinen: Erhöhte Reisimporte 2020/21'
       },
       insights: [
-        'Erhöhte Importe = Vorsorgemaßnahmen',
-        'Europa baute hingegen Lager ab (-9 Mio t)',
-        'China hortete weiter: 50% der Weltreserven'
+        'Vorsorgliche Lagerauffüllung gegen Unsicherheit',
+        'China hortete parallel 50% der Weltreserven',
+        'Europa baute hingegen Lager ab (-9 Mio t)'
       ]
     },
 
     {
-      id: 'ukraine-crisis-wheat',
+      id: 'ukraine-wheat-collapse',
       title: 'Ukraine-Krieg: Die Kornkammer brennt',
       content: `
-        Februar 2022 - Russlands Invasion erschüttert die Getreidemärkte. 
-        Die Ukraine exportierte vor dem Krieg <strong>10% des Weltweizens</strong>. 
-        Die Auswirkungen sind dramatisch.
+        Februar 2022 - Russlands Invasion erschüttert die Getreidemärkte. Die Ukraine 
+        exportierte vor dem Krieg <strong>19,8 Millionen Tonnen Weizen</strong> jährlich. 
+        2022 brachen die Ausfuhren um 42% auf nur 11,4 Mio. t ein. Schwarzmeer-Blockade!
       `,
       route: '/timeseries',
       target: '[data-tour="timeseries-chart"]',
@@ -196,39 +166,36 @@ export const mainTour = {
       actions: {
         onEnter: async () => {
           const { useUIStore } = await import('@/stores/useUIStore')
-          const { useTourStore } = await import('@/tour/stores/useTourStore')
           const uiStore = useUIStore()
-          const tourStore = useTourStore()
+          // Ukraine Weizenexport-Kollaps 2022 - zeige dramatischen Rückgang
           uiStore.selectedProduct = 'Wheat and products'
           uiStore.selectedCountry = 'Ukraine'
-          uiStore.selectedMetric = 'export_quantity'
-          // Year range selection not supported in current UI
-          // Highlight Ukraine crisis
+          uiStore.selectedMetric = 'Export quantity'
           uiStore.selectedYear = 2022
         }
       },
       dataHighlight: {
         label: 'Weizenexport-Kollaps',
-        value: 'Ukraine-Krieg führte zu Exportrückgang'
+        value: '19,8 → 11,4 Mio. t (-42%)'
       },
       insights: [
+        'Vor Krieg: 10% des Weltweizen-Exports',
         'Hafenblockaden im Schwarzen Meer',
-        'Getreidekorridore nur teilweise wirksam',
-        'Weltweite Getreidepreise explodierten'
+        'Getreidekorridore nur teilweise wirksam'
       ]
     },
 
     {
-      id: 'feed-problem',
-      title: 'Das Tierfutter-Dilemma',
+      id: 'china-feed-explosion',
+      title: 'Das Tierfutter-Dilemma: China verfüttert 222 Mio. t',
       content: `
         Ein kritischer Trend: <strong>41% des weltweiten Getreides</strong> landet in 
-        Futtertrögen statt auf Tellern. Seit 2010 stieg der Futterverbrauch um 40% - 
-        während Menschen hungern.
+        Futtertögen statt auf Tellern. China allein verfütterte 2022 schon 222 Millionen 
+        Tonnen Mais - ein Anstieg von 130 auf 222 Mio. t seit 2010 (+71%)!
       `,
-      route: '/',
-      target: '[data-tour="feed-usage"]',
-      position: 'left',
+      route: '/timeseries',
+      target: '[data-tour="timeseries-chart"]',
+      position: 'top',
       highlightOptions: {
         padding: 12
       },
@@ -236,29 +203,32 @@ export const mainTour = {
         onEnter: async () => {
           const { useUIStore } = await import('@/stores/useUIStore')
           const uiStore = useUIStore()
+          // China Mais als Tierfutter - enormer Anstieg seit 2010
           uiStore.selectedProduct = 'Maize and products'
-          uiStore.selectedMetric = 'feed'
+          uiStore.selectedCountry = 'China'
+          uiStore.selectedMetric = 'Feed'
           uiStore.selectedYear = 2022
         }
       },
       dataHighlight: {
-        label: 'Mais als Tierfutter',
-        value: '2022: 717 Mio. Tonnen (+47% seit 2010)'
+        label: 'China Mais-Futter Explosion',
+        value: '2010: 130 Mio. t → 2022: 222 Mio. t'
       },
       insights: [
-        'China verfüttert 222 Mio. t Mais (2022)',
-        'USA: 138 Mio. t - gleichbleibend hoch',
-        'Nur 48% des Getreides für Menschen'
+        'Wachsende Fleischnachfrage treibt Futterbedarf',
+        'USA stabil bei ~138 Mio. t verfüttert',
+        'Nur 48% des Getreides für Menschen direkt'
       ]
     },
 
+
     {
-      id: 'ml-predictions',
-      title: 'KI blickt in die Zukunft',
+      id: 'ml-future-predictions',
+      title: 'KI blickt in die klimaunsichere Zukunft',
       content: `
-        Unsere <strong>Machine Learning Modelle</strong> prognostizieren die Entwicklung 
-        bis 2025. Die Vorhersagen berücksichtigen Klimawandel, Bevölkerungswachstum 
-        und historische Trends.
+        Unsere <strong>Machine Learning Modelle</strong> prognostizieren bis 2025: Weizenproduktion 
+        +3,2%, aber Unsicherheit steigt. Nach den Schocks 2020-2022 zeigen die Daten: 
+        Klimaextreme werden häufiger, Vorhersagen schwieriger.
       `,
       route: '/ml-predictions',
       target: '[data-tour="ml-chart"]',
@@ -267,28 +237,31 @@ export const mainTour = {
         onEnter: async () => {
           const { useUIStore } = await import('@/stores/useUIStore')
           const uiStore = useUIStore()
+          // ML Prognosen für globale Weizenproduktion
           uiStore.selectedProduct = 'Wheat and products'
-          uiStore.selectedMetric = 'production'
+          uiStore.selectedCountry = null // Global
+          uiStore.selectedMetric = 'Production'
+          uiStore.selectedYear = 2025
         }
       },
       dataHighlight: {
-        label: 'Weizenproduktion 2025',
-        value: 'Prognose: +3,2% gegenüber 2022'
+        label: 'Weizenprognose 2025',
+        value: '+3,2% aber höhere Volatilität'
       },
       insights: [
-        'Unsicherheit durch Klimaextreme steigt',
-        'Technologischer Fortschritt als Hoffnung',
-        'Regionale Verschiebungen erwartet'
+        'Technischer Fortschritt vs. Klimarisiken',
+        'Ukraine-Erholung noch ungewiss',
+        'Regionale Verschiebungen zu erwarten'
       ]
     },
 
     {
-      id: 'simulation-scenarios',
-      title: 'Was wäre wenn...?',
+      id: 'simulation-feed-reduction',
+      title: 'Simulation: 20% weniger Tierfutter',
       content: `
-        Im <strong>Simulationspanel</strong> können Sie Szenarien durchspielen: 
-        Was wenn 20% weniger Getreide verfüttert würde? Wie viele Menschen könnten 
-        zusätzlich ernährt werden?
+        Die Daten zeigen: <strong>41% des Getreides wird verfüttert</strong>. Was wäre, wenn wir 
+        nur 20% weniger an Tiere verfüttern würden? Die Simulation zeigt: Millionen mehr 
+        Menschen könnten ernährt werden. Effizienz statt Mengenwachstum!
       `,
       route: '/simulation',
       target: '[data-tour="simulation-chart"]',
@@ -297,96 +270,33 @@ export const mainTour = {
         onEnter: async () => {
           const { useUIStore } = await import('@/stores/useUIStore')
           const uiStore = useUIStore()
+          // Getreide Feed-Reduktion Szenario - globale Simulation
           uiStore.selectedProduct = 'Cereals - Excluding Beer'
-          uiStore.selectedMetric = 'production'
+          uiStore.selectedCountry = null // Global 
+          uiStore.selectedMetric = 'Feed'
+          uiStore.selectedYear = 2022
         }
       },
       dataHighlight: {
-        label: 'Szenario-Rechnung',
-        value: 'Effizientere Nutzung von Getreide möglich'
+        label: 'Feed-Effizienz Szenario',
+        value: '20% weniger verfüttern = mehr Menschen ernähren'
       },
       insights: [
-        'Enorme Effizienzpotenziale vorhanden',
-        'Ernährungsumstellung als Schlüssel',
-        'Politik und Verbraucher gefragt'
+        'Von 717 auf 574 Mio. t Mais-Futter',
+        'Gesparte Kalorien für 200+ Mio. Menschen',
+        'Nachhaltigkeit durch Effizienz'
       ]
     },
 
-    {
-      id: 'brazil-sugar-crisis',
-      title: 'Fallstudie: Brasiliens Zuckerkrise',
-      content: `
-        2021 traf Brasilien eine <strong>Jahrhundertdürre gefolgt von Frost</strong>. 
-        Die Zuckerrohrproduktion brach um 17% ein - mit globalen Folgen, da Brasilien 
-        der größte Zuckerexporteur ist.
-      `,
-      route: '/timeseries',
-      target: '[data-tour="timeseries-chart"]',
-      position: 'top',
-      actions: {
-        onEnter: async () => {
-          const { useUIStore } = await import('@/stores/useUIStore')
-          const { useTourStore } = await import('@/tour/stores/useTourStore')
-          const uiStore = useUIStore()
-          const tourStore = useTourStore()
-          uiStore.selectedProduct = 'Sugar & Sweeteners'
-          uiStore.selectedCountry = 'Brazil'
-          uiStore.selectedMetric = 'production'
-          // Year range selection not supported in current UI
-          // Focus on Brazil frost year
-          uiStore.selectedYear = 2021
-        }
-      },
-      dataHighlight: {
-        label: 'Produktionseinbruch',
-        value: 'Dürre und Frost reduzierten Produktion'
-      },
-      insights: [
-        'Niedrigste Erträge seit 2003',
-        'Weltmarkt-Zuckerpreise auf 4-Jahres-Hoch',
-        'Mehr Zuckerrohr musste zu Ethanol werden'
-      ]
-    },
+
 
     {
-      id: 'palm-oil-volatility',
-      title: 'Palmöl: Spielball des Klimas',
+      id: 'conclusion-lessons-learned',
+      title: 'Lehren einer datengetriebenen Zeitreise',
       content: `
-        Palmöl aus Indonesien und Malaysia versorgt die Welt. Doch <strong>El Niño</strong> 
-        und andere Klimaphänomene machen die Produktion unberechenbar. 2022 verhängte 
-        Indonesien sogar einen Exportstopp.
-      `,
-      route: '/timeseries',
-      target: '[data-tour="metric-selector"]',
-      position: 'bottom',
-      actions: {
-        onEnter: async () => {
-          const { useUIStore } = await import('@/stores/useUIStore')
-          const uiStore = useUIStore()
-          uiStore.selectedProduct = 'Palm Oil'
-          // uiStore.selectedCountry = 'Indonesia' // Removed to prevent automatic Indonesia selection
-          uiStore.selectedMetric = 'export_quantity'
-          // Note: Year range is not supported in UIStore
-        }
-      },
-      dataHighlight: {
-        label: '2022 Exportstopp',
-        value: 'April-Mai: Kompletter Exportstopp'
-      },
-      insights: [
-        '2016: El Niño -10% Produktion',
-        '2020: Arbeitskräftemangel durch COVID',
-        'Preisvolatilität bedroht Ernährungssicherheit'
-      ]
-    },
-
-    {
-      id: 'conclusion',
-      title: 'Lehren für die Zukunft',
-      content: `
-        Unsere Datenreise zeigt: Die globale Ernährung ist <strong>resilienter als gedacht</strong>, 
-        aber auch verwundbarer durch Klimawandel und Konflikte. Positive Trends existieren, 
-        doch die Herausforderungen wachsen.
+        Unsere Datenreise durch 13 Jahre zeigt: Die globale Ernährung ist <strong>resilienter 
+        als gedacht</strong>, aber verwundbarer durch Klimawandel und Konflikte. Von COVID-Panik 
+        bis Ukraine-Schock - die Daten erzählen Geschichten menschlicher Anpassungsfähigkeit.
       `,
       route: '/',
       target: '[data-tour="dashboard-overview"]',
@@ -394,24 +304,23 @@ export const mainTour = {
       actions: {
         onEnter: async () => {
           const { useUIStore } = await import('@/stores/useUIStore')
-          const { useTourStore } = await import('@/tour/stores/useTourStore')
           const uiStore = useUIStore()
-          const tourStore = useTourStore()
+          // Zurück zur globalen Übersicht - Gesamtbild
           uiStore.selectedProduct = 'Cereals - Excluding Beer'
+          uiStore.selectedCountry = null // Global
           uiStore.selectedYear = 2022
-          // Reset to current year
-          uiStore.selectedYear = 2022
+          uiStore.selectedMetric = 'Production'
         }
       },
       dataHighlight: {
-        label: 'Kernbotschaft',
-        value: 'Daten ermöglichen bessere Entscheidungen'
+        label: 'Datenbasierte Erkenntnisse',
+        value: '2010-2022: Eine Geschichte der Resilienz'
       },
       insights: [
-        '✅ Resiliente Lieferketten bewährten sich',
-        '⚠️ Klimarisiken nehmen dramatisch zu',
-        '🌍 Regionale Ungleichheiten bleiben kritisch',
-        '🔄 Nachhaltige Transformation ist möglich'
+        '✅ Globale Versorgung stieg trotz aller Krisen',
+        '⚠️ Regionale Ungleichheit bleibt dramatisch',
+        '🌍 Klimaextreme werden zur neuen Normalität',
+        '🔄 Effizienz wichtiger als reines Mengenwachstum'
       ]
     }
   ]

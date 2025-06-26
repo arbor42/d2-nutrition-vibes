@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { useTourStore } from '@/tour/stores/useTourStore'
 import { useDataStore } from '@/stores/useDataStore'
 import { useUIStore } from '@/stores/useUIStore'
 import WorldMap from '@/components/visualizations/WorldMap.vue'
@@ -9,6 +10,7 @@ import { formatAgricultureValue } from '@/utils/formatters'
 
 const dataStore = useDataStore()
 const uiStore = useUIStore()
+const tourStore = useTourStore()
 
 const selectedVisualization = ref('world-map')
 const dashboardLoading = ref(false)
@@ -495,20 +497,43 @@ const getFeedUsageExplanation = () => {
   }
 }
 
+// Debounced watcher to prevent race conditions during tour navigation
+let watcherTimeout
 watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([product, year]) => {
   if (product && year) {
-    try {
-      // Check if timeseries data is available for this product
-      if (dataStore.timeseriesData && dataStore.timeseriesData[product]) {
-        console.log('📊 DashboardPanel watcher: Using timeseries data for', product)
-        // Timeseries data is available, no need to load production data
-      } else {
-        console.log('📊 DashboardPanel watcher: Loading production data for', product)
-        await dataStore.loadProductionData(product, year)
-      }
-    } catch (error) {
-      console.error('Failed to load production data:', error)
+    // Clear any pending watcher execution
+    if (watcherTimeout) {
+      clearTimeout(watcherTimeout)
     }
+    
+    // Debounce the watcher to prevent rapid firing during tour navigation
+    watcherTimeout = setTimeout(async () => {
+      try {
+        // Skip data loading if tour is active and currently executing step actions
+        if (tourStore.isTourActive && tourStore.currentStep) {
+          console.log('📊 DashboardPanel watcher: Skipping data load during tour step execution')
+          return
+        }
+        
+        // Check if timeseries data is available for this product
+        if (dataStore.timeseriesData && dataStore.timeseriesData[product]) {
+          console.log('📊 DashboardPanel watcher: Using timeseries data for', product)
+          // Timeseries data is available, no need to load production data
+        } else {
+          console.log('📊 DashboardPanel watcher: Loading production data for', product)
+          await dataStore.loadProductionData(product, year)
+        }
+      } catch (error) {
+        console.error('Failed to load production data:', error)
+      }
+    }, tourStore.isTourActive ? 500 : 100) // Longer debounce during tour
+  }
+})
+
+// Cleanup timeout on unmount
+onUnmounted(() => {
+  if (watcherTimeout) {
+    clearTimeout(watcherTimeout)
   }
 })
 </script>

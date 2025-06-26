@@ -162,10 +162,8 @@ export const useTourStore = defineStore('tour', () => {
   const nextStep = () => {
     if (canGoNext.value) {
       return goToStep(currentStepIndex.value + 1)
-    } else if (isLastStep.value) {
-      stopTour('completed')
-      return true
     }
+    // Don't auto-complete on last step - let user explicitly end tour
     return false
   }
   
@@ -267,15 +265,12 @@ export const useTourStore = defineStore('tour', () => {
     }
   })
   
-  // Watch for tour completion
+  // Progress tracking (removed auto-completion)
+  // User should manually end tour when ready
   watch(progress, (newProgress) => {
+    // Just track progress, don't auto-complete
     if (newProgress === 100 && isActive.value) {
-      // Auto-complete tour
-      setTimeout(() => {
-        if (isActive.value) {
-          stopTour('completed')
-        }
-      }, 2000)
+      console.log('[TourStore] Tour reached final step - waiting for user to end tour')
     }
   })
   

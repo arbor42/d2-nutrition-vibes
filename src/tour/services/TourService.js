@@ -81,11 +81,10 @@ class TourService {
           break
         case 'Enter':
           e.preventDefault()
-          if (this.store.isLastStep) {
-            this.stopTour('completed')
-          } else if (this.store.canGoNext) {
+          if (this.store.canGoNext) {
             this.nextStep()
           }
+          // On last step, Enter does nothing - user must explicitly end tour
           break
       }
     })
@@ -157,7 +156,14 @@ class TourService {
   }
   
   async nextStep() {
-    if (!this.store.canGoNext && !this.store.isLastStep) return false
+    // If it's the last step, complete the tour
+    if (this.store.isLastStep) {
+      this.stopTour('completed')
+      return true
+    }
+    
+    // Otherwise, proceed normally
+    if (!this.store.canGoNext) return false
     
     const success = this.store.nextStep()
     if (success && this.store.currentStep) {
@@ -219,16 +225,38 @@ class TourService {
       
       // Execute step actions and wait for reactive updates
       if (step.actions?.onEnter) {
-        await step.actions.onEnter()
-        await nextTick()
-        
-        // Wait a bit more for reactive updates to propagate
-        await new Promise(resolve => setTimeout(resolve, 100))
-        
-        // Re-check if element exists after state changes
-        const updatedElement = await this.waitForElement(step.target, 2000)
-        if (updatedElement) {
-          element = updatedElement
+        try {
+          await step.actions.onEnter()
+          await nextTick()
+          
+          // Wait a bit more for reactive updates to propagate
+          await new Promise(resolve => setTimeout(resolve, 100))
+          
+          // Re-check if element exists after state changes
+          const updatedElement = await this.waitForElement(step.target, 2000)
+          if (updatedElement) {
+            element = updatedElement
+          }
+        } catch (error) {
+          console.error(`[TourService] Error executing step actions for '${step.id}':`, error)
+          this.store.trackEvent('tour_step_action_error', { 
+            stepId: step.id, 
+            error: error.message 
+          })
+          
+          // Try to continue with fallback if available
+          if (step.fallbackPosition) {
+            console.log(`[TourService] Using fallback position due to action error for step '${step.id}'`)
+            this.store.setTooltipPosition(step.fallbackPosition)
+            this.store.overlayVisible = true
+            this.store.tooltipVisible = true
+            return
+          }
+          
+          // Skip this step and continue tour
+          console.warn(`[TourService] Skipping step '${step.id}' due to action error`)
+          await this.nextStep()
+          return
         }
       }
       
@@ -346,17 +374,34 @@ class TourService {
     for (let i = 0; i < retries; i++) {
       const element = await attemptFind(retries - i)
       if (element) {
-        return element
+        // Verify element is actually visible and interactable
+        const rect = element.getBoundingClientRect()
+        const isVisible = rect.width > 0 && rect.height > 0 && 
+                         getComputedStyle(element).visibility !== 'hidden' &&
+                         getComputedStyle(element).display !== 'none'
+        
+        if (isVisible) {
+          console.log(`[TourService] Element '${selector}' found and verified as visible`)
+          return element
+        } else {
+          console.warn(`[TourService] Element '${selector}' found but not visible, continuing search...`)
+        }
       }
       
       // If not last retry, wait before trying again
       if (i < retries - 1) {
-        console.log(`[TourService] Element '${selector}' not found, retrying... (${i + 1}/${retries})`)
+        console.log(`[TourService] Element '${selector}' not found or not visible, retrying... (${i + 1}/${retries})`)
         await new Promise(resolve => setTimeout(resolve, 500 * (i + 1))) // Increasing delay
+        
+        // Extra wait for dashboard elements that may need data loading
+        if (selector.includes('dashboard')) {
+          console.log(`[TourService] Extra wait for dashboard element '${selector}'`)
+          await new Promise(resolve => setTimeout(resolve, 1000))
+        }
       }
     }
     
-    console.warn(`[TourService] Element '${selector}' not found after ${retries} retries`)
+    console.warn(`[TourService] Element '${selector}' not found or not visible after ${retries} retries`)
     return null
   }
   
@@ -986,52 +1031,79 @@ class TourService {
     await new Promise(resolve => setTimeout(resolve, 50))
   }
   
-  // Enhanced method for multiple selections with validation
+  // Enhanced method for multiple selections with validation and data loading coordination
   async setUISelections(selections = {}, retries = 3) {
     const { useUIStore } = await import('@/stores/useUIStore')
+    const { useDataStore } = await import('@/stores/useDataStore')
     const uiStore = useUIStore()
+    const dataStore = useDataStore()
     
     for (let attempt = 1; attempt <= retries; attempt++) {
-      // Apply all selections
-      if (selections.product !== undefined) uiStore.selectedProduct = selections.product
-      if (selections.country !== undefined) uiStore.selectedCountry = selections.country
-      if (selections.metric !== undefined) uiStore.selectedMetric = selections.metric
-      if (selections.year !== undefined) uiStore.selectedYear = selections.year
-      
-      // Wait for all reactive updates
-      await nextTick()
-      await new Promise(resolve => setTimeout(resolve, 100 * attempt)) // Increasing delay
-      
-      // Validate selections were applied
-      const finalState = {
-        product: uiStore.selectedProduct,
-        country: uiStore.selectedCountry,
-        metric: uiStore.selectedMetric,
-        year: uiStore.selectedYear
-      }
-      
-      // Check if all selections were applied correctly
-      let allApplied = true
-      for (const [key, value] of Object.entries(selections)) {
-        if (value !== undefined && finalState[key] !== value) {
-          allApplied = false
-          console.warn(`[TourService] Selection '${key}' not applied correctly. Expected: ${value}, Got: ${finalState[key]}`)
-          break
+      try {
+        // Apply all selections
+        if (selections.product !== undefined) uiStore.selectedProduct = selections.product
+        if (selections.country !== undefined) uiStore.selectedCountry = selections.country
+        if (selections.metric !== undefined) uiStore.selectedMetric = selections.metric
+        if (selections.year !== undefined) uiStore.selectedYear = selections.year
+        
+        // Wait for all reactive updates
+        await nextTick()
+        await new Promise(resolve => setTimeout(resolve, 100 * attempt)) // Increasing delay
+        
+        // Wait for data loading to complete with timeout
+        await this.waitForDataLoadingComplete(dataStore, 5000)
+        
+        // Validate selections were applied
+        const finalState = {
+          product: uiStore.selectedProduct,
+          country: uiStore.selectedCountry,
+          metric: uiStore.selectedMetric,
+          year: uiStore.selectedYear
         }
-      }
-      
-      if (allApplied) {
-        console.log('[TourService] UI selections applied successfully:', finalState)
-        return finalState
-      }
-      
-      if (attempt < retries) {
-        console.log(`[TourService] Retrying UI selections... (${attempt}/${retries})`)
+        
+        // Check if all selections were applied correctly
+        let allApplied = true
+        for (const [key, value] of Object.entries(selections)) {
+          if (value !== undefined && finalState[key] !== value) {
+            allApplied = false
+            console.warn(`[TourService] Selection '${key}' not applied correctly. Expected: ${value}, Got: ${finalState[key]}`)
+            break
+          }
+        }
+        
+        if (allApplied) {
+          console.log('[TourService] UI selections applied successfully:', finalState)
+          return finalState
+        }
+        
+        if (attempt < retries) {
+          console.log(`[TourService] Retrying UI selections... (${attempt}/${retries})`)
+        }
+      } catch (error) {
+        console.error(`[TourService] Error during UI selection attempt ${attempt}:`, error)
+        if (attempt === retries) {
+          throw error
+        }
       }
     }
     
     console.error('[TourService] Failed to apply UI selections after retries:', selections)
     return null
+  }
+
+  // Wait for data loading to complete with timeout
+  async waitForDataLoadingComplete(dataStore, timeout = 5000) {
+    const startTime = Date.now()
+    
+    while (dataStore.isLoading && (Date.now() - startTime) < timeout) {
+      await new Promise(resolve => setTimeout(resolve, 50))
+    }
+    
+    if (dataStore.isLoading) {
+      console.warn('[TourService] Data loading timeout reached, proceeding anyway')
+    } else {
+      console.log('[TourService] Data loading completed successfully')
+    }
   }
 }
 

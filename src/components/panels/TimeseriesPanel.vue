@@ -11,22 +11,24 @@
       <div class="panel-controls">
         <div class="filters-grid">
           <div class="filter-group">
-            <SearchableSelect
-              v-model="selectedProduct"
+            <MultiSelect
+              v-model="selectedProducts"
               :options="productOptions"
-              placeholder="Produkt auswählen..."
-              label="Produkt"
+              placeholder="Produkte auswählen..."
+              label="Produkte"
               size="md"
+              :max-items="3"
             />
           </div>
           
           <div class="filter-group">
-            <SearchableSelect
-              v-model="selectedCountry"
+            <MultiSelect
+              v-model="selectedCountries"
               :options="countryOptions"
-              placeholder="Land auswählen..."
-              label="Land"
+              placeholder="Länder auswählen..."
+              label="Länder"
               size="md"
+              :max-items="5"
             />
           </div>
           
@@ -39,19 +41,6 @@
               size="md"
             />
           </div>
-
-          <div class="filter-group">
-            <BaseButton 
-              :disabled="isLoading" 
-              variant="primary"
-              size="md"
-              class="mt-6"
-              @click="loadData"
-            >
-              <LoadingSpinner v-if="isLoading" size="sm" />
-              {{ isLoading ? 'Lädt...' : 'Daten laden' }}
-            </BaseButton>
-          </div>
         </div>
       </div>
 
@@ -61,22 +50,18 @@
             :error="error"
             title="Fehler beim Laden der Zeitreihendaten"
             :show-retry="true"
-            @retry="loadData"
+            @retry="ensureDataLoaded"
           />
-        </div>
-
-        <div v-else-if="isLoading" class="loading-container">
-          <LoadingSpinner size="lg" />
-          <p class="loading-text">Lade Zeitreihendaten...</p>
         </div>
 
         <div v-else-if="chartData.length > 0" class="chart-container" data-tour="timeseries-chart">
           <TimeseriesChart
             :width="800"
             :height="500"
-            :selected-country="selectedCountry"
-            :selected-product="selectedProduct"
+            :selected-countries="selectedCountries"
+            :selected-products="selectedProducts"
             :selected-metric="selectedMetric"
+            :chart-data="chartData"
             @point-click="handlePointClick"
           />
         </div>
@@ -84,7 +69,12 @@
         <div v-else class="empty-state">
           <div class="empty-icon">📈</div>
           <h3>Keine Daten verfügbar</h3>
-          <p>Wählen Sie Produkt und Land aus, um Zeitreihendaten anzuzeigen.</p>
+          <p v-if="selectedProducts.length === 0">
+            Wählen Sie mindestens ein Produkt aus, um Zeitreihendaten anzuzeigen.
+          </p>
+          <p v-else>
+            Die ausgewählten Produkte haben keine verfügbaren Zeitreihendaten.
+          </p>
         </div>
       </div>
 
@@ -95,12 +85,12 @@
             <span class="stat-value">{{ chartData.length }}</span>
           </div>
           <div class="stat-item">
-            <span class="stat-label">Produkt</span>
-            <span class="stat-value">{{ getGermanName(selectedProduct) }}</span>
+            <span class="stat-label">{{ selectedProducts.length > 1 ? 'Produkte' : 'Produkt' }}</span>
+            <span class="stat-value">{{ selectedProducts.length }}</span>
           </div>
           <div class="stat-item">
-            <span class="stat-label">Land</span>
-            <span class="stat-value">{{ selectedCountry || 'Global' }}</span>
+            <span class="stat-label">{{ selectedCountries.length > 1 ? 'Länder' : 'Land' }}</span>
+            <span class="stat-value">{{ selectedCountries.length > 0 ? selectedCountries.length : 'Global' }}</span>
           </div>
         </div>
       </div>
@@ -114,9 +104,8 @@ import { useDataStore } from '@/stores/useDataStore'
 import { useUIStore } from '@/stores/useUIStore'
 import ErrorBoundary from '@/components/ui/ErrorBoundary.vue'
 import ErrorDisplay from '@/components/ui/ErrorDisplay.vue'
-import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
-import BaseButton from '@/components/ui/BaseButton.vue'
 import SearchableSelect from '@/components/ui/SearchableSelect.vue'
+import MultiSelect from '@/components/ui/MultiSelect.vue'
 import TimeseriesChart from '@/components/visualizations/TimeseriesChart.vue'
 import { getAllProductOptions, getGermanName } from '@/utils/productMappings'
 
@@ -125,11 +114,10 @@ const dataStore = useDataStore()
 const uiStore = useUIStore()
 
 // Reactive state - use the same defaults as dashboard
-const selectedProduct = ref('Wheat and products')
-const selectedCountry = ref('')
+const selectedProducts = ref([])
+const selectedCountries = ref([])
 const selectedMetric = ref('production')
 const chartData = ref([])
-const isLoading = ref(false)
 const error = ref(null)
 
 // Computed properties
@@ -151,12 +139,18 @@ const productOptions = computed(() => {
 
 // Get available countries from timeseries data
 const countryOptions = computed(() => {
-  if (!dataStore.timeseriesData || !selectedProduct.value) return []
+  if (!dataStore.timeseriesData || selectedProducts.value.length === 0) return []
   
-  const productData = dataStore.timeseriesData[selectedProduct.value]
-  if (!productData) return []
+  // Get union of all countries that exist for any selected product
+  const allCountries = new Set()
   
-  const countries = Object.keys(productData)
+  selectedProducts.value.forEach(product => {
+    const productData = dataStore.timeseriesData[product]
+    if (productData) {
+      Object.keys(productData).forEach(country => allCountries.add(country))
+    }
+  })
+  
   const NON_COUNTRY_ENTITIES = [
     "World", "Africa", "Americas", "Asia", "Europe", "Oceania",
     "Northern America", "South America", "Central America", "Caribbean",
@@ -170,7 +164,7 @@ const countryOptions = computed(() => {
     "Net Food Importing Developing Countries"
   ]
   
-  return countries
+  return [...allCountries]
     .filter(country => !NON_COUNTRY_ENTITIES.includes(country) && !country.toLowerCase().includes('total'))
     .map(country => ({
       value: country,
@@ -189,84 +183,87 @@ const metricOptions = [
 
 // Update chart data when selections change
 const updateChartData = () => {
-  if (!dataStore.timeseriesData || !selectedProduct.value) {
+  if (!dataStore.timeseriesData || selectedProducts.value.length === 0) {
     chartData.value = []
     return
   }
 
-  const productData = dataStore.timeseriesData[selectedProduct.value]
-  if (!productData) {
-    chartData.value = []
-    return
-  }
+  const metricKey = selectedMetric.value === 'production' ? 'production' :
+                   selectedMetric.value === 'import_quantity' ? 'imports' :
+                   selectedMetric.value === 'export_quantity' ? 'exports' :
+                   'domestic_supply'
 
-  if (selectedCountry.value && productData[selectedCountry.value]) {
-    // Single country data
-    const countryData = productData[selectedCountry.value]
-    const metricKey = selectedMetric.value === 'production' ? 'production' :
-                     selectedMetric.value === 'import_quantity' ? 'imports' :
-                     selectedMetric.value === 'export_quantity' ? 'exports' :
-                     'domestic_supply'
-    
-    chartData.value = countryData
-      .map(yearData => ({
-        year: yearData.year,
-        value: yearData[metricKey] || 0,
-        country: selectedCountry.value,
-        product: selectedProduct.value,
-        unit: yearData.unit || 't'
-      }))
-      .filter(item => item.value > 0)
-      .sort((a, b) => a.year - b.year)
-  } else {
-    // Global aggregated data
-    const yearlyTotals = new Map()
-    const metricKey = selectedMetric.value === 'production' ? 'production' :
-                     selectedMetric.value === 'import_quantity' ? 'imports' :
-                     selectedMetric.value === 'export_quantity' ? 'exports' :
-                     'domestic_supply'
-    
-    Object.entries(productData).forEach(([country, countryData]) => {
-      countryData.forEach(yearData => {
-        const value = yearData[metricKey] || 0
-        if (value > 0) {
-          const year = yearData.year
-          const currentTotal = yearlyTotals.get(year) || 0
-          yearlyTotals.set(year, currentTotal + value)
+  const allData = []
+
+  // Iterate through selected products
+  selectedProducts.value.forEach(product => {
+    const productData = dataStore.timeseriesData[product]
+    if (!productData) return
+
+    if (selectedCountries.value.length > 0) {
+      // Multiple countries selected
+      selectedCountries.value.forEach(country => {
+        if (productData[country]) {
+          const countryData = productData[country]
+          countryData.forEach(yearData => {
+            const value = yearData[metricKey] || 0
+            if (value > 0) {
+              allData.push({
+                year: yearData.year,
+                value: value,
+                country: country,
+                product: product,
+                unit: yearData.unit || 't',
+                // Create a unique series identifier for each country-product combination
+                series: `${country} - ${product}`
+              })
+            }
+          })
         }
       })
-    })
-    
-    chartData.value = Array.from(yearlyTotals.entries())
-      .map(([year, value]) => ({
-        year: year,
-        value: value,
-        country: 'Global',
-        product: selectedProduct.value,
-        unit: 't'
-      }))
-      .sort((a, b) => a.year - b.year)
-  }
+    } else {
+      // No countries selected - show global data for each product
+      const yearlyTotals = new Map()
+      
+      Object.entries(productData).forEach(([country, countryData]) => {
+        countryData.forEach(yearData => {
+          const value = yearData[metricKey] || 0
+          if (value > 0) {
+            const year = yearData.year
+            const currentTotal = yearlyTotals.get(year) || 0
+            yearlyTotals.set(year, currentTotal + value)
+          }
+        })
+      })
+      
+      yearlyTotals.forEach((value, year) => {
+        allData.push({
+          year: year,
+          value: value,
+          country: 'Global',
+          product: product,
+          unit: 't',
+          series: `Global - ${product}`
+        })
+      })
+    }
+  })
+  
+  chartData.value = allData.sort((a, b) => {
+    if (a.series !== b.series) return a.series.localeCompare(b.series)
+    return a.year - b.year
+  })
 }
 
 // Methods
-const loadData = async () => {
-  error.value = null
-  isLoading.value = true
-  
+const ensureDataLoaded = async () => {
   try {
-    // Ensure timeseries data is loaded
     if (!dataStore.timeseriesData) {
       await dataStore.initializeApp()
     }
-    
-    updateChartData()
-    
   } catch (err) {
     error.value = err
-    chartData.value = []
-  } finally {
-    isLoading.value = false
+    console.error('TimeseriesPanel data loading error:', err)
   }
 }
 
@@ -280,13 +277,14 @@ const handlePointClick = (point) => {
 }
 
 // Watchers
-watch([selectedProduct, selectedCountry, selectedMetric], () => {
+watch([selectedProducts, selectedCountries, selectedMetric], () => {
   updateChartData()
-})
+}, { immediate: true })
 
 // Lifecycle
 onMounted(async () => {
-  await loadData()
+  await ensureDataLoaded()
+  updateChartData()
 })
 </script>
 
@@ -312,7 +310,7 @@ onMounted(async () => {
 }
 
 .filters-grid {
-  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-end;
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start;
 }
 
 .filter-group {
@@ -324,13 +322,8 @@ onMounted(async () => {
 }
 
 .error-container,
-.loading-container,
 .empty-state {
   @apply flex flex-col items-center justify-center h-full;
-}
-
-.loading-text {
-  @apply mt-4 text-gray-600 dark:text-gray-400;
 }
 
 .empty-icon {

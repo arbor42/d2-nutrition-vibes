@@ -5,13 +5,15 @@ import BaseButton from '@/components/ui/BaseButton.vue'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 import * as d3 from 'd3'
 import { createD3AxisFormatter, createD3TooltipFormatter } from '@/utils/formatters'
+import { createColorScale } from '@/utils/chartColors'
 
 interface Props {
   width?: number
   height?: number
-  selectedCountry?: string
-  selectedProduct?: string
+  selectedCountries?: string[]
+  selectedProducts?: string[]
   selectedMetric?: string
+  chartData?: any[]
   showGrid?: boolean
   showPoints?: boolean
 }
@@ -19,9 +21,10 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   width: 600,
   height: 400,
-  selectedCountry: '',
-  selectedProduct: 'Wheat and products',
+  selectedCountries: () => [],
+  selectedProducts: () => [],
   selectedMetric: 'production',
+  chartData: () => [],
   showGrid: true,
   showPoints: true
 })
@@ -40,10 +43,11 @@ const svgContainerRef = ref<HTMLDivElement>()
 // State
 const isLoading = ref(false)
 const error = ref<string | null>(null)
-const chartData = ref<any[]>([])
+const localChartData = ref<any[]>([])
+const colorScale = ref(createColorScale())
 
 // Chart configuration
-const margin = { top: 20, right: 30, bottom: 40, left: 60 }
+const margin = { top: 20, right: 120, bottom: 40, left: 60 }
 
 // D3 variables
 let svg: d3.Selection<SVGSVGElement, unknown, null, undefined>
@@ -184,145 +188,26 @@ const getMetricLabel = () => {
 }
 
 // Load and prepare data
-const loadData = async () => {
-  if (!props.selectedProduct) return
-
-  try {
-    isLoading.value = true
-    error.value = null
-
-    // Use timeseries data if available
-    if (dataStore.timeseriesData) {
-      // For individual products, use the product name directly (no normalization needed)
-      const normalizedProduct = props.selectedProduct
-      
-      if (dataStore.timeseriesData[normalizedProduct]) {
-        const productTimeseries = dataStore.timeseriesData[normalizedProduct]
-        const processedData: any[] = []
-        
-        if (props.selectedCountry && productTimeseries[props.selectedCountry]) {
-          // Single country data
-          const countryData = productTimeseries[props.selectedCountry]
-          countryData.forEach((yearData: any) => {
-            const metricKey = props.selectedMetric === 'production' ? 'production' :
-                             props.selectedMetric === 'import_quantity' ? 'imports' :
-                             props.selectedMetric === 'export_quantity' ? 'exports' :
-                             'domestic_supply'
-            
-            const value = yearData[metricKey] || 0
-            if (value > 0) {
-              processedData.push({
-                year: yearData.year,
-                value: value,
-                country: props.selectedCountry,
-                product: normalizedProduct,
-                unit: yearData.unit || 't'
-              })
-            }
-          })
-        } else {
-          // Global aggregated data
-          const yearlyTotals = new Map()
-          
-          Object.entries(productTimeseries).forEach(([country, countryData]: [string, any]) => {
-            countryData.forEach((yearData: any) => {
-              const metricKey = props.selectedMetric === 'production' ? 'production' :
-                               props.selectedMetric === 'import_quantity' ? 'imports' :
-                               props.selectedMetric === 'export_quantity' ? 'exports' :
-                               'domestic_supply'
-              
-              const value = yearData[metricKey] || 0
-              if (value > 0) {
-                const year = yearData.year
-                const currentTotal = yearlyTotals.get(year) || 0
-                yearlyTotals.set(year, currentTotal + value)
-              }
-            })
-          })
-          
-          yearlyTotals.forEach((value, year) => {
-            processedData.push({
-              year: year,
-              value: value,
-              country: 'Global',
-              product: normalizedProduct,
-              unit: 't'
-            })
-          })
-        }
-        
-        chartData.value = processedData.sort((a, b) => a.year - b.year)
-        console.log(`📈 TimeseriesChart: Loaded ${processedData.length} data points for ${normalizedProduct}`)
-        updateChart()
-        return
-      }
-    }
-    
-    // Fallback to production data loading if timeseries not available
-    const availableYears = dataStore.availableYears || [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022]
-    const dataPromises = availableYears.map(year => 
-      dataStore.loadProductionData(props.selectedProduct, year)
-        .then(data => ({ year, data }))
-        .catch(err => ({ year, error: err }))
-    )
-
-    const results = await Promise.all(dataPromises)
-    const processedData: any[] = []
-    
-    results.forEach(({ year, data, error }) => {
-      if (error) {
-        console.warn(`Failed to load data for ${year}:`, error)
-        return
-      }
-
-      if (data?.data) {
-        data.data.forEach((item: any) => {
-          if (props.selectedCountry) {
-            if (item.country === props.selectedCountry && item.value > 0) {
-              processedData.push({
-                year,
-                value: item.value,
-                country: item.country,
-                product: item.product,
-                unit: item.unit
-              })
-            }
-          } else {
-            const existingEntry = processedData.find(d => d.year === year)
-            if (existingEntry) {
-              existingEntry.value += item.value
-            } else if (item.value > 0) {
-              processedData.push({
-                year,
-                value: item.value,
-                country: 'Global',
-                product: item.product,
-                unit: item.unit
-              })
-            }
-          }
-        })
-      }
-    })
-
-    chartData.value = processedData
+const loadData = () => {
+  // Use the chartData passed from parent
+  localChartData.value = props.chartData || []
+  
+  // Reset color scale when new data is loaded
+  colorScale.value = createColorScale()
+  
+  if (localChartData.value.length > 0) {
+    console.log(`📈 TimeseriesChart: Loaded ${localChartData.value.length} data points`)
     updateChart()
-
-  } catch (err) {
-    error.value = 'Fehler beim Laden der Zeitreihen-Daten'
-    console.error('Timeseries data loading error:', err)
-  } finally {
-    isLoading.value = false
   }
 }
 
 // Update chart with current data
 const updateChart = () => {
-  if (!g || !chartData.value.length) return
+  if (!g || !localChartData.value.length) return
   
-  console.log('📈 TimeseriesChart: Updating chart with', chartData.value.length, 'data points')
+  console.log('📈 TimeseriesChart: Updating chart with', localChartData.value.length, 'data points')
   
-  const data = chartData.value.filter(d => d.value > 0).sort((a, b) => a.year - b.year)
+  const data = localChartData.value.filter(d => d.value > 0).sort((a, b) => a.year - b.year)
   if (!data.length) return
 
   // Get current dimensions from container
@@ -335,6 +220,9 @@ const updateChart = () => {
   // Update viewBox for responsive scaling
   svg.attr('viewBox', `0 0 ${width} ${height}`)
 
+  // Group data by series
+  const seriesData = d3.group(data, d => d.series)
+  
   // Update scale domains
   const years = data.map(d => new Date(d.year, 0, 1))
   const values = data.map(d => d.value)
@@ -402,51 +290,63 @@ const updateChart = () => {
     yGridSelection.selectAll('line').style('stroke', gridColor).style('stroke-width', '1px').style('opacity', 0.5)
   }
 
-  // Draw line with green color scheme
-  const linePath = g.selectAll('.line-path').data([data])
-  
-  linePath.enter()
-    .append('path')
-    .attr('class', 'line-path')
-    .attr('fill', 'none')
-    .attr('stroke', '#059669') // emerald-600
-    .attr('stroke-width', 2.5)
-    .attr('stroke-linejoin', 'round')
-    .attr('stroke-linecap', 'round')
-    .merge(linePath)
-    .transition()
-    .duration(750)
-    .attr('d', line)
+  // Remove existing lines
+  g.selectAll('.line-path').remove()
+  g.selectAll('.series-group').remove()
 
-  linePath.exit().remove()
+  // Create a group for each series
+  const seriesGroups = g.selectAll('.series-group')
+    .data(Array.from(seriesData.entries()), d => d[0])
+    .enter()
+    .append('g')
+    .attr('class', 'series-group')
+
+  // Draw lines for each series
+  seriesGroups.each(function([seriesKey, seriesValues]) {
+    const sortedValues = seriesValues.sort((a, b) => a.year - b.year)
+    const color = colorScale.value(seriesKey)
+    
+    d3.select(this)
+      .append('path')
+      .attr('class', 'line-path')
+      .attr('fill', 'none')
+      .attr('stroke', color)
+      .attr('stroke-width', 2.5)
+      .attr('stroke-linejoin', 'round')
+      .attr('stroke-linecap', 'round')
+      .attr('opacity', 0)
+      .attr('d', line(sortedValues))
+      .transition()
+      .duration(750)
+      .attr('opacity', 1)
+  })
 
   // Draw points if enabled
   if (props.showPoints) {
-    const points = g.selectAll('.data-point').data(data, (d: any) => d.year)
+    // Remove existing points
+    g.selectAll('.data-point').remove()
     
-    points.enter()
-      .append('circle')
-      .attr('class', 'data-point')
-      .attr('r', 0)
-      .attr('fill', '#047857') // emerald-700
-      .attr('stroke', '#10b981') // emerald-500
-      .attr('stroke-width', 2)
-      .style('cursor', 'pointer')
-      .on('mouseover', handlePointMouseover)
-      .on('mouseout', handlePointMouseout)
-      .on('click', handlePointClick)
-      .merge(points)
-      .transition()
-      .duration(750)
-      .attr('r', 5)
-      .attr('cx', d => xScale(new Date(d.year, 0, 1)))
-      .attr('cy', d => yScale(d.value))
-
-    points.exit()
-      .transition()
-      .duration(500)
-      .attr('r', 0)
-      .remove()
+    // Add points for each data point
+    data.forEach(d => {
+      const color = colorScale.value(d.series)
+      
+      g.append('circle')
+        .attr('class', 'data-point')
+        .attr('r', 0)
+        .attr('fill', color)
+        .attr('stroke', 'white')
+        .attr('stroke-width', 2)
+        .style('cursor', 'pointer')
+        .attr('cx', xScale(new Date(d.year, 0, 1)))
+        .attr('cy', yScale(d.value))
+        .datum(d)
+        .on('mouseover', handlePointMouseover)
+        .on('mouseout', handlePointMouseout)
+        .on('click', handlePointClick)
+        .transition()
+        .duration(750)
+        .attr('r', 4)
+    })
   }
 
   // Update Y-axis label
@@ -457,22 +357,56 @@ const updateChart = () => {
   // Update X-axis label
   g.select('.x-label')
     .style('fill', axisColor)
+    
+  // Add legend
+  g.selectAll('.legend').remove()
+  
+  const legendGroup = g.append('g')
+    .attr('class', 'legend')
+    .attr('transform', `translate(${innerWidth + 10}, 20)`)
+  
+  const legendItems = Array.from(seriesData.keys()).sort()
+  const legendItemHeight = 20
+  
+  legendItems.forEach((series, i) => {
+    const legendItem = legendGroup.append('g')
+      .attr('transform', `translate(0, ${i * legendItemHeight})`)
+    
+    // Color box
+    legendItem.append('rect')
+      .attr('width', 12)
+      .attr('height', 12)
+      .attr('fill', colorScale.value(series))
+      .attr('rx', 2)
+    
+    // Label
+    legendItem.append('text')
+      .attr('x', 18)
+      .attr('y', 9)
+      .text(series)
+      .style('font-size', '11px')
+      .style('fill', axisColor)
+      .style('alignment-baseline', 'middle')
+  })
 }
 
 // Event handlers
 const handlePointMouseover = (event: MouseEvent, d: any) => {
+  const color = colorScale.value(d.series)
+  
   // Highlight the hovered point
   d3.select(event.target as Element)
     .transition()
     .duration(150)
-    .attr('r', 7)
+    .attr('r', 6)
     .attr('stroke-width', 3)
-    .attr('stroke', '#34d399') // emerald-400
 
   tooltip
     .style('opacity', 1)
+    .style('background', color)
+    .style('border-color', color)
     .html(`
-      <strong>${d.country || 'Global'}</strong><br/>
+      <strong>${d.series}</strong><br/>
       Jahr: ${d.year}<br/>
       ${getMetricLabel().replace('(Mio. t)', '')}: ${createD3TooltipFormatter('1000 t')(d.value)}
     `)
@@ -487,9 +421,8 @@ const handlePointMouseout = (event: MouseEvent) => {
   d3.select(event.target as Element)
     .transition()
     .duration(150)
-    .attr('r', 5)
+    .attr('r', 4)
     .attr('stroke-width', 2)
-    .attr('stroke', '#10b981') // emerald-500
 
   tooltip.style('opacity', 0)
   emit('pointHover', null)
@@ -548,9 +481,9 @@ const observer = new MutationObserver((mutations) => {
 })
 
 // Watchers
-watch([() => props.selectedCountry, () => props.selectedProduct, () => props.selectedMetric], () => {
+watch(() => props.chartData, () => {
   loadData()
-})
+}, { deep: true })
 
 // Lifecycle
 onMounted(() => {
@@ -607,9 +540,9 @@ defineExpose({
     </div>
 
     <!-- Chart title (optional, compact) -->
-    <div v-if="props.selectedCountry || chartData.length > 0" class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
+    <div v-if="localChartData.length > 0" class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
       <h4 class="text-sm font-medium text-gray-900 dark:text-gray-100">
-        {{ props.selectedCountry || 'Global' }} - {{ getMetricLabel() }}
+        {{ getMetricLabel() }}
       </h4>
     </div>
 
@@ -621,7 +554,7 @@ defineExpose({
 
     <!-- No data message -->
     <div
-      v-if="!isLoading && !error && chartData.length === 0"
+      v-if="!isLoading && !error && localChartData.length === 0"
       class="absolute inset-0 flex items-center justify-center text-gray-500 dark:text-gray-400"
     >
       <div class="text-center">
@@ -629,7 +562,7 @@ defineExpose({
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
         </svg>
         <p>Keine Zeitreihen-Daten verfügbar</p>
-        <p class="text-xs mt-1">Wählen Sie ein Produkt oder Land aus</p>
+        <p class="text-xs mt-1">Wählen Sie Produkte und Länder aus</p>
       </div>
     </div>
   </div>

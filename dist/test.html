@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Data Loading</title>
+</head>
+<body>
+    <h1>Testing Data Loading</h1>
+    <pre id="result"></pre>
+    <script>
+        async function testDataLoading() {
+            const result = document.getElementById('result');
+            
+            try {
+                // Test 1: Load index.json
+                const indexResponse = await fetch('/data/index.json');
+                result.textContent += `Index.json: ${indexResponse.status} ${indexResponse.statusText}\n`;
+                
+                // Test 2: Load metadata
+                const metadataResponse = await fetch('/data/fao/metadata.json');
+                result.textContent += `Metadata.json: ${metadataResponse.status} ${metadataResponse.statusText}\n`;
+                
+                // Test 3: Load timeseries
+                const timeseriesResponse = await fetch('/data/fao/timeseries.json');
+                result.textContent += `Timeseries.json: ${timeseriesResponse.status} ${timeseriesResponse.statusText}\n`;
+                
+                // Test 4: Try a production file
+                const prodResponse = await fetch('/data/fao/geo/wheat_and_products_production_2022.json');
+                result.textContent += `Wheat production: ${prodResponse.status} ${prodResponse.statusText}\n`;
+                
+            } catch (error) {
+                result.textContent += `Error: ${error.message}\n`;
+            }
+        }
+        
+        testDataLoading();
+    </script>
+</body>
+</html>

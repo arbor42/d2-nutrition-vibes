@@ -1,7 +1,8 @@
 {
-  "generated_at": "2025-06-16T10:27:00.892591",
+  "generated_at": "2025-06-24T14:31:29.658226",
   "data_summary": {
-    "total_records": 1076965,
+    "total_records": 1191487,
+    "kcal_records": 298768,
     "years": [
       2010,
       2011,
@@ -362,6 +363,7 @@
     "elements": [
       "Domestic supply quantity",
       "Export quantity",
+      "Feed",
       "Import quantity",
       "Production"
     ],
@@ -375,7 +377,13 @@
       "Import quantity": "Import volumes",
       "Export quantity": "Export volumes",
       "Production": "Domestic production",
-      "Domestic supply quantity": "Total domestic supply"
+      "Domestic supply quantity": "Total domestic supply",
+      "Feed": "Feed usage",
+      "food_supply_kcal": "Food supply in kcal/capita/day (from FAO)"
     }
+  },
+  "notes": {
+    "food_supply_kcal": "Values represent actual food consumption per capita per day from FAO data",
+    "validation": "All existing metrics preserved, food_supply_kcal added from original FAO dataset"
   }
 }

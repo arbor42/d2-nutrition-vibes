@@ -220,7 +220,7 @@
         <div v-else class="empty-state">
           <div class="empty-icon">🤖</div>
           <h3>Keine Prognosen geladen</h3>
-          <p>Wählen Sie einen Prognosentyp und eine spezifische Prognose aus, dann klicken Sie auf "Prognosen laden".</p>
+          <p>Wählen Sie einen Prognosentyp und eine spezifische Prognose aus um die Vorhersagen anzuzeigen.</p>
         </div>
       </div>
     </ErrorBoundary>
@@ -708,11 +708,19 @@ const chartData = computed(() => {
 })
 
 // Watchers
-watch([selectedForecast, selectedModel], () => {
-  if (selectedForecast.value && selectedModel.value) {
+watch(selectedForecast, (newValue, oldValue) => {
+  if (newValue && newValue !== oldValue) {
+    console.log('📊 MLPanel: Forecast selection changed:', newValue)
     loadPredictions()
   }
-}, { deep: true })
+})
+
+watch(selectedModel, (newValue, oldValue) => {
+  if (newValue && newValue !== oldValue && selectedForecast.value) {
+    console.log('🔄 MLPanel: Model selection changed:', newValue)
+    loadPredictions()
+  }
+})
 
 // Load available forecasts based on type
 const loadAvailableForecasts = wrapAsync(async () => {
@@ -755,10 +763,13 @@ const loadAvailableForecasts = wrapAsync(async () => {
         availableForecasts.value = forecasts
       }
       
-      // Select first forecast if available
+      // Auto-select first forecast if none selected
       if (availableForecasts.value.length > 0 && !selectedForecast.value) {
         selectedForecast.value = availableForecasts.value[0].file.replace('.json', '')
         console.log('✅ MLPanel: Auto-selected forecast:', selectedForecast.value)
+        
+        // Automatically load predictions for the selected forecast
+        await loadPredictions()
       }
       console.log('📊 MLPanel: Available forecasts:', availableForecasts.value.length)
     } else {
@@ -776,6 +787,7 @@ const loadAvailableForecasts = wrapAsync(async () => {
 
 // Lifecycle
 onMounted(async () => {
+  console.log('🚀 MLPanel: Component mounted, loading initial data...')
   try {
     // Load comprehensive index on mount
     const comprehensiveIndex = await dataStore.loadMLComprehensiveIndex()
@@ -784,8 +796,15 @@ onMounted(async () => {
     console.error('Failed to load comprehensive index:', err)
   }
   
+  // Load available forecasts
   await loadAvailableForecasts()
-  if (selectedForecast.value) {
+  
+  // Auto-select first forecast and load predictions
+  if (availableForecasts.value.length > 0 && !selectedForecast.value) {
+    selectedForecast.value = availableForecasts.value[0].file.replace('.json', '')
+    console.log('✅ MLPanel: Auto-selected first forecast:', selectedForecast.value)
+    
+    // Load predictions for the selected forecast
     await loadPredictions()
   }
 })

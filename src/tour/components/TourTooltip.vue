@@ -88,45 +88,45 @@
         </div>
       </div>
     
-      <!-- Navigation controls -->
-      <div class="flex justify-between items-center">
+      <!-- Navigation controls - Responsive layout -->
+      <div class="tour-controls">
         <!-- Previous button -->
         <button 
           v-if="canGoPrevious"
           :disabled="isLoading"
-          class="btn btn-secondary flex items-center space-x-2 disabled:opacity-50"
+          class="btn btn-secondary btn-responsive disabled:opacity-50"
           @click="$emit('previous')"
         >
           <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
           </svg>
-          <span>Zurück</span>
+          <span class="btn-text">Zurück</span>
         </button>
-        <div v-else></div>
+        <div v-else class="btn-spacer"></div>
       
         <!-- Action buttons -->
-        <div class="flex space-x-2">
+        <div class="action-buttons">
           <!-- Skip tour button -->
           <button 
-            class="btn btn-ghost text-sm"
+            class="btn btn-ghost btn-responsive text-sm"
             :disabled="isLoading"
             @click="$emit('skip')"
           >
-            Tour überspringen
+            <span class="btn-text">Überspringen</span>
           </button>
         
           <!-- Next/Finish button -->
           <button 
             :disabled="isLoading"
-            class="btn btn-primary flex items-center space-x-2 disabled:opacity-50"
+            class="btn btn-primary btn-responsive disabled:opacity-50"
             @click="$emit('next')"
           >
             <span v-if="isLoading" class="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></span>
-            <span>{{ isLastStep ? 'Tour beenden' : 'Weiter' }}</span>
-            <svg v-if="!isLastStep && !isLoading" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <span class="btn-text">{{ isLastStep ? 'Beenden' : 'Weiter' }}</span>
+            <svg v-if="!isLastStep && !isLoading" class="w-4 h-4 btn-icon" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
             </svg>
-            <svg v-else-if="isLastStep && !isLoading" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <svg v-else-if="isLastStep && !isLoading" class="w-4 h-4 btn-icon" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
             </svg>
           </button>
@@ -217,6 +217,24 @@ watch(() => props.position, (newPosition) => {
 
 const tooltipStyle = computed(() => {
   const dimensions = store.tooltipDimensions
+  const isMobile = window.innerWidth <= 640
+  const isTablet = window.innerWidth <= 768
+  
+  // Responsive constraints
+  let minWidth = 300
+  let maxWidth = 600
+  let minHeight = 200
+  let maxHeight = '80vh'
+  
+  if (isMobile) {
+    minWidth = 280
+    maxWidth = Math.min(window.innerWidth - 32, 400) // 2rem margin
+    maxHeight = 'calc(100vh - 4rem)'
+  } else if (isTablet) {
+    minWidth = 300
+    maxWidth = Math.min(window.innerWidth - 48, 500) // 3rem margin
+    maxHeight = 'calc(100vh - 6rem)'
+  }
   
   return {
     position: 'fixed',
@@ -224,10 +242,10 @@ const tooltipStyle = computed(() => {
     left: `${dragPosition.value.x}px`,
     width: typeof dimensions.width === 'number' ? `${dimensions.width}px` : dimensions.width,
     height: typeof dimensions.height === 'number' ? `${dimensions.height}px` : dimensions.height,
-    minWidth: `${store.tooltipConstraints?.minWidth || 300}px`,
-    maxWidth: `${store.tooltipConstraints?.maxWidth || 600}px`,
-    minHeight: `${store.tooltipConstraints?.minHeight || 200}px`,
-    maxHeight: store.tooltipConstraints?.maxHeight ? `${store.tooltipConstraints.maxHeight}px` : '80vh',
+    minWidth: `${store.tooltipConstraints?.minWidth || minWidth}px`,
+    maxWidth: `${store.tooltipConstraints?.maxWidth || maxWidth}px`,
+    minHeight: `${store.tooltipConstraints?.minHeight || minHeight}px`,
+    maxHeight: store.tooltipConstraints?.maxHeight ? `${store.tooltipConstraints.maxHeight}px` : maxHeight,
     zIndex: '9999 !important',
     transition: isDragging.value ? 'none' : 'all 0.3s ease'
   }
@@ -272,6 +290,26 @@ const cleanupObservers = () => {
   }
 }
 
+// Window resize handler for responsive updates
+const handleWindowResize = () => {
+  // Force tooltip style recalculation on resize
+  if (tooltipRef.value) {
+    // Trigger reactive update of tooltipStyle
+    nextTick(() => {
+      // Reposition tooltip if it's now outside viewport
+      const rect = tooltipRef.value.getBoundingClientRect()
+      const viewport = { width: window.innerWidth, height: window.innerHeight }
+      
+      if (rect.right > viewport.width || rect.bottom > viewport.height) {
+        // Adjust position to fit in viewport
+        const newX = Math.min(dragPosition.value.x, viewport.width - rect.width - 16)
+        const newY = Math.min(dragPosition.value.y, viewport.height - rect.height - 16)
+        dragPosition.value = { x: Math.max(16, newX), y: Math.max(16, newY) }
+      }
+    })
+  }
+}
+
 // Lifecycle hooks
 onMounted(() => {
   // Setup ResizeObserver nach dem Mount
@@ -282,6 +320,9 @@ onMounted(() => {
       tourService.setupTooltipResizeObserver(tooltipRef.value)
     }
   }, 50)
+  
+  // Add window resize listener
+  window.addEventListener('resize', handleWindowResize)
 })
 
 onUnmounted(() => {
@@ -289,6 +330,9 @@ onUnmounted(() => {
   if (tourService) {
     tourService.cleanupTooltipObservers()
   }
+  
+  // Remove window resize listener
+  window.removeEventListener('resize', handleWindowResize)
 })
 </script>
 
@@ -390,13 +434,85 @@ onUnmounted(() => {
     0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
+/* Tour Controls Responsive Styling */
+.tour-controls {
+  @apply flex justify-between items-start gap-2;
+  flex-wrap: wrap;
+}
+
+.action-buttons {
+  @apply flex gap-2;
+  flex-wrap: wrap;
+}
+
+.btn-responsive {
+  @apply flex items-center gap-2;
+  min-height: 44px; /* Touch target */
+  padding: 8px 12px;
+  flex-shrink: 0;
+}
+
+.btn-text {
+  @apply whitespace-nowrap;
+}
+
+.btn-icon {
+  @apply flex-shrink-0;
+}
+
+.btn-spacer {
+  @apply w-0;
+}
+
 /* Responsive adjustments */
+@media (max-width: 768px) {
+  .tour-tooltip {
+    /* Tablet: Better constraints */
+    min-width: 300px !important;
+    max-width: calc(100vw - 3rem) !important;
+    max-height: calc(100vh - 6rem) !important;
+  }
+  
+  .tour-controls {
+    @apply flex-col gap-3;
+    align-items: stretch;
+  }
+  
+  .action-buttons {
+    @apply justify-end;
+  }
+  
+  .btn-responsive {
+    @apply justify-center;
+    min-height: 48px;
+  }
+  
+  .btn-spacer {
+    @apply hidden;
+  }
+}
+
 @media (max-width: 640px) {
   .tour-tooltip {
-    /* Mobile: Engere Constraints */
+    /* Mobile: Tighter constraints */
     min-width: 280px !important;
     max-width: calc(100vw - 2rem) !important;
     max-height: calc(100vh - 4rem) !important;
+  }
+  
+  /* Mobile button layout improvements */
+  .action-buttons {
+    @apply flex-col gap-2 w-full;
+  }
+  
+  .btn-responsive {
+    @apply w-full justify-center;
+    min-height: 44px;
+    padding: 12px 16px;
+  }
+  
+  .btn-text {
+    @apply text-sm;
   }
   
   /* Kleinere Schriftgrößen auf Mobile */
@@ -425,6 +541,17 @@ onUnmounted(() => {
   .tour-tooltip > div:not(.tour-tooltip-handle) {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+  
+  /* Ultra-mobile: Stack everything vertically */
+  .btn-responsive {
+    @apply text-xs;
+    min-height: 40px;
+    padding: 10px 12px;
+  }
+  
+  .btn-text {
+    @apply text-xs;
   }
 }
 

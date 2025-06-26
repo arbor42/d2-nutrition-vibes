@@ -57,22 +57,6 @@
           <span class="hidden sm:inline">Export</span>
         </button>
 
-        <button
-          :disabled="dataStore.isLoading"
-          class="btn-secondary flex items-center space-x-2"
-          :class="{ 'opacity-50 cursor-not-allowed': dataStore.isLoading }"
-          title="Daten aktualisieren"
-          @click="refreshData"
-        >
-          <svg 
-            class="w-4 h-4"
-            :class="{ 'animate-spin': dataStore.isLoading }"
-            fill="none" stroke="currentColor" viewBox="0 0 24 24"
-          >
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-          </svg>
-          <span class="hidden sm:inline">Aktualisieren</span>
-        </button>
 
         <button
           class="btn-secondary flex items-center space-x-2"
@@ -114,11 +98,9 @@
 <script setup lang="ts">
 import { h } from 'vue'
 import { useRouter } from 'vue-router'
-import { useDataStore } from '@/stores/useDataStore'
 import { useUIStore } from '@/stores/useUIStore'
 
 const router = useRouter()
-const dataStore = useDataStore()
 const uiStore = useUIStore()
 
 // Analysis panel options
@@ -196,20 +178,6 @@ const exportData = () => {
   }, 2000)
 }
 
-// Refresh current data
-const refreshData = async () => {
-  if (dataStore.isLoading) return
-  
-  try {
-    uiStore.addLoadingMessage('Aktualisiere Daten...')
-    await dataStore.initializeApp()
-    
-  } catch (error) {
-    console.error('Error refreshing data:', error)
-  } finally {
-    uiStore.clearLoadingMessages()
-  }
-}
 
 // Reset view to defaults
 const resetView = () => {

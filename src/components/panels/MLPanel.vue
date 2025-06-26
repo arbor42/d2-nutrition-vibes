@@ -38,14 +38,6 @@
               placeholder="Modell auswählen..."
             />
           </div>
-
-          <div class="filter-group">
-            <label class="invisible">Aktion</label>
-            <BaseButton :disabled="isLoading || !selectedForecast" class="w-full" @click="loadPredictions">
-              <LoadingSpinner v-if="isLoading" size="sm" />
-              {{ isLoading ? 'Lädt...' : 'Prognosen laden' }}
-            </BaseButton>
-          </div>
         </div>
       </div>
 
@@ -821,7 +813,7 @@ onMounted(async () => {
 }
 
 .filters-grid {
-  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4;
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4;
 }
 
 .filter-group {

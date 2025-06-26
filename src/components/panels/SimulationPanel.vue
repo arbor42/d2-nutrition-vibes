@@ -142,18 +142,14 @@
             
             <div class="config-actions">
               <div class="action-buttons">
-                <BaseButton :disabled="isLoading" variant="primary" @click="runSimulation">
-                  <LoadingSpinner v-if="isLoading" size="sm" />
-                  {{ isLoading ? 'Simuliert...' : 'Simulation starten' }}
-                </BaseButton>
-                
                 <BaseButton variant="outline" @click="resetConfig">
                   Zurücksetzen
                 </BaseButton>
               </div>
               
-              <div v-if="hasConfigChanged" class="config-changed-indicator">
-                ⚠️ Parameter geändert - Simulation neu starten
+              <div v-if="isLoading" class="simulation-running-indicator">
+                <LoadingSpinner size="sm" />
+                <span>Simulation läuft automatisch...</span>
               </div>
             </div>
           </div>
@@ -547,9 +543,9 @@ const resetConfig = () => {
   selectedScenario.value = 'custom'
 }
 
-// Watch for slider changes
-watch(scenarioConfig, (newConfig) => {
-  // Only mark as changed if we have a reference config and values actually differ
+// Watch for slider changes and run simulation automatically
+watch(scenarioConfig, async (newConfig) => {
+  // Only run if we have a reference config and values actually differ
   if (lastAppliedConfig.value) {
     const hasActualChanges = Object.keys(newConfig).some(key => {
       return Math.abs(newConfig[key] - lastAppliedConfig.value[key]) > 0.05 // Allow small floating point differences
@@ -559,6 +555,12 @@ watch(scenarioConfig, (newConfig) => {
     
     if (hasActualChanges) {
       simulationResults.value = null // Clear results when config actually changes
+      // Auto-run simulation after a short delay to allow for multiple rapid changes
+      setTimeout(() => {
+        if (!isLoading.value) {
+          runSimulation()
+        }
+      }, 800)
     }
   }
 }, { deep: true })
@@ -593,6 +595,13 @@ const handleScenarioSelect = (scenarioId) => {
     // Clear previous results and reset change indicator
     simulationResults.value = null
     hasConfigChanged.value = false
+    
+    // Automatically run simulation for new scenario
+    setTimeout(() => {
+      if (!isLoading.value) {
+        runSimulation()
+      }
+    }, 200)
   }
   
   console.log('Scenario selected:', scenarioId, 'Sliders updated:', scenarioConfig.value)
@@ -807,6 +816,10 @@ const getSliderDescription = (type, value) => {
 
 .config-changed-indicator {
   @apply text-sm text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 px-3 py-2 rounded-lg border border-orange-200 dark:border-orange-800;
+}
+
+.simulation-running-indicator {
+  @apply text-sm text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-3 py-2 rounded-lg border border-blue-200 dark:border-blue-800 flex items-center space-x-2;
 }
 
 .slider-description {

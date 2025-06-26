@@ -90,19 +90,6 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
 const exportData = () => {
 }
 
-const refreshData = async () => {
-  if (dataStore.isLoading) return
-  
-  try {
-    uiStore.addLoadingMessage('Aktualisiere Daten...')
-    await dataStore.initializeApp()
-    
-  } catch (error) {
-    console.error('Error updating data:', error)
-  } finally {
-    uiStore.clearLoadingMessages()
-  }
-}
 
 const resetView = () => {
   uiStore.resetUI()
@@ -165,24 +152,6 @@ const resetView = () => {
         <span class="hidden sm:inline">Export</span>
       </button>
 
-      <button
-        :disabled="dataStore.isLoading"
-        class="px-3 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200 flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
-        :class="dataStore.isLoading 
-          ? 'border-primary-300 dark:border-primary-600 bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300' 
-          : 'border-primary-500 dark:border-primary-400 bg-primary-500 dark:bg-primary-600 text-white hover:bg-primary-600 dark:hover:bg-primary-500'"
-        title="Daten aktualisieren"
-        @click="refreshData"
-      >
-        <svg 
-          class="w-4 h-4"
-          :class="{ 'animate-spin': dataStore.isLoading }"
-          fill="none" stroke="currentColor" viewBox="0 0 24 24"
-        >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-        </svg>
-        <span class="hidden sm:inline">Aktualisieren</span>
-      </button>
 
       <button
         class="px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200 flex items-center space-x-2"

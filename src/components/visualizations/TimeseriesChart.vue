@@ -47,7 +47,7 @@ const localChartData = ref<any[]>([])
 const colorScale = ref(createColorScale())
 
 // Chart configuration
-const margin = { top: 20, right: 120, bottom: 40, left: 60 }
+const margin = { top: 60, right: 30, bottom: 40, left: 60 }
 
 // D3 variables
 let svg: d3.Selection<SVGSVGElement, unknown, null, undefined>
@@ -179,11 +179,27 @@ const setupResizeObserver = () => {
 // Get metric label for Y-axis
 const getMetricLabel = () => {
   switch (props.selectedMetric) {
-    case 'production': return 'Produktion (Mio. t)'
-    case 'import_quantity': return 'Import (Mio. t)'
-    case 'export_quantity': return 'Export (Mio. t)'
-    case 'domestic_supply_quantity': return 'Inlandsversorgung (Mio. t)'
-    default: return 'Wert (Mio. t)'
+    case 'production': {
+      return 'Produktion (Mio. t)'
+    }
+    case 'import_quantity': {
+      return 'Import (Mio. t)'
+    }
+    case 'export_quantity': {
+      return 'Export (Mio. t)'
+    }
+    case 'domestic_supply_quantity': {
+      return 'Inlandsversorgung (Mio. t)'
+    }
+    case 'feed': {
+      return 'Tierfutter (Mio. t)'
+    }
+    case 'food_supply_kcal': {
+      return 'Kalorienversorgung (kcal/Kopf/Tag)'
+    }
+    default: {
+      return 'Wert (Mio. t)'
+    }
   }
 }
 
@@ -239,8 +255,20 @@ const updateChart = () => {
   const xAxis = d3.axisBottom(xScale)
     .tickFormat(d3.timeFormat('%Y'))
     .tickSizeOuter(0)
+  // Format Y-axis based on metric type
+  const getAxisFormatter = () => {
+    switch (props.selectedMetric) {
+      case 'food_supply_kcal': {
+        return createD3AxisFormatter('kcal')
+      }
+      default: {
+        return createD3AxisFormatter('1000 t')
+      }
+    }
+  }
+  
   const yAxis = d3.axisLeft(yScale)
-    .tickFormat(createD3AxisFormatter('1000 t'))
+    .tickFormat(getAxisFormatter())
     .tickSizeOuter(0)
 
   const xAxisSelection = g.select('.x-axis')
@@ -358,36 +386,46 @@ const updateChart = () => {
   g.select('.x-label')
     .style('fill', axisColor)
     
-  // Add legend
+  // Add legend at the top
   g.selectAll('.legend').remove()
   
-  const legendGroup = g.append('g')
-    .attr('class', 'legend')
-    .attr('transform', `translate(${innerWidth + 10}, 20)`)
-  
   const legendItems = Array.from(seriesData.keys()).sort()
-  const legendItemHeight = 20
   
-  legendItems.forEach((series, i) => {
-    const legendItem = legendGroup.append('g')
-      .attr('transform', `translate(0, ${i * legendItemHeight})`)
+  if (legendItems.length > 0) {
+    const legendGroup = g.append('g')
+      .attr('class', 'legend')
+      .attr('transform', `translate(0, -40)`)
     
-    // Color box
-    legendItem.append('rect')
-      .attr('width', 12)
-      .attr('height', 12)
-      .attr('fill', colorScale.value(series))
-      .attr('rx', 2)
+    // Calculate layout for horizontal legend
+    const itemWidth = 120 // Approximate width per legend item
+    const itemsPerRow = Math.floor(innerWidth / itemWidth) || 1
     
-    // Label
-    legendItem.append('text')
-      .attr('x', 18)
-      .attr('y', 9)
-      .text(series)
-      .style('font-size', '11px')
-      .style('fill', axisColor)
-      .style('alignment-baseline', 'middle')
-  })
+    legendItems.forEach((series, i) => {
+      const row = Math.floor(i / itemsPerRow)
+      const col = i % itemsPerRow
+      const x = col * itemWidth
+      const y = row * 18
+      
+      const legendItem = legendGroup.append('g')
+        .attr('transform', `translate(${x}, ${y})`)
+      
+      // Color box
+      legendItem.append('rect')
+        .attr('width', 10)
+        .attr('height', 10)
+        .attr('fill', colorScale.value(series))
+        .attr('rx', 2)
+      
+      // Label
+      legendItem.append('text')
+        .attr('x', 15)
+        .attr('y', 8)
+        .text(series)
+        .style('font-size', '10px')
+        .style('fill', axisColor)
+        .style('alignment-baseline', 'middle')
+    })
+  }
 }
 
 // Event handlers
@@ -401,6 +439,20 @@ const handlePointMouseover = (event: MouseEvent, d: any) => {
     .attr('r', 6)
     .attr('stroke-width', 3)
 
+  // Format tooltip value based on metric type
+  const getTooltipFormatter = () => {
+    switch (props.selectedMetric) {
+      case 'food_supply_kcal': {
+        return createD3TooltipFormatter('kcal')
+      }
+      default: {
+        return createD3TooltipFormatter('1000 t')
+      }
+    }
+  }
+
+  const metricLabel = getMetricLabel().replace(/\s*\([^)]*\)/, '') // Remove unit from label
+
   tooltip
     .style('opacity', 1)
     .style('background', color)
@@ -408,7 +460,7 @@ const handlePointMouseover = (event: MouseEvent, d: any) => {
     .html(`
       <strong>${d.series}</strong><br/>
       Jahr: ${d.year}<br/>
-      ${getMetricLabel().replace('(Mio. t)', '')}: ${createD3TooltipFormatter('1000 t')(d.value)}
+      ${metricLabel}: ${getTooltipFormatter()(d.value)}
     `)
     .style('left', (event.pageX + 10) + 'px')
     .style('top', (event.pageY - 10) + 'px')

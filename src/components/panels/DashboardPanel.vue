@@ -320,6 +320,71 @@ const globalStats = computed(() => {
   }
 })
 
+// Dashboard timeseries data for the TimeseriesChart component
+const dashboardTimeseriesData = computed(() => {
+  const currentProduct = uiStore.selectedProduct
+  const currentCountry = uiStore.selectedCountry
+  const currentMetric = uiStore.selectedMetric
+  
+  if (!dataStore.timeseriesData || !currentProduct) {
+    return []
+  }
+
+  const productData = dataStore.timeseriesData[currentProduct]
+  if (!productData) {
+    return []
+  }
+
+  const metricKey = currentMetric === 'production' ? 'production' :
+                   currentMetric === 'import_quantity' ? 'imports' :
+                   currentMetric === 'export_quantity' ? 'exports' :
+                   currentMetric === 'domestic_supply_quantity' ? 'domestic_supply' :
+                   currentMetric === 'feed' ? 'feed' :
+                   currentMetric === 'food_supply_kcal' ? 'food_supply_kcal' :
+                   'production'
+
+  if (currentCountry && productData[currentCountry]) {
+    // Single country data
+    const countryData = productData[currentCountry]
+    return countryData
+      .map(yearData => ({
+        year: yearData.year,
+        value: yearData[metricKey] || 0,
+        country: currentCountry,
+        product: currentProduct,
+        unit: yearData.unit || 't',
+        series: `${currentCountry} - ${currentProduct}`
+      }))
+      .filter(item => item.value > 0)
+      .sort((a, b) => a.year - b.year)
+  } else {
+    // Global aggregated data
+    const yearlyTotals = new Map()
+    
+    Object.entries(productData).forEach(([country, countryData]) => {
+      countryData.forEach(yearData => {
+        const value = yearData[metricKey] || 0
+        if (value > 0) {
+          const year = yearData.year
+          const currentTotal = yearlyTotals.get(year) || 0
+          yearlyTotals.set(year, currentTotal + value)
+        }
+      })
+    })
+    
+    return Array.from(yearlyTotals.entries())
+      .map(([year, value]) => ({
+        year: year,
+        value: value,
+        country: 'Global',
+        product: currentProduct,
+        unit: 't',
+        series: `Global - ${currentProduct}`
+      }))
+      .sort((a, b) => a.year - b.year)
+  }
+})
+
 
 const onCountryClick = (countryCode: string) => {
   console.log('🖱️ DashboardPanel: Country click received:', countryCode)
@@ -642,9 +707,10 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
         <!-- Timeseries View -->
         <div v-else-if="selectedVisualization === 'timeseries'" class="h-96 p-4">
           <TimeseriesChart
-            :selected-country="uiStore.selectedCountry"
-            :selected-product="uiStore.selectedProduct"
+            :selected-countries="uiStore.selectedCountry ? [uiStore.selectedCountry] : []"
+            :selected-products="uiStore.selectedProduct ? [uiStore.selectedProduct] : []"
             :selected-metric="uiStore.selectedMetric"
+            :chart-data="dashboardTimeseriesData"
             @point-hover="(data) => {}"
             @point-click="(data) => {}"
           />
@@ -683,9 +749,10 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
                 <TimeseriesChart
                   :width="containerWidth"
                   :height="600"
-                  :selected-country="uiStore.selectedCountry"
-                  :selected-product="uiStore.selectedProduct"
+                  :selected-countries="uiStore.selectedCountry ? [uiStore.selectedCountry] : []"
+                  :selected-products="uiStore.selectedProduct ? [uiStore.selectedProduct] : []"
                   :selected-metric="uiStore.selectedMetric"
+                  :chart-data="dashboardTimeseriesData"
                 />
               </div>
             </div>

@@ -114,7 +114,7 @@ const dataStore = useDataStore()
 const uiStore = useUIStore()
 
 // Reactive state - use the same defaults as dashboard
-const selectedProducts = ref([])
+const selectedProducts = ref(['Wheat and products'])
 const selectedCountries = ref([])
 const selectedMetric = ref('production')
 const chartData = ref([])
@@ -178,7 +178,9 @@ const metricOptions = [
   { value: 'production', label: 'Produktion' },
   { value: 'import_quantity', label: 'Import' },
   { value: 'export_quantity', label: 'Export' },
-  { value: 'domestic_supply_quantity', label: 'Inlandsversorgung' }
+  { value: 'domestic_supply_quantity', label: 'Inlandsversorgung' },
+  { value: 'feed', label: 'Tierfutter' },
+  { value: 'food_supply_kcal', label: 'Kalorienversorgung' }
 ]
 
 // Update chart data when selections change
@@ -191,7 +193,10 @@ const updateChartData = () => {
   const metricKey = selectedMetric.value === 'production' ? 'production' :
                    selectedMetric.value === 'import_quantity' ? 'imports' :
                    selectedMetric.value === 'export_quantity' ? 'exports' :
-                   'domestic_supply'
+                   selectedMetric.value === 'domestic_supply_quantity' ? 'domestic_supply' :
+                   selectedMetric.value === 'feed' ? 'feed' :
+                   selectedMetric.value === 'food_supply_kcal' ? 'food_supply_kcal' :
+                   'production'
 
   const allData = []
 

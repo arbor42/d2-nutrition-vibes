@@ -12,7 +12,7 @@ interface Props {
   height?: number
   selectedCountries?: string[]
   selectedProducts?: string[]
-  selectedMetric?: string
+  selectedMetrics?: string[]
   chartData?: any[]
   showGrid?: boolean
   showPoints?: boolean
@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<Props>(), {
   height: 400,
   selectedCountries: () => [],
   selectedProducts: () => [],
-  selectedMetric: 'production',
+  selectedMetrics: () => ['production'],
   chartData: () => [],
   showGrid: true,
   showPoints: true
@@ -47,7 +47,7 @@ const localChartData = ref<any[]>([])
 const colorScale = ref(createColorScale())
 
 // Chart configuration
-const margin = { top: 60, right: 30, bottom: 40, left: 60 }
+const margin = ref({ top: 80, right: 30, bottom: 30, left: 60 })
 
 // D3 variables
 let svg: d3.Selection<SVGSVGElement, unknown, null, undefined>
@@ -71,8 +71,8 @@ const initializeChart = () => {
   const containerRect = svgContainerRef.value.getBoundingClientRect()
   const width = containerRect.width || 600
   const height = containerRect.height || 400
-  const innerWidth = width - margin.left - margin.right
-  const innerHeight = height - margin.top - margin.bottom
+  const innerWidth = width - margin.value.left - margin.value.right
+  const innerHeight = height - margin.value.top - margin.value.bottom
   
   console.log('📈 TimeseriesChart: Chart dimensions:', { width, height, innerWidth, innerHeight })
 
@@ -87,7 +87,7 @@ const initializeChart = () => {
 
   // Create main group
   g = svg.append('g')
-    .attr('transform', `translate(${margin.left},${margin.top})`)
+    .attr('transform', `translate(${margin.value.left},${margin.value.top})`)
 
   // Setup scales
   xScale = d3.scaleTime().range([0, innerWidth])
@@ -125,7 +125,7 @@ const initializeChart = () => {
     .attr('class', 'x-label')
     .attr('text-anchor', 'middle')
     .attr('x', innerWidth / 2)
-    .attr('y', innerHeight + 35)
+    .attr('y', innerHeight + 30)
     .text('Jahr')
     .style('font-size', '12px')
     .style('fill', labelColor)
@@ -177,8 +177,9 @@ const setupResizeObserver = () => {
 }
 
 // Get metric label for Y-axis
-const getMetricLabel = () => {
-  switch (props.selectedMetric) {
+const getMetricLabel = (metric?: string) => {
+  const metricToCheck = metric || (props.selectedMetrics?.length > 0 ? props.selectedMetrics[0] : 'production')
+  switch (metricToCheck) {
     case 'production': {
       return 'Produktion (Mio. t)'
     }
@@ -230,8 +231,8 @@ const updateChart = () => {
   const containerRect = svgContainerRef.value?.getBoundingClientRect()
   const width = containerRect?.width || 600
   const height = containerRect?.height || 400
-  const innerWidth = width - margin.left - margin.right
-  const innerHeight = height - margin.top - margin.bottom
+  const innerWidth = width - margin.value.left - margin.value.right
+  const innerHeight = height - margin.value.top - margin.value.bottom
 
   // Update viewBox for responsive scaling
   svg.attr('viewBox', `0 0 ${width} ${height}`)
@@ -257,14 +258,12 @@ const updateChart = () => {
     .tickSizeOuter(0)
   // Format Y-axis based on metric type
   const getAxisFormatter = () => {
-    switch (props.selectedMetric) {
-      case 'food_supply_kcal': {
-        return createD3AxisFormatter('kcal')
-      }
-      default: {
-        return createD3AxisFormatter('1000 t')
-      }
+    // When multiple metrics are selected, check if any is food_supply_kcal
+    const hasKcalMetric = props.selectedMetrics?.includes('food_supply_kcal')
+    if (hasKcalMetric && props.selectedMetrics?.length === 1) {
+      return createD3AxisFormatter('kcal')
     }
+    return createD3AxisFormatter('1000 t')
   }
   
   const yAxis = d3.axisLeft(yScale)
@@ -392,38 +391,105 @@ const updateChart = () => {
   const legendItems = Array.from(seriesData.keys()).sort()
   
   if (legendItems.length > 0) {
+    // Re-check dark mode for legend rendering
+    const isDarkModeLegend = document.documentElement.classList.contains('dark')
+    console.log('Legend Dark Mode Check:', isDarkModeLegend, 'Classes:', document.documentElement.classList.toString())
+    
     const legendGroup = g.append('g')
       .attr('class', 'legend')
-      .attr('transform', `translate(0, -40)`)
+      .attr('transform', `translate(0, -50)`)
     
-    // Calculate layout for horizontal legend
-    const itemWidth = 120 // Approximate width per legend item
-    const itemsPerRow = Math.floor(innerWidth / itemWidth) || 1
+    // Calculate dynamic layout for legend
+    const maxLabelLength = Math.max(...legendItems.map(item => item.length))
+    const itemWidth = Math.min(200, maxLabelLength * 6 + 30) // Dynamic width based on text length, increased for more padding
+    const padding = 20 // Space between items, increased from 15
+    const itemHeight = 30 // Height per row, increased from 20 for bigger boxes
+    const itemsPerRow = Math.max(1, Math.floor(innerWidth / (itemWidth + padding)))
+    const totalRows = Math.ceil(legendItems.length / itemsPerRow)
+    
+    // Calculate legend space needed and position
+    const legendHeight = totalRows * itemHeight + 10
+    const legendOffset = Math.min(50, Math.max(30, legendHeight))
+    
+    // Dynamically adjust top margin based on legend size
+    if (totalRows > 3) {
+      margin.value.top = Math.max(80, 60 + totalRows * 15)
+      // Re-calculate inner height with new margin
+      const newInnerHeight = height - margin.value.top - margin.value.bottom
+      // Update scales and axes positions
+      yScale.range([newInnerHeight, 0])
+      g.select('.x-axis').attr('transform', `translate(0,${newInnerHeight})`)
+      g.select('.x-grid').attr('transform', `translate(0,${newInnerHeight})`)
+      g.select('.x-label').attr('y', newInnerHeight + 30)
+      g.select('.y-label').attr('x', -newInnerHeight / 2)
+    }
+    
+    legendGroup.attr('transform', `translate(0, -${legendOffset})`)
     
     legendItems.forEach((series, i) => {
       const row = Math.floor(i / itemsPerRow)
       const col = i % itemsPerRow
-      const x = col * itemWidth
-      const y = row * 18
+      const x = col * (itemWidth + padding)
+      const y = row * itemHeight
       
       const legendItem = legendGroup.append('g')
         .attr('transform', `translate(${x}, ${y})`)
+        .style('cursor', 'pointer')
+        .attr('opacity', 1)
+      
+      // Hover effect
+      legendItem.on('mouseover', function() {
+        d3.select(this).attr('opacity', 0.7)
+      }).on('mouseout', function() {
+        d3.select(this).attr('opacity', 1)
+      })
+      
+      // Background for better readability
+      legendItem.append('rect')
+        .attr('x', -8)
+        .attr('y', -6)
+        .attr('width', itemWidth + 16)
+        .attr('height', 24)
+        .attr('fill', isDarkModeLegend ? 'rgba(31, 41, 55, 0.9)' : 'rgba(255, 255, 255, 0.95)') // gray-800 dark, white light
+        .attr('stroke', isDarkModeLegend ? 'rgba(75, 85, 99, 0.5)' : 'rgba(209, 213, 219, 0.8)') // gray-600 dark, gray-300 light
+        .attr('stroke-width', 0.5)
+        .attr('rx', 3)
       
       // Color box
       legendItem.append('rect')
-        .attr('width', 10)
-        .attr('height', 10)
+        .attr('x', 2)
+        .attr('y', 2)
+        .attr('width', 12)
+        .attr('height', 12)
         .attr('fill', colorScale.value(series))
         .attr('rx', 2)
+        .attr('stroke', isDarkModeLegend ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.2)')
+        .attr('stroke-width', isDarkModeLegend ? 1 : 0.5)
       
-      // Label
+      // Label with text truncation
       legendItem.append('text')
-        .attr('x', 15)
-        .attr('y', 8)
+        .attr('x', 18)
+        .attr('y', 9)
         .text(series)
-        .style('font-size', '10px')
-        .style('fill', axisColor)
+        .style('font-size', '11px')
+        .style('fill', isDarkModeLegend ? '#E5E7EB' : '#1F2937') // gray-200 in dark, gray-800 in light
         .style('alignment-baseline', 'middle')
+        .style('font-weight', '500')
+        .each(function() {
+          const textElement = d3.select(this)
+          const textNode = this as SVGTextElement
+          const availableWidth = itemWidth - 20
+          
+          // Truncate text if too long
+          let text = series
+          while (textNode.getComputedTextLength() > availableWidth && text.length > 0) {
+            text = text.slice(0, -1)
+            textElement.text(text + '...')
+          }
+        })
+      
+      // Tooltip for full text
+      legendItem.append('title').text(series)
     })
   }
 }
@@ -440,8 +506,8 @@ const handlePointMouseover = (event: MouseEvent, d: any) => {
     .attr('stroke-width', 3)
 
   // Format tooltip value based on metric type
-  const getTooltipFormatter = () => {
-    switch (props.selectedMetric) {
+  const getTooltipFormatter = (metric: string) => {
+    switch (metric) {
       case 'food_supply_kcal': {
         return createD3TooltipFormatter('kcal')
       }
@@ -451,7 +517,7 @@ const handlePointMouseover = (event: MouseEvent, d: any) => {
     }
   }
 
-  const metricLabel = getMetricLabel().replace(/\s*\([^)]*\)/, '') // Remove unit from label
+  const metricLabel = d.metricLabel || getMetricLabel(d.metric).replace(/\s*\([^)]*\)/, '') // Remove unit from label
 
   tooltip
     .style('opacity', 1)
@@ -460,7 +526,7 @@ const handlePointMouseover = (event: MouseEvent, d: any) => {
     .html(`
       <strong>${d.series}</strong><br/>
       Jahr: ${d.year}<br/>
-      ${metricLabel}: ${getTooltipFormatter()(d.value)}
+      ${metricLabel}: ${getTooltipFormatter(d.metric || 'production')(d.value)}
     `)
     .style('left', (event.pageX + 10) + 'px')
     .style('top', (event.pageY - 10) + 'px')
@@ -521,6 +587,22 @@ const updateThemeStyles = () => {
   // Update labels
   g.select('.x-label').style('fill', axisColor)
   g.select('.y-label').style('fill', axisColor)
+  
+  // Update legend
+  const legendBackgroundColor = isDarkMode ? 'rgba(31, 41, 55, 0.9)' : 'rgba(255, 255, 255, 0.95)'
+  const legendStrokeColor = isDarkMode ? 'rgba(75, 85, 99, 0.5)' : 'rgba(209, 213, 219, 0.8)'
+  const legendTextColor = isDarkMode ? '#E5E7EB' : '#1F2937'
+  
+  g.selectAll('.legend rect').each(function(d, i) {
+    const rect = d3.select(this)
+    // Check if this is the background rect (first rect in each legend item)
+    if (i % 2 === 0) {
+      rect.attr('fill', legendBackgroundColor)
+          .attr('stroke', legendStrokeColor)
+    }
+  })
+  
+  g.selectAll('.legend text').style('fill', legendTextColor)
 }
 
 // Watch for theme changes
@@ -592,7 +674,7 @@ defineExpose({
     </div>
 
     <!-- Chart title (optional, compact) -->
-    <div v-if="localChartData.length > 0" class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
+    <div v-if="localChartData.length > 0 && selectedMetrics?.length === 1" class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
       <h4 class="text-sm font-medium text-gray-900 dark:text-gray-100">
         {{ getMetricLabel() }}
       </h4>

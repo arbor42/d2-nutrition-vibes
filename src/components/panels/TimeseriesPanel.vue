@@ -33,12 +33,13 @@
           </div>
           
           <div class="filter-group" data-tour="year-selector">
-            <SearchableSelect
-              v-model="selectedMetric"
+            <MultiSelect
+              v-model="selectedMetrics"
               :options="metricOptions"
-              placeholder="Metrik auswählen..."
-              label="Metrik"
+              placeholder="Metriken auswählen..."
+              label="Metriken"
               size="md"
+              :max-items="3"
             />
           </div>
         </div>
@@ -54,16 +55,45 @@
           />
         </div>
 
-        <div v-else-if="chartData.length > 0" class="chart-container" data-tour="timeseries-chart">
-          <TimeseriesChart
-            :width="800"
-            :height="500"
-            :selected-countries="selectedCountries"
-            :selected-products="selectedProducts"
-            :selected-metric="selectedMetric"
-            :chart-data="chartData"
-            @point-click="handlePointClick"
-          />
+        <div v-else-if="chartData.length > 0 || missingDataCombinations.length > 0" class="content-wrapper">
+          <div v-if="missingDataCombinations.length > 0" class="missing-data-warning">
+            <div class="warning-header">
+              <span class="warning-icon">⚠️</span>
+              <span class="warning-title">Hinweis: Einige Datenkombinationen sind nicht verfügbar</span>
+              <button 
+                @click="showMissingDetails = !showMissingDetails"
+                class="toggle-details-btn"
+              >
+                {{ showMissingDetails ? 'Details ausblenden' : 'Details anzeigen' }}
+              </button>
+            </div>
+            <div v-if="showMissingDetails" class="missing-details">
+              <div 
+                v-for="(item, index) in missingDataCombinations" 
+                :key="index"
+                class="missing-item"
+              >
+                <span class="missing-label">{{ item.product }}</span>
+                <span class="missing-separator">-</span>
+                <span class="missing-label">{{ item.country }}</span>
+                <span class="missing-separator">-</span>
+                <span class="missing-label">{{ item.metric }}</span>
+                <span class="missing-reason">({{ item.reason }})</span>
+              </div>
+            </div>
+          </div>
+          
+          <div v-if="chartData.length > 0" class="chart-container" data-tour="timeseries-chart">
+            <TimeseriesChart
+              :width="800"
+              :height="500"
+              :selected-countries="selectedCountries"
+              :selected-products="selectedProducts"
+              :selected-metrics="selectedMetrics"
+              :chart-data="chartData"
+              @point-click="handlePointClick"
+            />
+          </div>
         </div>
 
         <div v-else class="empty-state">
@@ -116,9 +146,11 @@ const uiStore = useUIStore()
 // Reactive state - use the same defaults as dashboard
 const selectedProducts = ref(['Wheat and products'])
 const selectedCountries = ref([])
-const selectedMetric = ref('production')
+const selectedMetrics = ref(['production'])
 const chartData = ref([])
 const error = ref(null)
+const missingDataCombinations = ref([])
+const showMissingDetails = ref(false)
 
 // Computed properties
 const hasError = computed(() => error.value !== null)
@@ -185,79 +217,135 @@ const metricOptions = [
 
 // Update chart data when selections change
 const updateChartData = () => {
-  if (!dataStore.timeseriesData || selectedProducts.value.length === 0) {
+  if (!dataStore.timeseriesData || selectedProducts.value.length === 0 || selectedMetrics.value.length === 0) {
     chartData.value = []
+    missingDataCombinations.value = []
     return
   }
 
-  const metricKey = selectedMetric.value === 'production' ? 'production' :
-                   selectedMetric.value === 'import_quantity' ? 'imports' :
-                   selectedMetric.value === 'export_quantity' ? 'exports' :
-                   selectedMetric.value === 'domestic_supply_quantity' ? 'domestic_supply' :
-                   selectedMetric.value === 'feed' ? 'feed' :
-                   selectedMetric.value === 'food_supply_kcal' ? 'food_supply_kcal' :
-                   'production'
-
   const allData = []
+  const missingCombinations = []
+  const expectedCombinations = new Set()
 
-  // Iterate through selected products
-  selectedProducts.value.forEach(product => {
-    const productData = dataStore.timeseriesData[product]
-    if (!productData) return
+  // Iterate through selected metrics
+  selectedMetrics.value.forEach(metric => {
+    const metricKey = metric === 'production' ? 'production' :
+                     metric === 'import_quantity' ? 'imports' :
+                     metric === 'export_quantity' ? 'exports' :
+                     metric === 'domestic_supply_quantity' ? 'domestic_supply' :
+                     metric === 'feed' ? 'feed' :
+                     metric === 'food_supply_kcal' ? 'food_supply_kcal' :
+                     'production'
 
-    if (selectedCountries.value.length > 0) {
-      // Multiple countries selected
-      selectedCountries.value.forEach(country => {
-        if (productData[country]) {
-          const countryData = productData[country]
+    // Get metric label for series naming
+    const metricLabel = metricOptions.find(m => m.value === metric)?.label || metric
+
+    // Iterate through selected products
+    selectedProducts.value.forEach(product => {
+      const productData = dataStore.timeseriesData[product]
+      if (!productData) {
+        missingCombinations.push({
+          product: getGermanName(product),
+          country: 'Alle',
+          metric: metricLabel,
+          reason: 'Keine Daten verfügbar'
+        })
+        return
+      }
+
+      if (selectedCountries.value.length > 0) {
+        // Multiple countries selected
+        selectedCountries.value.forEach(country => {
+          const combinationKey = `${country}-${product}-${metric}`
+          expectedCombinations.add(combinationKey)
+          
+          if (productData[country]) {
+            const countryData = productData[country]
+            let hasData = false
+            
+            countryData.forEach(yearData => {
+              const value = yearData[metricKey] || 0
+              if (value > 0) {
+                hasData = true
+                allData.push({
+                  year: yearData.year,
+                  value: value,
+                  country: country,
+                  product: product,
+                  metric: metric,
+                  metricLabel: metricLabel,
+                  unit: yearData.unit || 't',
+                  // Create a unique series identifier for each country-product-metric combination
+                  series: `${country} - ${product} - ${metricLabel}`
+                })
+              }
+            })
+            
+            if (!hasData) {
+              missingCombinations.push({
+                product: getGermanName(product),
+                country: country,
+                metric: metricLabel,
+                reason: 'Keine Werte > 0'
+              })
+            }
+          } else {
+            missingCombinations.push({
+              product: getGermanName(product),
+              country: country,
+              metric: metricLabel,
+              reason: 'Land nicht in Daten'
+            })
+          }
+        })
+      } else {
+        // No countries selected - show global data for each product
+        const yearlyTotals = new Map()
+        let hasGlobalData = false
+        
+        Object.entries(productData).forEach(([country, countryData]) => {
           countryData.forEach(yearData => {
             const value = yearData[metricKey] || 0
             if (value > 0) {
-              allData.push({
-                year: yearData.year,
-                value: value,
-                country: country,
-                product: product,
-                unit: yearData.unit || 't',
-                // Create a unique series identifier for each country-product combination
-                series: `${country} - ${product}`
-              })
+              hasGlobalData = true
+              const year = yearData.year
+              const currentTotal = yearlyTotals.get(year) || 0
+              yearlyTotals.set(year, currentTotal + value)
             }
           })
+        })
+        
+        if (hasGlobalData) {
+          yearlyTotals.forEach((value, year) => {
+            allData.push({
+              year: year,
+              value: value,
+              country: 'Global',
+              product: product,
+              metric: metric,
+              metricLabel: metricLabel,
+              unit: 't',
+              series: `Global - ${product} - ${metricLabel}`
+            })
+          })
+        } else {
+          missingCombinations.push({
+            product: getGermanName(product),
+            country: 'Global',
+            metric: metricLabel,
+            reason: 'Keine globalen Daten'
+          })
         }
-      })
-    } else {
-      // No countries selected - show global data for each product
-      const yearlyTotals = new Map()
-      
-      Object.entries(productData).forEach(([country, countryData]) => {
-        countryData.forEach(yearData => {
-          const value = yearData[metricKey] || 0
-          if (value > 0) {
-            const year = yearData.year
-            const currentTotal = yearlyTotals.get(year) || 0
-            yearlyTotals.set(year, currentTotal + value)
-          }
-        })
-      })
-      
-      yearlyTotals.forEach((value, year) => {
-        allData.push({
-          year: year,
-          value: value,
-          country: 'Global',
-          product: product,
-          unit: 't',
-          series: `Global - ${product}`
-        })
-      })
-    }
+      }
+    })
   })
   
   chartData.value = allData.sort((a, b) => {
     if (a.series !== b.series) return a.series.localeCompare(b.series)
     return a.year - b.year
   })
+  
+  missingDataCombinations.value = missingCombinations
 }
 
 // Methods
@@ -282,7 +370,7 @@ const handlePointClick = (point) => {
 }
 
 // Watchers
-watch([selectedProducts, selectedCountries, selectedMetric], () => {
+watch([selectedProducts, selectedCountries, selectedMetrics], () => {
   updateChartData()
 }, { immediate: true })
 
@@ -365,5 +453,49 @@ onMounted(async () => {
 
 .stat-value {
   @apply block text-lg font-semibold text-gray-900 dark:text-gray-100;
+}
+
+.content-wrapper {
+  @apply flex flex-col h-full gap-4;
+}
+
+.missing-data-warning {
+  @apply bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4;
+}
+
+.warning-header {
+  @apply flex items-center gap-2;
+}
+
+.warning-icon {
+  @apply text-yellow-600 dark:text-yellow-400 text-lg;
+}
+
+.warning-title {
+  @apply text-sm font-medium text-yellow-800 dark:text-yellow-200 flex-1;
+}
+
+.toggle-details-btn {
+  @apply text-xs text-yellow-700 dark:text-yellow-300 hover:text-yellow-800 dark:hover:text-yellow-200 underline;
+}
+
+.missing-details {
+  @apply mt-3 space-y-1;
+}
+
+.missing-item {
+  @apply text-xs text-yellow-700 dark:text-yellow-300 flex items-center gap-1;
+}
+
+.missing-label {
+  @apply font-medium;
+}
+
+.missing-separator {
+  @apply text-yellow-600 dark:text-yellow-400;
+}
+
+.missing-reason {
+  @apply text-yellow-600 dark:text-yellow-400 ml-1;
 }
 </style>

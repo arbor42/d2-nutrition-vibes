@@ -1,7 +1,7 @@
 <template>
-  <div class="tour-progress-bar fixed top-0 left-0 right-0 pointer-events-auto" style="z-index: 9998;">
+  <div class="tour-progress-bar fixed bottom-0 left-0 right-0 pointer-events-auto" style="z-index: 9998;">
     <!-- Main progress bar -->
-    <div class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-3">
+    <div class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-3">
       <div class="flex items-center justify-between">
         <!-- Tour info -->
         <div class="flex items-center space-x-4">
@@ -105,13 +105,13 @@ const stepIndicators = computed(() => {
 
 <style scoped>
 .tour-progress-bar {
-  animation: slideDown 0.3s ease-out;
+  animation: slideUp 0.3s ease-out;
   backdrop-filter: blur(10px);
 }
 
-@keyframes slideDown {
+@keyframes slideUp {
   from {
-    transform: translateY(-100%);
+    transform: translateY(100%);
   }
   to {
     transform: translateY(0);

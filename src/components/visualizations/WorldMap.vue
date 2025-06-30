@@ -1210,6 +1210,30 @@ const applyProductionDataDirect = (container, data) => {
     console.log('🎨 WorldMap: Value ranges:', valueRanges)
     console.log('🎨 WorldMap: Thresholds between colors:', thresholds)
     
+    // Count countries in each decile
+    const countryCounts = new Array(greenColorScheme.length).fill(0)
+    countryData.forEach(d => {
+      const value = d.value
+      let decileIndex = 0
+      
+      if (value <= minValue) {
+        decileIndex = 0
+      } else if (value >= maxValue) {
+        decileIndex = greenColorScheme.length - 1
+      } else {
+        for (let i = 0; i < percentiles.length; i++) {
+          if (value <= percentiles[i]) {
+            decileIndex = i + 1
+            break
+          }
+        }
+      }
+      
+      countryCounts[decileIndex]++
+    })
+    
+    console.log('🎨 WorldMap: Countries per decile:', countryCounts)
+    
     // Create a custom scale function that maps values to colors using percentiles
     colorScale = (value) => {
       // Edge cases
@@ -1232,6 +1256,7 @@ const applyProductionDataDirect = (container, data) => {
     colorScale.range = () => greenColorScheme
     colorScale.domain = () => [minValue, maxValue]
     colorScale.percentiles = () => percentiles
+    colorScale.countryCounts = () => countryCounts
     
     legendDomain.value = [minValue, maxValue]
     

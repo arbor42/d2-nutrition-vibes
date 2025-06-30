@@ -40,7 +40,7 @@
               left: `${(index / legendData.items.length) * 100}%`, 
               width: `${100 / legendData.items.length}%` 
             }"
-            :title="`Top ${100 - index * 10}% - ${100 - (index + 1) * 10}%: ${item.rangeDisplay}`"
+            :title="`Decile ${index + 1} (${index * 10 + 10}th percentile): ${item.rangeDisplay} - ${item.countryCount} countries`"
             @mouseenter="hoveredSegment = index"
             @mouseleave="hoveredSegment = null"
           ></div>
@@ -59,17 +59,20 @@
         class="text-center text-sm text-gray-700 dark:text-gray-300 mt-2 p-2 bg-gray-50 dark:bg-gray-700 rounded"
       >
         <div class="font-medium">
-          Top {{ 100 - hoveredSegment * 10 }}% - {{ 100 - (hoveredSegment + 1) * 10 }}%
+          Decile {{ hoveredSegment + 1 }} ({{ hoveredSegment * 10 + 10 }}th percentile)
         </div>
         <div class="text-xs text-gray-600 dark:text-gray-400">
           {{ legendData.items[hoveredSegment].rangeDisplay }}
+        </div>
+        <div class="text-xs text-blue-600 dark:text-blue-400 mt-1">
+          {{ legendData.items[hoveredSegment].countryCount }} countries
         </div>
       </div>
       
       <!-- Unit and additional info -->
       <div class="text-xs text-gray-500 dark:text-gray-500 text-center mt-2">
         <div v-if="legendData.isPercentileBased" class="text-green-600 dark:text-green-400">
-          ✓ Perzentil-basierte Farbskala
+          ✓ Dezil-basierte Farbskala (wissenschaftlich korrekt)
         </div>
       </div>
     </div>
@@ -120,6 +123,7 @@ const legendData = computed(() => {
   
   // Check if we have percentile data from the color scale
   const percentiles = props.legendScale.percentiles ? props.legendScale.percentiles() : null
+  const countryCounts = props.legendScale.countryCounts ? props.legendScale.countryCounts() : null
   
   for (let i = 0; i < numColors; i++) {
     let rangeStart, rangeEnd
@@ -168,7 +172,8 @@ const legendData = computed(() => {
       formattedStartNoUnit: formattedStartNoUnit,
       formattedEndNoUnit: formattedEndNoUnit,
       rangeDisplay: `${formattedStart} - ${formattedEnd}`,
-      percentile: percentiles ? `${(i * 10)}-${((i + 1) * 10)}%` : null,
+      percentile: percentiles ? `${(i + 1) * 10}th percentile` : null,
+      countryCount: countryCounts ? countryCounts[i] : 0,
       isLast: i === numColors - 1
     })
   }

@@ -38,11 +38,17 @@ export function formatAgricultureValue(value, options = {}) {
   else if (unit === "1000 t") {
     if (absValue >= 1000000) {
       // >= 1 billion tonnes actual weight
-      formattedNumber = (value / 1000000).toFixed(precision ?? 1);
+      const scaledValue = value / 1000000;
+      // Use higher precision for values close to threshold
+      const dynamicPrecision = precision ?? (scaledValue < 10 ? 2 : 1);
+      formattedNumber = scaledValue.toFixed(dynamicPrecision);
       displayUnit = longForm ? "Mrd. t" : "Mrd t";
     } else if (absValue >= 1000) {
       // >= 1 million tonnes actual weight  
-      formattedNumber = (value / 1000).toFixed(precision ?? 1);
+      const scaledValue = value / 1000;
+      // Use higher precision for values close to threshold
+      const dynamicPrecision = precision ?? (scaledValue < 10 ? 2 : 1);
+      formattedNumber = scaledValue.toFixed(dynamicPrecision);
       displayUnit = longForm ? "Mio. t" : "Mio t";
     } else if (absValue >= 100) {
       // >= 100,000 tonnes actual weight
@@ -50,7 +56,9 @@ export function formatAgricultureValue(value, options = {}) {
       displayUnit = longForm ? "Tsd. t" : "Tsd t";
     } else {
       // < 100,000 tonnes actual weight
-      formattedNumber = value.toFixed(precision ?? 1);
+      // Use higher precision for smaller values
+      const dynamicPrecision = precision ?? (absValue < 10 ? 2 : 1);
+      formattedNumber = value.toFixed(dynamicPrecision);
       displayUnit = longForm ? "Tsd. t" : "Tsd t";
     }
   } else {

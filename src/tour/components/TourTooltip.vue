@@ -223,7 +223,7 @@ const tooltipStyle = computed(() => {
   // Responsive constraints
   let minWidth = 300
   let maxWidth = 600
-  let minHeight = 200
+  const minHeight = 200
   let maxHeight = '80vh'
   
   if (isMobile) {

@@ -49,6 +49,7 @@ const isInitialized = ref(false)
 const infoExpanded = ref(false) // State for collapsible info panel
 const countryDetailVisible = ref(false) // State for country detail panel
 const selectedCountryDetail = ref(null) // Selected country data for detail view
+const hoveredSegment = ref(null) // State for hovered legend segment
 
 // Click debouncing to prevent unwanted country detail views
 let lastClickTime = 0
@@ -60,17 +61,30 @@ const legendUnit = ref('1000 t') // Unit for legend display
 
 // Computed legend data for Vue template
 const legendData = computed(() => {
-  if (!legendDomain.value || !legendUnit.value) return null
+  if (!legendDomain.value || !legendUnit.value || !legendScale.value) return null
   
   const domain = legendDomain.value
   const numColors = greenColorScheme.length
-  const stepSize = (domain[1] - domain[0]) / numColors
   
-  // Create legend items with value ranges for each color
+  // Create legend items with percentile-based value ranges for each color
   const items = []
+  
+  // Check if we have percentile data from the color scale
+  const percentiles = legendScale.value.percentiles ? legendScale.value.percentiles() : null
+  
   for (let i = 0; i < numColors; i++) {
-    const rangeStart = domain[0] + (stepSize * i)
-    const rangeEnd = domain[0] + (stepSize * (i + 1))
+    let rangeStart, rangeEnd
+    
+    if (percentiles) {
+      // Use percentile-based ranges
+      rangeStart = i === 0 ? domain[0] : percentiles[i - 1]
+      rangeEnd = i === numColors - 1 ? domain[1] : percentiles[i]
+    } else {
+      // Fallback to equal intervals if percentiles not available
+      const stepSize = (domain[1] - domain[0]) / numColors
+      rangeStart = domain[0] + (stepSize * i)
+      rangeEnd = domain[0] + (stepSize * (i + 1))
+    }
     
     // Use centralized formatting for start and end values
     const formattedStart = formatAgricultureValue(rangeStart, { 
@@ -105,6 +119,7 @@ const legendData = computed(() => {
       formattedStartNoUnit: formattedStartNoUnit,
       formattedEndNoUnit: formattedEndNoUnit,
       rangeDisplay: `${formattedStart} - ${formattedEnd}`,
+      percentile: percentiles ? `${(i * 10)}-${((i + 1) * 10)}%` : null,
       isLast: i === numColors - 1
     })
   }
@@ -116,7 +131,8 @@ const legendData = computed(() => {
     max: domain[1],
     unit: legendUnit.value,
     formattedMin: formatAgricultureValue(domain[0], { unit: legendUnit.value, showUnit: true, longForm: false }),
-    formattedMax: formatAgricultureValue(domain[1], { unit: legendUnit.value, showUnit: true, longForm: false })
+    formattedMax: formatAgricultureValue(domain[1], { unit: legendUnit.value, showUnit: true, longForm: false }),
+    isPercentileBased: !!percentiles
   }
 })
 
@@ -1154,54 +1170,57 @@ const applyProductionDataDirect = (container, data) => {
       count: values.length, range, median, q1, q3, iqr, isHighlySkewed
     })
     
-    // Always use all 10 colors with min at first color and max at last color
-    console.log('🎨 WorldMap: Using all 10 colors with equal steps')
+    // Use 10-step percentile-based scale where top 10% get yellow, etc.
+    console.log('🎨 WorldMap: Using 10-step percentile-based color scale')
     
-    // Calculate step size for 9 intervals (10 colors = 9 steps)
-    const stepSize = (maxValue - minValue) / (greenColorScheme.length - 1)
-    const valueRanges = []
-    const thresholds = []
-    
-    // Create value thresholds for each color transition
-    for (let i = 0; i < greenColorScheme.length - 1; i++) {
-      const threshold = minValue + (stepSize * (i + 1))
-      thresholds.push(threshold)
+    // Calculate percentile thresholds (10% intervals)
+    const percentiles = []
+    for (let i = 1; i < greenColorScheme.length; i++) {
+      const percentile = i / greenColorScheme.length
+      const threshold = d3.quantile(sortedValues, percentile)
+      percentiles.push(threshold)
     }
     
-    // Create value ranges for logging
+    const valueRanges = []
+    const thresholds = percentiles
+    
+    // Create value ranges for logging using percentile boundaries
     for (let i = 0; i < greenColorScheme.length; i++) {
-      const rangeStart = i === 0 ? minValue : thresholds[i - 1]
-      const rangeEnd = i === greenColorScheme.length - 1 ? maxValue : thresholds[i]
+      const rangeStart = i === 0 ? minValue : percentiles[i - 1]
+      const rangeEnd = i === greenColorScheme.length - 1 ? maxValue : percentiles[i]
       valueRanges.push({
         min: rangeStart,
         max: rangeEnd,
-        color: greenColorScheme[i]
+        color: greenColorScheme[i],
+        percentile: `${(i * 10)}-${((i + 1) * 10)}%`
       })
     }
     
     console.log('🎨 WorldMap: Value ranges:', valueRanges)
     console.log('🎨 WorldMap: Thresholds between colors:', thresholds)
     
-    // Create a custom scale function that maps values to colors
+    // Create a custom scale function that maps values to colors using percentiles
     colorScale = (value) => {
       // Edge cases
       if (value <= minValue) return greenColorScheme[0]
       if (value >= maxValue) return greenColorScheme[greenColorScheme.length - 1]
       
-      // Find which color index the value maps to
-      // Using (length - 1) because we have 19 intervals for 20 colors
-      const normalizedPosition = (value - minValue) / (maxValue - minValue)
-      const colorIndex = Math.floor(normalizedPosition * (greenColorScheme.length - 1))
+      // Find which percentile band the value falls into
+      for (let i = 0; i < percentiles.length; i++) {
+        if (value <= percentiles[i]) {
+          return greenColorScheme[i + 1]
+        }
+      }
       
-      // Ensure we don't exceed array bounds
-      const clampedIndex = Math.min(colorIndex, greenColorScheme.length - 1)
-      return greenColorScheme[clampedIndex]
+      // If we get here, the value is in the highest percentile
+      return greenColorScheme[greenColorScheme.length - 1]
     }
     
     // Store thresholds for legend
     colorScale.thresholds = () => thresholds
     colorScale.range = () => greenColorScheme
     colorScale.domain = () => [minValue, maxValue]
+    colorScale.percentiles = () => percentiles
     
     legendDomain.value = [minValue, maxValue]
     
@@ -1818,24 +1837,11 @@ defineExpose({
       </div>
     </div>
 
-    <!-- Map SVG Container with explicit sizing -->
-    <!-- Remove v-once from container to ensure ref works properly -->
-    <div 
-      ref="svgContainerRef"
-      class="map-svg-container" 
-      style="width: 100%; height: calc(100% - 120px); min-height: 480px; position: relative;"
-    >
-      <!-- Debug message -->
-      <div v-if="!isInitialized && !isLoading && !error" class="absolute inset-0 flex items-center justify-center text-gray-500">
-        <p>Karte wird initialisiert...</p>
-      </div>
-    </div>
-
-    <!-- New Boxed Legend -->
+    <!-- Continuous Legend Bar Above Map -->
     <div 
       v-if="legendData && !isLoading" 
-      class="legend-container bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4"
-      style="min-height: 120px; position: absolute; bottom: 0; left: 0; right: 0;"
+      class="legend-container bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg mb-4 p-4"
+      style="min-height: 100px;"
     >
       <div class="flex flex-col h-full">
         <!-- Legend Title -->
@@ -1843,61 +1849,80 @@ defineExpose({
           {{ legendData.title }}
         </div>
         
-        <!-- Legend Scale with Value Ranges -->
-        <div class="flex-1 overflow-x-auto">
-          <div class="flex items-center justify-center min-w-max px-2">
-            <!-- Desktop Layout: Show all colors -->
-            <div class="hidden md:flex items-center space-x-2">
-              <div 
-                v-for="(item, index) in legendData.items" 
-                :key="index"
-                class="flex flex-col items-center group"
-              >
-                <!-- Color Block -->
-                <div 
-                  class="w-6 h-6 border border-gray-300 dark:border-gray-600 transition-all duration-200 group-hover:scale-110 group-hover:border-gray-500 dark:group-hover:border-gray-400 cursor-help shadow-sm"
-                  :style="{ backgroundColor: item.color }"
-                  :title="item.rangeDisplay"
-                />
-                
-                <!-- Value Range Label -->
-                <div class="text-xs text-gray-600 dark:text-gray-400 mt-1 text-center" style="min-width: 50px; max-width: 70px;">
-                  <div class="font-medium text-center leading-tight">{{ item.formattedStartNoUnit }}</div>
-                  <div class="text-gray-500 dark:text-gray-500 text-center">-</div>
-                  <div class="font-medium text-center leading-tight">{{ item.formattedEndNoUnit }}</div>
-                </div>
-              </div>
-            </div>
+        <!-- Continuous Color Bar -->
+        <div class="flex-1 relative">
+          <!-- Main continuous bar container -->
+          <div class="relative h-8 mx-4 mb-2 rounded overflow-hidden border border-gray-300 dark:border-gray-600">
+            <!-- Continuous gradient background -->
+            <div 
+              class="absolute inset-0"
+              :style="{
+                background: `linear-gradient(to right, ${legendData.items.map(item => item.color).join(', ')})`
+              }"
+            ></div>
             
-            <!-- Mobile Layout: Show selected colors -->
-            <div class="flex md:hidden items-center space-x-2">
-              <div 
-                v-for="index in [0, 2, 4, 6, 8, 9]" 
-                :key="index"
-                class="flex flex-col items-center group"
-              >
-                <!-- Color Block -->
-                <div 
-                  class="w-8 h-8 border border-gray-300 dark:border-gray-600 transition-all duration-200 group-hover:scale-110 group-hover:border-gray-500 dark:group-hover:border-gray-400 cursor-help shadow-sm"
-                  :style="{ backgroundColor: legendData.items[index].color }"
-                  :title="legendData.items[index].rangeDisplay"
-                />
-                
-                <!-- Value Range Label -->
-                <div class="text-xs text-gray-600 dark:text-gray-400 mt-1 text-center" style="min-width: 60px;">
-                  <div class="font-medium text-center leading-tight">{{ legendData.items[index].formattedStartNoUnit }}</div>
-                  <div class="text-gray-500 dark:text-gray-500 text-center">-</div>
-                  <div class="font-medium text-center leading-tight">{{ legendData.items[index].formattedEndNoUnit }}</div>
-                </div>
-              </div>
-            </div>
+            <!-- Percentile separators -->
+            <div 
+              v-for="(item, index) in legendData.items.slice(0, -1)" 
+              :key="index"
+              class="absolute top-0 bottom-0 w-px bg-white/30"
+              :style="{ left: `${((index + 1) / legendData.items.length) * 100}%` }"
+            ></div>
+            
+            <!-- Hoverable segments for each percentile -->
+            <div 
+              v-for="(item, index) in legendData.items" 
+              :key="index"
+              class="absolute top-0 bottom-0 cursor-help transition-all duration-200 hover:bg-black/10"
+              :style="{ 
+                left: `${(index / legendData.items.length) * 100}%`, 
+                width: `${100 / legendData.items.length}%` 
+              }"
+              :title="`Top ${100 - index * 10}% - ${100 - (index + 1) * 10}%: ${item.rangeDisplay}`"
+              @mouseenter="hoveredSegment = index"
+              @mouseleave="hoveredSegment = null"
+            ></div>
+          </div>
+          
+          <!-- Value labels below the bar -->
+          <div class="flex justify-between items-center text-xs text-gray-600 dark:text-gray-400 px-4">
+            <span class="font-medium">{{ legendData.formattedMin }}</span>
+            <span class="font-medium">{{ legendData.formattedMax }}</span>
           </div>
         </div>
         
-        <!-- Unit Display -->
-        <div class="text-xs text-gray-500 dark:text-gray-500 text-center mt-2">
-          Bereich: {{ legendData.formattedMin }} bis {{ legendData.formattedMax }}
+        <!-- Hover tooltip -->
+        <div 
+          v-if="hoveredSegment !== null"
+          class="text-center text-sm text-gray-700 dark:text-gray-300 mt-2 p-2 bg-gray-50 dark:bg-gray-700 rounded"
+        >
+          <div class="font-medium">
+            Top {{ 100 - hoveredSegment * 10 }}% - {{ 100 - (hoveredSegment + 1) * 10 }}%
+          </div>
+          <div class="text-xs text-gray-600 dark:text-gray-400">
+            {{ legendData.items[hoveredSegment].rangeDisplay }}
+          </div>
         </div>
+        
+        <!-- Unit and additional info -->
+        <div class="text-xs text-gray-500 dark:text-gray-500 text-center mt-2">
+          <div v-if="legendData.isPercentileBased" class="text-green-600 dark:text-green-400">
+            ✓ Perzentil-basierte Farbskala
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Map SVG Container with explicit sizing -->
+    <!-- Remove v-once from container to ensure ref works properly -->
+    <div 
+      ref="svgContainerRef"
+      class="map-svg-container" 
+      style="width: 100%; height: calc(100% - 140px); min-height: 480px; position: relative;"
+    >
+      <!-- Debug message -->
+      <div v-if="!isInitialized && !isLoading && !error" class="absolute inset-0 flex items-center justify-center text-gray-500">
+        <p>Karte wird initialisiert...</p>
       </div>
     </div>
   </div>

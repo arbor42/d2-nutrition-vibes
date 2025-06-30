@@ -6,7 +6,7 @@
     >
       <div class="tour-debugger-header">
         <h3>Tour Debugger</h3>
-        <button @click="showDebugger = false" class="close-btn">×</button>
+        <button class="close-btn" @click="showDebugger = false">×</button>
       </div>
       
       <div class="tour-debugger-content">
@@ -62,9 +62,9 @@
         <div class="debug-section">
           <h4>Actions</h4>
           <div class="debug-actions">
-            <button @click="refreshTargetInfo" class="debug-btn">Refresh Info</button>
-            <button @click="recalculatePosition" class="debug-btn">Recalculate Position</button>
-            <button @click="logDebugInfo" class="debug-btn">Log to Console</button>
+            <button class="debug-btn" @click="refreshTargetInfo">Refresh Info</button>
+            <button class="debug-btn" @click="recalculatePosition">Recalculate Position</button>
+            <button class="debug-btn" @click="logDebugInfo">Log to Console</button>
           </div>
         </div>
       </div>

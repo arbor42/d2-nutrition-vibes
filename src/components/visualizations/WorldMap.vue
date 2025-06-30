@@ -20,6 +20,7 @@ interface Props {
     selectedIndices: number[]
     selectedColors: string[]
   }
+  colorScheme?: string[]
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -28,7 +29,8 @@ const props = withDefaults(defineProps<Props>(), {
   selectedProduct: 'Wheat and products',
   selectedYear: 2022,
   selectedMetric: 'production',
-  colorFilter: () => ({ selectedIndices: [], selectedColors: [] })
+  colorFilter: () => ({ selectedIndices: [], selectedColors: [] }),
+  colorScheme: () => ['#440154', '#482878', '#3e4989', '#31688e', '#26828e', '#1f9e89', '#35b779', '#6ece58', '#b5de2b', '#fde725']
 })
 
 const emit = defineEmits<{
@@ -69,7 +71,7 @@ const legendData = computed(() => {
   if (!legendDomain.value || !legendUnit.value || !legendScale.value) return null
   
   const domain = legendDomain.value
-  const numColors = greenColorScheme.length
+  const numColors = getCurrentColorScheme().length
   
   // Create legend items with percentile-based value ranges for each color
   const items = []
@@ -116,7 +118,7 @@ const legendData = computed(() => {
     })
     
     items.push({
-      color: greenColorScheme[i],
+      color: getCurrentColorScheme()[i],
       rangeStart: rangeStart,
       rangeEnd: rangeEnd,
       formattedStart: formattedStart,
@@ -233,18 +235,10 @@ let path: d3.GeoPath
 let colorScale: d3.ScaleQuantize<string>
 let zoom: d3.ZoomBehavior<SVGElement, unknown>
 
-// Viridis color scheme for production data (10 steps)
-const greenColorScheme = [
-  '#440154',  // Dark purple (lowest values)
-  '#482878',  // Purple
-  '#3E4A89',  // Blue
-  '#32608D',  // Blue
-  '#25818E',  // Teal
-  '#20978C',  // Teal-green
-  '#2AB07E',  // Green
-  '#5DC863',  // Light green
-  '#7DD151',  // Yellow-green
-  '#FDE725'   // Yellow (highest values)
+// Get current color scheme from props
+const getCurrentColorScheme = () => props.colorScheme || [
+  '#440154', '#482878', '#3E4A89', '#32608D', '#25818E',
+  '#20978C', '#2AB07E', '#5DC863', '#7DD151', '#FDE725'
 ]
 
 // Helper functions for color filtering
@@ -256,7 +250,7 @@ const getColorIndexForValue = (value: number, colorScale: any): number => {
     const domain = colorScale.domain()
     
     if (value <= domain[0]) return 0
-    if (value >= domain[1]) return greenColorScheme.length - 1
+    if (value >= domain[1]) return getCurrentColorScheme().length - 1
     
     for (let i = 0; i < percentiles.length; i++) {
       if (value <= percentiles[i]) {
@@ -264,7 +258,7 @@ const getColorIndexForValue = (value: number, colorScale: any): number => {
       }
     }
     
-    return greenColorScheme.length - 1
+    return getCurrentColorScheme().length - 1
   } catch (error) {
     console.warn('🎨 Error getting color index:', error)
     return 0
@@ -288,7 +282,7 @@ const getDimmedColor = (color: string): string => {
 // Computed properties
 const mapConfig = computed(() => ({
   projection: 'naturalEarth1',
-  colorScheme: greenColorScheme,
+  colorScheme: getCurrentColorScheme(),
   ...vizStore.getVisualizationConfig('worldMap')
 }))
 
@@ -1229,8 +1223,8 @@ const applyProductionDataDirect = (container, data) => {
     
     // Calculate percentile thresholds (10% intervals)
     const percentiles = []
-    for (let i = 1; i < greenColorScheme.length; i++) {
-      const percentile = i / greenColorScheme.length
+    for (let i = 1; i < getCurrentColorScheme().length; i++) {
+      const percentile = i / getCurrentColorScheme().length
       const threshold = d3.quantile(sortedValues, percentile)
       percentiles.push(threshold)
     }
@@ -1239,13 +1233,13 @@ const applyProductionDataDirect = (container, data) => {
     const thresholds = percentiles
     
     // Create value ranges for logging using percentile boundaries
-    for (let i = 0; i < greenColorScheme.length; i++) {
+    for (let i = 0; i < getCurrentColorScheme().length; i++) {
       const rangeStart = i === 0 ? minValue : percentiles[i - 1]
-      const rangeEnd = i === greenColorScheme.length - 1 ? maxValue : percentiles[i]
+      const rangeEnd = i === getCurrentColorScheme().length - 1 ? maxValue : percentiles[i]
       valueRanges.push({
         min: rangeStart,
         max: rangeEnd,
-        color: greenColorScheme[i],
+        color: getCurrentColorScheme()[i],
         percentile: `${(i * 10)}-${((i + 1) * 10)}%`
       })
     }
@@ -1254,7 +1248,7 @@ const applyProductionDataDirect = (container, data) => {
     console.log('🎨 WorldMap: Thresholds between colors:', thresholds)
     
     // Count countries in each decile
-    const countryCounts = new Array(greenColorScheme.length).fill(0)
+    const countryCounts = new Array(getCurrentColorScheme().length).fill(0)
     countryData.forEach(d => {
       const value = d.value
       let decileIndex = 0
@@ -1262,7 +1256,7 @@ const applyProductionDataDirect = (container, data) => {
       if (value <= minValue) {
         decileIndex = 0
       } else if (value >= maxValue) {
-        decileIndex = greenColorScheme.length - 1
+        decileIndex = getCurrentColorScheme().length - 1
       } else {
         for (let i = 0; i < percentiles.length; i++) {
           if (value <= percentiles[i]) {
@@ -1280,23 +1274,23 @@ const applyProductionDataDirect = (container, data) => {
     // Create a custom scale function that maps values to colors using percentiles
     colorScale = (value) => {
       // Edge cases
-      if (value <= minValue) return greenColorScheme[0]
-      if (value >= maxValue) return greenColorScheme[greenColorScheme.length - 1]
+      if (value <= minValue) return getCurrentColorScheme()[0]
+      if (value >= maxValue) return getCurrentColorScheme()[getCurrentColorScheme().length - 1]
       
       // Find which percentile band the value falls into
       for (let i = 0; i < percentiles.length; i++) {
         if (value <= percentiles[i]) {
-          return greenColorScheme[i + 1]
+          return getCurrentColorScheme()[i + 1]
         }
       }
       
       // If we get here, the value is in the highest percentile
-      return greenColorScheme[greenColorScheme.length - 1]
+      return getCurrentColorScheme()[getCurrentColorScheme().length - 1]
     }
     
     // Store thresholds for legend
     colorScale.thresholds = () => thresholds
-    colorScale.range = () => greenColorScheme
+    colorScale.range = () => getCurrentColorScheme()
     colorScale.domain = () => [minValue, maxValue]
     colorScale.percentiles = () => percentiles
     colorScale.countryCounts = () => countryCounts
@@ -1749,6 +1743,31 @@ watch(() => props.colorFilter, (newFilter, oldFilter) => {
     }
   } else {
     console.log('🎨 WorldMap WATCHER: Map not ready for filter application, skipping...')
+  }
+}, { deep: true })
+
+// Watch for colorScheme changes
+watch(() => props.colorScheme, (newColorScheme, oldColorScheme) => {
+  if (!newColorScheme || !oldColorScheme || JSON.stringify(newColorScheme) === JSON.stringify(oldColorScheme)) {
+    return
+  }
+  
+  console.log('🎨 WorldMap WATCHER: Color scheme changed:', newColorScheme)
+  
+  // Only update colors if map is initialized and we have data
+  if (isInitialized.value && legendScale.value && svgContainerRef.value) {
+    const processedData = getProcessedProductionData()
+    if (processedData.length > 0) {
+      console.log('🎨 WorldMap WATCHER: Recreating color scale with new scheme...')
+      
+      // Recreate the color scale with new colors but same data
+      const container = d3.select(svgContainerRef.value).select('.map-container')
+      if (!container.empty()) {
+        applyProductionDataDirect(container, processedData)
+      }
+    }
+  } else {
+    console.log('🎨 WorldMap WATCHER: Map not ready for color scheme update, skipping...')
   }
 }, { deep: true })
 

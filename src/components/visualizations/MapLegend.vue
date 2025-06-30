@@ -6,11 +6,56 @@
     style="min-height: 100px;"
   >
     <div class="flex flex-col h-full">
-      <!-- Legend Title with Filter Status -->
+      <!-- Legend Title with Gear Menu and Filter Status -->
       <div class="flex items-center justify-between mb-3">
+        <!-- Color Scheme Gear Menu - Top Left -->
+        <div class="relative color-scheme-menu">
+          <button
+            @click="toggleColorSchemeMenu"
+            class="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
+            title="Color scheme options"
+          >
+            <!-- Gear Icon -->
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+          </button>
+          
+          <!-- Dropdown Menu -->
+          <div 
+            v-if="showColorSchemeMenu"
+            class="absolute left-0 mt-1 w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-50"
+          >
+            <div class="p-2">
+              <div class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 px-2">Color Schemes</div>
+              <div 
+                v-for="scheme in colorSchemes" 
+                :key="scheme.name"
+                @click="selectColorScheme(scheme.name)"
+                class="flex items-center justify-between px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer"
+                :class="{ 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300': selectedColorScheme === scheme.name }"
+              >
+                <span>{{ scheme.displayName }}</span>
+                <div class="flex ml-2">
+                  <div 
+                    v-for="(color, idx) in scheme.colors.slice(0, 4)" 
+                    :key="idx"
+                    class="w-3 h-3 rounded-sm border border-gray-300 dark:border-gray-600"
+                    :style="{ backgroundColor: color }"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Legend Title - Center -->
         <div class="text-sm font-medium text-gray-700 dark:text-gray-300 text-center flex-1">
           {{ legendData.title }}
         </div>
+        
+        <!-- Filter Status - Right -->
         <div v-if="selectedColors.size > 0" class="flex items-center gap-2">
           <span class="text-xs text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-2 py-1 rounded">
             {{ selectedColors.size }} filter{{ selectedColors.size > 1 ? 's' : '' }} active
@@ -118,14 +163,40 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, nextTick } from 'vue'
+import { ref, computed, watch, nextTick, onMounted, onUnmounted } from 'vue'
 import { formatAgricultureValue } from '@/utils/formatters.js'
 
-// Color scheme - matching WorldMap component
-const greenColorScheme = [
-  '#440154', '#482878', '#3e4989', '#31688e', '#26828e',
-  '#1f9e89', '#35b779', '#6ece58', '#b5de2b', '#fde725'
-]
+// Color schemes
+const colorSchemes = ref({
+  viridis: {
+    name: 'viridis',
+    displayName: 'Viridis',
+    colors: ['#440154', '#482878', '#3e4989', '#31688e', '#26828e', '#1f9e89', '#35b779', '#6ece58', '#b5de2b', '#fde725']
+  },
+  redYellowGreen: {
+    name: 'redYellowGreen',
+    displayName: 'Red-Yellow-Green',
+    colors: ['#d73027', '#f46d43', '#fdae61', '#fee08b', '#ffffbf', '#d9ef8b', '#a6d96a', '#66bd63', '#1a9850', '#006837']
+  },
+  blues: {
+    name: 'blues',
+    displayName: 'Blues',
+    colors: ['#f7fbff', '#deebf7', '#c6dbef', '#9ecae1', '#6baed6', '#4292c6', '#2171b5', '#08519c', '#08306b', '#041d42']
+  },
+  oranges: {
+    name: 'oranges',
+    displayName: 'Oranges',
+    colors: ['#fff5eb', '#fee6ce', '#fdd0a2', '#fdae6b', '#fd8d3c', '#f16913', '#d94801', '#a63603', '#7f2704', '#4a1003']
+  }
+})
+
+// Current selected color scheme
+const selectedColorScheme = ref('viridis')
+
+// Get current color scheme
+const getCurrentColorScheme = () => {
+  return colorSchemes.value[selectedColorScheme.value].colors
+}
 
 // Props
 interface Props {
@@ -153,9 +224,13 @@ const hoveredSegment = ref<number | null>(null)
 const selectedColors = ref<Set<number>>(new Set())
 const isResetting = ref(false)
 
+// State for color scheme menu
+const showColorSchemeMenu = ref(false)
+
 // Emit function for communicating filter changes to parent
 const emit = defineEmits<{
   colorFilter: [selectedIndices: number[], selectedColors: string[]]
+  colorSchemeChange: [schemeName: string, colors: string[]]
 }>()
 
 // Toggle color filter selection
@@ -187,10 +262,29 @@ const resetFilters = () => {
   })
 }
 
+// Toggle color scheme menu
+const toggleColorSchemeMenu = () => {
+  showColorSchemeMenu.value = !showColorSchemeMenu.value
+}
+
+// Select a color scheme
+const selectColorScheme = (schemeName: string) => {
+  selectedColorScheme.value = schemeName
+  showColorSchemeMenu.value = false
+  
+  // Reset filters when changing color scheme
+  resetFilters()
+  
+  // Emit color scheme change to parent
+  const newColors = getCurrentColorScheme()
+  emit('colorSchemeChange', schemeName, newColors)
+}
+
 // Emit filter change to parent component
 const emitFilterChange = () => {
   const selectedIndices = Array.from(selectedColors.value)
-  const selectedColorValues = selectedIndices.map(index => greenColorScheme[index])
+  const currentColors = getCurrentColorScheme()
+  const selectedColorValues = selectedIndices.map(index => currentColors[index])
   emit('colorFilter', selectedIndices, selectedColorValues)
 }
 
@@ -207,7 +301,8 @@ const legendData = computed(() => {
   if (!props.legendDomain || !props.legendUnit || !props.legendScale) return null
   
   const domain = props.legendDomain
-  const numColors = greenColorScheme.length
+  const currentColors = getCurrentColorScheme()
+  const numColors = currentColors.length
   
   // Create legend items with percentile-based value ranges for each color
   const items = []
@@ -255,7 +350,7 @@ const legendData = computed(() => {
     })
     
     items.push({
-      color: greenColorScheme[i],
+      color: currentColors[i],
       rangeStart: rangeStart,
       rangeEnd: rangeEnd,
       formattedStart: formattedStart,
@@ -295,4 +390,21 @@ const getLegendTitle = () => {
   const baseTitle = metricTitles[props.selectedMetric as keyof typeof metricTitles] || 'Daten'
   return `${baseTitle} - ${props.selectedProduct}`
 }
+
+// Click outside handler to close color scheme menu
+const handleClickOutside = (event: MouseEvent) => {
+  const target = event.target as HTMLElement
+  if (!target.closest('.color-scheme-menu')) {
+    showColorSchemeMenu.value = false
+  }
+}
+
+// Setup and cleanup click outside listener
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside)
+})
 </script>

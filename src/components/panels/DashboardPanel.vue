@@ -29,6 +29,12 @@ const activeColorFilter = ref<{
   selectedColors: []
 })
 
+// Current color scheme state
+const currentColorScheme = ref<string[]>([
+  '#440154', '#482878', '#3e4989', '#31688e', '#26828e',
+  '#1f9e89', '#35b779', '#6ece58', '#b5de2b', '#fde725'
+])
+
 // Handle legend updates from WorldMap
 const handleLegendUpdate = (legendData: { legendScale: any, legendDomain: [number, number], legendUnit: string }) => {
   mapLegendData.value = legendData
@@ -45,6 +51,11 @@ const handleColorFilter = (selectedIndices: number[], selectedColors: string[]) 
   if (JSON.stringify(activeColorFilter.value) !== JSON.stringify(newFilter)) {
     activeColorFilter.value = newFilter
   }
+}
+
+// Handle color scheme changes from MapLegend
+const handleColorSchemeChange = (schemeName: string, colors: string[]) => {
+  currentColorScheme.value = colors
 }
 
 const visualizationOptions = [
@@ -840,6 +851,7 @@ onUnmounted(() => {
             :selected-metric="uiStore.selectedMetric"
             :is-loading="dashboardLoading"
             @color-filter="handleColorFilter"
+            @color-scheme-change="handleColorSchemeChange"
           />
           
           <!-- World Map (without internal legend) -->
@@ -849,6 +861,7 @@ onUnmounted(() => {
               :selected-year="uiStore.selectedYear"
               :selected-metric="uiStore.selectedMetric"
               :color-filter="activeColorFilter"
+              :color-scheme="currentColorScheme"
               @country-click="onCountryClick"
               @country-hover="(country) => {}"
               @legend-update="handleLegendUpdate"

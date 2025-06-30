@@ -653,6 +653,7 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
   }
 })
 
+
 // Cleanup timeout on unmount
 onUnmounted(() => {
   if (watcherTimeout) {
@@ -840,7 +841,7 @@ onUnmounted(() => {
       </div>
       <div class="card-body">
         <!-- World Map View -->
-        <div v-if="selectedVisualization === 'world-map'" class="w-full relative" data-tour="world-map">
+        <div v-if="selectedVisualization === 'world-map'" class="w-full relative world-map-visualization" data-tour="world-map">
           <!-- Map Legend (outside the map container) -->
           <MapLegend
             v-if="mapLegendData"
@@ -855,7 +856,7 @@ onUnmounted(() => {
           />
           
           <!-- World Map (without internal legend) -->
-          <div class="h-[600px] w-full relative">
+          <div class="h-[600px] w-full relative world-map-container">
             <WorldMap
               :selected-product="uiStore.selectedProduct"
               :selected-year="uiStore.selectedYear"

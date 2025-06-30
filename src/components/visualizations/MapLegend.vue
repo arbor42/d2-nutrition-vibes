@@ -3,7 +3,7 @@
   <div 
     v-if="legendData && !isLoading" 
     class="legend-container bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg mb-4 p-4"
-    style="min-height: 100px;"
+    style="min-height: 100px; width: 100%; position: relative; z-index: 1;"
   >
     <div class="flex flex-col h-full">
       <!-- Legend Title with Gear Menu and Filter Status -->
@@ -408,3 +408,36 @@ onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)
 })
 </script>
+
+<style scoped>
+.legend-container {
+  /* Ensure proper rendering in PDF exports */
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  min-height: 100px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  display: block;
+  box-sizing: border-box;
+}
+
+/* Dark mode styles */
+.dark .legend-container {
+  background-color: #1f2937;
+  border-color: #374151;
+}
+
+/* Force solid backgrounds for PDF export */
+@media print {
+  .legend-container {
+    background-color: white !important;
+    border: 1px solid #000 !important;
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+  }
+}
+</style>

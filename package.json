@@ -29,6 +29,8 @@
     "@tailwindcss/typography": "^0.5.16",
     "@vee-validate/zod": "^4.15.1",
     "d3": "^7.8.5",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^3.0.1",
     "pinia": "^2.1.0",
     "terser": "^5.43.1",
     "topojson-client": "^3.1.0",

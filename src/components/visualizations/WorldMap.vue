@@ -2024,6 +2024,7 @@ defineExpose({
     class="chart-container relative w-full h-full bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700"
     style="min-height: 600px; width: 100%; height: 100%;"
     data-tour="world-map"
+    data-pdf-export="world-map"
   >
     <!-- Loading overlay -->
     <LoadingSpinner

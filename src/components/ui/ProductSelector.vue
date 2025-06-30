@@ -3,12 +3,14 @@ import { computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useDataStore } from '@/stores/useDataStore'
 import { useUIStore } from '@/stores/useUIStore'
+import { usePDFExport } from '@/composables/usePDFExport'
 import SearchableSelect from '@/components/ui/SearchableSelect.vue'
 import { getAllProductOptions, getGermanName } from '@/utils/productMappings'
 
 const router = useRouter()
 const dataStore = useDataStore()
 const uiStore = useUIStore()
+const { isExporting, exportDashboardToPDF } = usePDFExport()
 
 // Available product options for the searchable dropdown
 const productOptions = computed(() => {
@@ -121,7 +123,30 @@ watch([() => uiStore.selectedProduct, () => uiStore.selectedYear], async ([produ
 })
 
 // Action buttons methods
-const exportData = () => {
+const exportData = async () => {
+  console.log('🔥 Export button clicked!')
+  try {
+    // Check if we're on the dashboard page
+    if (router.currentRoute.value.path !== '/dashboard' && router.currentRoute.value.name !== 'dashboard') {
+      console.log('📍 Navigating to dashboard for export...')
+      await router.push('/dashboard')
+      
+      // Wait for the navigation and component rendering
+      await new Promise(resolve => setTimeout(resolve, 2000))
+    }
+    
+    console.log('📍 Starting comprehensive PDF export...')
+    // The new export function handles all data collection and validation internally
+    await exportDashboardToPDF()
+    
+  } catch (error) {
+    console.error('❌ Failed to export PDF:', error)
+    
+    // Show user-friendly error message
+    if (error instanceof Error) {
+      console.error('Export error details:', error.message)
+    }
+  }
 }
 
 
@@ -177,13 +202,19 @@ const resetView = () => {
     <div class="flex items-center space-x-2">
       <button
         class="px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200 flex items-center space-x-2"
+        :class="{ 'opacity-75 cursor-not-allowed': isExporting }"
+        :disabled="isExporting"
         title="Daten exportieren"
         @click="exportData"
       >
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg v-if="!isExporting" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
         </svg>
-        <span class="hidden sm:inline">Export</span>
+        <svg v-else class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+        </svg>
+        <span class="hidden sm:inline">{{ isExporting ? 'Exportiere...' : 'Export' }}</span>
       </button>
 
 

@@ -47,14 +47,20 @@
       <!-- Quick Actions -->
       <div class="flex items-center space-x-2">
         <button
-          class="btn-secondary flex items-center space-x-2"
-          title="Daten exportieren"
+          class="btn-secondary flex items-center space-x-2 bg-blue-500 text-white px-4 py-2 rounded"
+          :class="{ 'opacity-75 cursor-not-allowed': isExporting }"
+          :disabled="isExporting"
+          title="Dashboard als PDF exportieren"
           @click="exportData"
         >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg v-if="!isExporting" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
-          <span class="hidden sm:inline">Export</span>
+          <svg v-else class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+          </svg>
+          <span class="hidden sm:inline">{{ isExporting ? 'Exportiere...' : 'Export' }}</span>
         </button>
 
 
@@ -111,12 +117,16 @@
 import { h, inject } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUIStore } from '@/stores/useUIStore'
+import { useDataStore } from '@/stores/useDataStore'
 import { useTourStore } from '@/tour/stores/useTourStore'
+import { usePDFExport } from '@/composables/usePDFExport'
 
 const router = useRouter()
 const uiStore = useUIStore()
+const dataStore = useDataStore()
 const tourStore = useTourStore()
 const tourService = inject('tourService')
+const { isExporting, exportDashboardToPDF } = usePDFExport()
 
 // Analysis panel options
 const analysisOptions = [
@@ -188,13 +198,35 @@ const handlePanelSelect = (panel: any) => {
   
 }
 
-// Export current data
-const exportData = () => {
-  
-  // Simulate export process
-  setTimeout(() => {
-    // Export logic here
-  }, 2000)
+// Export current data as PDF
+const exportData = async () => {
+  console.log('🔥 Export button clicked!')
+  try {
+    // Check if we're on the dashboard page
+    const currentRoute = router.currentRoute.value
+    console.log('📍 Current route:', currentRoute.path)
+    
+    // If not on dashboard, navigate there first
+    if (currentRoute.path !== '/dashboard' && currentRoute.name !== 'dashboard') {
+      console.log('📍 Navigating to dashboard for export...')
+      await router.push('/dashboard')
+      
+      // Wait for the navigation and component rendering
+      await new Promise(resolve => setTimeout(resolve, 2000))
+    }
+    
+    console.log('📍 Starting comprehensive PDF export...')
+    // The new export function handles all data collection and validation internally
+    await exportDashboardToPDF()
+    
+  } catch (error) {
+    console.error('❌ Failed to export PDF:', error)
+    
+    // Show user-friendly error message
+    if (error instanceof Error) {
+      console.error('Export error details:', error.message)
+    }
+  }
 }
 
 

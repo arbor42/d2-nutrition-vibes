@@ -39,7 +39,7 @@ const uiStore = useUIStore()
 
 // Initialize app
 onMounted(async () => {
-  console.log('D2 Nutrition Vibes Vue.js App initialized')
+  console.log('OpenFoodMap Vue.js App initialized')
   
   // Initialize UI settings
   uiStore.initializeUI()

@@ -149,7 +149,7 @@ const panelDescription = computed(() => {
         </div>
         
         <div class="text-gray-500 dark:text-gray-400">
-          D2 Nutrition Vibes v2.0.0
+          OpenFoodMap v2.0.0
         </div>
       </div>
     </div>

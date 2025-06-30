@@ -10,7 +10,7 @@ const routes = [
         name: 'home',
         component: () => import('@/components/panels/DashboardPanel.vue'),
         meta: {
-          title: 'D2 Nutrition Vibes - Home',
+          title: 'OpenFoodMap - Home',
           preload: true
         }
       },
@@ -19,7 +19,7 @@ const routes = [
         name: 'dashboard',
         component: () => import('@/components/panels/DashboardPanel.vue'),
         meta: {
-          title: 'Dashboard - D2 Nutrition Vibes',
+          title: 'Dashboard - OpenFoodMap',
           preload: true
         }
       },
@@ -28,7 +28,7 @@ const routes = [
         name: 'timeseries',
         component: () => import('@/components/panels/TimeseriesPanel.vue'),
         meta: {
-          title: 'Zeitreihen - D2 Nutrition Vibes'
+          title: 'Zeitreihen - OpenFoodMap'
         }
       },
       {
@@ -36,7 +36,7 @@ const routes = [
         name: 'simulation',
         component: () => import('@/components/panels/SimulationPanel.vue'),
         meta: {
-          title: 'Simulation - D2 Nutrition Vibes'
+          title: 'Simulation - OpenFoodMap'
         }
       },
       {
@@ -44,7 +44,7 @@ const routes = [
         name: 'ml-predictions',
         component: () => import('@/components/panels/MLPanel.vue'),
         meta: {
-          title: 'ML Prognosen - D2 Nutrition Vibes'
+          title: 'ML Prognosen - OpenFoodMap'
         }
       }
     ]
@@ -54,7 +54,7 @@ const routes = [
     name: 'not-found',
     component: () => import(/* webpackChunkName: "not-found" */ '@/components/layout/NotFound.vue'),
     meta: {
-      title: 'Seite nicht gefunden - D2 Nutrition Vibes'
+      title: 'Seite nicht gefunden - OpenFoodMap'
     }
   }
 ]

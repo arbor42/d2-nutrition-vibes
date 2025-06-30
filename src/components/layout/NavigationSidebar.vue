@@ -114,19 +114,40 @@ const resumeTour = () => {
   <aside :class="sidebarClasses">
     <!-- Sidebar Header -->
     <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 h-16">
-      <div v-if="!collapsed" class="flex items-center space-x-3">
-        <div class="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center">
-          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-          </svg>
+      <div class="flex items-center flex-1">
+        <div v-if="!collapsed" class="flex items-center justify-center w-full">
+          <!-- Light mode logo -->
+          <img 
+            v-if="!uiStore.darkMode"
+            src="/logolight.png" 
+            alt="OpenFoodMap Logo" 
+            class="h-8 object-contain max-w-full"
+          />
+          <!-- Dark mode logo -->
+          <img 
+            v-else
+            src="/logodark.png" 
+            alt="OpenFoodMap Logo" 
+            class="h-8 object-contain max-w-full"
+          />
         </div>
-        <div>
-          <h2 class="text-sm font-semibold text-gray-900 dark:text-gray-100">
-            D2 Nutrition
-          </h2>
-          <p class="text-xs text-gray-500 dark:text-gray-400">
-            Vibes
-          </p>
+        
+        <!-- Logo for collapsed state -->
+        <div v-if="collapsed" class="flex items-center justify-center w-full">
+          <!-- Light mode logo -->
+          <img 
+            v-if="!uiStore.darkMode"
+            src="/logolight.png" 
+            alt="OpenFoodMap Logo" 
+            class="h-8 w-8 object-contain"
+          />
+          <!-- Dark mode logo -->
+          <img 
+            v-else
+            src="/logodark.png" 
+            alt="OpenFoodMap Logo" 
+            class="h-8 w-8 object-contain"
+          />
         </div>
       </div>
       

@@ -1,7 +1,7 @@
 {
-  "name": "d2-nutrition-vibes",
+  "name": "openfoodmap",
   "version": "1.0.0",
-  "description": "D2 Nutrition Vibes - Agricultural data visualization application",
+  "description": "OpenFoodMap - Agricultural data visualization application",
   "type": "module",
   "main": "src/main.js",
   "scripts": {
@@ -86,6 +86,6 @@
     "d3js",
     "fao"
   ],
-  "author": "D2 Team",
+  "author": "OpenFoodMap Team",
   "license": "MIT"
 }

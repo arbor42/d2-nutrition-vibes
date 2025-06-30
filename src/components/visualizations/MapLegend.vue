@@ -11,9 +11,9 @@
         <!-- Color Scheme Gear Menu - Top Left -->
         <div class="relative color-scheme-menu">
           <button
-            @click="toggleColorSchemeMenu"
             class="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
             title="Color scheme options"
+            @click="toggleColorSchemeMenu"
           >
             <!-- Gear Icon -->
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -32,9 +32,9 @@
               <div 
                 v-for="scheme in colorSchemes" 
                 :key="scheme.name"
-                @click="selectColorScheme(scheme.name)"
                 class="flex items-center justify-between px-2 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer"
                 :class="{ 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300': selectedColorScheme === scheme.name }"
+                @click="selectColorScheme(scheme.name)"
               >
                 <span>{{ scheme.displayName }}</span>
                 <div class="flex ml-2">
@@ -61,9 +61,9 @@
             {{ selectedColors.size }} filter{{ selectedColors.size > 1 ? 's' : '' }} active
           </span>
           <button
-            @click="resetFilters"
             class="text-xs px-2 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors"
             title="Reset all filters"
+            @click="resetFilters"
           >
             Reset
           </button>
@@ -115,8 +115,8 @@
         <div class="relative h-2 mx-4 mt-1">
           <div 
             v-for="(item, index) in legendData.items" 
-            :key="`highlight-${index}`"
             v-show="selectedColors.has(index)"
+            :key="`highlight-${index}`"
             class="absolute top-0 h-1 rounded-sm transition-all duration-200"
             style="background-color: #27ae60;"
             :style="{ 

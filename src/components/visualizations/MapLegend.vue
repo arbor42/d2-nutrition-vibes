@@ -54,10 +54,6 @@
             v-for="(item, index) in legendData.items" 
             :key="index"
             class="absolute top-0 bottom-0 cursor-pointer transition-all duration-200 hover:bg-black/10"
-            :class="{
-              'ring-2 ring-blue-500 ring-inset': selectedColors.has(index),
-              'bg-black/5': selectedColors.has(index)
-            }"
             :style="{ 
               left: `${(index / legendData.items.length) * 100}%`, 
               width: `${100 / legendData.items.length}%` 
@@ -66,6 +62,22 @@
             @mouseenter="hoveredSegment = index"
             @mouseleave="hoveredSegment = null"
             @click="toggleColorFilter(index)"
+          ></div>
+          
+        </div>
+        
+        <!-- Green highlight strips for selected ranges (outside the box) -->
+        <div class="relative h-2 mx-4 mt-1">
+          <div 
+            v-for="(item, index) in legendData.items" 
+            :key="`highlight-${index}`"
+            v-show="selectedColors.has(index)"
+            class="absolute top-0 h-1 rounded-sm transition-all duration-200"
+            style="background-color: #27ae60;"
+            :style="{ 
+              left: `${(index / legendData.items.length) * 100}%`, 
+              width: `${100 / legendData.items.length}%` 
+            }"
           ></div>
         </div>
         

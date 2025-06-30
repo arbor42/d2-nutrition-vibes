@@ -160,6 +160,10 @@ const analysisOptions = [
 
 // Format product names for display
 const formatProductName = (productCode: string) => {
+  if (productCode === 'All') {
+    return 'Alle Produkte'
+  }
+  
   const productNames = {
     'cassava_and_products': 'Kassava',
     'fruits_-_excluding_wine': 'Früchte',

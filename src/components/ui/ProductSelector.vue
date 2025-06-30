@@ -15,16 +15,26 @@ const productOptions = computed(() => {
   // Get individual items from metadata if available
   const individualItems = dataStore.faoMetadata?.data_summary?.food_items || []
   
+  let options = []
+  
   if (individualItems.length > 0) {
     // Use individual products from metadata with German names
-    return individualItems.map(product => ({
+    options = individualItems.map(product => ({
       value: product,
       label: getGermanName(product)
-    })).sort((a, b) => a.label.localeCompare(b.label, 'de'))
+    }))
   } else {
     // Fallback to all available products from mappings
-    return getAllProductOptions()
+    options = getAllProductOptions()
   }
+  
+  // Add "All" option at the beginning
+  const allOptions = [
+    { value: 'All', label: 'Alle Produkte' },
+    ...options.sort((a, b) => a.label.localeCompare(b.label, 'de'))
+  ]
+  
+  return allOptions
 })
 
 // Metric options with descriptions

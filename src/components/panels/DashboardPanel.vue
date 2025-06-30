@@ -29,6 +29,44 @@ const getCountriesArray = () => {
   const currentMetric = uiStore.selectedMetric
   const hasTimeseries = !!dataStore.timeseriesData
   
+  // Special handling for "All" products - aggregate across all products
+  if (currentProduct === 'All' && hasTimeseries && dataStore.timeseriesData) {
+    const metricKey = currentMetric === 'production' ? 'production' :
+                      currentMetric === 'import_quantity' ? 'imports' :
+                      currentMetric === 'export_quantity' ? 'exports' :
+                      currentMetric === 'feed' ? 'feed' :
+                      currentMetric === 'food_supply_kcal' ? 'food_supply_kcal' :
+                      currentMetric === 'domestic_supply_quantity' ? 'domestic_supply' :
+                      'domestic_supply'
+    
+    // Aggregate data across all products for each country
+    const countryTotals = new Map()
+    
+    Object.keys(dataStore.timeseriesData).forEach(product => {
+      if (product !== 'All') { // Skip the "All" entry itself
+        const productData = dataStore.timeseriesData[product]
+        Object.entries(productData).forEach(([country, countryData]) => {
+          if (country !== 'All') { // Skip the "All" country entry
+            const yearData = countryData.find(d => d.year === currentYear)
+            if (yearData && yearData[metricKey]) {
+              const currentTotal = countryTotals.get(country) || { value: 0, unit: yearData.unit || '1000 t' }
+              currentTotal.value += yearData[metricKey] || 0
+              countryTotals.set(country, currentTotal)
+            }
+          }
+        })
+      }
+    })
+    
+    // Convert to array format
+    return Array.from(countryTotals.entries()).map(([country, data]) => ({
+      country,
+      value: data.value,
+      unit: data.unit,
+      year: currentYear
+    })).filter(item => item.value > 0)
+  }
+  
   // Use timeseries data for individual products when available
   if (hasTimeseries && dataStore.timeseriesData[currentProduct]) {
     const metricKey = currentMetric === 'production' ? 'production' :
@@ -130,7 +168,8 @@ const topCountries = computed(() => {
       item.value > 0 &&
       item.country && 
       !NON_COUNTRY_ENTITIES.includes(item.country) &&
-      !item.country.toLowerCase().includes('total')
+      !item.country.toLowerCase().includes('total') &&
+      item.country !== 'All'
     )
     .sort((a, b) => b.value - a.value)
     .slice(0, 10)
@@ -193,8 +232,49 @@ const globalStats = computed(() => {
   let rawData = null
   let dataArray = []
   
+  // Special handling for "All" products - aggregate across all products
+  if (currentProduct === 'All' && hasTimeseries && dataStore.timeseriesData) {
+    console.log(`📊 DashboardPanel: Processing "All" products for metric: "${currentMetric}"`)
+    
+    const metricKey = currentMetric === 'production' ? 'production' :
+                      currentMetric === 'import_quantity' ? 'imports' :
+                      currentMetric === 'export_quantity' ? 'exports' :
+                      currentMetric === 'feed' ? 'feed' :
+                      currentMetric === 'food_supply_kcal' ? 'food_supply_kcal' :
+                      currentMetric === 'domestic_supply_quantity' ? 'domestic_supply' :
+                      'domestic_supply'
+    
+    // Aggregate data across all products for each country
+    const countryTotals = new Map()
+    
+    Object.keys(dataStore.timeseriesData).forEach(product => {
+      if (product !== 'All') { // Skip the "All" entry itself
+        const productData = dataStore.timeseriesData[product]
+        Object.entries(productData).forEach(([country, countryData]) => {
+          if (country !== 'All') { // Skip the "All" country entry
+            const yearData = countryData.find(d => d.year === currentYear)
+            if (yearData && yearData[metricKey]) {
+              const currentTotal = countryTotals.get(country) || { value: 0, unit: yearData.unit || '1000 t' }
+              currentTotal.value += yearData[metricKey] || 0
+              countryTotals.set(country, currentTotal)
+            }
+          }
+        })
+      }
+    })
+    
+    // Convert to array format
+    dataArray = Array.from(countryTotals.entries()).map(([country, data]) => ({
+      country,
+      value: data.value,
+      unit: data.unit,
+      year: currentYear
+    })).filter(item => item.value > 0)
+    
+    console.log(`📊 DashboardPanel: "All" products aggregation found ${dataArray.length} countries with ${metricKey} > 0`)
+  }
   // Use timeseries data for all metrics when available for individual products
-  if (hasTimeseries && dataStore.timeseriesData[currentProduct]) {
+  else if (hasTimeseries && dataStore.timeseriesData[currentProduct]) {
     // Use timeseries data for individual products
     const metricKey = currentMetric === 'production' ? 'production' :
                       currentMetric === 'import_quantity' ? 'imports' :
@@ -296,7 +376,8 @@ const globalStats = computed(() => {
   const countryData = validData.filter(item => 
     item.country && 
     !NON_COUNTRY_ENTITIES.includes(item.country) &&
-    !item.country.toLowerCase().includes('total')
+    !item.country.toLowerCase().includes('total') &&
+    item.country !== 'All'
   )
   
   console.log(`📊 DashboardPanel globalStats: countryData count: ${countryData.length}`)

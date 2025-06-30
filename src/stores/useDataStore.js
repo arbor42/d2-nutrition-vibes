@@ -290,6 +290,19 @@ export const useDataStore = defineStore('data', () => {
           transformedData[product][country] = yearData
         })
         
+        // Calculate "All" aggregations
+        console.log('📊 DataStore: Calculating "All" aggregations...')
+        transformedData['All'] = calculateAllAggregations(transformedData)
+        console.log('📊 DataStore: "All" aggregations calculated for all countries')
+        
+        // Add "All" countries aggregation for each product
+        Object.keys(transformedData).forEach(product => {
+          if (product !== 'All') {
+            transformedData[product]['All'] = calculateAllCountriesForProduct(transformedData[product])
+          }
+        })
+        console.log('📊 DataStore: "All" countries aggregation added for each product')
+        
         console.log('📊 DataStore: Transformed timeseries data structure:', {
           products: Object.keys(transformedData).length,
           sampleProduct: Object.keys(transformedData)[0],
@@ -777,3 +790,110 @@ export const useDataStore = defineStore('data', () => {
     syncCurrentData
   }
 })
+
+// Helper functions for "All" aggregations
+const calculateAllAggregations = (timeseriesData) => {
+  const allCountriesData = {}
+  const years = getAvailableYearsFromData(timeseriesData)
+  
+  // For each year, aggregate all products and all countries
+  years.forEach(year => {
+    const yearAggregation = {
+      year: year,
+      production: 0,
+      imports: 0,
+      exports: 0,
+      domestic_supply: 0,
+      feed: 0,
+      food_supply_kcal: 0,
+      unit: '1000 t'
+    }
+    
+    // Sum up all products for all countries for this year
+    Object.keys(timeseriesData).forEach(product => {
+      Object.keys(timeseriesData[product]).forEach(country => {
+        const countryData = timeseriesData[product][country]
+        const yearData = countryData.find(entry => entry.year === year)
+        
+        if (yearData) {
+          yearAggregation.production += yearData.production || 0
+          yearAggregation.imports += yearData.imports || 0
+          yearAggregation.exports += yearData.exports || 0
+          yearAggregation.domestic_supply += yearData.domestic_supply || 0
+          yearAggregation.feed += yearData.feed || 0
+          yearAggregation.food_supply_kcal += yearData.food_supply_kcal || 0
+        }
+      })
+    })
+    
+    // Store in the same structure as countries
+    if (!allCountriesData['All']) {
+      allCountriesData['All'] = []
+    }
+    allCountriesData['All'].push(yearAggregation)
+  })
+  
+  return allCountriesData
+}
+
+const calculateAllCountriesForProduct = (productData) => {
+  const years = getAvailableYearsFromProductData(productData)
+  const allCountriesAggregation = []
+  
+  // For each year, aggregate all countries for this product
+  years.forEach(year => {
+    const yearAggregation = {
+      year: year,
+      production: 0,
+      imports: 0,
+      exports: 0,
+      domestic_supply: 0,
+      feed: 0,
+      food_supply_kcal: 0,
+      unit: '1000 t'
+    }
+    
+    // Sum up all countries for this product for this year
+    Object.keys(productData).forEach(country => {
+      const countryData = productData[country]
+      const yearData = countryData.find(entry => entry.year === year)
+      
+      if (yearData) {
+        yearAggregation.production += yearData.production || 0
+        yearAggregation.imports += yearData.imports || 0
+        yearAggregation.exports += yearData.exports || 0
+        yearAggregation.domestic_supply += yearData.domestic_supply || 0
+        yearAggregation.feed += yearData.feed || 0
+        yearAggregation.food_supply_kcal += yearData.food_supply_kcal || 0
+      }
+    })
+    
+    allCountriesAggregation.push(yearAggregation)
+  })
+  
+  return allCountriesAggregation
+}
+
+const getAvailableYearsFromData = (timeseriesData) => {
+  const yearsSet = new Set()
+  
+  Object.keys(timeseriesData).forEach(product => {
+    Object.keys(timeseriesData[product]).forEach(country => {
+      const countryData = timeseriesData[product][country]
+      countryData.forEach(entry => yearsSet.add(entry.year))
+    })
+  })
+  
+  return Array.from(yearsSet).sort((a, b) => a - b)
+}
+
+const getAvailableYearsFromProductData = (productData) => {
+  const yearsSet = new Set()
+  
+  Object.keys(productData).forEach(country => {
+    const countryData = productData[country]
+    countryData.forEach(entry => yearsSet.add(entry.year))
+  })
+  
+  return Array.from(yearsSet).sort((a, b) => a - b)
+}

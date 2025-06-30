@@ -763,8 +763,76 @@ const loadProductionData = async () => {
     
     let productionData = null
     
+    // Special handling for "All" products - show aggregated data across all countries
+    if (props.selectedProduct === 'All') {
+      console.log('🗺️ WorldMap: Special handling for "All" products - aggregating all data')
+      if (dataStore.timeseriesData && dataStore.timeseriesData['All']) {
+        const allProductsData = dataStore.getTimeseriesDataForProduct('All', props.selectedYear)
+        
+        if (allProductsData && allProductsData['All']) {
+          const aggregatedData = allProductsData['All']
+          const metricKey = props.selectedMetric === 'production' ? 'production' :
+                           props.selectedMetric === 'import_quantity' ? 'imports' :
+                           props.selectedMetric === 'export_quantity' ? 'exports' :
+                           props.selectedMetric === 'domestic_supply_quantity' ? 'domestic_supply' :
+                           props.selectedMetric === 'feed' ? 'feed' :
+                           props.selectedMetric === 'food_supply_kcal' ? 'food_supply_kcal' :
+                           'production'
+          
+          const totalValue = aggregatedData[metricKey] || 0
+          let unit = aggregatedData.unit || '1000 t'
+          
+          // Override unit for specific metrics
+          if (props.selectedMetric === 'food_supply_kcal') {
+            unit = 'kcal/capita/day'
+          }
+          
+          // Calculate each country's total across all products for normal color scaling
+          if (dataStore.timeseriesData) {
+            const allCountries = new Set()
+            Object.keys(dataStore.timeseriesData).forEach(product => {
+              if (product !== 'All') {
+                Object.keys(dataStore.timeseriesData[product]).forEach(country => {
+                  if (country !== 'All') {
+                    allCountries.add(country)
+                  }
+                })
+              }
+            })
+            
+            // Calculate each country's contribution across all products
+            productionData = Array.from(allCountries).map(country => {
+              let countryTotal = 0
+              
+              // Sum this country's contribution across all products
+              Object.keys(dataStore.timeseriesData).forEach(product => {
+                if (product !== 'All' && dataStore.timeseriesData[product][country]) {
+                  const countryData = dataStore.timeseriesData[product][country]
+                  const yearData = countryData.find(entry => entry.year === props.selectedYear)
+                  if (yearData && yearData[metricKey]) {
+                    countryTotal += yearData[metricKey] || 0
+                  }
+                }
+              })
+              
+              return {
+                country: country,
+                countryCode: getCountryCode(country),
+                value: countryTotal,
+                unit: unit,
+                year: props.selectedYear,
+                element: props.selectedMetric
+              }
+            }).filter(item => item.value > 0)
+            
+            console.log('🗺️ WorldMap: "All" products - created data for', productionData.length, 'countries')
+            console.log('🗺️ WorldMap: "All" products - sample data:', productionData.slice(0, 5))
+          }
+        }
+      }
+    }
     // Check if we have timeseries data for this product (individual products)
-    if (dataStore.timeseriesData && dataStore.timeseriesData[props.selectedProduct]) {
+    else if (dataStore.timeseriesData && dataStore.timeseriesData[props.selectedProduct]) {
       console.log('🗺️ WorldMap: Using timeseries data for individual product')
       console.log('🔍 WorldMap: Found product in timeseries:', props.selectedProduct)
       const timeseriesData = dataStore.getTimeseriesDataForProduct(props.selectedProduct, props.selectedYear)

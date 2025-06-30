@@ -15,11 +15,15 @@
       <div class="flex-1 relative">
         <!-- Main continuous bar container -->
         <div class="relative h-8 mx-4 mb-2 rounded overflow-hidden border border-gray-300 dark:border-gray-600">
-          <!-- Continuous gradient background -->
+          <!-- Discrete color segments -->
           <div 
-            class="absolute inset-0"
+            v-for="(item, index) in legendData.items" 
+            :key="index"
+            class="absolute top-0 bottom-0"
             :style="{
-              background: `linear-gradient(to right, ${legendData.items.map(item => item.color).join(', ')})`
+              left: `${(index / legendData.items.length) * 100}%`,
+              width: `${100 / legendData.items.length}%`,
+              backgroundColor: item.color
             }"
           ></div>
           

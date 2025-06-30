@@ -58,6 +58,79 @@ const legendScale = ref(null)
 const legendDomain = ref([0, 100000000]) // Static domain across years
 const legendUnit = ref('1000 t') // Unit for legend display
 
+// Computed legend data for Vue template
+const legendData = computed(() => {
+  if (!legendDomain.value || !legendUnit.value) return null
+  
+  const domain = legendDomain.value
+  const numColors = greenColorScheme.length
+  const stepSize = (domain[1] - domain[0]) / numColors
+  
+  // Create legend items with value ranges for each color
+  const items = []
+  for (let i = 0; i < numColors; i++) {
+    const rangeStart = domain[0] + (stepSize * i)
+    const rangeEnd = domain[0] + (stepSize * (i + 1))
+    
+    // Use centralized formatting for start and end values
+    const formattedStart = formatAgricultureValue(rangeStart, { 
+      unit: legendUnit.value, 
+      showUnit: true,
+      longForm: false
+    })
+    const formattedEnd = formatAgricultureValue(rangeEnd, { 
+      unit: legendUnit.value, 
+      showUnit: true,
+      longForm: false
+    })
+    
+    // For display purposes, also get versions without units for compact display
+    const formattedStartNoUnit = formatAgricultureValue(rangeStart, { 
+      unit: legendUnit.value, 
+      showUnit: false,
+      longForm: false
+    })
+    const formattedEndNoUnit = formatAgricultureValue(rangeEnd, { 
+      unit: legendUnit.value, 
+      showUnit: false,
+      longForm: false
+    })
+    
+    items.push({
+      color: greenColorScheme[i],
+      rangeStart: rangeStart,
+      rangeEnd: rangeEnd,
+      formattedStart: formattedStart,
+      formattedEnd: formattedEnd,
+      formattedStartNoUnit: formattedStartNoUnit,
+      formattedEndNoUnit: formattedEndNoUnit,
+      rangeDisplay: `${formattedStart} - ${formattedEnd}`,
+      isLast: i === numColors - 1
+    })
+  }
+  
+  return {
+    items,
+    title: getLegendTitle(),
+    min: domain[0],
+    max: domain[1],
+    unit: legendUnit.value,
+    formattedMin: formatAgricultureValue(domain[0], { unit: legendUnit.value, showUnit: true, longForm: false }),
+    formattedMax: formatAgricultureValue(domain[1], { unit: legendUnit.value, showUnit: true, longForm: false })
+  }
+})
+
+// Get legend title based on selected metric
+const getLegendTitle = () => {
+  const metricLabels = {
+    'production': 'Produktion',
+    'import_quantity': 'Import',
+    'export_quantity': 'Export',
+    'domestic_supply': 'Versorgung'
+  }
+  return metricLabels[props.selectedMetric] || 'Wert'
+}
+
 // Tooltip implementation with D3
 let tooltipDiv = null
 
@@ -128,25 +201,15 @@ let path: d3.GeoPath
 let colorScale: d3.ScaleQuantize<string>
 let zoom: d3.ZoomBehavior<SVGElement, unknown>
 
-// Viridis color scheme for production data
+// Viridis color scheme for production data (10 steps)
 const greenColorScheme = [
   '#440154',  // Dark purple (lowest values)
-  '#471365',  // Purple
-  '#481F70',  // Purple
   '#482878',  // Purple
-  '#46337E',  // Purple
-  '#423E85',  // Purple-blue
   '#3E4A89',  // Blue
-  '#39558C',  // Blue
   '#32608D',  // Blue
-  '#2D6B8E',  // Blue-teal
-  '#29768E',  // Teal
   '#25818E',  // Teal
-  '#228C8D',  // Teal
   '#20978C',  // Teal-green
-  '#20A386',  // Green
   '#2AB07E',  // Green
-  '#41BD72',  // Light green
   '#5DC863',  // Light green
   '#7DD151',  // Yellow-green
   '#FDE725'   // Yellow (highest values)
@@ -489,156 +552,11 @@ const drawCountriesDirect = (container, features) => {
   console.log('✅ WorldMap: Countries drawn, total:', totalCountries)
 }
 
-// Create legend
+// Create legend (now just a stub - legend moved to Vue template)
 const createLegend = (svg) => {
-  console.log('🎨 WorldMap: Creating legend...')
-  
-  // Remove existing legend
+  console.log('🎨 WorldMap: Legend creation moved to Vue template')
+  // Remove any existing SVG legend
   svg.select('.legend-group').remove()
-  
-  if (!legendScale.value || !legendDomain.value) {
-    console.log('⚠️ WorldMap: No legend scale available yet')
-    return
-  }
-  
-  const legendWidth = 200
-  const legendHeight = 10
-  const legendMargin = { top: 10, right: 20, bottom: 30, left: 20 }
-  
-  // Get actual SVG dimensions
-  const svgNode = svg.node()
-  const svgWidth = svgNode ? svgNode.clientWidth : props.width
-  const svgHeight = svgNode ? svgNode.clientHeight : props.height
-  
-  const legend = svg.append('g')
-    .attr('class', 'legend-group')
-    .attr('transform', `translate(${svgWidth - legendWidth - legendMargin.right}, ${svgHeight - legendHeight - legendMargin.bottom})`)
-  
-  // Create gradient
-  const gradientId = 'legend-gradient'
-  
-  // Check if defs already exists
-  let defs = svg.select('defs')
-  if (defs.empty()) {
-    defs = svg.append('defs')
-  }
-  
-  const gradient = defs
-    .append('linearGradient')
-    .attr('id', gradientId)
-    .attr('x1', '0%')
-    .attr('x2', '100%')
-    .attr('y1', '0%')
-    .attr('y2', '0%')
-  
-  // Color stops are now added above in the scale section
-  
-  // Add rectangle with gradient
-  const isDarkMode = document.documentElement.classList.contains('dark')
-  const legendStroke = isDarkMode ? '#4B5563' : '#e5e7eb' // gray-600 : gray-200
-  
-  legend.append('rect')
-    .attr('width', legendWidth)
-    .attr('height', legendHeight)
-    .attr('fill', `url(#${gradientId})`)
-    .attr('stroke', legendStroke)
-    .attr('stroke-width', 0.5)
-  
-  // Add scale
-  const legendScaleLinear = d3.scaleLinear()
-    .domain(legendDomain.value)
-    .range([0, legendWidth])
-  
-  // Update gradient with smooth transition
-  gradient.selectAll('stop').remove()
-  
-  // Add color stops for each color in the scheme with equal steps
-  greenColorScheme.forEach((color, i) => {
-    const startPos = (i / greenColorScheme.length) * 100
-    const endPos = ((i + 1) / greenColorScheme.length) * 100
-    
-    // Add start stop
-    gradient.append('stop')
-      .attr('offset', `${startPos}%`)
-      .attr('stop-color', color)
-    
-    // Add end stop (except for the last color)
-    if (i < greenColorScheme.length - 1) {
-      gradient.append('stop')
-        .attr('offset', `${endPos}%`)
-        .attr('stop-color', color)
-    }
-  })
-  
-  // Create tick values for the legend with 19 intervals (20 colors)
-  const tickValues = []
-  const stepSize = (legendDomain.value[1] - legendDomain.value[0]) / (greenColorScheme.length - 1)
-  
-  // Show min, max, and a few intermediate values
-  tickValues.push(legendDomain.value[0]) // Min value
-  
-  // Add 4 intermediate values (at positions 5, 10, 15)
-  for (const i of [5, 10, 15]) {
-    tickValues.push(legendDomain.value[0] + (stepSize * i))
-  }
-  
-  tickValues.push(legendDomain.value[1]) // Max value
-  
-  const legendAxis = d3.axisBottom(legendScaleLinear)
-    .ticks(tickValues ? tickValues.length : 5)
-    .tickFormat(createD3AxisFormatter(legendUnit.value))
-  
-  if (tickValues) {
-    legendAxis.tickValues(tickValues)
-  }
-  
-  const legendTextColor = isDarkMode ? '#D1D5DB' : '#374151' // gray-300 : gray-700
-  
-  const legendAxisGroup = legend.append('g')
-    .attr('transform', `translate(0, ${legendHeight})`)
-    .call(legendAxis)
-    
-  legendAxisGroup.selectAll('text')
-    .style('font-size', '10px')
-    .style('fill', legendTextColor)
-    
-  legendAxisGroup.selectAll('path')
-    .style('stroke', legendTextColor)
-    
-  legendAxisGroup.selectAll('line')
-    .style('stroke', legendTextColor)
-  
-  // Add title
-  legend.append('text')
-    .attr('x', legendWidth / 2)
-    .attr('y', -5)
-    .attr('text-anchor', 'middle')
-    .style('font-size', '11px')
-    .style('font-weight', '500')
-    .style('fill', legendTextColor)
-    .text(() => {
-      const metricLabels = {
-        'production': 'Produktion',
-        'import_quantity': 'Import',
-        'export_quantity': 'Export',
-        'domestic_supply': 'Versorgung'
-      }
-      const metricLabel = metricLabels[props.selectedMetric] || 'Wert'
-      
-      // Get appropriate unit label based on legendUnit
-      let unitLabel = ''
-      if (legendUnit.value === '1000 t') {
-        unitLabel = '(1000 t)'
-      } else if (legendUnit.value === 't') {
-        unitLabel = '(t)'
-      } else if (legendUnit.value === 'kg') {
-        unitLabel = '(kg)'
-      } else {
-        unitLabel = `(${legendUnit.value})`
-      }
-      
-      return `${metricLabel} ${unitLabel}`
-    })
 }
 
 // Setup map with D3.js (keeping original for compatibility)
@@ -1236,10 +1154,10 @@ const applyProductionDataDirect = (container, data) => {
       count: values.length, range, median, q1, q3, iqr, isHighlySkewed
     })
     
-    // Always use all 20 colors with min at first color and max at last color
-    console.log('🎨 WorldMap: Using all 20 colors with equal steps')
+    // Always use all 10 colors with min at first color and max at last color
+    console.log('🎨 WorldMap: Using all 10 colors with equal steps')
     
-    // Calculate step size for 19 intervals (20 colors = 19 steps)
+    // Calculate step size for 9 intervals (10 colors = 9 steps)
     const stepSize = (maxValue - minValue) / (greenColorScheme.length - 1)
     const valueRanges = []
     const thresholds = []
@@ -1905,7 +1823,7 @@ defineExpose({
     <div 
       ref="svgContainerRef"
       class="map-svg-container" 
-      style="width: 100%; height: 100%; min-height: 600px; position: relative;"
+      style="width: 100%; height: calc(100% - 120px); min-height: 480px; position: relative;"
     >
       <!-- Debug message -->
       <div v-if="!isInitialized && !isLoading && !error" class="absolute inset-0 flex items-center justify-center text-gray-500">
@@ -1913,7 +1831,75 @@ defineExpose({
       </div>
     </div>
 
-    <!-- Legend is rendered inside the SVG via D3 -->
+    <!-- New Boxed Legend -->
+    <div 
+      v-if="legendData && !isLoading" 
+      class="legend-container bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4"
+      style="min-height: 120px; position: absolute; bottom: 0; left: 0; right: 0;"
+    >
+      <div class="flex flex-col h-full">
+        <!-- Legend Title -->
+        <div class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3 text-center">
+          {{ legendData.title }}
+        </div>
+        
+        <!-- Legend Scale with Value Ranges -->
+        <div class="flex-1 overflow-x-auto">
+          <div class="flex items-center justify-center min-w-max px-2">
+            <!-- Desktop Layout: Show all colors -->
+            <div class="hidden md:flex items-center space-x-2">
+              <div 
+                v-for="(item, index) in legendData.items" 
+                :key="index"
+                class="flex flex-col items-center group"
+              >
+                <!-- Color Block -->
+                <div 
+                  class="w-6 h-6 border border-gray-300 dark:border-gray-600 transition-all duration-200 group-hover:scale-110 group-hover:border-gray-500 dark:group-hover:border-gray-400 cursor-help shadow-sm"
+                  :style="{ backgroundColor: item.color }"
+                  :title="item.rangeDisplay"
+                />
+                
+                <!-- Value Range Label -->
+                <div class="text-xs text-gray-600 dark:text-gray-400 mt-1 text-center" style="min-width: 50px; max-width: 70px;">
+                  <div class="font-medium text-center leading-tight">{{ item.formattedStartNoUnit }}</div>
+                  <div class="text-gray-500 dark:text-gray-500 text-center">-</div>
+                  <div class="font-medium text-center leading-tight">{{ item.formattedEndNoUnit }}</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Mobile Layout: Show selected colors -->
+            <div class="flex md:hidden items-center space-x-2">
+              <div 
+                v-for="index in [0, 2, 4, 6, 8, 9]" 
+                :key="index"
+                class="flex flex-col items-center group"
+              >
+                <!-- Color Block -->
+                <div 
+                  class="w-8 h-8 border border-gray-300 dark:border-gray-600 transition-all duration-200 group-hover:scale-110 group-hover:border-gray-500 dark:group-hover:border-gray-400 cursor-help shadow-sm"
+                  :style="{ backgroundColor: legendData.items[index].color }"
+                  :title="legendData.items[index].rangeDisplay"
+                />
+                
+                <!-- Value Range Label -->
+                <div class="text-xs text-gray-600 dark:text-gray-400 mt-1 text-center" style="min-width: 60px;">
+                  <div class="font-medium text-center leading-tight">{{ legendData.items[index].formattedStartNoUnit }}</div>
+                  <div class="text-gray-500 dark:text-gray-500 text-center">-</div>
+                  <div class="font-medium text-center leading-tight">{{ legendData.items[index].formattedEndNoUnit }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Unit Display -->
+        <div class="text-xs text-gray-500 dark:text-gray-500 text-center mt-2">
+          Bereich: {{ legendData.formattedMin }} bis {{ legendData.formattedMax }}
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -1923,6 +1909,8 @@ defineExpose({
   height: 100%;
   min-height: 600px;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .map-svg-container {
@@ -1933,6 +1921,11 @@ defineExpose({
   left: 0;
   right: 0;
   bottom: 0;
+}
+
+.legend-container {
+  flex-shrink: 0;
+  z-index: 10;
 }
 
 .world-map-svg {

@@ -8,7 +8,7 @@ import BaseButton from '@/components/ui/BaseButton.vue'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 import * as d3 from 'd3'
 import * as topojson from 'topojson-client'
-import { createD3AxisFormatter, createD3TooltipFormatter, getAxisUnitLabel } from '@/utils/formatters'
+import { createD3AxisFormatter, createD3TooltipFormatter, getAxisUnitLabel, formatAgricultureValue } from '@/utils/formatters'
 
 interface Props {
   width?: number
@@ -47,6 +47,8 @@ const geoDataStatic = shallowRef(null) // Use shallowRef for large objects
 const productionDataStatic = shallowRef([]) // Use shallowRef for arrays
 const isInitialized = ref(false)
 const infoExpanded = ref(false) // State for collapsible info panel
+const countryDetailVisible = ref(false) // State for country detail panel
+const selectedCountryDetail = ref(null) // Selected country data for detail view
 
 // Click debouncing to prevent unwanted country detail views
 let lastClickTime = 0
@@ -89,7 +91,7 @@ const tooltip = {
     // Get content from formatter or use default
     const content = formatter ? formatter() : 'No data'
     
-    // Get mouse position
+    // Get mouse position (dynamic positioning)
     const mouseX = event.pageX || event.clientX
     const mouseY = event.pageY || event.clientY
     
@@ -156,6 +158,32 @@ const mapConfig = computed(() => ({
   colorScheme: greenColorScheme,
   ...vizStore.getVisualizationConfig('worldMap')
 }))
+
+// Reactive country detail data
+const reactiveCountryDetail = computed(() => {
+  if (!selectedCountryDetail.value) return null
+  
+  const countryName = selectedCountryDetail.value.name
+  const countryCode = selectedCountryDetail.value.code
+  const normalizedName = normalizeCountryName(countryName || '')
+  
+  // Get fresh data based on current props
+  const processedData = getProcessedProductionData()
+  const countryData = processedData.find(
+    item => item.countryCode === countryCode || 
+             item.country.toLowerCase() === countryName?.toLowerCase() ||
+             item.country.toLowerCase() === normalizedName?.toLowerCase()
+  )
+  
+  return {
+    name: countryName,
+    code: countryCode,
+    data: countryData,
+    product: props.selectedProduct,
+    year: props.selectedYear,
+    metric: props.selectedMetric
+  }
+})
 
 // Initialize map
 const initializeMap = async () => {
@@ -1269,6 +1297,7 @@ const handleCountryClick = (event, d) => {
   
   const countryName = d.properties.name
   const countryCode = d.properties.iso_a3
+  const normalizedName = normalizeCountryName(countryName || '')
   
   console.log('🖱️ WorldMap: Country clicked:', { countryName, countryCode })
   
@@ -1285,6 +1314,27 @@ const handleCountryClick = (event, d) => {
     return
   }
   lastClickTime = now
+  
+  // Find country data for detail view
+  const processedData = getProcessedProductionData()
+  const countryData = processedData.find(
+    item => item.countryCode === countryCode || 
+             item.country.toLowerCase() === countryName?.toLowerCase() ||
+             item.country.toLowerCase() === normalizedName?.toLowerCase()
+  )
+  
+  // Set detail view data
+  selectedCountryDetail.value = {
+    name: countryName,
+    code: countryCode,
+    data: countryData,
+    product: props.selectedProduct,
+    year: props.selectedYear,
+    metric: props.selectedMetric
+  }
+  
+  // Show detail panel
+  countryDetailVisible.value = true
   
   // Only set selected country if it's different from current
   if (uiStore.selectedCountry !== countryName) {
@@ -1455,6 +1505,14 @@ watch([() => props.selectedProduct, () => props.selectedYear, () => props.select
   if (isInitialized.value) {
     console.log('🔄 WorldMap WATCHER: Map is initialized, loading data...')
     await loadProductionData()
+    
+    // Update country detail if it's visible
+    if (countryDetailVisible.value && selectedCountryDetail.value) {
+      console.log('🔄 WorldMap WATCHER: Updating country detail data...')
+      // Wait for data to be loaded before updating detail
+      await nextTick()
+      updateCountryDetailData()
+    }
   } else {
     console.log('🔄 WorldMap WATCHER: Map not initialized yet, skipping...')
   }
@@ -1502,6 +1560,47 @@ const hasDataGaps = () => {
 // Toggle function for info panel
 const toggleInfoPanel = () => {
   infoExpanded.value = !infoExpanded.value
+}
+
+// Close country detail panel
+const closeCountryDetail = () => {
+  countryDetailVisible.value = false
+  selectedCountryDetail.value = null
+}
+
+// Format country detail value
+const formatCountryDetailValue = (value, unit) => {
+  if (!value || value === 0) return 'Keine Daten verfügbar'
+  
+  // Use the main formatting function to ensure consistency with the old detail view
+  return formatAgricultureValue(value, { unit: unit || '1000 t', showUnit: true })
+}
+
+// Update country detail data when props change
+const updateCountryDetailData = () => {
+  if (!selectedCountryDetail.value) return
+  
+  const countryName = selectedCountryDetail.value.name
+  const countryCode = selectedCountryDetail.value.code
+  const normalizedName = normalizeCountryName(countryName || '')
+  
+  // Find updated country data
+  const processedData = getProcessedProductionData()
+  const countryData = processedData.find(
+    item => item.countryCode === countryCode || 
+             item.country.toLowerCase() === countryName?.toLowerCase() ||
+             item.country.toLowerCase() === normalizedName?.toLowerCase()
+  )
+  
+  // Update the detail view with new data
+  selectedCountryDetail.value = {
+    name: countryName,
+    code: countryCode,
+    data: countryData,
+    product: props.selectedProduct,
+    year: props.selectedYear,
+    metric: props.selectedMetric
+  }
 }
 
 // Initialize on mount with better timing
@@ -1606,6 +1705,83 @@ defineExpose({
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
       </BaseButton>
+    </div>
+
+    <!-- Country Detail Panel (Top Right) -->
+    <div 
+      v-if="countryDetailVisible && reactiveCountryDetail"
+      class="absolute top-4 right-16 z-30 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-4 max-w-sm border border-gray-200 dark:border-gray-600 animate-in slide-in-from-right-2 duration-300"
+      style="min-width: 280px;"
+    >
+      <!-- Close Button -->
+      <button
+        class="absolute top-2 right-2 p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+        title="Schließen"
+        @click="closeCountryDetail"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <!-- Country Header -->
+      <div class="mb-3">
+        <h3 class="font-semibold text-lg text-gray-900 dark:text-gray-100 pr-6">
+          {{ reactiveCountryDetail.name }}
+        </h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+          {{ reactiveCountryDetail.code }}
+        </p>
+      </div>
+
+      <!-- Product Information -->
+      <div class="mb-4">
+        <div class="flex items-center space-x-2 mb-2">
+          <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Produkt:</span>
+          <span class="text-sm text-blue-600 dark:text-blue-400">
+            {{ reactiveCountryDetail.product?.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) }}
+          </span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Jahr:</span>
+          <span class="text-sm text-gray-600 dark:text-gray-400">
+            {{ reactiveCountryDetail.year }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Data Value -->
+      <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
+        <div class="flex items-center justify-between">
+          <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+            {{ 
+              reactiveCountryDetail.metric === 'production' ? 'Produktion' :
+              reactiveCountryDetail.metric === 'import_quantity' ? 'Import' :
+              reactiveCountryDetail.metric === 'export_quantity' ? 'Export' :
+              reactiveCountryDetail.metric === 'domestic_supply_quantity' ? 'Inlandsversorgung' :
+              reactiveCountryDetail.metric === 'feed' ? 'Tierfutter' :
+              reactiveCountryDetail.metric === 'food_supply_kcal' ? 'Kalorienversorgung' :
+              'Wert'
+            }}:
+          </span>
+        </div>
+        <div class="mt-1">
+          <span class="text-lg font-bold text-gray-900 dark:text-gray-100">
+            {{ formatCountryDetailValue(reactiveCountryDetail.data?.value, reactiveCountryDetail.data?.unit) }}
+          </span>
+        </div>
+        <div v-if="reactiveCountryDetail.data?.unit" class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+          Einheit: {{ reactiveCountryDetail.data.unit }}
+        </div>
+      </div>
+
+      <!-- Additional Info -->
+      <div class="mt-3 text-xs text-gray-500 dark:text-gray-400">
+        <div class="flex items-center space-x-1">
+          <span>ℹ️</span>
+          <span>Klicken Sie auf ein anderes Land für weitere Details</span>
+        </div>
+      </div>
     </div>
 
     <!-- Map Information Panel -->

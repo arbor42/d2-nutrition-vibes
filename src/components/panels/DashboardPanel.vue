@@ -692,59 +692,6 @@ onUnmounted(() => {
       </div>
     </div>
     
-    <!-- Selected Country Details -->
-    <div v-if="selectedCountryData" class="card">
-      <div class="card-header">
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
-          {{ uiStore.selectedCountry }} - Detailansicht
-        </h3>
-        <button
-          class="btn btn-ghost btn-sm"
-          @click="uiStore.setSelectedCountry('')"
-        >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-      <div class="card-body">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div class="text-center">
-            <p class="text-sm text-gray-600 dark:text-gray-400">Produktion</p>
-            <p class="text-xl font-bold text-primary-600 dark:text-primary-400">
-              {{ formatAgricultureValue(selectedCountryData.value, { unit: selectedCountryData.unit || '1000 t', showUnit: true }) }}
-            </p>
-          </div>
-          <div class="text-center">
-            <p class="text-sm text-gray-600 dark:text-gray-400">Weltanteil</p>
-            <p class="text-xl font-bold text-secondary-600 dark:text-secondary-400">
-              {{ globalStats.total > 0 && selectedCountryData ? ((selectedCountryData.value / globalStats.total) * 100).toFixed(1) : '0' }}%
-            </p>
-            <p class="text-xs text-gray-500 dark:text-gray-400">
-              der Weltproduktion
-            </p>
-          </div>
-          <div class="text-center">
-            <p class="text-sm text-gray-600 dark:text-gray-400">Rang</p>
-            <p class="text-xl font-bold text-success-600 dark:text-success-400">
-              #{{ countryRank }}
-            </p>
-            <p class="text-xs text-gray-500 dark:text-gray-400">
-              weltweit
-            </p>
-          </div>
-          <div class="text-center">
-            <p class="text-sm text-gray-600 dark:text-gray-400">Jahr</p>
-            <p class="text-xl font-bold text-gray-600 dark:text-gray-400">
-              {{ uiStore.selectedYear }}
-            </p>
-            <p class="text-xs text-gray-500 dark:text-gray-400">
-              Datenjahr
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
     
     <!-- Visualization Selection -->
     <div class="card">

@@ -1,3 +1,5 @@
 .claude
 py/fao_ml_forecasts
 node_modules
+dist/
+tests/

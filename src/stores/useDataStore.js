@@ -796,7 +796,55 @@ const calculateAllAggregations = (timeseriesData) => {
   const allCountriesData = {}
   const years = getAvailableYearsFromData(timeseriesData)
   
-  // For each year, aggregate all products and all countries
+  // Get all unique countries from the data
+  const allCountries = new Set()
+  Object.keys(timeseriesData).forEach(product => {
+    Object.keys(timeseriesData[product]).forEach(country => {
+      allCountries.add(country)
+    })
+  })
+  
+  // Calculate aggregations for each individual country (All Products per country)
+  allCountries.forEach(country => {
+    const countryAggregations = []
+    
+    years.forEach(year => {
+      const yearAggregation = {
+        year: year,
+        production: 0,
+        imports: 0,
+        exports: 0,
+        domestic_supply: 0,
+        feed: 0,
+        food_supply_kcal: 0,
+        unit: '1000 t'
+      }
+      
+      // Sum up all products for this specific country for this year
+      Object.keys(timeseriesData).forEach(product => {
+        if (timeseriesData[product][country]) {
+          const countryData = timeseriesData[product][country]
+          const yearData = countryData.find(entry => entry.year === year)
+          
+          if (yearData) {
+            yearAggregation.production += yearData.production || 0
+            yearAggregation.imports += yearData.imports || 0
+            yearAggregation.exports += yearData.exports || 0
+            yearAggregation.domestic_supply += yearData.domestic_supply || 0
+            yearAggregation.feed += yearData.feed || 0
+            yearAggregation.food_supply_kcal += yearData.food_supply_kcal || 0
+          }
+        }
+      })
+      
+      countryAggregations.push(yearAggregation)
+    })
+    
+    allCountriesData[country] = countryAggregations
+  })
+  
+  // Calculate global aggregation (All Products + All Countries) 
+  const globalAggregations = []
   years.forEach(year => {
     const yearAggregation = {
       year: year,
@@ -826,12 +874,11 @@ const calculateAllAggregations = (timeseriesData) => {
       })
     })
     
-    // Store in the same structure as countries
-    if (!allCountriesData['All']) {
-      allCountriesData['All'] = []
-    }
-    allCountriesData['All'].push(yearAggregation)
+    globalAggregations.push(yearAggregation)
   })
+  
+  // Store global aggregation under 'All' key
+  allCountriesData['All'] = globalAggregations
   
   return allCountriesData
 }

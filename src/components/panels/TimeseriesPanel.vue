@@ -193,13 +193,18 @@ const hasError = computed(() => error.value !== null)
 const productOptions = computed(() => {
   const individualItems = dataStore.faoMetadata?.data_summary?.food_items || []
   
+  const allOption = { value: 'All', label: 'Alle Produkte' }
+  
   if (individualItems.length > 0) {
-    return individualItems.map(product => ({
+    const productList = individualItems.map(product => ({
       value: product,
       label: getGermanName(product)
     })).sort((a, b) => a.label.localeCompare(b.label, 'de'))
+    
+    return [allOption, ...productList]
   } else {
-    return getAllProductOptions()
+    const productList = getAllProductOptions()
+    return [allOption, ...productList]
   }
 })
 
@@ -230,13 +235,21 @@ const countryOptions = computed(() => {
     "Net Food Importing Developing Countries"
   ]
   
-  return [...allCountries]
-    .filter(country => !NON_COUNTRY_ENTITIES.includes(country) && !country.toLowerCase().includes('total'))
+  const allOption = { value: 'All', label: 'Alle Länder' }
+  
+  const countryList = [...allCountries]
+    .filter(country => 
+      country !== 'All' && // Exclude the pre-computed "All" key
+      !NON_COUNTRY_ENTITIES.includes(country) && 
+      !country.toLowerCase().includes('total')
+    )
     .map(country => ({
       value: country,
       label: country
     }))
     .sort((a, b) => a.label.localeCompare(b.label))
+  
+  return [allOption, ...countryList]
 })
 
 // Metric options
@@ -259,9 +272,12 @@ const updateChartData = () => {
 
   const allData = []
   const missingCombinations = []
-  const expectedCombinations = new Set()
 
-  // Iterate through selected metrics
+  // Create arrays of all products and countries to process (including "All" and specific items)
+  const productsToProcess = selectedProducts.value.slice() // Copy the array
+  const countriesToProcess = selectedCountries.value.length > 0 ? selectedCountries.value.slice() : ['Global'] // Default to Global if no countries selected
+
+  // Iterate through each metric
   selectedMetrics.value.forEach(metric => {
     const metricKey = metric === 'production' ? 'production' :
                      metric === 'import_quantity' ? 'imports' :
@@ -271,106 +287,110 @@ const updateChartData = () => {
                      metric === 'food_supply_kcal' ? 'food_supply_kcal' :
                      'production'
 
-    // Get metric label for series naming
     const metricLabel = metricOptions.find(m => m.value === metric)?.label || metric
 
-    // Iterate through selected products
-    selectedProducts.value.forEach(product => {
-      const productData = dataStore.timeseriesData[product]
-      if (!productData) {
-        missingCombinations.push({
-          product: getGermanName(product),
-          country: 'Alle',
-          metric: metricLabel,
-          reason: 'Keine Daten verfügbar'
-        })
-        return
-      }
+    // Process each product-country combination
+    productsToProcess.forEach(product => {
+      countriesToProcess.forEach(country => {
+        let seriesData = []
+        let seriesName = ''
+        let hasData = false
 
-      if (selectedCountries.value.length > 0) {
-        // Multiple countries selected
-        selectedCountries.value.forEach(country => {
-          const combinationKey = `${country}-${product}-${metric}`
-          expectedCombinations.add(combinationKey)
-          
-          if (productData[country]) {
-            const countryData = productData[country]
-            let hasData = false
+        if (product === 'All' && country === 'All') {
+          // All Products + All Countries = Global aggregation
+          if (dataStore.timeseriesData['All'] && dataStore.timeseriesData['All']['All']) {
+            seriesData = dataStore.timeseriesData['All']['All']
+            seriesName = `Alle Länder - Alle Produkte - ${metricLabel}`
+          }
+        } else if (product === 'All' && country === 'Global') {
+          // All Products + No specific countries = Global aggregation
+          if (dataStore.timeseriesData['All'] && dataStore.timeseriesData['All']['All']) {
+            seriesData = dataStore.timeseriesData['All']['All']
+            seriesName = `Alle Produkte - ${metricLabel}`
+          }
+        } else if (product === 'All' && country !== 'All' && country !== 'Global') {
+          // All Products + Specific Country
+          if (dataStore.timeseriesData['All'] && dataStore.timeseriesData['All'][country]) {
+            seriesData = dataStore.timeseriesData['All'][country]
+            seriesName = `${country} - Alle Produkte - ${metricLabel}`
+          }
+        } else if (product !== 'All' && country === 'All') {
+          // Specific Product + All Countries
+          const productData = dataStore.timeseriesData[product]
+          if (productData && productData['All']) {
+            seriesData = productData['All']
+            seriesName = `Alle Länder - ${getGermanName(product)} - ${metricLabel}`
+          }
+        } else if (product !== 'All' && country === 'Global') {
+          // Specific Product + No specific countries = Manual global aggregation
+          const productData = dataStore.timeseriesData[product]
+          if (productData) {
+            const yearlyTotals = new Map()
             
-            countryData.forEach(yearData => {
-              const value = yearData[metricKey] || 0
-              if (value > 0) {
-                hasData = true
-                allData.push({
-                  year: yearData.year,
-                  value: value,
-                  country: country,
-                  product: product,
-                  metric: metric,
-                  metricLabel: metricLabel,
-                  unit: yearData.unit || 't',
-                  // Create a unique series identifier for each country-product-metric combination
-                  series: `${country} - ${product} - ${metricLabel}`
+            Object.entries(productData).forEach(([countryKey, countryData]) => {
+              if (countryKey !== 'All') { // Exclude pre-computed "All" to avoid double counting
+                countryData.forEach(yearData => {
+                  const value = yearData[metricKey] || 0
+                  if (value > 0) {
+                    const year = yearData.year
+                    const currentTotal = yearlyTotals.get(year) || 0
+                    yearlyTotals.set(year, currentTotal + value)
+                  }
                 })
               }
             })
             
-            if (!hasData) {
-              missingCombinations.push({
-                product: getGermanName(product),
-                country: country,
-                metric: metricLabel,
-                reason: 'Keine Werte > 0'
-              })
-            }
-          } else {
-            missingCombinations.push({
-              product: getGermanName(product),
-              country: country,
-              metric: metricLabel,
-              reason: 'Land nicht in Daten'
-            })
+            // Convert to series data format
+            seriesData = Array.from(yearlyTotals.entries()).map(([year, value]) => ({
+              year: year,
+              [metricKey]: value,
+              unit: '1000 t'
+            }))
+            seriesName = `Global - ${getGermanName(product)} - ${metricLabel}`
           }
-        })
-      } else {
-        // No countries selected - show global data for each product
-        const yearlyTotals = new Map()
-        let hasGlobalData = false
-        
-        Object.entries(productData).forEach(([country, countryData]) => {
-          countryData.forEach(yearData => {
+        } else if (product !== 'All' && country !== 'All' && country !== 'Global') {
+          // Specific Product + Specific Country
+          const productData = dataStore.timeseriesData[product]
+          if (productData && productData[country]) {
+            seriesData = productData[country]
+            seriesName = `${country} - ${getGermanName(product)} - ${metricLabel}`
+          }
+        }
+
+        // Process the series data if available
+        if (seriesData && seriesData.length > 0) {
+          seriesData.forEach(yearData => {
             const value = yearData[metricKey] || 0
             if (value > 0) {
-              hasGlobalData = true
-              const year = yearData.year
-              const currentTotal = yearlyTotals.get(year) || 0
-              yearlyTotals.set(year, currentTotal + value)
+              hasData = true
+              allData.push({
+                year: yearData.year,
+                value: value,
+                country: country,
+                product: product,
+                metric: metric,
+                metricLabel: metricLabel,
+                unit: yearData.unit || '1000 t',
+                series: seriesName
+              })
             }
           })
-        })
-        
-        if (hasGlobalData) {
-          yearlyTotals.forEach((value, year) => {
-            allData.push({
-              year: year,
-              value: value,
-              country: 'Global',
-              product: product,
-              metric: metric,
-              metricLabel: metricLabel,
-              unit: 't',
-              series: `Global - ${product} - ${metricLabel}`
-            })
-          })
-        } else {
+        }
+
+        // Track missing data combinations
+        if (!hasData && seriesData !== null) {
+          const productName = product === 'All' ? 'Alle Produkte' : getGermanName(product)
+          const countryName = country === 'All' ? 'Alle Länder' : 
+                             country === 'Global' ? 'Global' : country
+          
           missingCombinations.push({
-            product: getGermanName(product),
-            country: 'Global',
+            product: productName,
+            country: countryName,
             metric: metricLabel,
-            reason: 'Keine globalen Daten'
+            reason: seriesData && seriesData.length > 0 ? 'Keine Werte > 0' : 'Keine Daten verfügbar'
           })
         }
-      }
+      })
     })
   })
   

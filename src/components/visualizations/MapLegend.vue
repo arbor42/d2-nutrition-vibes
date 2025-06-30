@@ -6,9 +6,23 @@
     style="min-height: 100px;"
   >
     <div class="flex flex-col h-full">
-      <!-- Legend Title -->
-      <div class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3 text-center">
-        {{ legendData.title }}
+      <!-- Legend Title with Filter Status -->
+      <div class="flex items-center justify-between mb-3">
+        <div class="text-sm font-medium text-gray-700 dark:text-gray-300 text-center flex-1">
+          {{ legendData.title }}
+        </div>
+        <div v-if="selectedColors.size > 0" class="flex items-center gap-2">
+          <span class="text-xs text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-2 py-1 rounded">
+            {{ selectedColors.size }} filter{{ selectedColors.size > 1 ? 's' : '' }} active
+          </span>
+          <button
+            @click="resetFilters"
+            class="text-xs px-2 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors"
+            title="Reset all filters"
+          >
+            Reset
+          </button>
+        </div>
       </div>
       
       <!-- Continuous Color Bar -->
@@ -35,18 +49,23 @@
             :style="{ left: `${((index + 1) / legendData.items.length) * 100}%` }"
           ></div>
           
-          <!-- Hoverable segments for each percentile -->
+          <!-- Clickable segments for filtering -->
           <div 
             v-for="(item, index) in legendData.items" 
             :key="index"
-            class="absolute top-0 bottom-0 cursor-help transition-all duration-200 hover:bg-black/10"
+            class="absolute top-0 bottom-0 cursor-pointer transition-all duration-200 hover:bg-black/10"
+            :class="{
+              'ring-2 ring-blue-500 ring-inset': selectedColors.has(index),
+              'bg-black/5': selectedColors.has(index)
+            }"
             :style="{ 
               left: `${(index / legendData.items.length) * 100}%`, 
               width: `${100 / legendData.items.length}%` 
             }"
-            :title="`Decile ${index + 1} (${index * 10 + 10}th percentile): ${item.rangeDisplay} - ${item.countryCount} countries`"
+            :title="`Click to ${selectedColors.has(index) ? 'deselect' : 'select'} Decile ${index + 1} (${index * 10 + 10}th percentile): ${item.rangeDisplay} - ${item.countryCount} countries`"
             @mouseenter="hoveredSegment = index"
             @mouseleave="hoveredSegment = null"
+            @click="toggleColorFilter(index)"
           ></div>
         </div>
         
@@ -78,13 +97,16 @@
         <div v-if="legendData.isPercentileBased" class="text-green-600 dark:text-green-400">
           ✓ Dezil-basierte Farbskala (wissenschaftlich korrekt)
         </div>
+        <div class="text-gray-400 dark:text-gray-500 mt-1">
+          Click on colors to filter the map • Select multiple colors • Click again to deselect
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch, nextTick } from 'vue'
 import { formatAgricultureValue } from '@/utils/formatters.js'
 
 // Color scheme - matching WorldMap component
@@ -114,6 +136,59 @@ const props = withDefaults(defineProps<Props>(), {
 
 // State for hover functionality
 const hoveredSegment = ref<number | null>(null)
+
+// State for color filtering
+const selectedColors = ref<Set<number>>(new Set())
+const isResetting = ref(false)
+
+// Emit function for communicating filter changes to parent
+const emit = defineEmits<{
+  colorFilter: [selectedIndices: number[], selectedColors: string[]]
+}>()
+
+// Toggle color filter selection
+const toggleColorFilter = (index: number) => {
+  if (selectedColors.value.has(index)) {
+    selectedColors.value.delete(index)
+  } else {
+    selectedColors.value.add(index)
+  }
+  
+  // Trigger reactivity
+  selectedColors.value = new Set(selectedColors.value)
+  
+  // Emit the filter change
+  emitFilterChange()
+}
+
+// Reset all filters
+const resetFilters = () => {
+  if (isResetting.value) return // Prevent recursive calls
+  
+  isResetting.value = true
+  selectedColors.value.clear()
+  selectedColors.value = new Set()
+  emitFilterChange()
+  
+  nextTick(() => {
+    isResetting.value = false
+  })
+}
+
+// Emit filter change to parent component
+const emitFilterChange = () => {
+  const selectedIndices = Array.from(selectedColors.value)
+  const selectedColorValues = selectedIndices.map(index => greenColorScheme[index])
+  emit('colorFilter', selectedIndices, selectedColorValues)
+}
+
+// Watch for changes in legend data to reset filters when data changes
+watch(() => props.legendDomain, (newDomain, oldDomain) => {
+  // Only reset if domain actually changed to prevent infinite loops
+  if (JSON.stringify(newDomain) !== JSON.stringify(oldDomain)) {
+    resetFilters()
+  }
+})
 
 // Computed legend data
 const legendData = computed(() => {

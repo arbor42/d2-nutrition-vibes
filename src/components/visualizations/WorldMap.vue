@@ -16,6 +16,10 @@ interface Props {
   selectedProduct?: string
   selectedYear?: number
   selectedMetric?: string
+  colorFilter?: {
+    selectedIndices: number[]
+    selectedColors: string[]
+  }
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -23,7 +27,8 @@ const props = withDefaults(defineProps<Props>(), {
   height: 600,
   selectedProduct: 'Wheat and products',
   selectedYear: 2022,
-  selectedMetric: 'production'
+  selectedMetric: 'production',
+  colorFilter: () => ({ selectedIndices: [], selectedColors: [] })
 })
 
 const emit = defineEmits<{
@@ -241,6 +246,44 @@ const greenColorScheme = [
   '#7DD151',  // Yellow-green
   '#FDE725'   // Yellow (highest values)
 ]
+
+// Helper functions for color filtering
+const getColorIndexForValue = (value: number, colorScale: any): number => {
+  if (!colorScale || !colorScale.percentiles) return 0
+  
+  try {
+    const percentiles = colorScale.percentiles()
+    const domain = colorScale.domain()
+    
+    if (value <= domain[0]) return 0
+    if (value >= domain[1]) return greenColorScheme.length - 1
+    
+    for (let i = 0; i < percentiles.length; i++) {
+      if (value <= percentiles[i]) {
+        return i + 1
+      }
+    }
+    
+    return greenColorScheme.length - 1
+  } catch (error) {
+    console.warn('🎨 Error getting color index:', error)
+    return 0
+  }
+}
+
+const getDimmedColor = (color: string): string => {
+  try {
+    // Create a more muted/grayed version of the color
+    const d3Color = d3.color(color)
+    if (d3Color) {
+      return d3Color.copy({ opacity: 0.3 }).toString()
+    }
+    return color
+  } catch (error) {
+    console.warn('🎨 Error dimming color:', error)
+    return color
+  }
+}
 
 // Computed properties
 const mapConfig = computed(() => ({
@@ -1295,6 +1338,18 @@ const applyProductionDataDirect = (container, data) => {
       
       if (value && colorScale) {
         const color = colorScale(value)
+        
+        // Apply color filter if active
+        if (props.colorFilter && props.colorFilter.selectedIndices.length > 0) {
+          // Find which color segment this country belongs to
+          const colorIndex = getColorIndexForValue(value, colorScale)
+          
+          // If this country's color is not in the selected filter, dim it
+          if (!props.colorFilter.selectedIndices.includes(colorIndex)) {
+            return getDimmedColor(color)
+          }
+        }
+        
         // Log first few countries to debug
         if (container.selectAll('.country').nodes().indexOf(d) < 5) {
           console.log(`🎨 Country: ${countryName}, Code: ${countryCode}, Value: ${value}, Color: ${color}`)
@@ -1313,6 +1368,121 @@ const applyProductionDataDirect = (container, data) => {
       const hasData = (countryCode && dataByCountryCode.has(countryCode)) || 
                       dataByNormalizedName.has(normalizedName) ||
                       dataByCountry.has(countryName)
+      
+      // Apply filter opacity if filters are active
+      if (props.colorFilter && props.colorFilter.selectedIndices.length > 0 && hasData) {
+        // Get the country's value and determine its color index
+        let value = null
+        if (countryCode && dataByCountryCode.has(countryCode)) {
+          value = dataByCountryCode.get(countryCode)
+        } else if (dataByNormalizedName.has(normalizedName)) {
+          value = dataByNormalizedName.get(normalizedName)
+        } else if (dataByCountry.has(countryName)) {
+          value = dataByCountry.get(countryName)
+        }
+        
+        if (value && colorScale) {
+          const colorIndex = getColorIndexForValue(value, colorScale)
+          return props.colorFilter.selectedIndices.includes(colorIndex) ? 1 : 0.4
+        }
+      }
+      
+      return hasData ? 1 : 0.6
+    })
+}
+
+// Update country colors with filter (without reloading data)
+const updateCountryColorsWithFilter = (container) => {
+  if (!legendScale.value) return
+  
+  const processedData = getProcessedProductionData()
+  if (!processedData.length) return
+  
+  // Create data maps for quick lookup (same as in applyProductionDataDirect)
+  const dataByCountry = new Map()
+  const dataByCountryCode = new Map()
+  const dataByNormalizedName = new Map()
+  
+  processedData.forEach(d => {
+    if (d.value > 0) {
+      dataByCountry.set(d.country.toLowerCase(), d.value)
+      if (d.country_code) {
+        dataByCountryCode.set(d.country_code, d.value)
+      }
+      const normalizedName = normalizeCountryName(d.country)
+      if (normalizedName) {
+        dataByNormalizedName.set(normalizedName.toLowerCase(), d.value)
+      }
+    }
+  })
+  
+  // Update only colors and opacity without triggering data changes
+  container.selectAll('.country')
+    .transition()
+    .duration(300) // Shorter transition for filter updates
+    .attr('fill', (d) => {
+      // Try multiple properties for country identification
+      const countryName = (d.properties.name || d.properties.NAME || d.properties.admin || '').toLowerCase()
+      const countryCode = d.properties.iso_a3 || d.properties.ISO_A3 || d.properties.adm0_a3 || d.properties.ADM0_A3
+      const normalizedName = normalizeCountryName(d.properties.name || d.properties.NAME || '').toLowerCase()
+      
+      // Try to find value by different keys
+      let value = null
+      if (countryCode && dataByCountryCode.has(countryCode)) {
+        value = dataByCountryCode.get(countryCode)
+      } else if (dataByNormalizedName.has(normalizedName)) {
+        value = dataByNormalizedName.get(normalizedName)
+      } else if (dataByCountry.has(countryName)) {
+        value = dataByCountry.get(countryName)
+      }
+      
+      if (value && legendScale.value) {
+        const color = legendScale.value(value)
+        
+        // Apply color filter if active
+        if (props.colorFilter && props.colorFilter.selectedIndices.length > 0) {
+          // Find which color segment this country belongs to
+          const colorIndex = getColorIndexForValue(value, legendScale.value)
+          
+          // If this country's color is not in the selected filter, dim it
+          if (!props.colorFilter.selectedIndices.includes(colorIndex)) {
+            return getDimmedColor(color)
+          }
+        }
+        
+        return color
+      }
+      // Return theme-appropriate default color for countries without data
+      const isDarkMode = document.documentElement.classList.contains('dark')
+      return isDarkMode ? '#4B5563' : '#e5e7eb' // gray-600 : gray-200
+    })
+    .attr('opacity', (d) => {
+      const countryName = (d.properties.name || d.properties.NAME || d.properties.admin || '').toLowerCase()
+      const countryCode = d.properties.iso_a3 || d.properties.ISO_A3 || d.properties.adm0_a3 || d.properties.ADM0_A3
+      const normalizedName = normalizeCountryName(d.properties.name || d.properties.NAME || '').toLowerCase()
+      
+      const hasData = (countryCode && dataByCountryCode.has(countryCode)) || 
+                      dataByNormalizedName.has(normalizedName) ||
+                      dataByCountry.has(countryName)
+      
+      // Apply filter opacity if filters are active
+      if (props.colorFilter && props.colorFilter.selectedIndices.length > 0 && hasData) {
+        // Get the country's value and determine its color index
+        let value = null
+        if (countryCode && dataByCountryCode.has(countryCode)) {
+          value = dataByCountryCode.get(countryCode)
+        } else if (dataByNormalizedName.has(normalizedName)) {
+          value = dataByNormalizedName.get(normalizedName)
+        } else if (dataByCountry.has(countryName)) {
+          value = dataByCountry.get(countryName)
+        }
+        
+        if (value && legendScale.value) {
+          const colorIndex = getColorIndexForValue(value, legendScale.value)
+          return props.colorFilter.selectedIndices.includes(colorIndex) ? 1 : 0.4
+        }
+      }
+      
       return hasData ? 1 : 0.6
     })
 }
@@ -1558,6 +1728,29 @@ watch([() => props.selectedProduct, () => props.selectedYear, () => props.select
     console.log('🔄 WorldMap WATCHER: Map not initialized yet, skipping...')
   }
 }, { immediate: true })
+
+// Watch for color filter changes
+watch(() => props.colorFilter, (newFilter, oldFilter) => {
+  // Avoid unnecessary updates if filter hasn't actually changed
+  if (JSON.stringify(newFilter) === JSON.stringify(oldFilter)) {
+    return
+  }
+  
+  console.log('🎨 WorldMap WATCHER: Color filter changed:', newFilter)
+  
+  // Only apply filter if map is initialized and we have data
+  if (isInitialized.value && legendScale.value && svgContainerRef.value) {
+    console.log('🎨 WorldMap WATCHER: Applying color filter to map...')
+    
+    // Directly update country colors without reloading data
+    const container = d3.select(svgContainerRef.value).select('.map-container')
+    if (!container.empty()) {
+      updateCountryColorsWithFilter(container)
+    }
+  } else {
+    console.log('🎨 WorldMap WATCHER: Map not ready for filter application, skipping...')
+  }
+}, { deep: true })
 
 // Removed watcher - using static updates instead
 

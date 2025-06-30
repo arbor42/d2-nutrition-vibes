@@ -20,9 +20,31 @@ const containerWidth = ref(400)
 // Legend data from WorldMap component
 const mapLegendData = ref<{ legendScale: any, legendDomain: [number, number], legendUnit: string } | null>(null)
 
+// Color filter state
+const activeColorFilter = ref<{
+  selectedIndices: number[]
+  selectedColors: string[]
+}>({
+  selectedIndices: [],
+  selectedColors: []
+})
+
 // Handle legend updates from WorldMap
 const handleLegendUpdate = (legendData: { legendScale: any, legendDomain: [number, number], legendUnit: string }) => {
   mapLegendData.value = legendData
+}
+
+// Handle color filter changes from MapLegend
+const handleColorFilter = (selectedIndices: number[], selectedColors: string[]) => {
+  const newFilter = {
+    selectedIndices,
+    selectedColors
+  }
+  
+  // Only update if the filter actually changed
+  if (JSON.stringify(activeColorFilter.value) !== JSON.stringify(newFilter)) {
+    activeColorFilter.value = newFilter
+  }
 }
 
 const visualizationOptions = [
@@ -817,6 +839,7 @@ onUnmounted(() => {
             :selected-product="uiStore.selectedProduct"
             :selected-metric="uiStore.selectedMetric"
             :is-loading="dashboardLoading"
+            @color-filter="handleColorFilter"
           />
           
           <!-- World Map (without internal legend) -->
@@ -825,6 +848,7 @@ onUnmounted(() => {
               :selected-product="uiStore.selectedProduct"
               :selected-year="uiStore.selectedYear"
               :selected-metric="uiStore.selectedMetric"
+              :color-filter="activeColorFilter"
               @country-click="onCountryClick"
               @country-hover="(country) => {}"
               @legend-update="handleLegendUpdate"

@@ -4,6 +4,7 @@ import { useTourStore } from '@/tour/stores/useTourStore'
 import { useDataStore } from '@/stores/useDataStore'
 import { useUIStore } from '@/stores/useUIStore'
 import WorldMap from '@/components/visualizations/WorldMap.vue'
+import MapLegend from '@/components/visualizations/MapLegend.vue'
 import TimeseriesChart from '@/components/visualizations/TimeseriesChart.vue'
 import ProductSelector from '@/components/ui/ProductSelector.vue'
 import { formatAgricultureValue } from '@/utils/formatters'
@@ -15,6 +16,14 @@ const tourStore = useTourStore()
 const selectedVisualization = ref('world-map')
 const dashboardLoading = ref(false)
 const containerWidth = ref(400)
+
+// Legend data from WorldMap component
+const mapLegendData = ref<{ legendScale: any, legendDomain: [number, number], legendUnit: string } | null>(null)
+
+// Handle legend updates from WorldMap
+const handleLegendUpdate = (legendData: { legendScale: any, legendDomain: [number, number], legendUnit: string }) => {
+  mapLegendData.value = legendData
+}
 
 const visualizationOptions = [
   { value: 'world-map', label: 'Weltkarte', icon: 'globe' },
@@ -798,14 +807,29 @@ onUnmounted(() => {
       </div>
       <div class="card-body">
         <!-- World Map View -->
-        <div v-if="selectedVisualization === 'world-map'" class="h-[600px] w-full relative" data-tour="world-map">
-          <WorldMap
+        <div v-if="selectedVisualization === 'world-map'" class="w-full relative" data-tour="world-map">
+          <!-- Map Legend (outside the map container) -->
+          <MapLegend
+            v-if="mapLegendData"
+            :legend-scale="mapLegendData.legendScale"
+            :legend-domain="mapLegendData.legendDomain"
+            :legend-unit="mapLegendData.legendUnit"
             :selected-product="uiStore.selectedProduct"
-            :selected-year="uiStore.selectedYear"
             :selected-metric="uiStore.selectedMetric"
-            @country-click="onCountryClick"
-            @country-hover="(country) => {}"
+            :is-loading="dashboardLoading"
           />
+          
+          <!-- World Map (without internal legend) -->
+          <div class="h-[600px] w-full relative">
+            <WorldMap
+              :selected-product="uiStore.selectedProduct"
+              :selected-year="uiStore.selectedYear"
+              :selected-metric="uiStore.selectedMetric"
+              @country-click="onCountryClick"
+              @country-hover="(country) => {}"
+              @legend-update="handleLegendUpdate"
+            />
+          </div>
         </div>
         
         <!-- Timeseries View -->

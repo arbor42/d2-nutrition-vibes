@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, shallowRef, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, shallowRef, computed, watch, onMounted, onUnmounted, nextTick, watchEffect } from 'vue'
 // Removed unused composables
 import { useDataStore } from '@/stores/useDataStore'
 import { useUIStore } from '@/stores/useUIStore'
@@ -29,6 +29,7 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{
   countryClick: [country: string]
   countryHover: [country: string | null]
+  legendUpdate: [legendData: { legendScale: any, legendDomain: [number, number], legendUnit: string }]
 }>()
 
 // Stores
@@ -49,7 +50,6 @@ const isInitialized = ref(false)
 const infoExpanded = ref(false) // State for collapsible info panel
 const countryDetailVisible = ref(false) // State for country detail panel
 const selectedCountryDetail = ref(null) // Selected country data for detail view
-const hoveredSegment = ref(null) // State for hovered legend segment
 
 // Click debouncing to prevent unwanted country detail views
 let lastClickTime = 0
@@ -146,6 +146,17 @@ const getLegendTitle = () => {
   }
   return metricLabels[props.selectedMetric] || 'Wert'
 }
+
+// Emit legend data when it changes
+watchEffect(() => {
+  if (legendScale.value && legendDomain.value && legendUnit.value) {
+    emit('legendUpdate', {
+      legendScale: legendScale.value,
+      legendDomain: legendDomain.value,
+      legendUnit: legendUnit.value
+    })
+  }
+})
 
 // Tooltip implementation with D3
 let tooltipDiv = null
@@ -1837,88 +1848,13 @@ defineExpose({
       </div>
     </div>
 
-    <!-- Continuous Legend Bar Above Map -->
-    <div 
-      v-if="legendData && !isLoading" 
-      class="legend-container bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg mb-4 p-4"
-      style="min-height: 100px;"
-    >
-      <div class="flex flex-col h-full">
-        <!-- Legend Title -->
-        <div class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3 text-center">
-          {{ legendData.title }}
-        </div>
-        
-        <!-- Continuous Color Bar -->
-        <div class="flex-1 relative">
-          <!-- Main continuous bar container -->
-          <div class="relative h-8 mx-4 mb-2 rounded overflow-hidden border border-gray-300 dark:border-gray-600">
-            <!-- Continuous gradient background -->
-            <div 
-              class="absolute inset-0"
-              :style="{
-                background: `linear-gradient(to right, ${legendData.items.map(item => item.color).join(', ')})`
-              }"
-            ></div>
-            
-            <!-- Percentile separators -->
-            <div 
-              v-for="(item, index) in legendData.items.slice(0, -1)" 
-              :key="index"
-              class="absolute top-0 bottom-0 w-px bg-white/30"
-              :style="{ left: `${((index + 1) / legendData.items.length) * 100}%` }"
-            ></div>
-            
-            <!-- Hoverable segments for each percentile -->
-            <div 
-              v-for="(item, index) in legendData.items" 
-              :key="index"
-              class="absolute top-0 bottom-0 cursor-help transition-all duration-200 hover:bg-black/10"
-              :style="{ 
-                left: `${(index / legendData.items.length) * 100}%`, 
-                width: `${100 / legendData.items.length}%` 
-              }"
-              :title="`Top ${100 - index * 10}% - ${100 - (index + 1) * 10}%: ${item.rangeDisplay}`"
-              @mouseenter="hoveredSegment = index"
-              @mouseleave="hoveredSegment = null"
-            ></div>
-          </div>
-          
-          <!-- Value labels below the bar -->
-          <div class="flex justify-between items-center text-xs text-gray-600 dark:text-gray-400 px-4">
-            <span class="font-medium">{{ legendData.formattedMin }}</span>
-            <span class="font-medium">{{ legendData.formattedMax }}</span>
-          </div>
-        </div>
-        
-        <!-- Hover tooltip -->
-        <div 
-          v-if="hoveredSegment !== null"
-          class="text-center text-sm text-gray-700 dark:text-gray-300 mt-2 p-2 bg-gray-50 dark:bg-gray-700 rounded"
-        >
-          <div class="font-medium">
-            Top {{ 100 - hoveredSegment * 10 }}% - {{ 100 - (hoveredSegment + 1) * 10 }}%
-          </div>
-          <div class="text-xs text-gray-600 dark:text-gray-400">
-            {{ legendData.items[hoveredSegment].rangeDisplay }}
-          </div>
-        </div>
-        
-        <!-- Unit and additional info -->
-        <div class="text-xs text-gray-500 dark:text-gray-500 text-center mt-2">
-          <div v-if="legendData.isPercentileBased" class="text-green-600 dark:text-green-400">
-            ✓ Perzentil-basierte Farbskala
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- Map SVG Container with explicit sizing -->
     <!-- Remove v-once from container to ensure ref works properly -->
     <div 
       ref="svgContainerRef"
       class="map-svg-container" 
-      style="width: 100%; height: calc(100% - 140px); min-height: 480px; position: relative;"
+      style="width: 100%; height: 100%; min-height: 480px; position: relative;"
     >
       <!-- Debug message -->
       <div v-if="!isInitialized && !isLoading && !error" class="absolute inset-0 flex items-center justify-center text-gray-500">

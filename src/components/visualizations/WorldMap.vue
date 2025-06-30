@@ -53,6 +53,7 @@ const isLoading = ref(false)
 const error = ref<string | null>(null)
 const geoDataStatic = shallowRef(null) // Use shallowRef for large objects
 const productionDataStatic = shallowRef([]) // Use shallowRef for arrays
+const capitalsDataStatic = shallowRef(null) // Use shallowRef for capitals data
 const isInitialized = ref(false)
 const infoExpanded = ref(false) // State for collapsible info panel
 const countryDetailVisible = ref(false) // State for country detail panel
@@ -352,6 +353,11 @@ const initializeMap = async () => {
     console.log('✅ WorldMap: Geo data loaded:', loadedGeoData ? 'Success' : 'Failed')
     console.log('📊 WorldMap: Features count:', loadedGeoData?.features?.length || 'N/A')
     geoDataStatic.value = loadedGeoData
+
+    // Load capitals data
+    console.log('🏛️ WorldMap: Loading capitals data...')
+    await loadCapitalsData()
+    console.log('✅ WorldMap: Capitals data loaded')
 
     // Initialize tooltip
     tooltip.init()
@@ -912,6 +918,60 @@ const loadProductionData = async () => {
     console.warn('Failed to load production data:', err)
     productionDataStatic.value = []
   }
+}
+
+// Load capitals data
+const loadCapitalsData = async () => {
+  console.log('🏛️ WorldMap: Loading capitals data...')
+  try {
+    const response = await fetch('/data/capitals.json')
+    if (!response.ok) {
+      throw new Error(`Failed to load capitals data: ${response.statusText}`)
+    }
+    const data = await response.json()
+    console.log('🏛️ WorldMap: Capitals data loaded:', data.features?.length || 0, 'entries')
+    capitalsDataStatic.value = data
+    return data
+  } catch (error) {
+    console.warn('🏛️ WorldMap: Failed to load capitals data:', error)
+    return null
+  }
+}
+
+// Get capital coordinates for a country
+const getCapitalCoordinates = (countryCode, countryName) => {
+  if (!capitalsDataStatic.value?.features) {
+    console.warn('🏛️ WorldMap: No capitals data available')
+    return null
+  }
+
+  // First try to match by ISO3 code (most reliable)
+  if (countryCode) {
+    const byCode = capitalsDataStatic.value.features.find(feature => 
+      feature.properties.iso3 === countryCode ||
+      feature.properties.iso2 === countryCode
+    )
+    if (byCode) {
+      console.log(`🏛️ WorldMap: Found capital for ${countryCode}: ${byCode.properties.city} at ${byCode.geometry.coordinates}`)
+      return byCode.geometry.coordinates
+    }
+  }
+
+  // Fallback to country name matching
+  if (countryName) {
+    const normalizedName = normalizeCountryName(countryName)
+    const byName = capitalsDataStatic.value.features.find(feature => 
+      feature.properties.country?.toLowerCase() === countryName.toLowerCase() ||
+      feature.properties.country?.toLowerCase() === normalizedName.toLowerCase()
+    )
+    if (byName) {
+      console.log(`🏛️ WorldMap: Found capital for ${countryName}: ${byName.properties.city} at ${byName.geometry.coordinates}`)
+      return byName.geometry.coordinates
+    }
+  }
+
+  console.warn(`🏛️ WorldMap: No capital found for ${countryCode || countryName}`)
+  return null
 }
 
 // Helper function to get country code - comprehensive mapping
@@ -1630,19 +1690,66 @@ const zoomToCountry = (countryData) => {
   const svg = d3.select(svgContainerRef.value).select('svg')
   if (svg.empty()) return
 
-  const bounds = path.bounds(countryData)
-  const dx = bounds[1][0] - bounds[0][0]
-  const dy = bounds[1][1] - bounds[0][1]
-  const x = (bounds[0][0] + bounds[1][0]) / 2
-  const y = (bounds[0][1] + bounds[1][1]) / 2
+  // Get country information
+  const countryName = countryData.properties.name
+  const countryCode = countryData.properties.iso_a3
+
+  // Try to get capital coordinates first
+  const capitalCoords = getCapitalCoordinates(countryCode, countryName)
   
-  // Get current SVG dimensions
-  const svgNode = svg.node()
-  const width = svgNode ? svgNode.clientWidth : props.width
-  const height = svgNode ? svgNode.clientHeight : props.height
+  let x, y, scale, translate
   
-  const scale = Math.min(8, 0.9 / Math.max(dx / width, dy / height))
-  const translate = [width / 2 - scale * x, height / 2 - scale * y]
+  if (capitalCoords) {
+    // Use capital coordinates for zooming
+    console.log(`🎯 WorldMap: Zooming to capital of ${countryName}: ${capitalCoords}`)
+    
+    // Project capital coordinates to screen coordinates
+    const projectedCapital = projection(capitalCoords)
+    if (projectedCapital) {
+      x = projectedCapital[0]
+      y = projectedCapital[1]
+      
+      // Get current SVG dimensions
+      const svgNode = svg.node()
+      const width = svgNode ? svgNode.clientWidth : props.width
+      const height = svgNode ? svgNode.clientHeight : props.height
+      
+      // Use a fixed scale for capital zooming
+      scale = 4
+      translate = [width / 2 - scale * x, height / 2 - scale * y]
+    } else {
+      console.warn(`🎯 WorldMap: Failed to project capital coordinates for ${countryName}`)
+      // Fallback to country bounds
+      const bounds = path.bounds(countryData)
+      const dx = bounds[1][0] - bounds[0][0]
+      const dy = bounds[1][1] - bounds[0][1]
+      x = (bounds[0][0] + bounds[1][0]) / 2
+      y = (bounds[0][1] + bounds[1][1]) / 2
+      
+      const svgNode = svg.node()
+      const width = svgNode ? svgNode.clientWidth : props.width
+      const height = svgNode ? svgNode.clientHeight : props.height
+      
+      scale = Math.min(8, 0.9 / Math.max(dx / width, dy / height))
+      translate = [width / 2 - scale * x, height / 2 - scale * y]
+    }
+  } else {
+    // Fallback to original behavior if no capital found
+    console.log(`🎯 WorldMap: No capital found for ${countryName}, using country center`)
+    const bounds = path.bounds(countryData)
+    const dx = bounds[1][0] - bounds[0][0]
+    const dy = bounds[1][1] - bounds[0][1]
+    x = (bounds[0][0] + bounds[1][0]) / 2
+    y = (bounds[0][1] + bounds[1][1]) / 2
+    
+    // Get current SVG dimensions
+    const svgNode = svg.node()
+    const width = svgNode ? svgNode.clientWidth : props.width
+    const height = svgNode ? svgNode.clientHeight : props.height
+    
+    scale = Math.min(8, 0.9 / Math.max(dx / width, dy / height))
+    translate = [width / 2 - scale * x, height / 2 - scale * y]
+  }
 
   svg.transition()
     .duration(750)

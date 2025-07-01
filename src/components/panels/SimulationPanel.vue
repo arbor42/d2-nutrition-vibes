@@ -259,6 +259,8 @@ import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import RangeSlider from '@/components/ui/RangeSlider.vue'
 import SimulationChart from '@/components/visualizations/SimulationChart.vue'
+import { useRoute } from 'vue-router'
+import urlService from '@/services/urlState.js'
 
 // Composables
 const { handleError: handleErrorUtil, wrapAsync } = useErrorHandling()
@@ -267,15 +269,43 @@ const { handleError: handleErrorUtil, wrapAsync } = useErrorHandling()
 const isLoading = ref(false)
 const error = ref(null)
 const simulationResults = ref(null)
-const selectedScenario = ref('climate_shock')
 const hasConfigChanged = ref(false)
 const lastAppliedConfig = ref(null)
 
+// Router-Referenz für Query-Parameter
+const route = useRoute()
+
+// --- Helpers zur Szenario-Konvertierung (Index ↔ ID) ------------------
+const scenarioIndexToId = (idx) => {
+  const list = [
+    'climate_shock',
+    'population_pressure',
+    'tech_revolution',
+    'trade_disruption',
+    'custom'
+  ]
+  return list[idx] ?? 'custom'
+}
+
+const scenarioIdToIndex = (id) => {
+  const map = {
+    climate_shock: 0,
+    population_pressure: 1,
+    tech_revolution: 2,
+    trade_disruption: 3,
+    custom: 4
+  }
+  return map[id] ?? 4
+}
+
+// Initial Szenario aus UrlState (Nummer) ermitteln
+const selectedScenario = ref(scenarioIndexToId(urlService._simState.sc ?? 0))
+
 const scenarioConfig = ref({
-  climateChange: 1.0,
-  populationGrowth: 1.2,
-  techProgress: 1.1,
-  economicGrowth: 1.5
+  climateChange: urlService._sliderState.cc || 1.0,
+  populationGrowth: urlService._sliderState.pg || 1.0,
+  techProgress: urlService._sliderState.tp || 1.0,
+  economicGrowth: urlService._sliderState.eg || 1.0
 })
 
 // Computed properties
@@ -567,9 +597,14 @@ watch(scenarioConfig, async (newConfig) => {
 
 // Load initial data
 onMounted(async () => {
-  // Pre-select first scenario and apply its preset
-  if (availableScenarios.value.length > 0) {
-    handleScenarioSelect(availableScenarios.value[0].id)
+  // Falls Szenario über URL/State gesetzt ist und nicht "custom", wende Preset an.
+  if (selectedScenario.value !== 'custom') {
+    handleScenarioSelect(selectedScenario.value)
+  } else {
+    // Custom-Config aus URL → direkt Simulation starten
+    if (!isLoading.value) {
+      runSimulation()
+    }
   }
 })
 
@@ -685,6 +720,40 @@ const getSliderDescription = (type, value) => {
       return ''
   }
 }
+
+// --- Watcher: UI → URL -------------------------------------------------
+watch(selectedScenario, (val) => {
+  urlService._simState.sc = scenarioIdToIndex(val)
+})
+
+watch(scenarioConfig, (cfg) => {
+  urlService._sliderState.cc = Number(cfg.climateChange)
+  urlService._sliderState.pg = Number(cfg.populationGrowth)
+  urlService._sliderState.tp = Number(cfg.techProgress)
+  urlService._sliderState.eg = Number(cfg.economicGrowth)
+}, { deep: true })
+
+// --- Watcher: Route(Query) → UI ---------------------------------------
+watch(() => [route.query.sc, route.query.cc, route.query.pg, route.query.tp, route.query.eg], () => {
+  // Scenario Index → ID
+  if (urlService._simState.sc !== undefined) {
+    const id = scenarioIndexToId(urlService._simState.sc)
+    if (id && id !== selectedScenario.value) {
+      selectedScenario.value = id
+    }
+  }
+
+  const newCfg = {
+    climateChange: urlService._sliderState.cc || 1.0,
+    populationGrowth: urlService._sliderState.pg || 1.0,
+    techProgress: urlService._sliderState.tp || 1.0,
+    economicGrowth: urlService._sliderState.eg || 1.0
+  }
+
+  if (JSON.stringify(newCfg) !== JSON.stringify(scenarioConfig.value)) {
+    scenarioConfig.value = { ...newCfg }
+  }
+}, { immediate: true })
 </script>
 
 <style scoped>

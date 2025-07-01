@@ -51,13 +51,18 @@ class UrlStateService {
       met: [] // selectedMetrics
     }
 
-    // Slider-Werte (Phase 5)
-    this._sliderState = {
-      cc: 0,
-      pg: 0,
-      tp: 0,
-      eg: 0
-    }
+    // Slider-Werte (Phase 5) – reaktiv, damit Watcher feuern
+    this._sliderState = reactive({
+      cc: 0, // Climate Change
+      pg: 0, // Population Growth
+      tp: 0, // Tech Progress
+      eg: 0  // Economic Growth
+    })
+
+    // --- Simulation Panel -----------------------------------------
+    this._simState = reactive({
+      sc: 4 // selectedScenario index (4 = benutzerdefiniert)
+    })
 
     // ML-Panel-Status (Phase 6)
     this._mlState = {
@@ -276,6 +281,12 @@ class UrlStateService {
         get: () => ui.selectedVisualization,
         /* @ts-ignore */
         set: (v) => { if (v) ui.setSelectedVisualization(String(v), false) }
+      },
+      // --- Simulation Panel ----------------------------------------
+      sc: {
+        default: 4,
+        get: () => this._simState.sc,
+        set: (v) => { this._simState.sc = Number(v) || 4 }
       },
       // --- Timeseries spezifische Arrays ---------------------------
       tpr: {

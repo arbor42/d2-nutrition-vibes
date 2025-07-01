@@ -13,7 +13,10 @@ const dataStore = useDataStore()
 const uiStore = useUIStore()
 const tourStore = useTourStore()
 
-const selectedVisualization = ref('world-map')
+const selectedVisualization = computed({
+  get: () => uiStore.selectedVisualization,
+  set: (val: string) => uiStore.setSelectedVisualization(val)
+})
 const dashboardLoading = ref(false)
 const containerWidth = ref(400)
 
@@ -264,8 +267,7 @@ const topCountries = computed(() => {
 // Feed usage calculation - dynamically detects if product has feed data
 const feedUsage = computed(() => {
   const currentProduct = uiStore.selectedProduct
-  const currentYear = uiStore.selectedYear
-  
+  const currentYear = uiStore.selectedYear  
   if (!currentProduct || !currentYear) {
     return { percentage: 0, amount: 0, unit: '1000 t' }
   }

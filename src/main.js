@@ -10,6 +10,9 @@ import './tour/styles/tour.css'
 import TourPlugin from './tour'
 import { availableTours } from './tour/config/tourSteps'
 
+// URL-State-Service (Phase 2)
+import UrlStateService from '@/services/urlState'
+
 // Create Pinia store
 const pinia = createPinia()
 
@@ -26,6 +29,7 @@ app.config.errorHandler = (error, instance, info) => {
   console.error('Error Info:', info)
   
   // Send to error reporting service in production
+  // @ts-ignore – Vite import.meta.env Typing nicht in JS-Dateien
   if (import.meta.env.PROD) {
     // TODO: Implement error reporting service
     console.error('Production error:', { error: error.message, stack: error.stack, info })
@@ -50,5 +54,14 @@ app.use(TourPlugin, {
   autoStart: false // Don't auto-start tour
 })
 
+// UrlStateService initialisieren & Resolver übergeben
+UrlStateService.init(router)
 
-app.mount('#app')
+// Wrapped Resolver, der nach Ausführung automatisch die URL-Anwendung triggert
+const readyResolver = UrlStateService.setReadyResolver(() => {})
+
+// Warten bis Router bereit ist, dann Resolver ausführen und App mounten
+router.isReady().then(() => {
+  readyResolver()
+  app.mount('#app')
+})

@@ -47,18 +47,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed } from 'vue'
 import { useUIStore } from '@/stores/useUIStore'
 import NavigationSidebar from './NavigationSidebar.vue'
 import PanelsContainer from './PanelsContainer.vue'
 
 const uiStore = useUIStore()
 
-const sidebarCollapsed = ref(false)
-
+// Bidirektionale Bindung an uiStore.sidebarOpen
+const sidebarCollapsed = computed({
+  get: () => !uiStore.sidebarOpen,
+  set: (val: boolean) => uiStore.toggleSidebar()
+})
 
 const toggleSidebar = () => {
-  sidebarCollapsed.value = !sidebarCollapsed.value
+  uiStore.toggleSidebar()
 }
 </script>
 

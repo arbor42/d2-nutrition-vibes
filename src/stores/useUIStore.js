@@ -4,7 +4,7 @@ import { ref, computed, watch } from 'vue'
 export const useUIStore = defineStore('ui', () => {
   // Enhanced state for Phase 5
   const theme = ref('light')
-  const sidebarOpen = ref(false)
+  const sidebarOpen = ref(true)
   const currentPanel = ref('dashboard')
   const activePanel = ref('dashboard')
   const selectedCountry = ref('')
@@ -17,6 +17,7 @@ export const useUIStore = defineStore('ui', () => {
   const darkMode = ref(false)
   const loadingMessages = ref([])
   const isUserInteraction = ref(false) // Track if changes come from user actions
+  const selectedVisualization = ref('world-map')
   
   // Enhanced UI state
   const loading = ref(false)
@@ -178,6 +179,12 @@ export const useUIStore = defineStore('ui', () => {
     if (isUser) {
       setTimeout(() => { isUserInteraction.value = false }, 100)
     }
+  }
+
+  const setSelectedVisualization = (view, isUser = true) => {
+    isUserInteraction.value = isUser
+    selectedVisualization.value = view
+    if (isUser) setTimeout(() => { isUserInteraction.value = false }, 100)
   }
 
   const setMapView = (zoom, center) => {
@@ -458,6 +465,7 @@ export const useUIStore = defineStore('ui', () => {
     selectedProduct,
     selectedMetric,
     selectedYear,
+    selectedVisualization,
     showAnalysisMenu,
     mapZoom,
     mapCenter,
@@ -507,6 +515,7 @@ export const useUIStore = defineStore('ui', () => {
     setSelectedProduct,
     setSelectedMetric,
     setSelectedYear,
+    setSelectedVisualization,
     setMapView,
     toggleDarkMode,
     toggleTheme,

@@ -173,6 +173,18 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - D3.js community for visualization tools
 - Vue.js ecosystem for the robust framework
 
+## Deep-Linking & URL-State-Service
+
+Der neue `UrlStateService` serialisiert den kompletten UI-Zustand in die Query-Parameter der Adresse. Dadurch lassen sich Ansichten teilen und per Bookmark wiederherstellen.
+
+Beispiele
+```
+/?dark=1&sb=1&pnl=simulation            # Dark-Mode, Sidebar offen, Simulation-Panel
+/?pr=Wheat,Rice&cty=DEU,BRA&yr=2022     # Auswahl mehrerer Produkte/Länder
+```
+
+Weitere Details siehe `urlservice.md`.
+
 ---
 
 For detailed development instructions and architectural decisions, please refer to the [CLAUDE.md](./CLAUDE.md) documentation.

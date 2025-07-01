@@ -31,26 +31,26 @@ onMounted(() => {
 
 const navigationItems = [
   {
-    name: 'Dashboard',
-    path: '/',
+    label: 'Dashboard',
+    panel: 'dashboard',
     icon: 'home',
     description: 'Übersicht und Hauptsteuerung'
   },
   {
-    name: 'Zeitreihen',
-    path: '/timeseries',
+    label: 'Zeitreihen',
+    panel: 'timeseries',
     icon: 'chart-line',
     description: 'Zeitreihenanalyse und Trends'
   },
   {
-    name: 'Simulation',
-    path: '/simulation',
+    label: 'Simulation',
+    panel: 'simulation',
     icon: 'cog',
     description: 'Szenario-Simulationen'
   },
   {
-    name: 'ML Prognosen',
-    path: '/ml-predictions',
+    label: 'ML Prognosen',
+    panel: 'ml-predictions',
     icon: 'brain',
     description: 'Machine Learning Vorhersagen'
   },
@@ -77,12 +77,12 @@ const sidebarClasses = computed(() => [
     : 'w-64'
 ].join(' '))
 
-const isActive = (path: string) => {
-  return route.path === path
-}
+const isActive = (panelName: string) => uiStore.currentPanel === panelName
 
-const navigateTo = (path: string) => {
-  router.push(path)
+const navigateTo = (panelName: string) => {
+  uiStore.setCurrentPanel(panelName)
+  uiStore.showPanel(panelName)
+  router.push({ path: '/', query: { pnl: panelName } })
 }
 
 const getIconSvg = (iconName: string) => {
@@ -173,19 +173,19 @@ const resumeTour = () => {
     <nav class="flex-1 p-2 space-y-1 overflow-y-auto">
       <div
         v-for="item in navigationItems"
-        :key="item.path"
+        :key="item.panel"
         class="relative"
       >
         <button
           :class="[
             'w-full flex items-center rounded-lg transition-all duration-200 group',
             collapsed ? 'px-2 py-2 justify-center' : 'px-3 py-2 text-sm font-medium',
-            isActive(item.path)
+            isActive(item.panel)
               ? 'bg-primary-100 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300'
               : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-gray-100'
           ]"
-          :title="collapsed ? item.name : ''"
-          @click="navigateTo(item.path)"
+          :title="collapsed ? item.label : ''"
+          @click="navigateTo(item.panel)"
         >
           <!-- Icon -->
           <svg 
@@ -208,12 +208,12 @@ const resumeTour = () => {
             v-if="!collapsed"
             class="truncate text-sm"
           >
-            {{ item.name }}
+            {{ item.label }}
           </span>
           
           <!-- Active Indicator -->
           <div
-            v-if="isActive(item.path) && !collapsed"
+            v-if="isActive(item.panel) && !collapsed"
             class="ml-auto w-1.5 h-1.5 bg-primary-500 rounded-full"
           />
         </button>
@@ -223,7 +223,7 @@ const resumeTour = () => {
           v-if="collapsed"
           class="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 px-2 py-1 bg-gray-900 dark:bg-gray-50 text-white dark:text-gray-900 text-xs rounded opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity z-50 whitespace-nowrap"
         >
-          {{ item.name }}
+          {{ item.label }}
           <div class="absolute left-0 top-1/2 transform -translate-x-1 -translate-y-1/2 w-2 h-2 bg-gray-900 dark:bg-gray-50 rotate-45"></div>
         </div>
       </div>

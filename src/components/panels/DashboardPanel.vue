@@ -1181,7 +1181,8 @@ const computeFeedShare = (entry: any): number => {
       <div class="card-body">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
           <router-link
-            to="/timeseries"
+            :to="{ path: '/', query: { pnl: 'timeseries' } }"
+            @click="uiStore.setCurrentPanel('timeseries'); uiStore.showPanel('timeseries')"
             class="block p-4 bg-gray-50 dark:bg-gray-900 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-center"
           >
             <svg class="w-8 h-8 text-primary-600 dark:text-primary-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1191,7 +1192,8 @@ const computeFeedShare = (entry: any): number => {
           </router-link>
           
           <router-link
-            to="/simulation"
+            :to="{ path: '/', query: { pnl: 'simulation' } }"
+            @click="uiStore.setCurrentPanel('simulation'); uiStore.showPanel('simulation')"
             class="block p-4 bg-gray-50 dark:bg-gray-900 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-center"
           >
             <svg class="w-8 h-8 text-secondary-600 dark:text-secondary-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1201,7 +1203,8 @@ const computeFeedShare = (entry: any): number => {
           </router-link>
           
           <router-link
-            to="/ml-predictions"
+            :to="{ path: '/', query: { pnl: 'ml-predictions' } }"
+            @click="uiStore.setCurrentPanel('ml-predictions'); uiStore.showPanel('ml-predictions')"
             class="block p-4 bg-gray-50 dark:bg-gray-900 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-center"
           >
             <svg class="w-8 h-8 text-success-600 dark:text-success-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1211,7 +1214,8 @@ const computeFeedShare = (entry: any): number => {
           </router-link>
           
           <router-link
-            to="/structural"
+            :to="{ path: '/', query: { pnl: 'structural' } }"
+            @click="uiStore.setCurrentPanel('structural'); uiStore.showPanel('structural')"
             class="block p-4 bg-gray-50 dark:bg-gray-900 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-center"
           >
             <svg class="w-8 h-8 text-warning-600 dark:text-warning-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

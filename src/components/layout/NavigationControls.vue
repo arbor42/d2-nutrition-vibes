@@ -30,7 +30,7 @@
             <router-link
               v-for="panel in analysisOptions"
               :key="panel.route"
-              :to="panel.route"
+              :to="{ path: '/', query: { pnl: panel.name } }"
               class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
               :class="{
                 'bg-primary-50 text-primary-700 dark:bg-primary-900/20 dark:text-primary-300': $route.name === panel.name

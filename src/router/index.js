@@ -8,44 +8,27 @@ const routes = [
       {
         path: '',
         name: 'home',
-        component: () => import('@/components/panels/DashboardPanel.vue'),
+        component: () => import('@/components/layout/PanelView.vue'),
         meta: {
-          title: 'OpenFoodMap - Home',
+          title: 'OpenFoodMap',
           preload: true
         }
       },
       {
         path: '/dashboard',
-        name: 'dashboard',
-        component: () => import('@/components/panels/DashboardPanel.vue'),
-        meta: {
-          title: 'Dashboard - OpenFoodMap',
-          preload: true
-        }
+        redirect: { path: '/', query: { pnl: 'dashboard' } }
       },
       {
         path: '/timeseries',
-        name: 'timeseries',
-        component: () => import('@/components/panels/TimeseriesPanel.vue'),
-        meta: {
-          title: 'Zeitreihen - OpenFoodMap'
-        }
+        redirect: { path: '/', query: { pnl: 'timeseries' } }
       },
       {
         path: '/simulation',
-        name: 'simulation',
-        component: () => import('@/components/panels/SimulationPanel.vue'),
-        meta: {
-          title: 'Simulation - OpenFoodMap'
-        }
+        redirect: { path: '/', query: { pnl: 'simulation' } }
       },
       {
         path: '/ml-predictions',
-        name: 'ml-predictions',
-        component: () => import('@/components/panels/MLPanel.vue'),
-        meta: {
-          title: 'ML Prognosen - OpenFoodMap'
-        }
+        redirect: { path: '/', query: { pnl: 'ml-predictions' } }
       }
     ]
   },

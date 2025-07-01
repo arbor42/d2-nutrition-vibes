@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useUIStore } from '@/stores/useUIStore'
 import { useDataStore } from '@/stores/useDataStore'
 import DashboardPanel from '@/components/panels/DashboardPanel.vue'
@@ -10,24 +10,32 @@ import MLPanel from '@/components/panels/MLPanel.vue'
 import ProductSelector from '@/components/ui/ProductSelector.vue'
 
 const route = useRoute()
+const router = useRouter()
 const uiStore = useUIStore()
 const dataStore = useDataStore()
 
+// Synchronisiere pnl Query → Store
+watch(
+  () => route.query.pnl,
+  (pnl) => {
+    if (typeof pnl === 'string' && pnl.length) {
+      uiStore.setCurrentPanel(pnl)
+    }
+  },
+  { immediate: true }
+)
+
 const currentComponent = computed(() => {
-  const componentMap: Record<string, any> = {
-    '/': DashboardPanel,
-    '/dashboard': DashboardPanel,
-    '/timeseries': TimeseriesPanel,
-    '/simulation': SimulationPanel,
-    '/ml-predictions': MLPanel,
+  const map: Record<string, any> = {
+    dashboard: DashboardPanel,
+    timeseries: TimeseriesPanel,
+    simulation: SimulationPanel,
+    'ml-predictions': MLPanel
   }
-  
-  return componentMap[route.path] || DashboardPanel
+  return map[uiStore.currentPanel] || DashboardPanel
 })
 
-const isDashboard = computed(() => {
-  return route.path === '/' || route.path === '/dashboard'
-})
+const isDashboard = computed(() => uiStore.currentPanel === 'dashboard')
 
 const containerClasses = computed(() => [
   'w-full',
@@ -36,27 +44,23 @@ const containerClasses = computed(() => [
 ].join(' '))
 
 const panelTitle = computed(() => {
-  const titleMap: Record<string, string> = {
-    '/': 'Dashboard',
-    '/dashboard': 'Dashboard',
-    '/timeseries': 'Zeitreihenanalyse',
-    '/simulation': 'Simulationen',
-    '/ml-predictions': 'ML Prognosen',
+  const map: Record<string,string> = {
+    dashboard: 'Dashboard',
+    timeseries: 'Zeitreihenanalyse',
+    simulation: 'Simulationen',
+    'ml-predictions': 'ML Prognosen'
   }
-  
-  return titleMap[route.path] || 'Dashboard'
+  return map[uiStore.currentPanel] || 'Dashboard'
 })
 
 const panelDescription = computed(() => {
-  const descriptionMap: Record<string, string> = {
-    '/': 'Überblick über alle wichtigen Metriken und Visualisierungen',
-    '/dashboard': 'Überblick über alle wichtigen Metriken und Visualisierungen',
-    '/timeseries': 'Zeitliche Entwicklung von Produktions- und Verbrauchsdaten',
-    '/simulation': 'Szenario-basierte Simulationen und Prognosen',
-    '/ml-predictions': 'Machine Learning gestützte Vorhersagen und Analysen',
+  const map: Record<string,string> = {
+    dashboard: 'Überblick über alle wichtigen Metriken und Visualisierungen',
+    timeseries: 'Zeitliche Entwicklung von Produktions- und Verbrauchsdaten',
+    simulation: 'Szenario-basierte Simulationen und Prognosen',
+    'ml-predictions': 'Machine Learning gestützte Vorhersagen und Analysen'
   }
-  
-  return descriptionMap[route.path] || 'Überblick über alle wichtigen Metriken und Visualisierungen'
+  return map[uiStore.currentPanel] || map.dashboard
 })
 </script>
 

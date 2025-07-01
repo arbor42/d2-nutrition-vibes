@@ -13,7 +13,7 @@
 
 import { useUIStore } from '@/stores/useUIStore'
 import { useVisualizationStore } from '@/stores/useVisualizationStore'
-import { watch, ref } from 'vue'
+import { watch, ref, reactive } from 'vue'
 
 class UrlStateService {
   // Statische Property für Singleton-Referenz (ESLint/TS/TypeScript Happy)
@@ -76,6 +76,13 @@ class UrlStateService {
       filt: ref([]), // number[] dezile, reaktiv als Ref
       infopanel: false
     }
+
+    // --- Timeseries Panel -----------------------------------------
+    this._tsState = reactive({
+      tpr: [],   // selectedProducts[]
+      tcty: [],  // selectedCountries[]
+      tmet: []   // selectedMetrics[]
+    })
 
     UrlStateService._instance = this
   }
@@ -269,6 +276,22 @@ class UrlStateService {
         get: () => ui.selectedVisualization,
         /* @ts-ignore */
         set: (v) => { if (v) ui.setSelectedVisualization(String(v), false) }
+      },
+      // --- Timeseries spezifische Arrays ---------------------------
+      tpr: {
+        default: [],
+        get: () => this._tsState.tpr,
+        set: (v) => { this._tsState.tpr = Array.isArray(v) ? v : this._paramToArray(v) }
+      },
+      tcty: {
+        default: [],
+        get: () => this._tsState.tcty,
+        set: (v) => { this._tsState.tcty = Array.isArray(v) ? v : this._paramToArray(v) }
+      },
+      tmet: {
+        default: [],
+        get: () => this._tsState.tmet,
+        set: (v) => { this._tsState.tmet = Array.isArray(v) ? v : this._paramToArray(v) }
       },
     }
 

@@ -172,15 +172,15 @@ import SearchableSelect from '@/components/ui/SearchableSelect.vue'
 import MultiSelect from '@/components/ui/MultiSelect.vue'
 import TimeseriesChart from '@/components/visualizations/TimeseriesChart.vue'
 import { getAllProductOptions, getGermanName } from '@/utils/productMappings'
+import urlService from '@/services/urlState.js'
+import { useRoute } from 'vue-router'
 
 // Store and composables
 const dataStore = useDataStore()
 const uiStore = useUIStore()
+const route = useRoute()
 
 // Reactive state - use the same defaults as dashboard
-const selectedProducts = ref(['Wheat and products'])
-const selectedCountries = ref([])
-const selectedMetrics = ref(['production'])
 const chartData = ref([])
 const error = ref(null)
 const missingDataCombinations = ref([])
@@ -274,6 +274,17 @@ const computeFeedShare = (entry) => {
   const feed = entry.feed || 0
   return ds > 0 ? (feed / ds) * 100 : 0
 }
+
+// Helper zum Parsen von Query → Array
+const toArr = (param) => {
+  if (!param) return []
+  return decodeURIComponent(String(param)).split(',').filter(Boolean)
+}
+
+// Initialwerte aus UrlStateService (Timeseries-spezifische Keys)
+const selectedProducts = ref(urlService._tsState.tpr?.length ? [...urlService._tsState.tpr] : ['Wheat and products'])
+const selectedCountries = ref(urlService._tsState.tcty?.length ? [...urlService._tsState.tcty] : [])
+const selectedMetrics = ref(urlService._tsState.tmet?.length ? [...urlService._tsState.tmet] : ['production'])
 
 // Update chart data when selections change
 const updateChartData = () => {
@@ -467,6 +478,33 @@ const handlePointClick = (point) => {
 // Watchers
 watch([selectedProducts, selectedCountries, selectedMetrics], () => {
   updateChartData()
+}, { immediate: true })
+
+// --- Watcher: UI → URL (Timeseries Keys) ------------------------------
+watch(selectedProducts, (val) => {
+  urlService._tsState.tpr = [...val]
+}, { deep: true })
+
+watch(selectedCountries, (val) => {
+  urlService._tsState.tcty = [...val]
+}, { deep: true })
+
+watch(selectedMetrics, (val) => {
+  urlService._tsState.tmet = [...val]
+}, { deep: true })
+
+// --- Watcher: Route(Query) → UI (Timeseries Keys) ---------------------
+watch(() => [route.query.tpr, route.query.tcty, route.query.tmet], () => {
+  // Arrays aus Query neu setzen; UrlStateService kümmert sich beim Deserialisieren darum
+  if (urlService._tsState.tpr && JSON.stringify(urlService._tsState.tpr) !== JSON.stringify(selectedProducts.value)) {
+    selectedProducts.value = [...urlService._tsState.tpr]
+  }
+  if (urlService._tsState.tcty && JSON.stringify(urlService._tsState.tcty) !== JSON.stringify(selectedCountries.value)) {
+    selectedCountries.value = [...urlService._tsState.tcty]
+  }
+  if (urlService._tsState.tmet && JSON.stringify(urlService._tsState.tmet) !== JSON.stringify(selectedMetrics.value)) {
+    selectedMetrics.value = [...urlService._tsState.tmet]
+  }
 }, { immediate: true })
 
 // Lifecycle

@@ -187,6 +187,7 @@
             <MLChart
               :data="chartData"
               :config="chartConfig"
+              :show-confidence="showConfidence"
               @prediction-select="handlePredictionSelect"
               @confidence-toggle="handleConfidenceToggle"
             />
@@ -293,15 +294,21 @@ import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import SearchableSelect from '@/components/ui/SearchableSelect.vue'
 import MLChart from '@/components/visualizations/MLChart.vue'
+import { useRoute } from 'vue-router'
+import urlService from '@/services/urlState.js'
 
 // Store and composables
 const dataStore = useDataStore()
 const { handleError: handleErrorUtil, wrapAsync } = useErrorHandling()
 
-// Reactive state
-const selectedForecastType = ref('global')
-const selectedForecast = ref('') // Will be set after loading forecasts
-const selectedModel = ref('linear') // Will be updated based on model performance
+// Router
+const route = useRoute()
+
+// Reactive state – Initial aus UrlStateService
+const selectedForecastType = ref(urlService._mlState.ft || 'global')
+const selectedForecast = ref(urlService._mlState.fc || '')
+const selectedModel = ref(urlService._mlState.mdl || 'linear')
+const showConfidence = ref(urlService._mlState.conf)
 const predictions = ref([])
 const modelStats = ref({})
 const isLoading = ref(false)
@@ -549,9 +556,9 @@ const handlePredictionSelect = (prediction) => {
   // TODO: Show prediction details
 }
 
-const handleConfidenceToggle = (showConfidence) => {
-  console.log('Confidence toggle:', showConfidence)
-  // TODO: Update chart visibility
+const handleConfidenceToggle = (val) => {
+  showConfidence.value = val
+  urlService._mlState.conf = val
 }
 
 // Helper methods
@@ -804,6 +811,65 @@ watch(selectedModel, (newValue, oldValue) => {
     loadPredictions()
   }
 })
+
+watch(selectedForecastType, async (v, old) => {
+  urlService._mlState.ft = v
+  if (v !== old) {
+    await loadAvailableForecasts()
+
+    // Wenn aktuelle Prognose nicht mehr verfügbar, erste wählen
+    const match = availableForecasts.value.find(f => f.file.replace('.json','') === selectedForecast.value)
+    if (!match && availableForecasts.value.length > 0) {
+      selectedForecast.value = availableForecasts.value[0].file.replace('.json','')
+    }
+
+    if (selectedForecast.value) {
+      await loadPredictions()
+    }
+  }
+})
+
+watch(selectedForecast, (v) => {
+  urlService._mlState.fc = v
+})
+
+watch(selectedModel, (v) => {
+  urlService._mlState.mdl = v
+})
+
+watch(showConfidence, (v) => {
+  urlService._mlState.conf = v
+})
+
+watch(() => [route.query.ft, route.query.fc, route.query.mdl, route.query.conf], async () => {
+  if (urlService._mlState.ft && urlService._mlState.ft !== selectedForecastType.value) {
+    selectedForecastType.value = urlService._mlState.ft
+    await loadAvailableForecasts()
+    
+    // Forecast evtl. neu setzen, falls nicht mehr vorhanden
+    if (availableForecasts.value.length > 0) {
+      const match = availableForecasts.value.find(f => f.file.replace('.json','') === urlService._mlState.fc)
+      if (!match) {
+        selectedForecast.value = availableForecasts.value[0].file.replace('.json','')
+        urlService._mlState.fc = selectedForecast.value
+      }
+    }
+  }
+  if (urlService._mlState.fc !== undefined && urlService._mlState.fc !== selectedForecast.value) {
+    selectedForecast.value = urlService._mlState.fc
+  }
+  if (urlService._mlState.mdl && urlService._mlState.mdl !== selectedModel.value) {
+    selectedModel.value = urlService._mlState.mdl
+  }
+  if (urlService._mlState.conf !== undefined && urlService._mlState.conf !== showConfidence.value) {
+    showConfidence.value = urlService._mlState.conf
+  }
+
+  // Nach Übernahme aller Parameter Berechnungen nachziehen
+  if (selectedForecast.value) {
+    await loadPredictions()
+  }
+}, { immediate: true })
 
 // Load available forecasts based on type
 const loadAvailableForecasts = wrapAsync(async () => {

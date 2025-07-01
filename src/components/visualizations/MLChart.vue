@@ -13,6 +13,10 @@ const props = defineProps({
   config: {
     type: Object,
     default: () => ({})
+  },
+  showConfidence: {
+    type: Boolean,
+    default: true
   }
 })
 
@@ -37,7 +41,7 @@ const {
 })
 
 // State
-const showConfidenceInterval = ref(true)
+const showConfidenceInterval = ref(props.showConfidence)
 
 // Dark mode detection using UIStore
 const isDarkMode = computed(() => uiStore.isDarkMode)
@@ -491,6 +495,12 @@ watch(() => uiStore.isDarkMode, () => {
   if (isReady.value) {
     drawChart()
   }
+})
+
+// Reaktiv auf Prop-Änderungen reagieren (extern gesteuert)
+watch(() => props.showConfidence, (val) => {
+  showConfidenceInterval.value = val
+  drawChart()
 })
 
 // Initialize on mount

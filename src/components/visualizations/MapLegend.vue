@@ -437,7 +437,7 @@ onUnmounted(() => {
     background-color: white !important;
     border: 1px solid #000 !important;
     -webkit-print-color-adjust: exact;
-    color-adjust: exact;
+    print-color-adjust: exact;
   }
 }
 </style>

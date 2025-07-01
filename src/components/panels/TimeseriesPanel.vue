@@ -191,7 +191,7 @@ const hasError = computed(() => error.value !== null)
 
 // Get available products from metadata
 const productOptions = computed(() => {
-  const individualItems = dataStore.faoMetadata?.data_summary?.food_items || []
+  const individualItems = (dataStore.faoMetadata?.data_summary?.food_items || []).filter(p => p !== 'Animal Products')
   
   const allOption = { value: 'All', label: 'Alle Produkte' }
   
@@ -203,7 +203,7 @@ const productOptions = computed(() => {
     
     return [allOption, ...productList]
   } else {
-    const productList = getAllProductOptions()
+    const productList = getAllProductOptions().filter(opt => opt.value !== 'Animal Products')
     return [allOption, ...productList]
   }
 })

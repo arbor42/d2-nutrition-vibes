@@ -181,6 +181,21 @@ const setupResizeObserver = () => {
 
 // Get metric label for Y-axis
 const getMetricLabel = (metric?: string) => {
+  // Wenn mehrere Metriken gewählt sind, nur die Einheit anzeigen
+  if (props.selectedMetrics && props.selectedMetrics.length > 1) {
+    const metricToCheck = metric || (props.selectedMetrics.length > 0 ? props.selectedMetrics[0] : 'production')
+    switch (metricToCheck) {
+      case 'food_supply_kcal':
+        return 'kcal/Kopf/Tag'
+      case 'feed_share':
+        return '%'
+      case 'protein_gpcd':
+      case 'fat_gpcd':
+        return 'g/Kopf/Tag'
+      default:
+        return 'Mio. t'
+    }
+  }
   const metricToCheck = metric || (props.selectedMetrics?.length > 0 ? props.selectedMetrics[0] : 'production')
   switch (metricToCheck) {
     case 'production': {
@@ -222,6 +237,21 @@ const getMetricLabel = (metric?: string) => {
     default: {
       return 'Wert (Mio. t)'
     }
+  }
+}
+
+// Hilfsfunktion um Einheit pro Metrik zu ermitteln
+const getUnitLabel = (metric: string) => {
+  switch (metric) {
+    case 'food_supply_kcal':
+      return 'kcal/Kopf/Tag'
+    case 'feed_share':
+      return '%'
+    case 'protein_gpcd':
+    case 'fat_gpcd':
+      return 'g/Kopf/Tag'
+    default:
+      return 'Mio. t'
   }
 }
 
@@ -278,12 +308,13 @@ const updateChart = () => {
   const xAxis = d3.axisBottom(xScale)
     .tickFormat(d3.timeFormat('%Y'))
     .tickSizeOuter(0)
-  // Format Y-axis based on metric type
+  // Format Y-axis based on metric type (verhindert Sprung auf Mrd t)
   const getAxisFormatter = () => {
-    // When multiple metrics are selected, check if any is food_supply_kcal
     const hasKcalMetric = props.selectedMetrics?.includes('food_supply_kcal')
     const hasFeedShareMetric = props.selectedMetrics?.includes('feed_share')
     const hasGpcdMetric = props.selectedMetrics?.some(m => m === 'protein_gpcd' || m === 'fat_gpcd')
+
+    // Einzelne Spezialmetriken
     if (hasKcalMetric && props.selectedMetrics?.length === 1) {
       return createD3AxisFormatter('kcal')
     }
@@ -293,7 +324,14 @@ const updateChart = () => {
     if (hasGpcdMetric && props.selectedMetrics?.length === 1) {
       return createD3AxisFormatter('g/Kopf/Tag')
     }
-    return createD3AxisFormatter('1000 t')
+
+    // Default: Gewichtsbezogene Metrik → immer in Mio t anzeigen
+    return (value: number) => {
+      const mio = value / 1_000_000 // Tonnen → Mio t
+      return new Intl.NumberFormat('de-DE', {
+        maximumFractionDigits: 0
+      }).format(mio)
+    }
   }
   
   const yAxis = d3.axisLeft(yScale)
@@ -428,9 +466,9 @@ const updateChart = () => {
     const legendGroup = svg.append('g')
       .attr('class', 'legend')
     
-    // Calculate dynamic layout for legend
+    // Berechne Layout dynamisch – basierend auf Seriennamen, keine Einheiten mehr
     const maxLabelLength = Math.max(...legendItems.map(item => item.length))
-    const itemWidth = Math.min(200, maxLabelLength * 6 + 30) // Dynamic width based on text length, increased for more padding
+    const itemWidth = maxLabelLength * 7 + 40 // Schätzung der benötigten Breite pro Item
     const padding = 20 // Space between items, increased from 15
     const itemHeight = 30 // Height per row, increased from 20 for bigger boxes
     const itemsPerRow = Math.max(1, Math.floor(innerWidth / (itemWidth + padding)))
@@ -514,30 +552,20 @@ const updateChart = () => {
         .attr('stroke', isDarkModeLegend ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.2)')
         .attr('stroke-width', isDarkModeLegend ? 1 : 0.5)
       
-      // Label with text truncation
+      // Serienlabel (nur Name)
+      const labelText = series
+
       legendItem.append('text')
         .attr('x', 18)
         .attr('y', 9)
-        .text(series)
+        .text(labelText)
         .style('font-size', '11px')
         .style('fill', isDarkModeLegend ? '#E5E7EB' : '#1F2937') // gray-200 in dark, gray-800 in light
         .style('alignment-baseline', 'middle')
         .style('font-weight', '500')
-        .each(function() {
-          const textElement = d3.select(this)
-          const textNode = this as SVGTextElement
-          const availableWidth = itemWidth - 20
-          
-          // Truncate text if too long
-          let text = series
-          while (textNode.getComputedTextLength() > availableWidth && text.length > 0) {
-            text = text.slice(0, -1)
-            textElement.text(text + '...')
-          }
-        })
       
-      // Tooltip for full text
-      legendItem.append('title').text(series)
+      // Tooltip mit vollständigem Seriennamen
+      legendItem.append('title').text(labelText)
     })
   }
 }

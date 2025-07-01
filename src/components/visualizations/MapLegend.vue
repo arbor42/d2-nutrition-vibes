@@ -190,15 +190,7 @@ const colorSchemes = ref({
   }
 })
 
-// Current selected color scheme
-const selectedColorScheme = ref('viridis')
-
-// Get current color scheme
-const getCurrentColorScheme = () => {
-  return colorSchemes.value[selectedColorScheme.value].colors
-}
-
-// Props
+// Props (muss vor Nutzung definiert sein)
 interface Props {
   legendScale?: any
   legendDomain?: [number, number]
@@ -206,6 +198,7 @@ interface Props {
   selectedProduct?: string
   selectedMetric?: string
   isLoading?: boolean
+  schemeName?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -214,8 +207,28 @@ const props = withDefaults(defineProps<Props>(), {
   legendUnit: '1000 t',
   selectedProduct: 'Wheat and products',
   selectedMetric: 'production',
-  isLoading: false
+  isLoading: false,
+  schemeName: 'viridis'
 })
+
+// Current selected color scheme
+const selectedColorScheme = ref(props.schemeName)
+
+// Sync prop → local state (z. B. bei URL-Änderungen)
+watch(
+  () => props.schemeName,
+  (newName) => {
+    if (newName && newName !== selectedColorScheme.value) {
+      selectedColorScheme.value = newName
+    }
+  }
+)
+
+// Get current color scheme
+const getCurrentColorScheme = () => {
+  // Typecast, weil selectedColorScheme dynamisch ist
+  return colorSchemes.value[(selectedColorScheme.value as keyof typeof colorSchemes.value)].colors
+}
 
 // State for hover functionality
 const hoveredSegment = ref<number | null>(null)

@@ -63,11 +63,19 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
   scrollBehavior(to, from, savedPosition) {
+    // 1. Browser-Back/Forward: gespeicherte Position wiederherstellen
     if (savedPosition) {
       return savedPosition
-    } else {
-      return { top: 0 }
     }
+
+    // 2. Nur Query-Änderung (z. B. durch UrlStateService) → Position beibehalten
+    const onlyQueryChanged = to.path === from.path && to.hash === from.hash
+    if (onlyQueryChanged) {
+      return false // Kein Scrollen
+    }
+
+    // 3. Normale Navigation → nach oben
+    return { top: 0 }
   }
 })
 

@@ -8,10 +8,12 @@ import MapLegend from '@/components/visualizations/MapLegend.vue'
 import TimeseriesChart from '@/components/visualizations/TimeseriesChart.vue'
 import ProductSelector from '@/components/ui/ProductSelector.vue'
 import { formatAgricultureValue } from '@/utils/formatters'
+import { useVisualizationStore } from '@/stores/useVisualizationStore'
 
 const dataStore = useDataStore()
 const uiStore = useUIStore()
 const tourStore = useTourStore()
+const vizStore = useVisualizationStore()
 
 const selectedVisualization = computed({
   get: () => uiStore.selectedVisualization,
@@ -32,11 +34,17 @@ const activeColorFilter = ref<{
   selectedColors: []
 })
 
-// Current color scheme state
-const currentColorScheme = ref<string[]>([
-  '#440154', '#482878', '#3e4989', '#31688e', '#26828e',
-  '#1f9e89', '#35b779', '#6ece58', '#b5de2b', '#fde725'
-])
+// Konstantes Mapping von Schema-Name → Farben (identisch zu MapLegend)
+const COLOR_SCHEMES = {
+  viridis: ['#440154','#482878','#3e4989','#31688e','#26828e','#1f9e89','#35b779','#6ece58','#b5de2b','#fde725'],
+  redYellowGreen: ['#d73027','#f46d43','#fdae61','#fee08b','#ffffbf','#d9ef8b','#a6d96a','#66bd63','#1a9850','#006837'],
+  blues: ['#f7fbff','#deebf7','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b','#041d42'],
+  oranges: ['#fff5eb','#fee6ce','#fdd0a2','#fdae6b','#fd8d3c','#f16913','#d94801','#a63603','#7f2704','#4a1003']
+} as const
+
+// Ausgangs-Farbschema aus dem Store ableiten
+const initialScheme = vizStore.getVisualizationConfig('worldMap').colorScheme || 'viridis'
+const currentColorScheme = ref<string[]>([...COLOR_SCHEMES[initialScheme as keyof typeof COLOR_SCHEMES]])
 
 // Handle legend updates from WorldMap
 const handleLegendUpdate = (legendData: { legendScale: any, legendDomain: [number, number], legendUnit: string }) => {
@@ -58,8 +66,21 @@ const handleColorFilter = (selectedIndices: number[], selectedColors: string[]) 
 
 // Handle color scheme changes from MapLegend
 const handleColorSchemeChange = (schemeName: string, colors: string[]) => {
+  // Lokale Farben aktualisieren
   currentColorScheme.value = colors
+  // In den Store schreiben → URL-Service greift die Änderung auf
+  vizStore.setMapColorScheme(schemeName)
 }
+
+// Store-Änderungen beobachten (z. B. wenn sie aus der URL kommen)
+watch(
+  () => vizStore.getVisualizationConfig('worldMap').colorScheme,
+  (newScheme) => {
+    if (newScheme && Object.prototype.hasOwnProperty.call(COLOR_SCHEMES, newScheme as keyof typeof COLOR_SCHEMES)) {
+      currentColorScheme.value = [...COLOR_SCHEMES[newScheme as keyof typeof COLOR_SCHEMES]]
+    }
+  }
+)
 
 const visualizationOptions = [
   { value: 'world-map', label: 'Weltkarte', icon: 'globe' },
@@ -993,6 +1014,7 @@ const computeFeedShare = (entry: any): number => {
             :selected-product="uiStore.selectedProduct"
             :selected-metric="uiStore.selectedMetric"
             :is-loading="dashboardLoading"
+            :scheme-name="vizStore.getVisualizationConfig('worldMap').colorScheme"
             @color-filter="handleColorFilter"
             @color-scheme-change="handleColorSchemeChange"
           />

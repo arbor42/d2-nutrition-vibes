@@ -12,6 +12,7 @@
 // aber problemlos nach .ts umbenannt und typisiert werden.
 
 import { useUIStore } from '@/stores/useUIStore'
+import { useVisualizationStore } from '@/stores/useVisualizationStore'
 import { watch } from 'vue'
 
 class UrlStateService {
@@ -110,6 +111,7 @@ class UrlStateService {
    */
   _buildInitialMapping() {
     const ui = useUIStore()
+    const viz = useVisualizationStore()
 
     this.mapping = {
       // Dark-Mode (1/0 → boolean)
@@ -229,9 +231,9 @@ class UrlStateService {
         set: (v) => { this._mapState.lng = parseFloat(v) || 0 }
       },
       cs: {
-        default: 'viridis',
-        get: () => this._mapState.cs,
-        set: (v) => { this._mapState.cs = String(v || 'viridis') }
+        default: viz.getVisualizationConfig('worldMap').colorScheme,
+        get: () => viz.getVisualizationConfig('worldMap').colorScheme,
+        set: (v) => { if (v) viz.updateMapConfig({ colorScheme: v }) }
       },
       filt: {
         default: [],
@@ -261,8 +263,11 @@ class UrlStateService {
         set: (v) => { if (v) ui.setSelectedMetric(String(v)) }
       },
       view: {
+        /* @ts-ignore */
         default: ui.selectedVisualization,
+        /* @ts-ignore */
         get: () => ui.selectedVisualization,
+        /* @ts-ignore */
         set: (v) => { if (v) ui.setSelectedVisualization(String(v), false) }
       },
     }

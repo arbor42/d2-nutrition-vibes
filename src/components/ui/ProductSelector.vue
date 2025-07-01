@@ -20,14 +20,16 @@ const productOptions = computed(() => {
   let options = []
   
   if (individualItems.length > 0) {
-    // Use individual products from metadata with German names
-    options = individualItems.map(product => ({
-      value: product,
-      label: getGermanName(product)
-    }))
+    // Verwende individuelle Produkte aus den Metadaten (ohne "Animal Products")
+    options = individualItems
+      .filter(product => product !== 'Animal Products')
+      .map(product => ({
+        value: product,
+        label: getGermanName(product)
+      }))
   } else {
-    // Fallback to all available products from mappings
-    options = getAllProductOptions()
+    // Fallback auf alle verfügbaren Produkte aus den Mappings (ohne "Animal Products")
+    options = getAllProductOptions().filter(opt => opt.value !== 'Animal Products')
   }
   
   // Add "All" option at the beginning

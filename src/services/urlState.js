@@ -13,7 +13,7 @@
 
 import { useUIStore } from '@/stores/useUIStore'
 import { useVisualizationStore } from '@/stores/useVisualizationStore'
-import { watch } from 'vue'
+import { watch, ref } from 'vue'
 
 class UrlStateService {
   // Statische Property für Singleton-Referenz (ESLint/TS/TypeScript Happy)
@@ -73,7 +73,7 @@ class UrlStateService {
       lat: 0,
       lng: 0,
       cs: 'viridis',
-      filt: [], // number[] dezile
+      filt: ref([]), // number[] dezile, reaktiv als Ref
       infopanel: false
     }
 
@@ -237,10 +237,10 @@ class UrlStateService {
       },
       filt: {
         default: [],
-        get: () => this._mapState.filt,
+        get: () => this._mapState.filt.value,
         set: (v) => {
           const arr = Array.isArray(v) ? v : this._paramToArray(v)
-          this._mapState.filt = arr.map(num => Number(num)).filter(n => !isNaN(n))
+          this._mapState.filt.value = arr.map(num => Number(num)).filter(n => !isNaN(n))
         }
       },
       infopanel: {

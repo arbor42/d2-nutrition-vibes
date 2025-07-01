@@ -9,6 +9,7 @@ import TimeseriesChart from '@/components/visualizations/TimeseriesChart.vue'
 import ProductSelector from '@/components/ui/ProductSelector.vue'
 import { formatAgricultureValue } from '@/utils/formatters'
 import { useVisualizationStore } from '@/stores/useVisualizationStore'
+import urlService from '@/services/urlState.js'
 
 const dataStore = useDataStore()
 const uiStore = useUIStore()
@@ -61,8 +62,25 @@ const handleColorFilter = (selectedIndices: number[], selectedColors: string[]) 
   // Only update if the filter actually changed
   if (JSON.stringify(activeColorFilter.value) !== JSON.stringify(newFilter)) {
     activeColorFilter.value = newFilter
+    // In UrlStateService schreiben (reactive Ref)
+    urlService._mapState.filt.value = [...selectedIndices]
   }
 }
+
+// Watch auf UrlStateService → aktualisiere Filter in UI (Route→State)
+watch(
+  () => urlService._mapState.filt.value,
+  (indices: number[] = []) => {
+    if (!indices) return
+    if (JSON.stringify(indices) !== JSON.stringify(activeColorFilter.value.selectedIndices)) {
+      activeColorFilter.value = {
+        selectedIndices: [...indices],
+        selectedColors: indices.map(i => currentColorScheme.value[i] ?? '')
+      }
+    }
+  },
+  { deep: true, immediate: true }
+)
 
 // Handle color scheme changes from MapLegend
 const handleColorSchemeChange = (schemeName: string, colors: string[]) => {
@@ -1015,6 +1033,7 @@ const computeFeedShare = (entry: any): number => {
             :selected-metric="uiStore.selectedMetric"
             :is-loading="dashboardLoading"
             :scheme-name="vizStore.getVisualizationConfig('worldMap').colorScheme"
+            :filter-indices="activeColorFilter.selectedIndices"
             @color-filter="handleColorFilter"
             @color-scheme-change="handleColorSchemeChange"
           />

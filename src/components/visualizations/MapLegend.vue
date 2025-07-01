@@ -199,6 +199,7 @@ interface Props {
   selectedMetric?: string
   isLoading?: boolean
   schemeName?: string
+  filterIndices?: number[]
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -208,11 +209,28 @@ const props = withDefaults(defineProps<Props>(), {
   selectedProduct: 'Wheat and products',
   selectedMetric: 'production',
   isLoading: false,
-  schemeName: 'viridis'
+  schemeName: 'viridis',
+  filterIndices: () => []
 })
 
 // Current selected color scheme
 const selectedColorScheme = ref(props.schemeName)
+
+// Sync Filter Indices von Parent → Legend
+watch(
+  () => props.filterIndices,
+  (newIdx) => {
+    if (!newIdx) return
+    // Erzeuge neues Set der ausgewählten Farben
+    const newSet = new Set(newIdx)
+    // Vergleiche
+    const same = newIdx.length === selectedColors.value.size && newIdx.every(i => selectedColors.value.has(i))
+    if (!same) {
+      selectedColors.value = newSet
+    }
+  },
+  { deep: true }
+)
 
 // Sync prop → local state (z. B. bei URL-Änderungen)
 watch(
@@ -234,7 +252,7 @@ const getCurrentColorScheme = () => {
 const hoveredSegment = ref<number | null>(null)
 
 // State for color filtering
-const selectedColors = ref<Set<number>>(new Set())
+const selectedColors = ref<Set<number>>(new Set(props.filterIndices))
 const isResetting = ref(false)
 
 // State for color scheme menu

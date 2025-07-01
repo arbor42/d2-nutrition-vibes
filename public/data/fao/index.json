@@ -7,12 +7,18 @@
     "summary": "summary.json",
     "network": "network.json"
   },
-  "description": "FAO food data processed for d3.js visualization",
+  "description": "Enhanced FAO food data with food_supply_kcal integration",
+  "version": "enhanced_with_kcal",
   "usage": {
-    "timeseries": "Use for line charts showing trends over time",
+    "timeseries": "Use for line charts - now includes food_supply_kcal values",
     "rankings": "Use for bar charts showing top producers",
     "trade": "Use for trade balance visualizations",
     "summary": "Use for overview dashboards",
     "network": "Use for network/flow diagrams"
+  },
+  "notes": {
+    "food_supply_kcal": "Added from original FAO dataset, represents actual food consumption",
+    "preservation": "All existing metrics (production, imports, exports, domestic_supply, feed) preserved",
+    "backup": "Original timeseries.json backed up as timeseries_backup.json"
   }
 }

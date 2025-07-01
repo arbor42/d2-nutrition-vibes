@@ -78,6 +78,11 @@ const getCountriesArray = () => {
                       currentMetric === 'export_quantity' ? 'exports' :
                       currentMetric === 'feed' ? 'feed' :
                       currentMetric === 'food_supply_kcal' ? 'food_supply_kcal' :
+                      currentMetric === 'protein' ? 'protein' :
+                      currentMetric === 'protein_gpcd' ? 'protein_gpcd' :
+                      currentMetric === 'fat' ? 'fat' :
+                      currentMetric === 'fat_gpcd' ? 'fat_gpcd' :
+                      currentMetric === 'processing' ? 'processing' :
                       currentMetric === 'domestic_supply_quantity' ? 'domestic_supply' :
                       'domestic_supply'
     
@@ -90,10 +95,17 @@ const getCountriesArray = () => {
         Object.entries(productData).forEach(([country, countryData]) => {
           if (country !== 'All') { // Skip the "All" country entry
             const yearData = countryData.find(d => d.year === currentYear)
-            if (yearData && yearData[metricKey]) {
-              const currentTotal = countryTotals.get(country) || { value: 0, unit: yearData.unit || '1000 t' }
-              currentTotal.value += yearData[metricKey] || 0
-              countryTotals.set(country, currentTotal)
+            if (yearData) {
+              if (currentMetric === 'feed_share') {
+                const currentTotal = countryTotals.get(country) || { feed: 0, ds: 0 }
+                currentTotal.feed += yearData.feed || 0
+                currentTotal.ds += yearData.domestic_supply || 0
+                countryTotals.set(country, currentTotal)
+              } else if (yearData[metricKey]) {
+                const currentTotal = countryTotals.get(country) || { value: 0, unit: yearData.unit || '1000 t' }
+                currentTotal.value += yearData[metricKey] || 0
+                countryTotals.set(country, currentTotal)
+              }
             }
           }
         })
@@ -101,12 +113,24 @@ const getCountriesArray = () => {
     })
     
     // Convert to array format
-    return Array.from(countryTotals.entries()).map(([country, data]) => ({
-      country,
-      value: data.value,
-      unit: data.unit,
-      year: currentYear
-    })).filter(item => item.value > 0)
+    return Array.from(countryTotals.entries()).map(([country, data]) => {
+      if (currentMetric === 'feed_share') {
+        const share = data.ds > 0 ? (data.feed / data.ds) * 100 : 0
+        return {
+          country,
+          value: share,
+          unit: '%',
+          year: currentYear
+        }
+      } else {
+        return {
+          country,
+          value: data.value,
+          unit: data.unit,
+          year: currentYear
+        }
+      }
+    }).filter(item => item.value > 0)
   }
   
   // Use timeseries data for individual products when available
@@ -116,27 +140,47 @@ const getCountriesArray = () => {
                       currentMetric === 'export_quantity' ? 'exports' :
                       currentMetric === 'feed' ? 'feed' :
                       currentMetric === 'food_supply_kcal' ? 'food_supply_kcal' :
+                      currentMetric === 'protein' ? 'protein' :
+                      currentMetric === 'protein_gpcd' ? 'protein_gpcd' :
+                      currentMetric === 'fat' ? 'fat' :
+                      currentMetric === 'fat_gpcd' ? 'fat_gpcd' :
+                      currentMetric === 'processing' ? 'processing' :
                       currentMetric === 'domestic_supply_quantity' ? 'domestic_supply' :
                       'domestic_supply'
     
     const productTimeseries = dataStore.timeseriesData[currentProduct]
-    return Object.entries(productTimeseries).map(([country, countryData]) => {
-      const yearData = countryData.find(d => d.year === currentYear)
-      const value = yearData ? (yearData[metricKey] || 0) : 0
-      let unit = yearData?.unit || '1000 t'
-      
-      // Override unit for specific metrics
-      if (currentMetric === 'food_supply_kcal') {
-        unit = 'kcal/capita/day'
-      }
-      
-      return {
-        country,
-        value: value,
-        unit: unit,
-        year: currentYear
-      }
-    }).filter(item => item.value > 0)
+    return Object.entries(productTimeseries)
+      // Entferne künstliche Aggregationen "All" (alle Länder), da diese
+      // das Farbschema der Weltkarte massiv verzerren würden.
+      .filter(([country]) => country !== 'All')
+      .map(([country, countryData]) => {
+        const yearData = countryData.find(d => d.year === currentYear)
+        let value = 0
+        if (yearData) {
+          if (currentMetric === 'feed_share') {
+            value = computeFeedShare(yearData)
+          } else {
+            value = yearData[metricKey] || 0
+          }
+        }
+        let unit = yearData?.unit || '1000 t'
+        
+        // Override unit for specific metrics
+        if (currentMetric === 'food_supply_kcal') {
+          unit = 'kcal/capita/day'
+        } else if (currentMetric === 'feed_share') {
+          unit = '%'
+        } else if (currentMetric === 'protein_gpcd' || currentMetric === 'fat_gpcd') {
+          unit = 'g/Kopf/Tag'
+        }
+        
+        return {
+          country,
+          value: value,
+          unit: unit,
+          year: currentYear
+        }
+      }).filter(item => item.value > 0)
   }
   
   // Fallback to production data for grouped products
@@ -283,6 +327,11 @@ const globalStats = computed(() => {
                       currentMetric === 'export_quantity' ? 'exports' :
                       currentMetric === 'feed' ? 'feed' :
                       currentMetric === 'food_supply_kcal' ? 'food_supply_kcal' :
+                      currentMetric === 'protein' ? 'protein' :
+                      currentMetric === 'protein_gpcd' ? 'protein_gpcd' :
+                      currentMetric === 'fat' ? 'fat' :
+                      currentMetric === 'fat_gpcd' ? 'fat_gpcd' :
+                      currentMetric === 'processing' ? 'processing' :
                       currentMetric === 'domestic_supply_quantity' ? 'domestic_supply' :
                       'domestic_supply'
     
@@ -295,10 +344,17 @@ const globalStats = computed(() => {
         Object.entries(productData).forEach(([country, countryData]) => {
           if (country !== 'All') { // Skip the "All" country entry
             const yearData = countryData.find(d => d.year === currentYear)
-            if (yearData && yearData[metricKey]) {
-              const currentTotal = countryTotals.get(country) || { value: 0, unit: yearData.unit || '1000 t' }
-              currentTotal.value += yearData[metricKey] || 0
-              countryTotals.set(country, currentTotal)
+            if (yearData) {
+              if (currentMetric === 'feed_share') {
+                const currentTotal = countryTotals.get(country) || { feed: 0, ds: 0 }
+                currentTotal.feed += yearData.feed || 0
+                currentTotal.ds += yearData.domestic_supply || 0
+                countryTotals.set(country, currentTotal)
+              } else if (yearData[metricKey]) {
+                const currentTotal = countryTotals.get(country) || { value: 0, unit: yearData.unit || '1000 t' }
+                currentTotal.value += yearData[metricKey] || 0
+                countryTotals.set(country, currentTotal)
+              }
             }
           }
         })
@@ -306,12 +362,24 @@ const globalStats = computed(() => {
     })
     
     // Convert to array format
-    dataArray = Array.from(countryTotals.entries()).map(([country, data]) => ({
-      country,
-      value: data.value,
-      unit: data.unit,
-      year: currentYear
-    })).filter(item => item.value > 0)
+    dataArray = Array.from(countryTotals.entries()).map(([country, data]) => {
+      if (currentMetric === 'feed_share') {
+        const share = data.ds > 0 ? (data.feed / data.ds) * 100 : 0
+        return {
+          country,
+          value: share,
+          unit: '%',
+          year: currentYear
+        }
+      } else {
+        return {
+          country,
+          value: data.value,
+          unit: data.unit,
+          year: currentYear
+        }
+      }
+    }).filter(item => item.value > 0)
     
     console.log(`📊 DashboardPanel: "All" products aggregation found ${dataArray.length} countries with ${metricKey} > 0`)
   }
@@ -323,6 +391,11 @@ const globalStats = computed(() => {
                       currentMetric === 'export_quantity' ? 'exports' :
                       currentMetric === 'feed' ? 'feed' :
                       currentMetric === 'food_supply_kcal' ? 'food_supply_kcal' :
+                      currentMetric === 'protein' ? 'protein' :
+                      currentMetric === 'protein_gpcd' ? 'protein_gpcd' :
+                      currentMetric === 'fat' ? 'fat' :
+                      currentMetric === 'fat_gpcd' ? 'fat_gpcd' :
+                      currentMetric === 'processing' ? 'processing' :
                       currentMetric === 'domestic_supply_quantity' ? 'domestic_supply' :
                       'domestic_supply'
     
@@ -334,23 +407,38 @@ const globalStats = computed(() => {
       year: currentYear
     })
     
-    dataArray = Object.entries(productTimeseries).map(([country, countryData]) => {
-      const yearData = countryData.find(d => d.year === currentYear)
-      const value = yearData ? (yearData[metricKey] || 0) : 0
-      let unit = yearData?.unit || '1000 t'
-      
-      // Override unit for specific metrics
-      if (currentMetric === 'food_supply_kcal') {
-        unit = 'kcal/capita/day'
-      }
-      
-      return {
-        country,
-        value: value,
-        unit: unit,
-        year: currentYear
-      }
-    }).filter(item => item.value > 0)
+    dataArray = Object.entries(productTimeseries)
+      // Entferne künstliche Aggregationen "All" (alle Länder), da diese
+      // das Farbschema der Weltkarte massiv verzerren würden.
+      .filter(([country]) => country !== 'All')
+      .map(([country, countryData]) => {
+        const yearData = countryData.find(d => d.year === currentYear)
+        let value = 0
+        if (yearData) {
+          if (currentMetric === 'feed_share') {
+            value = computeFeedShare(yearData)
+          } else {
+            value = yearData[metricKey] || 0
+          }
+        }
+        let unit = yearData?.unit || '1000 t'
+        
+        // Override unit for specific metrics
+        if (currentMetric === 'food_supply_kcal') {
+          unit = 'kcal/capita/day'
+        } else if (currentMetric === 'feed_share') {
+          unit = '%'
+        } else if (currentMetric === 'protein_gpcd' || currentMetric === 'fat_gpcd') {
+          unit = 'g/Kopf/Tag'
+        }
+        
+        return {
+          country,
+          value: value,
+          unit: unit,
+          year: currentYear
+        }
+      }).filter(item => item.value > 0)
     
     console.log(`📊 DashboardPanel: Found ${dataArray.length} countries with ${metricKey} > 0`)
   } else if (currentMetric === 'production') {
@@ -384,7 +472,7 @@ const globalStats = computed(() => {
   const validData = dataArray.filter(item => item && item.value > 0)
   
   // For per-capita metrics, calculate average instead of sum
-  const isPerCapitaMetric = uiStore.selectedMetric === 'food_supply_kcal'
+  const isPerCapitaMetric = ['food_supply_kcal', 'protein_gpcd', 'fat_gpcd', 'feed_share'].includes(uiStore.selectedMetric)
   const total = isPerCapitaMetric 
     ? validData.length > 0 ? validData.reduce((sum, item) => sum + (item.value || 0), 0) / validData.length : 0
     : validData.reduce((sum, item) => sum + (item.value || 0), 0)
@@ -433,6 +521,10 @@ const globalStats = computed(() => {
   let unit = '1000 t'
   if (currentMetric === 'food_supply_kcal') {
     unit = 'kcal/capita/day'
+  } else if (currentMetric === 'feed_share') {
+    unit = '%'
+  } else if (currentMetric === 'protein_gpcd' || currentMetric === 'fat_gpcd') {
+    unit = 'g/Kopf/Tag'
   } else if (validData.length > 0 && validData[0].unit) {
     unit = validData[0].unit
   }
@@ -463,9 +555,20 @@ const dashboardTimeseriesData = computed(() => {
   const metricKey = currentMetric === 'production' ? 'production' :
                    currentMetric === 'import_quantity' ? 'imports' :
                    currentMetric === 'export_quantity' ? 'exports' :
+                   currentMetric === 'protein' ? 'protein' :
+                   currentMetric === 'protein_gpcd' ? 'protein_gpcd' :
+                   currentMetric === 'fat' ? 'fat' :
+                   currentMetric === 'fat_gpcd' ? 'fat_gpcd' :
+                   currentMetric === 'processing' ? 'processing' :
                    currentMetric === 'domestic_supply_quantity' ? 'domestic_supply' :
                    currentMetric === 'feed' ? 'feed' :
                    currentMetric === 'food_supply_kcal' ? 'food_supply_kcal' :
+                   currentMetric === 'protein' ? 'protein' :
+                   currentMetric === 'protein_gpcd' ? 'protein_gpcd' :
+                   currentMetric === 'fat' ? 'fat' :
+                   currentMetric === 'fat_gpcd' ? 'fat_gpcd' :
+                   currentMetric === 'processing' ? 'processing' :
+                   currentMetric === 'feed_share' ? 'feed_share' :
                    'production'
 
   if (currentCountry && productData[currentCountry]) {
@@ -474,7 +577,7 @@ const dashboardTimeseriesData = computed(() => {
     return countryData
       .map(yearData => ({
         year: yearData.year,
-        value: yearData[metricKey] || 0,
+        value: currentMetric === 'feed_share' ? computeFeedShare(yearData) : (yearData[metricKey] || 0),
         country: currentCountry,
         product: currentProduct,
         unit: yearData.unit || 't',
@@ -593,7 +696,13 @@ const getTotalMetricTooltip = () => {
     export_quantity: `Zeigt die weltweiten Gesamtexporte in ${unit}. Umfasst alle Exporte zwischen Ländern.`,
     domestic_supply_quantity: `Zeigt die verfügbare Inlandsversorgung in ${unit}. Berechnet als: Produktion + Import - Export ± Lagerveränderungen.`,
     food_supply_kcal: `Zeigt die durchschnittliche Kalorienversorgung pro Person pro Tag. Datenquelle: FAO Food Balance Sheets.`,
-    feed: `Zeigt die Menge die als Tierfutter verwendet wird in ${unit}. Wichtiger Indikator für die Fleischproduktion.`
+    feed: `Zeigt die Menge die als Tierfutter verwendet wird in ${unit}. Wichtiger Indikator für die Fleischproduktion.`,
+    protein: `Gesamtmenge an Protein in 1000 t. Datenquelle: FAO Food Balance Sheets`,
+    protein_gpcd: `Proteinversorgung pro Kopf pro Tag in g/Kopf/Tag.`,
+    fat: `Gesamtmenge an Fett in 1000 t (FAO Food Balance Sheets).`,
+    fat_gpcd: `Fettversorgung pro Kopf pro Tag in g/Kopf/Tag.`,
+    processing: `Menge der zur Verarbeitung bestimmten Rohstoffe in 1000 t.`,
+    feed_share: `Anteil der Inlandsversorgung, der als Tierfutter verwendet wird (%).`
   }
   
   return tooltips[metric] || 'Gesamtwert für die ausgewählte Metrik und das Jahr.'
@@ -660,6 +769,13 @@ onUnmounted(() => {
     clearTimeout(watcherTimeout)
   }
 })
+
+// Helper zur Berechnung des Tierfutteranteils (%)
+const computeFeedShare = (entry: any): number => {
+  const ds = entry?.domestic_supply || 0
+  const feed = entry?.feed || 0
+  return ds > 0 ? (feed / ds) * 100 : 0
+}
 </script>
 
 <template>
@@ -686,6 +802,12 @@ onUnmounted(() => {
                     uiStore.selectedMetric === 'domestic_supply_quantity' ? 'Inlandsversorgung' :
                     uiStore.selectedMetric === 'food_supply_kcal' ? 'Kalorienversorgung' :
                     uiStore.selectedMetric === 'feed' ? 'Tierfutterverbrauch' :
+                    uiStore.selectedMetric === 'protein' ? 'Gesamtprotein' :
+                    uiStore.selectedMetric === 'protein_gpcd' ? 'Proteinversorgung' :
+                    uiStore.selectedMetric === 'fat' ? 'Gesamtfett' :
+                    uiStore.selectedMetric === 'fat_gpcd' ? 'Fettversorgung' :
+                    uiStore.selectedMetric === 'processing' ? 'Verarbeitungsmenge' :
+                    uiStore.selectedMetric === 'feed_share' ? 'Tierfutteranteil' :
                     'Gesamt' }} {{ uiStore.selectedYear || new Date().getFullYear() }}
                 </h3>
                 <svg class="w-4 h-4 text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 20 20">
@@ -722,6 +844,12 @@ onUnmounted(() => {
                   uiStore.selectedMetric === 'domestic_supply_quantity' ? 'Versorgte Länder' :
                   uiStore.selectedMetric === 'food_supply_kcal' ? 'Länder mit Kaloriendaten' :
                   uiStore.selectedMetric === 'feed' ? 'Länder mit Futterdaten' :
+                  uiStore.selectedMetric === 'protein' ? 'Länder mit Proteindaten' :
+                  uiStore.selectedMetric === 'protein_gpcd' ? 'Länder mit Proteinversorgungsdaten' :
+                  uiStore.selectedMetric === 'fat' ? 'Länder mit Fettdaten' :
+                  uiStore.selectedMetric === 'fat_gpcd' ? 'Länder mit Fettversorgungsdaten' :
+                  uiStore.selectedMetric === 'processing' ? 'Länder mit Verarbeitungsdaten' :
+                  uiStore.selectedMetric === 'feed_share' ? 'Länder mit Futteranteil' :
                   'Länder mit Daten' }}
               </h3>
               <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">
@@ -734,6 +862,12 @@ onUnmounted(() => {
                   uiStore.selectedMetric === 'domestic_supply_quantity' ? 'Versorgungsdaten' :
                   uiStore.selectedMetric === 'food_supply_kcal' ? 'Kalorienwerten' :
                   uiStore.selectedMetric === 'feed' ? 'Futterdaten' :
+                  uiStore.selectedMetric === 'protein' ? 'Proteindaten' :
+                  uiStore.selectedMetric === 'protein_gpcd' ? 'Proteinversorgungsdaten' :
+                  uiStore.selectedMetric === 'fat' ? 'Fettdaten' :
+                  uiStore.selectedMetric === 'fat_gpcd' ? 'Fettversorgungsdaten' :
+                  uiStore.selectedMetric === 'processing' ? 'Verarbeitungsdaten' :
+                  uiStore.selectedMetric === 'feed_share' ? 'Futteranteilswerten' :
                   'Daten' }}
               </p>
             </div>
@@ -760,6 +894,12 @@ onUnmounted(() => {
                   uiStore.selectedMetric === 'domestic_supply_quantity' ? 'Größter Verbraucher' :
                   uiStore.selectedMetric === 'food_supply_kcal' ? 'Höchste Kalorienversorgung' :
                   uiStore.selectedMetric === 'feed' ? 'Größter Futterverbraucher' :
+                  uiStore.selectedMetric === 'protein' ? 'Größter Proteinerzeuger' :
+                  uiStore.selectedMetric === 'protein_gpcd' ? 'Höchste Proteinversorgung' :
+                  uiStore.selectedMetric === 'fat' ? 'Größter Fettproduzent' :
+                  uiStore.selectedMetric === 'fat_gpcd' ? 'Höchste Fettversorgung' :
+                  uiStore.selectedMetric === 'processing' ? 'Größte Verarbeitung' :
+                  uiStore.selectedMetric === 'feed_share' ? 'Höchster Futteranteil' :
                   'Spitzenreiter' }}
               </h3>
               <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">

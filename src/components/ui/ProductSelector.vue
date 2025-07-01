@@ -70,7 +70,37 @@ const metricOptions = [
     value: 'feed', 
     label: 'Tierfutter',
     description: 'Menge die als Tierfutter verwendet wird in 1000 Tonnen'
-  }
+  },
+  {
+    value: 'protein',
+    label: 'Protein (1000 t)',
+    description: 'Gesamte Proteinmenge in 1000 Tonnen'
+  },
+  {
+    value: 'protein_gpcd',
+    label: 'Protein (g/Kopf/Tag)',
+    description: 'Proteinmenge pro Kopf pro Tag in Gramm'
+  },
+  {
+    value: 'fat',
+    label: 'Fett (1000 t)',
+    description: 'Gesamte Fettmenge in 1000 Tonnen'
+  },
+  {
+    value: 'fat_gpcd',
+    label: 'Fett (g/Kopf/Tag)',
+    description: 'Fettmenge pro Kopf pro Tag in Gramm'
+  },
+  {
+    value: 'processing',
+    label: 'Verarbeitung (1000 t)',
+    description: 'Menge an verarbeiteten Produkten in 1000 Tonnen'
+  },
+  {
+    value: 'feed_share',
+    label: 'Tierfutteranteil (%)',
+    description: 'Anteil von Tierfutter an der Inlandsversorgung in Prozent'
+  },
 ]
 
 // Year options  

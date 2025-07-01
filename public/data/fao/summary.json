@@ -2,113 +2,97 @@
   "global_yearly_totals": [
     {
       "year": 2010,
-      "production": 86869267.0,
-      "imports": 12433678.0,
-      "exports": 10663734.0,
-      "domestic_supply": 89395218.0
+      "production": 23246324.0,
+      "imports": 3042034.0,
+      "exports": 2618623.0,
+      "domestic_supply": 23857759.0
     },
     {
       "year": 2011,
-      "production": 91235660.0,
-      "imports": 12919898.0,
-      "exports": 10988068.0,
-      "domestic_supply": 92821090.0
+      "production": 24422717.0,
+      "imports": 3155163.0,
+      "exports": 2695896.0,
+      "domestic_supply": 24739923.0
     },
     {
       "year": 2012,
-      "production": 92445502.0,
-      "imports": 13758396.0,
-      "exports": 11688355.0,
-      "domestic_supply": 94822310.0
+      "production": 24764277.0,
+      "imports": 3396945.0,
+      "exports": 2892822.0,
+      "domestic_supply": 25291819.0
     },
     {
       "year": 2013,
-      "production": 96335192.0,
-      "imports": 14193531.0,
-      "exports": 12067168.0,
-      "domestic_supply": 97010321.0
+      "production": 25718766.0,
+      "imports": 3519565.0,
+      "exports": 2964652.0,
+      "domestic_supply": 25814387.0
     },
     {
       "year": 2014,
-      "production": 98179754.0,
-      "imports": 15249699.0,
-      "exports": 12689159.0,
-      "domestic_supply": 98691066.0
+      "production": 26182013.0,
+      "imports": 3787208.0,
+      "exports": 3114358.0,
+      "domestic_supply": 26268624.0
     },
     {
       "year": 2015,
-      "production": 98790949.0,
-      "imports": 15751104.0,
-      "exports": 13103564.0,
-      "domestic_supply": 100083378.0
+      "production": 26448909.0,
+      "imports": 3949340.0,
+      "exports": 3203784.0,
+      "domestic_supply": 26735979.0
     },
     {
       "year": 2016,
-      "production": 100387024.0,
-      "imports": 16289463.0,
-      "exports": 13472363.0,
-      "domestic_supply": 101981708.0
+      "production": 26836136.0,
+      "imports": 4049319.0,
+      "exports": 3300792.0,
+      "domestic_supply": 27218611.0
     },
     {
       "year": 2017,
-      "production": 102867537.0,
-      "imports": 17240382.0,
-      "exports": 14261343.0,
-      "domestic_supply": 104331738.0
+      "production": 27481245.0,
+      "imports": 4292337.0,
+      "exports": 3512355.0,
+      "domestic_supply": 27856537.0
     },
     {
       "year": 2018,
-      "production": 103819045.0,
-      "imports": 17303691.0,
-      "exports": 14224679.0,
-      "domestic_supply": 106105377.0
+      "production": 27677698.0,
+      "imports": 4278794.0,
+      "exports": 3481744.0,
+      "domestic_supply": 28292697.0
     },
     {
       "year": 2019,
-      "production": 105062912.0,
-      "imports": 17528253.0,
-      "exports": 14415915.0,
-      "domestic_supply": 107702972.0
+      "production": 27933098.0,
+      "imports": 4337790.0,
+      "exports": 3505992.0,
+      "domestic_supply": 28667594.0
     },
     {
       "year": 2020,
-      "production": 105398541.0,
-      "imports": 18239613.0,
-      "exports": 15062403.0,
-      "domestic_supply": 108004518.0
+      "production": 27992582.0,
+      "imports": 4563409.0,
+      "exports": 3655474.0,
+      "domestic_supply": 28757278.0
     },
     {
       "year": 2021,
-      "production": 107784380.0,
-      "imports": 19000786.0,
-      "exports": 15440240.0,
-      "domestic_supply": 110400666.0
+      "production": 28662268.0,
+      "imports": 4805327.0,
+      "exports": 3790525.0,
+      "domestic_supply": 29451370.0
     },
     {
       "year": 2022,
-      "production": 108312689.0,
-      "imports": 19761059.0,
-      "exports": 15587423.0,
-      "domestic_supply": 111926401.0
+      "production": 28864610.0,
+      "imports": 4949482.0,
+      "exports": 3830758.0,
+      "domestic_supply": 29860109.0
     }
   ],
   "top_producing_countries": [
-    {
-      "country": "World",
-      "total_production": 285760999.0
-    },
-    {
-      "country": "Asia",
-      "total_production": 138863640.0
-    },
-    {
-      "country": "Americas",
-      "total_production": 77519002.0
-    },
-    {
-      "country": "Eastern Asia",
-      "total_production": 55616699.0
-    },
     {
       "country": "China",
       "total_production": 52823758.0
@@ -118,222 +102,238 @@
       "total_production": 52472707.0
     },
     {
-      "country": "Southern Asia",
-      "total_production": 44792681.0
-    },
-    {
-      "country": "South America",
-      "total_production": 42387795.0
-    },
-    {
-      "country": "Europe",
-      "total_production": 39446787.0
-    },
-    {
       "country": "India",
       "total_production": 33460672.0
-    },
-    {
-      "country": "Net Food Importing Developing Countries",
-      "total_production": 32225037.0
     },
     {
       "country": "Brazil",
       "total_production": 30590495.0
     },
     {
-      "country": "South-eastern Asia",
-      "total_production": 30207674.0
-    },
-    {
-      "country": "Northern America",
-      "total_production": 26673856.0
-    },
-    {
-      "country": "Africa",
-      "total_production": 25968634.0
-    },
-    {
-      "country": "European Union (27)",
-      "total_production": 23928590.0
-    },
-    {
       "country": "United States of America",
       "total_production": 23555453.0
-    },
-    {
-      "country": "Eastern Europe",
-      "total_production": 17789608.0
-    },
-    {
-      "country": "Least Developed Countries",
-      "total_production": 17299074.0
-    },
-    {
-      "country": "Low Income Food Deficit Countries",
-      "total_production": 15265198.0
     },
     {
       "country": "Indonesia",
       "total_production": 12187908.0
     },
     {
-      "country": "Western Europe",
-      "total_production": 11293652.0
-    },
-    {
-      "country": "Land Locked Developing Countries",
-      "total_production": 11046266.0
-    },
-    {
-      "country": "Western Africa",
-      "total_production": 9177131.0
-    },
-    {
       "country": "Russian Federation",
       "total_production": 7530713.0
-    },
-    {
-      "country": "Central America",
-      "total_production": 7202499.0
-    },
-    {
-      "country": "Eastern Africa",
-      "total_production": 6545511.0
-    },
-    {
-      "country": "Southern Europe",
-      "total_production": 6316299.0
     },
     {
       "country": "Thailand",
       "total_production": 5839023.0
     },
     {
-      "country": "Western Asia",
-      "total_production": 5681851.0
+      "country": "Pakistan",
+      "total_production": 5401477.0
+    },
+    {
+      "country": "Nigeria",
+      "total_production": 4994086.0
+    },
+    {
+      "country": "Argentina",
+      "total_production": 4896260.0
+    },
+    {
+      "country": "France",
+      "total_production": 4648545.0
+    },
+    {
+      "country": "Mexico",
+      "total_production": 4508889.0
+    },
+    {
+      "country": "Germany",
+      "total_production": 4066510.0
+    },
+    {
+      "country": "Ukraine",
+      "total_production": 3934729.0
+    },
+    {
+      "country": "Türkiye",
+      "total_production": 3773202.0
+    },
+    {
+      "country": "Australia and New Zealand",
+      "total_production": 3563565.0
+    },
+    {
+      "country": "Malaysia",
+      "total_production": 3425359.0
+    },
+    {
+      "country": "Viet Nam",
+      "total_production": 3162374.0
+    },
+    {
+      "country": "Canada",
+      "total_production": 3118457.0
+    },
+    {
+      "country": "Australia",
+      "total_production": 2833604.0
+    },
+    {
+      "country": "Philippines",
+      "total_production": 2775963.0
+    },
+    {
+      "country": "Egypt",
+      "total_production": 2618839.0
+    },
+    {
+      "country": "Central Asia",
+      "total_production": 2564741.0
+    },
+    {
+      "country": "Bangladesh",
+      "total_production": 2438585.0
+    },
+    {
+      "country": "Spain",
+      "total_production": 2413450.0
+    },
+    {
+      "country": "Poland",
+      "total_production": 2361317.0
+    },
+    {
+      "country": "Iran (Islamic Republic of)",
+      "total_production": 2153637.0
+    },
+    {
+      "country": "Colombia",
+      "total_production": 2065514.0
+    },
+    {
+      "country": "Italy",
+      "total_production": 2051152.0
     }
   ],
   "top_produced_items": [
     {
       "item": "Cereals - Excluding Beer",
-      "total_production": 169463955.0
+      "total_production": 45514806.0
     },
     {
       "item": "Sugar Crops",
-      "total_production": 118942926.0
+      "total_production": 29966494.0
     },
     {
       "item": "Sugar cane",
-      "total_production": 103325267.0
+      "total_production": 26367823.0
     },
     {
       "item": "Milk - Excluding Butter",
-      "total_production": 97447772.0
+      "total_production": 23963590.0
     },
     {
       "item": "Vegetables",
-      "total_production": 73815231.0
-    },
-    {
-      "item": "Maize and products",
-      "total_production": 61800496.0
+      "total_production": 23831965.0
     },
     {
       "item": "Vegetables, other",
-      "total_production": 57603937.0
+      "total_production": 19193636.0
+    },
+    {
+      "item": "Maize and products",
+      "total_production": 16941614.0
     },
     {
       "item": "Oilcrops",
-      "total_production": 54576745.0
+      "total_production": 13864884.0
     },
     {
       "item": "Starchy Roots",
-      "total_production": 53320170.0
+      "total_production": 13017687.0
     },
     {
       "item": "Rice and products",
-      "total_production": 45366027.0
-    },
-    {
-      "item": "Fruits - Excluding Wine",
-      "total_production": 43808854.0
+      "total_production": 12413441.0
     },
     {
       "item": "Wheat and products",
-      "total_production": 43402337.0
+      "total_production": 11895873.0
+    },
+    {
+      "item": "Fruits - Excluding Wine",
+      "total_production": 11736337.0
     },
     {
       "item": "Potatoes and products",
-      "total_production": 22121789.0
+      "total_production": 6010853.0
     },
     {
       "item": "Meat",
-      "total_production": 19491281.0
-    },
-    {
-      "item": "Cassava and products",
-      "total_production": 19456767.0
+      "total_production": 5501032.0
     },
     {
       "item": "Palm kernels",
-      "total_production": 19053393.0
+      "total_production": 4720800.0
     },
     {
       "item": "Sugar & Sweeteners",
-      "total_production": 17367107.0
+      "total_production": 4371023.0
     },
     {
       "item": "Soyabeans",
-      "total_production": 16953123.0
+      "total_production": 4328003.0
     },
     {
-      "item": "Sugar beet",
-      "total_production": 15617651.0
+      "item": "Cassava and products",
+      "total_production": 3879260.0
     },
     {
       "item": "Fruits, other",
-      "total_production": 13606603.0
+      "total_production": 3759342.0
+    },
+    {
+      "item": "Sugar beet",
+      "total_production": 3598662.0
     },
     {
       "item": "Vegetable Oils",
-      "total_production": 12098421.0
-    },
-    {
-      "item": "Beer",
-      "total_production": 11044665.0
+      "total_production": 3136908.0
     },
     {
       "item": "Tomatoes and products",
-      "total_production": 10500842.0
+      "total_production": 3072133.0
     },
     {
-      "item": "Sugar (Raw Equivalent)",
-      "total_production": 10386016.0
-    },
-    {
-      "item": "Fish, Seafood",
-      "total_production": 10030864.0
+      "item": "Beer",
+      "total_production": 3029755.0
     },
     {
       "item": "Eggs",
-      "total_production": 9756342.0
+      "total_production": 2975744.0
     },
     {
-      "item": "Barley and products",
-      "total_production": 8559721.0
+      "item": "Fish, Seafood",
+      "total_production": 2955384.0
     },
     {
-      "item": "Bananas",
-      "total_production": 7077189.0
+      "item": "Sugar (Raw Equivalent)",
+      "total_production": 2622248.0
     },
     {
       "item": "Pigmeat",
-      "total_production": 7047393.0
+      "total_production": 2196550.0
+    },
+    {
+      "item": "Barley and products",
+      "total_production": 2100653.0
+    },
+    {
+      "item": "Sweet potatoes",
+      "total_production": 1911175.0
     },
     {
       "item": "Poultry Meat",
-      "total_production": 6908352.0
+      "total_production": 1856732.0
     }
   ]
 }

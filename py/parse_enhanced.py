@@ -4,6 +4,51 @@ import numpy as np
 from pathlib import Path
 from datetime import datetime
 
+# ---------------------------------------------------------------------------
+# Sammel-Regionen, die in der App nicht benötigt werden und daher komplett
+# aus allen Datensätzen ausgeschlossen werden sollen. Dies betrifft
+# Kontinente, Sub-Regionen, ökonomische Ländergruppen usw.
+# ACHTUNG: Nur exakte Namen, um echte Länder (z. B. «South Africa»)
+# versehentlich nicht zu entfernen.
+# ---------------------------------------------------------------------------
+AGGREGATE_AREAS = {
+    # Welt-/Kontinents-Aggregationen
+    "World",
+    "Africa",
+    "Americas",
+    "Asia",
+    "Europe",
+    "Oceania",
+
+    # Sub-Kontinente / Himmelsrichtungen
+    "Eastern Africa",
+    "Middle Africa",
+    "Northern Africa",
+    "Southern Africa",
+    "Western Africa",
+    "Eastern Asia",
+    "South-eastern Asia",
+    "Southern Asia",
+    "Western Asia",
+    "Central America",
+    "South America",
+    "Northern America",
+    "Eastern Europe",
+    "Northern Europe",
+    "Southern Europe",
+    "Western Europe",
+
+    # Ökonomische/development-Gruppen
+    "European Union",
+    "European Union (27)",
+    "European Union (28)",
+    "Land Locked Developing Countries",
+    "Least Developed Countries",
+    "Low Income Food Deficit Countries",
+    "Net Food Importing Developing Countries",
+    "Small Island Developing States",
+}
+
 class EnhancedFAODataProcessor:
     def __init__(self, csv_path):
         """
@@ -22,7 +67,17 @@ class EnhancedFAODataProcessor:
     def load_and_filter_data(self):
         """Lädt und filtert die FAO-Daten"""
         print("Lade FAO-Daten...")
+        
+        # Rohdaten laden
         self.df = pd.read_csv(self.csv_path)
+        
+        # ---------------------------------------------------------------
+        # 1) Aggregate Areas entfernen
+        # ---------------------------------------------------------------
+        initial_rows = len(self.df)
+        self.df = self.df[~self.df["Area"].isin(AGGREGATE_AREAS)].copy()
+        removed = initial_rows - len(self.df)
+        print(f"Entferne Aggregat-Regionen: {removed:,} Zeilen entfernt")
         
         # ERWEITERT: Lade auch Kaloriendaten
         print("Extrahiere Kaloriendaten...")
@@ -41,9 +96,15 @@ class EnhancedFAODataProcessor:
             'Production',
             'Domestic supply quantity',
             'Feed',  # ERWEITERT: Feed auch inkludieren falls vorhanden
+            # --- Neu 2025-06: zusätzliche Ernährungs-Metriken ---
+            'Protein supply quantity (t)',            # protein (total)
+            'Protein supply quantity (g/capita/day)', # protein_gpcd
+            'Fat supply quantity (t)',               # fat (total)
+            'Fat supply quantity (g/capita/day)',    # fat_gpcd
+            'Processing',
         ]
         
-        # Filtere Daten
+        # Filtere Daten (ohne Aggregat-Regionen, da self.df bereits bereinigt)
         self.filtered_df = self.df[
             (self.df['Year'] >= 2010) & 
             (self.df['Year'] <= 2022) &
@@ -92,7 +153,13 @@ class EnhancedFAODataProcessor:
                     "Production": "Domestic production",
                     "Domestic supply quantity": "Total domestic supply",
                     "Feed": "Feed usage",
-                    "food_supply_kcal": "Food supply in kcal/capita/day (from FAO)"
+                    "food_supply_kcal": "Food supply in kcal/capita/day (from FAO)",
+                    # --- Neu 2025-06 ---
+                    "protein": "Protein supply quantity (total, 1000 t)",
+                    "protein_gpcd": "Protein supply quantity (g/capita/day)",
+                    "fat": "Fat supply quantity (total, 1000 t)",
+                    "fat_gpcd": "Fat supply quantity (g/capita/day)",
+                    "processing": "Processing volume (1000 t)"
                 }
             },
             "notes": {
@@ -124,11 +191,13 @@ class EnhancedFAODataProcessor:
         # Gruppiere nach Land und Item
         for (country, item), group in self.filtered_df.groupby(['Area', 'Item']):
             
-            # Erstelle Zeitreihen-Struktur
+            # Einheit angleichen: 't' → '1000 t' (nach Skalierung)
+            base_unit = "t"
+
             country_item_data = {
                 "country": str(country),
                 "item": str(item),
-                "unit": str(group['Unit'].iloc[0]) if len(group) > 0 else "1000 t",
+                "unit": base_unit,
                 "data": []
             }
             
@@ -139,7 +208,22 @@ class EnhancedFAODataProcessor:
                 # Füge alle verfügbaren Elemente hinzu (BEIBEHALTUNG aller bestehenden Metriken)
                 for _, row in year_group.iterrows():
                     element_key = self._normalize_element_name(row['Element'])
-                    year_data[element_key] = float(row['Value']) if pd.notna(row['Value']) else 0.0
+                    
+                    # Skalierung: Protein/Fett Gesamtmengen liegen in Tonnen vor → in 1000 t umrechnen
+                    raw_val = float(row['Value']) if pd.notna(row['Value']) else 0.0
+                    mass_elements_kt = [
+                        'Production',
+                        'Import quantity',
+                        'Export quantity',
+                        'Domestic supply quantity',
+                        'Feed',
+                        'Processing'
+                    ]
+                    # Skalierung: ursprüngliche 1000-t-Werte → t
+                    if row['Element'] in mass_elements_kt:
+                        raw_val = raw_val * 1000  # 1000 t → t
+                    # Protein/Fett liegen bereits in t → unverändert
+                    year_data[element_key] = raw_val
                 
                 # ERWEITERT: Füge food_supply_kcal hinzu falls verfügbar
                 kcal_key = (country, item, year)
@@ -368,7 +452,13 @@ class EnhancedFAODataProcessor:
             'Export quantity': 'exports',
             'Production': 'production',
             'Domestic supply quantity': 'domestic_supply',
-            'Feed': 'feed'
+            'Feed': 'feed',
+            # --- Neu 2025-06: zusätzliche Ernährungs-Metriken ---
+            'Protein supply quantity (t)': 'protein',
+            'Protein supply quantity (g/capita/day)': 'protein_gpcd',
+            'Fat supply quantity (t)': 'fat',
+            'Fat supply quantity (g/capita/day)': 'fat_gpcd',
+            'Processing': 'processing',
         }
         return mapping.get(element, element.lower().replace(' ', '_'))
     

@@ -201,6 +201,24 @@ const getMetricLabel = (metric?: string) => {
     case 'food_supply_kcal': {
       return 'Kalorienversorgung (kcal/Kopf/Tag)'
     }
+    case 'protein': {
+      return 'Protein (Mio. t)'
+    }
+    case 'protein_gpcd': {
+      return 'Protein (g/Kopf/Tag)'
+    }
+    case 'fat': {
+      return 'Fett (Mio. t)'
+    }
+    case 'fat_gpcd': {
+      return 'Fett (g/Kopf/Tag)'
+    }
+    case 'processing': {
+      return 'Verarbeitung (Mio. t)'
+    }
+    case 'feed_share': {
+      return 'Tierfutteranteil (%)'
+    }
     default: {
       return 'Wert (Mio. t)'
     }
@@ -248,7 +266,8 @@ const updateChart = () => {
   const values = data.map(d => d.value)
 
   xScale.domain(d3.extent(years) as [Date, Date])
-  yScale.domain([0, d3.max(values) as number])
+  const maxVal = (props.selectedMetrics?.length === 1 && props.selectedMetrics[0] === 'feed_share') ? 100 : (d3.max(values) as number)
+  yScale.domain([0, maxVal])
 
   // Get theme colors
   const isDarkMode = document.documentElement.classList.contains('dark')
@@ -263,8 +282,16 @@ const updateChart = () => {
   const getAxisFormatter = () => {
     // When multiple metrics are selected, check if any is food_supply_kcal
     const hasKcalMetric = props.selectedMetrics?.includes('food_supply_kcal')
+    const hasFeedShareMetric = props.selectedMetrics?.includes('feed_share')
+    const hasGpcdMetric = props.selectedMetrics?.some(m => m === 'protein_gpcd' || m === 'fat_gpcd')
     if (hasKcalMetric && props.selectedMetrics?.length === 1) {
       return createD3AxisFormatter('kcal')
+    }
+    if (hasFeedShareMetric && props.selectedMetrics?.length === 1) {
+      return createD3AxisFormatter('%')
+    }
+    if (hasGpcdMetric && props.selectedMetrics?.length === 1) {
+      return createD3AxisFormatter('g/Kopf/Tag')
     }
     return createD3AxisFormatter('1000 t')
   }
@@ -531,6 +558,13 @@ const handlePointMouseover = (event: MouseEvent, d: any) => {
     switch (metric) {
       case 'food_supply_kcal': {
         return createD3TooltipFormatter('kcal')
+      }
+      case 'feed_share': {
+        return createD3TooltipFormatter('%')
+      }
+      case 'protein_gpcd':
+      case 'fat_gpcd': {
+        return createD3TooltipFormatter('g/Kopf/Tag')
       }
       default: {
         return createD3TooltipFormatter('1000 t')

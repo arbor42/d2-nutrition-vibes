@@ -384,7 +384,13 @@ const getLegendTitle = () => {
     export_quantity: 'Exporte',
     domestic_supply_quantity: 'Inlandsversorgung',
     food_supply_kcal: 'Nahrungsenergie',
-    feed: 'Futtermittel'
+    feed: 'Futtermittel',
+    protein: 'Protein',
+    protein_gpcd: 'Protein',
+    fat: 'Fett',
+    fat_gpcd: 'Fett',
+    processing: 'Verarbeitung',
+    feed_share: 'Tierfutteranteil (%)'
   }
   
   const baseTitle = metricTitles[props.selectedMetric as keyof typeof metricTitles] || 'Daten'

@@ -258,9 +258,22 @@ const metricOptions = [
   { value: 'import_quantity', label: 'Import' },
   { value: 'export_quantity', label: 'Export' },
   { value: 'domestic_supply_quantity', label: 'Inlandsversorgung' },
+  { value: 'food_supply_kcal', label: 'Kalorienversorgung' },
   { value: 'feed', label: 'Tierfutter' },
-  { value: 'food_supply_kcal', label: 'Kalorienversorgung' }
+  { value: 'protein', label: 'Protein (1000 t)' },
+  { value: 'protein_gpcd', label: 'Protein (g/Kopf/Tag)' },
+  { value: 'fat', label: 'Fett (1000 t)' },
+  { value: 'fat_gpcd', label: 'Fett (g/Kopf/Tag)' },
+  { value: 'processing', label: 'Verarbeitung (1000 t)' },
+  { value: 'feed_share', label: 'Tierfutteranteil (%)' }
 ]
+
+// Helper zur Berechnung des Tierfutteranteils (%)
+const computeFeedShare = (entry) => {
+  const ds = entry.domestic_supply || 0
+  const feed = entry.feed || 0
+  return ds > 0 ? (feed / ds) * 100 : 0
+}
 
 // Update chart data when selections change
 const updateChartData = () => {
@@ -285,6 +298,12 @@ const updateChartData = () => {
                      metric === 'domestic_supply_quantity' ? 'domestic_supply' :
                      metric === 'feed' ? 'feed' :
                      metric === 'food_supply_kcal' ? 'food_supply_kcal' :
+                     metric === 'protein' ? 'protein' :
+                     metric === 'protein_gpcd' ? 'protein_gpcd' :
+                     metric === 'fat' ? 'fat' :
+                     metric === 'fat_gpcd' ? 'fat_gpcd' :
+                     metric === 'processing' ? 'processing' :
+                     metric === 'feed_share' ? 'feed_share' :
                      'production'
 
     const metricLabel = metricOptions.find(m => m.value === metric)?.label || metric
@@ -326,26 +345,48 @@ const updateChartData = () => {
           const productData = dataStore.timeseriesData[product]
           if (productData) {
             const yearlyTotals = new Map()
+            const yearlyFeed = new Map()
+            const yearlyDS = new Map()
             
             Object.entries(productData).forEach(([countryKey, countryData]) => {
               if (countryKey !== 'All') { // Exclude pre-computed "All" to avoid double counting
                 countryData.forEach(yearData => {
-                  const value = yearData[metricKey] || 0
-                  if (value > 0) {
+                  if (metric === 'feed_share') {
                     const year = yearData.year
-                    const currentTotal = yearlyTotals.get(year) || 0
-                    yearlyTotals.set(year, currentTotal + value)
+                    const feedVal = yearData.feed || 0
+                    const dsVal = yearData.domestic_supply || 0
+                    yearlyFeed.set(year, (yearlyFeed.get(year) || 0) + feedVal)
+                    yearlyDS.set(year, (yearlyDS.get(year) || 0) + dsVal)
+                  } else {
+                    const value = yearData[metricKey] || 0
+                    if (value > 0) {
+                      const year = yearData.year
+                      const currentTotal = yearlyTotals.get(year) || 0
+                      yearlyTotals.set(year, currentTotal + value)
+                    }
                   }
                 })
               }
             })
             
             // Convert to series data format
-            seriesData = Array.from(yearlyTotals.entries()).map(([year, value]) => ({
-              year: year,
-              [metricKey]: value,
-              unit: '1000 t'
-            }))
+            if (metric === 'feed_share') {
+              seriesData = Array.from(yearlyDS.entries()).map(([year, dsVal]) => {
+                const feedVal = yearlyFeed.get(year) || 0
+                const perc = dsVal > 0 ? (feedVal / dsVal) * 100 : 0
+                return {
+                  year: year,
+                  feed_share: perc,
+                  unit: '%'
+                }
+              })
+            } else {
+              seriesData = Array.from(yearlyTotals.entries()).map(([year, value]) => ({
+                year: year,
+                [metricKey]: value,
+                unit: '1000 t'
+              }))
+            }
             seriesName = `Global - ${getGermanName(product)} - ${metricLabel}`
           }
         } else if (product !== 'All' && country !== 'All' && country !== 'Global') {
@@ -360,7 +401,7 @@ const updateChartData = () => {
         // Process the series data if available
         if (seriesData && seriesData.length > 0) {
           seriesData.forEach(yearData => {
-            const value = yearData[metricKey] || 0
+            const value = metric === 'feed_share' ? computeFeedShare(yearData) : (yearData[metricKey] || 0)
             if (value > 0) {
               hasData = true
               allData.push({

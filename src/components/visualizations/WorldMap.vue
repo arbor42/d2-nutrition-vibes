@@ -150,7 +150,16 @@ const getLegendTitle = () => {
     'production': 'Produktion',
     'import_quantity': 'Import',
     'export_quantity': 'Export',
-    'domestic_supply': 'Versorgung'
+    'domestic_supply': 'Versorgung',
+    // --- Neu 2025-06 ---
+    'food_supply_kcal': 'Kalorien',
+    'feed': 'Tierfutter',
+    'protein': 'Protein',
+    'protein_gpcd': 'Protein',
+    'fat': 'Fett',
+    'fat_gpcd': 'Fett',
+    'processing': 'Verarbeitung',
+    'feed_share': 'Tierfutteranteil'
   }
   return metricLabels[props.selectedMetric] || 'Wert'
 }
@@ -233,7 +242,7 @@ const getProcessedProductionData = () => {
 // Map elements
 let projection: d3.GeoProjection
 let path: d3.GeoPath
-let colorScale: d3.ScaleQuantize<string>
+let colorScale: any
 let zoom: d3.ZoomBehavior<SVGElement, unknown>
 
 // Get current color scheme from props
@@ -765,6 +774,13 @@ const loadProductionData = async () => {
                            props.selectedMetric === 'domestic_supply_quantity' ? 'domestic_supply' :
                            props.selectedMetric === 'feed' ? 'feed' :
                            props.selectedMetric === 'food_supply_kcal' ? 'food_supply_kcal' :
+                           // --- Neu 2025-06 ---
+                           props.selectedMetric === 'protein' ? 'protein' :
+                           props.selectedMetric === 'protein_gpcd' ? 'protein_gpcd' :
+                           props.selectedMetric === 'fat' ? 'fat' :
+                           props.selectedMetric === 'fat_gpcd' ? 'fat_gpcd' :
+                           props.selectedMetric === 'processing' ? 'processing' :
+                           props.selectedMetric === 'feed_share' ? 'feed_share' :
                            'production'
           
           const totalValue = aggregatedData[metricKey] || 0
@@ -773,6 +789,10 @@ const loadProductionData = async () => {
           // Override unit for specific metrics
           if (props.selectedMetric === 'food_supply_kcal') {
             unit = 'kcal/capita/day'
+          } else if (props.selectedMetric === 'feed_share') {
+            unit = '%'
+          } else if (props.selectedMetric === 'protein_gpcd' || props.selectedMetric === 'fat_gpcd') {
+            unit = 'g/Kopf/Tag'
           }
           
           // Calculate each country's total across all products for normal color scaling
@@ -791,17 +811,28 @@ const loadProductionData = async () => {
             // Calculate each country's contribution across all products
             productionData = Array.from(allCountries).map(country => {
               let countryTotal = 0
+              let feedSum = 0
+              let dsSum = 0
               
               // Sum this country's contribution across all products
               Object.keys(dataStore.timeseriesData).forEach(product => {
                 if (product !== 'All' && dataStore.timeseriesData[product][country]) {
                   const countryData = dataStore.timeseriesData[product][country]
                   const yearData = countryData.find(entry => entry.year === props.selectedYear)
-                  if (yearData && yearData[metricKey]) {
-                    countryTotal += yearData[metricKey] || 0
+                  if (yearData) {
+                    if (props.selectedMetric === 'feed_share') {
+                      feedSum += yearData.feed || 0
+                      dsSum += yearData.domestic_supply || 0
+                    } else if (yearData[metricKey]) {
+                      countryTotal += yearData[metricKey] || 0
+                    }
                   }
                 }
               })
+              
+              if (props.selectedMetric === 'feed_share') {
+                countryTotal = dsSum > 0 ? (feedSum / dsSum) * 100 : 0
+              }
               
               return {
                 country: country,
@@ -833,14 +864,30 @@ const loadProductionData = async () => {
                            props.selectedMetric === 'domestic_supply_quantity' ? 'domestic_supply' :
                            props.selectedMetric === 'feed' ? 'feed' :
                            props.selectedMetric === 'food_supply_kcal' ? 'food_supply_kcal' :
+                           // --- Neu 2025-06 ---
+                           props.selectedMetric === 'protein' ? 'protein' :
+                           props.selectedMetric === 'protein_gpcd' ? 'protein_gpcd' :
+                           props.selectedMetric === 'fat' ? 'fat' :
+                           props.selectedMetric === 'fat_gpcd' ? 'fat_gpcd' :
+                           props.selectedMetric === 'processing' ? 'processing' :
+                           props.selectedMetric === 'feed_share' ? 'feed_share' :
                            'production'
           
-          const value = data[metricKey] || 0
+          let value = data[metricKey] || 0
+          if (props.selectedMetric === 'feed_share') {
+            const ds = data.domestic_supply || 0
+            const feedVal = data.feed || 0
+            value = ds > 0 ? (feedVal / ds) * 100 : 0
+          }
           let unit = data.unit || 't'
           
           // Override unit for specific metrics
           if (props.selectedMetric === 'food_supply_kcal') {
             unit = 'kcal/capita/day'
+          } else if (props.selectedMetric === 'feed_share') {
+            unit = '%'
+          } else if (props.selectedMetric === 'protein_gpcd' || props.selectedMetric === 'fat_gpcd') {
+            unit = 'g/Kopf/Tag'
           }
           
           return {
@@ -854,17 +901,18 @@ const loadProductionData = async () => {
         }).filter(item => item.value > 0)
       }
     } else {
-      // Fallback to production data for grouped products
-      console.log('🗺️ WorldMap: Using production data for grouped product')
+      // Fallback: Verwende nur dann das klassische Produktions-Endpoint, wenn *wirklich*
+      // die Produktions-Metrik gefragt ist. Für alle anderen Metriken (Importe, Exporte,
+      // Domestic Supply, Feed, kcal, Protein/Fett …) haben wir ohne Timeseries keine
+      // zuverlässigen Daten – ein Rückgriff auf reinen Produktions-Output würde die
+      // Farbskala verunreinigen (sie basiert dann auf völlig anderen Werten).
       
-      // For feed and calorie metrics, only try to load if we're sure the product doesn't exist in timeseries
-      if (props.selectedMetric === 'feed' || props.selectedMetric === 'food_supply_kcal') {
-        console.warn('🗺️ WorldMap: Feed/Calorie metric selected but product not found in timeseries data')
-        console.warn('🗺️ WorldMap: This suggests the product should have individual data. Setting empty array.')
+      if (props.selectedMetric !== 'production') {
+        console.warn('🗺️ WorldMap: Kein Timeseries-Datensatz gefunden und Metrik ≠ production – überspringe Fallback, setze leeres Dataset')
         productionData = []
       } else {
         productionData = await dataStore.loadProductionData(
-          props.selectedProduct, 
+          props.selectedProduct,
           props.selectedYear
         )
       }
@@ -1217,7 +1265,7 @@ const applyProductionDataDirect = (container, data) => {
   console.log('🔍 WorldMap: Top 5 values:', debugValues.sort((a, b) => b.value - a.value).slice(0, 5))
   
   // Check for aggregate regions that might skew the data
-  const aggregateRegions = ['World', 'Europe', 'Asia', 'Africa', 'Americas', 'Oceania', 'European Union']
+  const aggregateRegions = ['World', 'All', 'Europe', 'Asia', 'Africa', 'Americas', 'Oceania', 'European Union']
   const suspiciousEntries = data.filter(d => 
     aggregateRegions.some(region => d.country.toLowerCase().includes(region.toLowerCase()))
   )
@@ -1246,128 +1294,72 @@ const applyProductionDataDirect = (container, data) => {
   
   // Extract unit from data (use first valid entry)
   const unitFromData = data.find(d => d.unit)?.unit || '1000 t'
-  legendUnit.value = unitFromData
+  if (props.selectedMetric === 'food_supply_kcal') {
+    legendUnit.value = 'kcal/capita/day'
+  } else if (props.selectedMetric === 'feed_share') {
+    legendUnit.value = '%'
+  } else if (props.selectedMetric === 'protein_gpcd' || props.selectedMetric === 'fat_gpcd') {
+    legendUnit.value = 'g/Kopf/Tag'
+  } else {
+    legendUnit.value = unitFromData
+  }
 
   // Create adaptive color scale based on data distribution
   // Filter out aggregate regions to get accurate country-level min/max
   const countryData = data.filter(d => 
-    d.value > 0 && 
+    d.value > 0 &&
+    d.country !== 'All' &&
     !aggregateRegions.some(region => d.country.toLowerCase().includes(region.toLowerCase()))
   )
   const values = countryData.map(d => d.value)
+  // Filter unrealistisch große Werte bei g/Kopf/Tag-Metriken (Protein/Fett) – stellenweise gelangen Tonnen-Werte in die Liste
+  if (props.selectedMetric === 'protein_gpcd' || props.selectedMetric === 'fat_gpcd') {
+    const MAX_GPCD = 150 // obere Schranke, realistischerweise <150 g/Kopf/Tag
+    const filtered = values.filter(v => v > 0 && v < MAX_GPCD)
+    // Nur ersetzen, wenn gefilterte Liste nicht leer
+    if (filtered.length > 0) {
+      values.splice(0, values.length, ...filtered)
+    }
+  }
+  // --- Neu 2025-06: feste Grenzen für Prozentwerte ---
+  if (props.selectedMetric === 'feed_share') {
+    values.push(0)
+    values.push(100)
+  }
   if (values.length > 0) {
-    // Sort values for analysis
-    const sortedValues = values.sort((a, b) => a - b)
+    // 🌈 Neue, robuste Dezil-Skalierung (10-Prozent-Schritte)
+    const sortedValues = [...values].sort((a, b) => a - b)
     const minValue = sortedValues[0]
     const maxValue = sortedValues[sortedValues.length - 1]
-    
-    console.log('🎨 WorldMap: Value range:', minValue, 'to', maxValue)
-    console.log('🎨 WorldMap: All values:', sortedValues)
-    
-    // Analyze data distribution for optimal scale selection
-    const range = maxValue - minValue
-    const median = d3.median(sortedValues)
-    const q1 = d3.quantile(sortedValues, 0.25)
-    const q3 = d3.quantile(sortedValues, 0.75)
-    const iqr = q3 - q1
-    
-    // Detect skewness - highly skewed if max is much larger than median
-    const isHighlySkewed = (maxValue - median) > 3 * iqr
-    
-    console.log('🎨 WorldMap: Data analysis:', {
-      count: values.length, range, median, q1, q3, iqr, isHighlySkewed
-    })
-    
-    // Use 10-step percentile-based scale where top 10% get yellow, etc.
-    console.log('🎨 WorldMap: Using 10-step percentile-based color scale')
-    
-    // Calculate percentile thresholds (10% intervals)
-    const percentiles = []
-    for (let i = 1; i < getCurrentColorScheme().length; i++) {
-      const percentile = i / getCurrentColorScheme().length
-      const threshold = d3.quantile(sortedValues, percentile)
-      percentiles.push(threshold)
+
+    const numColors = getCurrentColorScheme().length
+    const percentiles: number[] = []
+    for (let i = 1; i < numColors; i++) {
+      percentiles.push(d3.quantileSorted(sortedValues, i / numColors) as number)
     }
-    
-    const valueRanges = []
-    const thresholds = percentiles
-    
-    // Create value ranges for logging using percentile boundaries
-    for (let i = 0; i < getCurrentColorScheme().length; i++) {
-      const rangeStart = i === 0 ? minValue : percentiles[i - 1]
-      const rangeEnd = i === getCurrentColorScheme().length - 1 ? maxValue : percentiles[i]
-      valueRanges.push({
-        min: rangeStart,
-        max: rangeEnd,
-        color: getCurrentColorScheme()[i],
-        percentile: `${(i * 10)}-${((i + 1) * 10)}%`
-      })
-    }
-    
-    console.log('🎨 WorldMap: Value ranges:', valueRanges)
-    console.log('🎨 WorldMap: Thresholds between colors:', thresholds)
-    
-    // Count countries in each decile
-    const countryCounts = new Array(getCurrentColorScheme().length).fill(0)
+
+    const countryCounts = new Array(numColors).fill(0)
     countryData.forEach(d => {
-      const value = d.value
-      let decileIndex = 0
-      
-      if (value <= minValue) {
-        decileIndex = 0
-      } else if (value >= maxValue) {
-        decileIndex = getCurrentColorScheme().length - 1
-      } else {
-        for (let i = 0; i < percentiles.length; i++) {
-          if (value <= percentiles[i]) {
-            decileIndex = i + 1
-            break
-          }
-        }
-      }
-      
-      countryCounts[decileIndex]++
+      let idx = 0
+      while (idx < percentiles.length && d.value > percentiles[idx]) idx++
+      countryCounts[idx]++
     })
-    
-    console.log('🎨 WorldMap: Countries per decile:', countryCounts)
-    
-    // Create a custom scale function that maps values to colors using percentiles
-    colorScale = (value) => {
-      // Edge cases
-      if (value <= minValue) return getCurrentColorScheme()[0]
-      if (value >= maxValue) return getCurrentColorScheme()[getCurrentColorScheme().length - 1]
-      
-      // Find which percentile band the value falls into
-      for (let i = 0; i < percentiles.length; i++) {
-        if (value <= percentiles[i]) {
-          return getCurrentColorScheme()[i + 1]
-        }
-      }
-      
-      // If we get here, the value is in the highest percentile
-      return getCurrentColorScheme()[getCurrentColorScheme().length - 1]
-    }
-    
-    // Store thresholds for legend
-    colorScale.thresholds = () => thresholds
-    colorScale.range = () => getCurrentColorScheme()
-    colorScale.domain = () => [minValue, maxValue]
-    colorScale.percentiles = () => percentiles
-    colorScale.countryCounts = () => countryCounts
-    
+
+    colorScale = d3.scaleThreshold<number, string>()
+      .domain(percentiles)
+      .range(getCurrentColorScheme())
+
+    // Zusätzliche Helper-Methoden für Legende & Filter
+    ;(colorScale as any).percentiles = () => percentiles
+    ;(colorScale as any).countryCounts = () => countryCounts
+    ;(colorScale as any).domain = () => [minValue, maxValue]
+    ;(colorScale as any).thresholds = () => percentiles
+    ;(colorScale as any).range = () => getCurrentColorScheme()
+    ;(colorScale as any).quantiles = () => percentiles
+
     legendDomain.value = [minValue, maxValue]
-    
-    console.log('🎨 WorldMap: Adaptive color scale created with domain:', legendDomain.value)
-    
-    // Test the scale with a few sample values for verification
-    if (colorScale.quantiles) {
-      console.log('🎨 WorldMap: Quantile thresholds:', colorScale.quantiles())
-    }
-    const testValues = [minValue, median, maxValue]
-    console.log('🎨 WorldMap: Test colors:', testValues.map(v => ({ value: v, color: colorScale(v) })))
-    
-    // Update legend scale
     legendScale.value = colorScale
+    console.log('🎨 WorldMap: Neue Dezil-Skala – Domain', legendDomain.value, 'Percentiles', percentiles)
   }
 
   // Update country colors
@@ -1639,6 +1631,10 @@ const handleCountryMouseover = (event, d) => {
   let unit = countryData?.unit || '1000 t'
   if (props.selectedMetric === 'food_supply_kcal') {
     unit = 'kcal/capita/day'
+  } else if (props.selectedMetric === 'feed_share') {
+    unit = '%'
+  } else if (props.selectedMetric === 'protein_gpcd' || props.selectedMetric === 'fat_gpcd') {
+    unit = 'g/Kopf/Tag'
   }
   
   const tooltipFormatter = createD3TooltipFormatter(unit)
@@ -1652,7 +1648,14 @@ const handleCountryMouseover = (event, d) => {
                        props.selectedMetric === 'domestic_supply_quantity' ? 'Inlandsversorgung' :
                        props.selectedMetric === 'feed' ? 'Tierfutter' :
                        props.selectedMetric === 'food_supply_kcal' ? 'Kalorienversorgung' :
-                       'Inlandsversorgung'
+                       // --- Neu 2025-06 ---
+                       props.selectedMetric === 'protein' ? 'Protein (1000 t)' :
+                       props.selectedMetric === 'protein_gpcd' ? 'Protein (g/Kopf/Tag)' :
+                       props.selectedMetric === 'fat' ? 'Fett (1000 t)' :
+                       props.selectedMetric === 'fat_gpcd' ? 'Fett (g/Kopf/Tag)' :
+                       props.selectedMetric === 'processing' ? 'Verarbeitung (1000 t)' :
+                       props.selectedMetric === 'feed_share' ? 'Tierfutteranteil (%)' :
+                       'Metrik'
     content += `<span style="color: #fbbf24">${productName}</span><br/>`
     content += `${metricLabel}: <strong>${formattedValue}</strong><br/>`
     content += `<span style="color: #9ca3af; font-size: 12px">Jahr: ${props.selectedYear}</span>`
@@ -2016,6 +2019,13 @@ defineExpose({
   loadProductionData,
   zoomToCountry
 })
+
+// Helper zur Berechnung des Tierfutteranteils (%)
+const computeFeedShare = (entry) => {
+  const ds = entry.domestic_supply || 0
+  const feed = entry.feed || 0
+  return ds > 0 ? (feed / ds) * 100 : 0
+}
 </script>
 
 <template>
@@ -2122,7 +2132,13 @@ defineExpose({
               reactiveCountryDetail.metric === 'domestic_supply_quantity' ? 'Inlandsversorgung' :
               reactiveCountryDetail.metric === 'feed' ? 'Tierfutter' :
               reactiveCountryDetail.metric === 'food_supply_kcal' ? 'Kalorienversorgung' :
-              'Wert'
+              reactiveCountryDetail.metric === 'protein' ? 'Protein (1000 t)' :
+              reactiveCountryDetail.metric === 'protein_gpcd' ? 'Protein (g/Kopf/Tag)' :
+              reactiveCountryDetail.metric === 'fat' ? 'Fett (1000 t)' :
+              reactiveCountryDetail.metric === 'fat_gpcd' ? 'Fett (g/Kopf/Tag)' :
+              reactiveCountryDetail.metric === 'processing' ? 'Verarbeitung (1000 t)' :
+              reactiveCountryDetail.metric === 'feed_share' ? 'Tierfutteranteil (%)' :
+              'Metrik'
             }}:
           </span>
         </div>

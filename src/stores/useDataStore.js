@@ -817,6 +817,11 @@ const calculateAllAggregations = (timeseriesData) => {
         domestic_supply: 0,
         feed: 0,
         food_supply_kcal: 0,
+        protein: 0,
+        protein_gpcd: 0,
+        fat: 0,
+        fat_gpcd: 0,
+        processing: 0,
         unit: '1000 t'
       }
       
@@ -833,6 +838,11 @@ const calculateAllAggregations = (timeseriesData) => {
             yearAggregation.domestic_supply += yearData.domestic_supply || 0
             yearAggregation.feed += yearData.feed || 0
             yearAggregation.food_supply_kcal += yearData.food_supply_kcal || 0
+            yearAggregation.protein += yearData.protein || 0
+            yearAggregation.protein_gpcd += yearData.protein_gpcd || 0
+            yearAggregation.fat += yearData.fat || 0
+            yearAggregation.fat_gpcd += yearData.fat_gpcd || 0
+            yearAggregation.processing += yearData.processing || 0
           }
         }
       })
@@ -854,6 +864,11 @@ const calculateAllAggregations = (timeseriesData) => {
       domestic_supply: 0,
       feed: 0,
       food_supply_kcal: 0,
+      protein: 0,
+      protein_gpcd: 0,
+      fat: 0,
+      fat_gpcd: 0,
+      processing: 0,
       unit: '1000 t'
     }
     
@@ -870,6 +885,11 @@ const calculateAllAggregations = (timeseriesData) => {
           yearAggregation.domestic_supply += yearData.domestic_supply || 0
           yearAggregation.feed += yearData.feed || 0
           yearAggregation.food_supply_kcal += yearData.food_supply_kcal || 0
+          yearAggregation.protein += yearData.protein || 0
+          yearAggregation.protein_gpcd += yearData.protein_gpcd || 0
+          yearAggregation.fat += yearData.fat || 0
+          yearAggregation.fat_gpcd += yearData.fat_gpcd || 0
+          yearAggregation.processing += yearData.processing || 0
         }
       })
     })
@@ -897,6 +917,11 @@ const calculateAllCountriesForProduct = (productData) => {
       domestic_supply: 0,
       feed: 0,
       food_supply_kcal: 0,
+      protein: 0,
+      protein_gpcd: 0,
+      fat: 0,
+      fat_gpcd: 0,
+      processing: 0,
       unit: '1000 t'
     }
     
@@ -912,6 +937,11 @@ const calculateAllCountriesForProduct = (productData) => {
         yearAggregation.domestic_supply += yearData.domestic_supply || 0
         yearAggregation.feed += yearData.feed || 0
         yearAggregation.food_supply_kcal += yearData.food_supply_kcal || 0
+        yearAggregation.protein += yearData.protein || 0
+        yearAggregation.protein_gpcd += yearData.protein_gpcd || 0
+        yearAggregation.fat += yearData.fat || 0
+        yearAggregation.fat_gpcd += yearData.fat_gpcd || 0
+        yearAggregation.processing += yearData.processing || 0
       }
     })
     

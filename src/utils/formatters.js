@@ -6,11 +6,11 @@
 /**
  * Format agricultural production/trade values with consistent units
  * @param {number} value - Raw value from FAO dataset (in 1000 tonnes)
- * @param {object} options - Formatting options
- * @param {string} options.unit - Override unit (default: "1000 t")
- * @param {number} options.precision - Decimal places (default: 1 for large values, 0 for small)
- * @param {boolean} options.showUnit - Whether to show unit (default: true)
- * @param {boolean} options.longForm - Use long form units (default: false)
+ * @param {object} [options] - Formatting options
+ * @param {string} [options.unit="1000 t"] - Override unit (default: "1000 t")
+ * @param {number} [options.precision] - Decimal places (default: 1 for large values, 0 for small)
+ * @param {boolean} [options.showUnit=true] - Whether to show unit (default: true)
+ * @param {boolean} [options.longForm=false] - Use long form units (default: false)
  * @returns {string} Formatted value with unit
  */
 export function formatAgricultureValue(value, options = {}) {
@@ -21,60 +21,63 @@ export function formatAgricultureValue(value, options = {}) {
     longForm = false
   } = options;
 
+  // ---------------------------------------------------------------------
+  // ⚙️  Einheitliche Behandlung von Gewichts-Einheiten
+  // ---------------------------------------------------------------------
+  // In der gesamten Anwendung werden aktuell Mengen **in Tonnen (t)**
+  // an diese Funktion übergeben, auch wenn der übergebene Unit-String
+  // teilweise noch "1000 t" lautet. Um falsche Skalierungen zu vermeiden,
+  // interpretieren wir den String "1000 t" daher ab sofort als Alias für
+  // reguläre Tonnen und verarbeiten ihn identisch wie "t".
+  // Dadurch müssen bestehende Aufrufer im Code nicht sofort angepasst
+  // werden, gleichzeitig stimmt aber die Anzeige wieder.
+  // ---------------------------------------------------------------------
+
+  const normalizedUnit = unit === "1000 t" ? "t" : unit;
+
   if (value === null || value === undefined || isNaN(value)) {
-    return showUnit ? `0 ${unit}` : '0';
+    return showUnit ? `0 ${normalizedUnit}` : '0';
   }
 
   const absValue = Math.abs(value);
   let formattedNumber;
-  let displayUnit = unit;
+  let displayUnit = normalizedUnit;
   
   // Special handling for calorie data
-  if (unit === "kcal/capita/day") {
+  if (normalizedUnit === "kcal/capita/day") {
     formattedNumber = value.toFixed(precision ?? 0);
     displayUnit = longForm ? "kcal/Person/Tag" : "kcal";
   }
   // FAO data is in "1000 t", so we need to consider the actual scale
-  else if (unit === "1000 t") {
-    if (absValue >= 1000000) {
-      // >= 1 billion tonnes actual weight
-      const scaledValue = value / 1000000;
-      // Use higher precision for values close to threshold
-      const dynamicPrecision = precision ?? (scaledValue < 10 ? 2 : 1);
-      formattedNumber = scaledValue.toFixed(dynamicPrecision);
-      displayUnit = longForm ? "Mrd. t" : "Mrd t";
-    } else if (absValue >= 1000) {
-      // >= 1 million tonnes actual weight  
-      const scaledValue = value / 1000;
-      // Use higher precision for values close to threshold
-      const dynamicPrecision = precision ?? (scaledValue < 10 ? 2 : 1);
-      formattedNumber = scaledValue.toFixed(dynamicPrecision);
-      displayUnit = longForm ? "Mio. t" : "Mio t";
-    } else if (absValue >= 100) {
-      // >= 100,000 tonnes actual weight
-      formattedNumber = value.toFixed(precision ?? 0);
-      displayUnit = longForm ? "Tsd. t" : "Tsd t";
+  else if (normalizedUnit === "t") {
+    // Neue Basis: Tonnen, skaliere wie bei 1000 t nur mit 1000er-Versatz
+    if (absValue >= 1_000_000_000) {
+      formattedNumber = (value / 1_000_000_000).toFixed(precision ?? 1)
+      displayUnit = longForm ? "Mrd. t" : "Mrd t"
+    } else if (absValue >= 1_000_000) {
+      formattedNumber = (value / 1_000_000).toFixed(precision ?? 1)
+      displayUnit = longForm ? "Mio. t" : "Mio t"
+    } else if (absValue >= 1_000) {
+      formattedNumber = (value / 1_000).toFixed(precision ?? 1)
+      displayUnit = longForm ? "Tsd. t" : "Tsd t"
     } else {
-      // < 100,000 tonnes actual weight
-      // Use higher precision for smaller values
-      const dynamicPrecision = precision ?? (absValue < 10 ? 2 : 1);
-      formattedNumber = value.toFixed(dynamicPrecision);
-      displayUnit = longForm ? "Tsd. t" : "Tsd t";
+      formattedNumber = value.toFixed(precision ?? (absValue < 10 ? 1 : 0))
+      displayUnit = "t"
     }
   } else {
     // Other units - use standard metric scaling
     if (absValue >= 1000000000) {
       formattedNumber = (value / 1000000000).toFixed(precision ?? 1);
-      displayUnit = longForm ? `Mrd. ${unit}` : `Mrd ${unit}`;
+      displayUnit = longForm ? `Mrd. ${normalizedUnit}` : `Mrd ${normalizedUnit}`;
     } else if (absValue >= 1000000) {
       formattedNumber = (value / 1000000).toFixed(precision ?? 1);
-      displayUnit = longForm ? `Mio. ${unit}` : `Mio ${unit}`;
+      displayUnit = longForm ? `Mio. ${normalizedUnit}` : `Mio ${normalizedUnit}`;
     } else if (absValue >= 1000) {
       formattedNumber = (value / 1000).toFixed(precision ?? 1);
-      displayUnit = longForm ? `Tsd. ${unit}` : `Tsd ${unit}`;
+      displayUnit = longForm ? `Tsd. ${normalizedUnit}` : `Tsd ${normalizedUnit}`;
     } else {
       formattedNumber = value.toFixed(precision ?? (absValue < 10 ? 1 : 0));
-      displayUnit = unit;
+      displayUnit = normalizedUnit;
     }
   }
 
@@ -116,7 +119,7 @@ export function formatTooltipValue(value, unit = "1000 t") {
  * @returns {string} Appropriate axis unit label
  */
 export function getAxisUnitLabel(baseUnit = "1000 t") {
-  if (baseUnit === "1000 t") {
+  if (baseUnit === "1000 t" || baseUnit === "t") {
     return "Produktion (Mio. t)";
   }
   return `Werte (${baseUnit})`;

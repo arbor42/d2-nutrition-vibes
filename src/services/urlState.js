@@ -64,13 +64,13 @@ class UrlStateService {
       sc: 4 // selectedScenario index (4 = benutzerdefiniert)
     })
 
-    // ML-Panel-Status (Phase 6)
-    this._mlState = {
+    // ML-Panel-Status (Phase 6) – reaktiv, damit Watcher Updates erkennen
+    this._mlState = reactive({
       ft: '',  // Forecast Type
       fc: '',  // Forecast Key
       mdl: '', // Model
       conf: false // showConfidenceInterval
-    }
+    })
 
     // Map & Legend (Phase 7)
     this._mapState = {

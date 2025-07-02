@@ -16,7 +16,7 @@ export const mainTour = {
         <h2 class="text-xl font-bold mb-2">Willkommen bei der interaktiven Ernährungstour!</h2>
         <p>In den nächsten Minuten erlebst du, wie <strong>globale Krisen, Dürren und Trends</strong>
         unsere Nahrungsmittelströme beeinflussen. Lass uns gemeinsam fünf spannende
-        Datengeschichten entdecken – von der Ukraine bis nach China.</p>
+        Datengeschichten entdecken!</p>
         <p class="mt-2 italic text-sm">Klicke auf „Weiter“, um zu starten.</p>
       `,
       route: '/?pnl=dashboard',
@@ -36,7 +36,7 @@ export const mainTour = {
       content: `
         <strong>Februar 2022:</strong> Russlands Invasion legt die Schwarzmeerhäfen lahm.
         Die Ukraine exportierte zuvor rund <strong>19,8&nbsp;Mio.&nbsp;t Weizen</strong> pro Jahr.
-        2022 sinken die Ausfuhren um <strong>−42&nbsp;%</strong> auf nur 11,4&nbsp;Mio.&nbsp;t.
+        2022 sinken die Ausfuhren um <strong>42&nbsp;%</strong> auf nur 11,4&nbsp;Mio.&nbsp;t.
         Beobachte, wie die Zeitreihe in die Tiefe stürzt.
       `,
       route: '/?pnl=timeseries&tpr=Wheat%20and%20products&tcty=Ukraine&tmet=export_quantity',
@@ -80,7 +80,7 @@ export const mainTour = {
 
     {
       id: 'thailand-drought-sugar-2019',
-      title: 'Dürre 2019/20: Thailands Zuckerrohr halbiert sich',
+      title: 'Dürre 2019/20: Thailands Zuckerrohrproduktion halbiert sich',
       content: `
         Eine schwere Dürre reduziert Thailands Zuckerrohrernte fast um die Hälfte:
         von <strong>≈130&nbsp;Mio.&nbsp;t</strong> (2018) auf nur
@@ -107,7 +107,7 @@ export const mainTour = {
       content: `
         <strong>2021</strong> treffen Dürre und ungewöhnliche Spätfröste das
         Zentrum-Süd-Brasiliens. Die verarbeitete Zuckerrohrmenge fällt um
-        <strong>−13 %</strong> auf 525 Mio.&nbsp;t, die Zuckerproduktion sinkt
+        <strong>13 %</strong> auf 525 Mio.&nbsp;t, die Zuckerproduktion sinkt
         ähnlich stark – ein Schock für den größten Exporteur der Welt.
       `,
       route: '/?pnl=timeseries&tpr=Sugar%20cane&tcty=Brazil&tmet=Production&yr=2021',

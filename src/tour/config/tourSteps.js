@@ -5,7 +5,7 @@ export const mainTour = {
   id: 'main',
   title: 'Ernährung im Wandel der Zeit',
   description: 'Eine datengetriebene Reise durch 13 Jahre globaler Ernährungsgeschichte - von Pandemien über Kriege bis zu Klimaextremen',
-  estimatedDuration: '12-15 Minuten',
+  estimatedDuration: '14-17 Minuten',
   category: 'overview',
   difficulty: 'beginner',
   steps: [
@@ -155,6 +155,31 @@ export const mainTour = {
       ]
     },
 
+    {
+      id: 'feed-share-dashboard',
+      title: 'Wer frisst das Getreide? – 41 % gehen ins Tierfutter',
+      content: `
+        Auf der <strong>Futteranteils-Kachel</strong> siehst du, dass weltweit rund <strong>41&nbsp;%</strong>
+        der gesamten Getreideproduktion als Tierfutter verwendet werden – und damit nicht
+        direkt auf unseren Tellern landen. Dieser Anteil ist seit 2010 stetig gestiegen und
+        zeigt, wie sehr unsere Ernährungsgewohnheiten vom Fleischkonsum abhängen.
+      `,
+      route: '/?pr=Cereals%20-%20Excluding%20Beer&yr=2022&m=Feed',
+      target: '[data-tour="feed-usage"]',
+      position: 'left',
+      highlightOptions: {
+        padding: 10
+      },
+      dataHighlight: {
+        label: 'Futteranteil 2022',
+        value: '41 % des Getreides'
+      },
+      insights: [
+        '1,12 Mrd. t Getreide als Futter (2022)',
+        'Mais dominiert mit 717 Mio. t',
+        'Großer Hebel für Nachhaltigkeit'
+      ]
+    },
 
     {
       id: 'ml-future-predictions',
@@ -199,8 +224,6 @@ export const mainTour = {
         'Nachhaltigkeit durch Effizienz'
       ]
     },
-
-
 
     {
       id: 'conclusion-lessons-learned',

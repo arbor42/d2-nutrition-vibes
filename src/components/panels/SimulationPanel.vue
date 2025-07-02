@@ -158,20 +158,6 @@
           <div v-if="simulationResults" class="results-section">
             <div class="results-header">
               <h3 class="section-title">Simulationsergebnisse</h3>
-              <div class="results-meta">
-                <span class="meta-item">
-                  <strong>Szenario:</strong> {{ simulationResults.scenario }}
-                </span>
-                <span class="meta-item">
-                  <strong>Methode:</strong> {{ simulationResults.dataSource }}
-                </span>
-                <span v-if="simulationResults.simulationDetails" class="meta-item">
-                  <strong>Details:</strong> 
-                  {{ simulationResults.simulationDetails.totalPaths }} Pfade, 
-                  {{ simulationResults.simulationDetails.confidenceLevel }} Konfidenz, 
-                  {{ simulationResults.simulationDetails.timeHorizon }}
-                </span>
-              </div>
             </div>
             
             <div class="results-grid">
@@ -227,15 +213,6 @@
                 </p>
               </div>
             </div>
-
-            <!-- Simulation Chart -->
-            <div class="chart-container" data-tour="simulation-chart">
-              <SimulationChart
-                :data="simulationResults.timeSeriesData"
-                :config="chartConfig"
-                @scenario-select="handleScenarioSelect"
-              />
-            </div>
           </div>
 
           <!-- Empty State -->
@@ -258,7 +235,6 @@ import ErrorDisplay from '@/components/ui/ErrorDisplay.vue'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import RangeSlider from '@/components/ui/RangeSlider.vue'
-import SimulationChart from '@/components/visualizations/SimulationChart.vue'
 import { useRoute } from 'vue-router'
 import urlService from '@/services/urlState.js'
 
@@ -374,16 +350,6 @@ const availableScenarios = computed(() => [
     }
   }
 ])
-
-const chartConfig = computed(() => ({
-  width: 800,
-  height: 400,
-  margin: { top: 20, right: 30, bottom: 40, left: 80 },
-  showConfidenceInterval: true,
-  showScenarios: true,
-  interactive: true,
-  animated: true
-}))
 
 // Simulation calculation functions
 const calculateStochasticPath = (baseValue, trend, volatility, steps, deltaT = 1) => {
@@ -903,14 +869,6 @@ watch(() => [route.query.sc, route.query.cc, route.query.pg, route.query.tp, rou
   @apply mb-6;
 }
 
-.results-meta {
-  @apply flex flex-wrap gap-4 mt-2 text-sm text-gray-600 dark:text-gray-400;
-}
-
-.meta-item {
-  @apply flex items-center gap-1;
-}
-
 .result-card {
   @apply bg-gray-50 dark:bg-gray-900 rounded-lg p-4;
 }
@@ -933,10 +891,6 @@ watch(() => [route.query.sc, route.query.cc, route.query.pg, route.query.tp, rou
 
 .result-description {
   @apply text-xs text-gray-500 dark:text-gray-400;
-}
-
-.chart-container {
-  @apply w-full h-96 bg-gray-50 dark:bg-gray-900 rounded-lg p-4;
 }
 
 .error-container,

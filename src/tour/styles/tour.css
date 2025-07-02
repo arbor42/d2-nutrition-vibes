@@ -26,7 +26,7 @@
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.6);
   /* Removed backdrop-filter to prevent blur */
-  transition: all 0.3s ease;
+  transition: none;
   pointer-events: auto; /* Allow clicks on backdrop to close */
   z-index: 9997; /* Background layer - below highlights and tooltip */
 }
@@ -35,7 +35,7 @@
 .tour-spotlight {
   position: absolute;
   pointer-events: none;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: none;
   z-index: 9998; /* Same as highlighted elements */
 }
 
@@ -61,8 +61,12 @@
     0 0 0 1px rgba(0, 0, 0, 0.05);
   max-width: 400px;
   z-index: 9999 !important; /* Highest z-index to stay on top */
-  animation: tourTooltipAppear 0.3s ease-out;
   pointer-events: auto;
+}
+
+/* Entrance animation nur beim ersten Einblenden */
+.tour-tooltip.tour-entering {
+  animation: tourTooltipAppear 0.3s ease-out;
 }
 
 .dark .tour-tooltip {

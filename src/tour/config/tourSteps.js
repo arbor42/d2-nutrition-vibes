@@ -60,7 +60,7 @@ export const mainTour = {
       content: `
         In der ersten Pandemie-Welle <strong>März 2020</strong> stoppt Vietnam
         kurzfristig alle Reisexporte, um die eigene Bevölkerung zu versorgen.
-        Der globale Markt reagiert mit Panikkäufen – doch schon wenige Wochen
+        Die Weltbevölkerung reagiert mit Panikkäufen – doch schon wenige Wochen
         später normalisiert sich die Lage.
       `,
       route: '/?pnl=timeseries&tpr=Rice%20and%20products&tcty=Viet%20Nam&tmet=Export%20quantity&yr=2020',

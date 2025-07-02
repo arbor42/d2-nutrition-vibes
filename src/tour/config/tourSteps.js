@@ -69,7 +69,7 @@ export const mainTour = {
       highlightOptions: { padding: 14 },
       dataHighlight: {
         label: 'Reisexporte Vietnam',
-        value: 'März 2020: 0 t'
+        value: '2020 42,8 Mio t'
       },
       insights: [
         'Kurzfristiger Lieferstopp → Preissprung',
@@ -130,11 +130,11 @@ export const mainTour = {
       content: `
         Die rapide wachsende Fleischproduktion lässt Chinas
         <strong>Mais-Futterverbrauch</strong> von 130 auf
-        <strong>222&nbsp;Mio.&nbsp;t</strong> steigen – ein Plus von 71 %.
+        <strong>222&nbsp;Mio.&nbsp;t</strong> steigen – ein Plus von <strong>71 %</strong>.
         Weltweit wandern inzwischen <strong>41 %</strong> des Getreides in
         Futtertröge.
       `,
-      route: '/?pnl=timeseries&tpr=Maize%20and%20products&tcty=China&tmet=Feed&yr=2022',
+      route: '/?pnl=timeseries&tpr=Maize%20and%20products&tcty=China&tmet=feed&yr=2022',
       target: '[data-tour="timeseries-chart"]',
       position: 'top',
       highlightOptions: { padding: 12 },

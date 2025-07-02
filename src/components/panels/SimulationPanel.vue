@@ -160,7 +160,7 @@
               <h3 class="section-title">Simulationsergebnisse</h3>
             </div>
             
-            <div class="results-grid">
+            <div class="results-grid" data-tour="simulation-metrics">
               <div class="result-card">
                 <div class="result-header">
                   <h4>Produktionsänderung</h4>

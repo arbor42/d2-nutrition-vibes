@@ -288,7 +288,7 @@ class UrlStateService {
         get: () => this._simState.sc,
         set: (v) => { this._simState.sc = Number(v) || 4 }
       },
-      // --- Timeseries spezifische Arrays ---------------------------
+      // --- Timeseries Panel Arrays --------------------------------
       tpr: {
         default: [],
         get: () => this._tsState.tpr,

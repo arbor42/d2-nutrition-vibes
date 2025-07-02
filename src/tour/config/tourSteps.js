@@ -212,7 +212,7 @@ export const mainTour = {
         Menschen könnten ernährt werden. Effizienz statt Mengenwachstum!
       `,
       route: '/simulation?pr=Cereals%20-%20Excluding%20Beer&yr=2022&m=Feed',
-      target: '[data-tour="simulation-chart"]',
+      target: '[data-tour="simulation-metrics"]',
       position: 'right',
       dataHighlight: {
         label: 'Feed-Effizienz Szenario',

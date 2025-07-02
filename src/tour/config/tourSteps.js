@@ -17,23 +17,12 @@ export const mainTour = {
         2.985 kcal pro Person/Tag (2022). Selbst COVID-19 und Ukrainekrieg konnten diesen 
         Trend nicht stoppen. Die Daten zeigen: <strong>Unsere Ernährungssysteme sind resilient</strong>.
       `,
-      route: '/',
+      route: '/?pr=Cereals%20-%20Excluding%20Beer&yr=2022&m=Production',
       target: '[data-tour="dashboard-stats"]',
       position: 'bottom',
       fallbackPosition: { top: 200, left: window.innerWidth / 2 - 200 },
       highlightOptions: {
         padding: 12
-      },
-      actions: {
-        onEnter: async () => {
-          const { useUIStore } = await import('@/stores/useUIStore')
-          const uiStore = useUIStore()
-          // Globale Übersicht - Getreideproduktion zeigen
-          uiStore.selectedProduct = 'Cereals - Excluding Beer'
-          uiStore.selectedCountry = null // Global anzeigen
-          uiStore.selectedYear = 2022
-          uiStore.selectedMetric = 'Production'
-        }
       },
       dataHighlight: {
         label: 'Globaler Kalorienanstieg',
@@ -54,23 +43,12 @@ export const mainTour = {
         Während Nordamerika mit 3.880 kcal/Tag im Überfluss schwelgt, kämpft Afrika mit nur 
         2.567 kcal/Tag. Asien holt auf (+9% seit 2010), Afrika stagniert (+0,3%).
       `,
-      route: '/',
+      route: '/?pr=Cereals%20-%20Excluding%20Beer&cty=Africa&yr=2022&m=Domestic%20supply%20quantity',
       target: '[data-tour="world-map"]',
       position: 'right',
       fallbackPosition: { top: 300, left: window.innerWidth / 2 - 200 },
       highlightOptions: {
         padding: 8
-      },
-      actions: {
-        onEnter: async () => {
-          const { useUIStore } = await import('@/stores/useUIStore')
-          const uiStore = useUIStore()
-          // Zeige regionale Unterschiede - Afrika vs Europa/Nordamerika
-          uiStore.selectedProduct = 'Cereals - Excluding Beer'
-          uiStore.selectedCountry = 'Africa' // Fokus auf Afrika für Kontrast
-          uiStore.selectedYear = 2022
-          uiStore.selectedMetric = 'Domestic supply quantity'
-        }
       },
       dataHighlight: {
         label: 'Globale Ernährungslücke',
@@ -91,22 +69,11 @@ export const mainTour = {
         um die Inlandsversorgung zu sichern. Philippinen und andere Importländer reagieren 
         sofort mit Hamsterkäufen. Die Zeitreihe zeigt: Nach wenigen Wochen Normalisierung.
       `,
-      route: '/timeseries',
+      route: '/?pnl=timeseries&tpr=Rice%20and%20products&tcty=Viet%20Nam&tmet=Export%20quantity&yr=2020',
       target: '[data-tour="timeseries-chart"]',
       position: 'top',
       highlightOptions: {
         padding: 16
-      },
-      actions: {
-        onEnter: async () => {
-          const { useUIStore } = await import('@/stores/useUIStore')
-          const uiStore = useUIStore()
-          // Vietnam Reis Export während COVID - zeige Einbruch 2020
-          uiStore.selectedProduct = 'Rice and products'
-          uiStore.selectedCountry = 'Viet Nam'
-          uiStore.selectedMetric = 'Export quantity'
-          uiStore.selectedYear = 2020
-        }
       },
       dataHighlight: {
         label: 'Vietnam Reisexport-Stopp',
@@ -127,20 +94,9 @@ export const mainTour = {
         2020/21 kaufte das Land ungewöhnlich viel Reis ein - eine klassische Vorsichtsmaßnahme 
         gegen drohende Versorgungsengpässe. Andere Entwicklungsländer handelten ähnlich.
       `,
-      route: '/timeseries',
+      route: '/?pnl=timeseries&tpr=Rice%20and%20products&tcty=Philippines&tmet=Import%20quantity&yr=2021',
       target: '[data-tour="metric-selector"]',
       position: 'bottom',
-      actions: {
-        onEnter: async () => {
-          const { useUIStore } = await import('@/stores/useUIStore')
-          const uiStore = useUIStore()
-          // Philippinen Reisimporte - strategische Bevorratung 2021
-          uiStore.selectedProduct = 'Rice and products'
-          uiStore.selectedCountry = 'Philippines'
-          uiStore.selectedMetric = 'Import quantity'
-          uiStore.selectedYear = 2021
-        }
-      },
       dataHighlight: {
         label: 'Strategische Bevorratung',
         value: 'Philippinen: Erhöhte Reisimporte 2020/21'
@@ -160,20 +116,9 @@ export const mainTour = {
         exportierte vor dem Krieg <strong>19,8 Millionen Tonnen Weizen</strong> jährlich. 
         2022 brachen die Ausfuhren um 42% auf nur 11,4 Mio. t ein. Schwarzmeer-Blockade!
       `,
-      route: '/timeseries',
+      route: '/?pnl=timeseries&tpr=Wheat%20and%20products&tcty=Ukraine&tmet=Export%20quantity&yr=2022',
       target: '[data-tour="timeseries-chart"]',
       position: 'top',
-      actions: {
-        onEnter: async () => {
-          const { useUIStore } = await import('@/stores/useUIStore')
-          const uiStore = useUIStore()
-          // Ukraine Weizenexport-Kollaps 2022 - zeige dramatischen Rückgang
-          uiStore.selectedProduct = 'Wheat and products'
-          uiStore.selectedCountry = 'Ukraine'
-          uiStore.selectedMetric = 'Export quantity'
-          uiStore.selectedYear = 2022
-        }
-      },
       dataHighlight: {
         label: 'Weizenexport-Kollaps',
         value: '19,8 → 11,4 Mio. t (-42%)'
@@ -193,22 +138,11 @@ export const mainTour = {
         Futtertögen statt auf Tellern. China allein verfütterte 2022 schon 222 Millionen 
         Tonnen Mais - ein Anstieg von 130 auf 222 Mio. t seit 2010 (+71%)!
       `,
-      route: '/timeseries',
+      route: '/?pnl=timeseries&tpr=Maize%20and%20products&tcty=China&tmet=Feed&yr=2022',
       target: '[data-tour="timeseries-chart"]',
       position: 'top',
       highlightOptions: {
         padding: 12
-      },
-      actions: {
-        onEnter: async () => {
-          const { useUIStore } = await import('@/stores/useUIStore')
-          const uiStore = useUIStore()
-          // China Mais als Tierfutter - enormer Anstieg seit 2010
-          uiStore.selectedProduct = 'Maize and products'
-          uiStore.selectedCountry = 'China'
-          uiStore.selectedMetric = 'Feed'
-          uiStore.selectedYear = 2022
-        }
       },
       dataHighlight: {
         label: 'China Mais-Futter Explosion',
@@ -230,20 +164,9 @@ export const mainTour = {
         +3,2%, aber Unsicherheit steigt. Nach den Schocks 2020-2022 zeigen die Daten: 
         Klimaextreme werden häufiger, Vorhersagen schwieriger.
       `,
-      route: '/ml-predictions',
+      route: '/ml-predictions?pr=Wheat%20and%20products&yr=2025&m=Production',
       target: '[data-tour="ml-chart"]',
       position: 'top',
-      actions: {
-        onEnter: async () => {
-          const { useUIStore } = await import('@/stores/useUIStore')
-          const uiStore = useUIStore()
-          // ML Prognosen für globale Weizenproduktion
-          uiStore.selectedProduct = 'Wheat and products'
-          uiStore.selectedCountry = null // Global
-          uiStore.selectedMetric = 'Production'
-          uiStore.selectedYear = 2025
-        }
-      },
       dataHighlight: {
         label: 'Weizenprognose 2025',
         value: '+3,2% aber höhere Volatilität'
@@ -263,20 +186,9 @@ export const mainTour = {
         nur 20% weniger an Tiere verfüttern würden? Die Simulation zeigt: Millionen mehr 
         Menschen könnten ernährt werden. Effizienz statt Mengenwachstum!
       `,
-      route: '/simulation',
+      route: '/simulation?pr=Cereals%20-%20Excluding%20Beer&yr=2022&m=Feed',
       target: '[data-tour="simulation-chart"]',
       position: 'right',
-      actions: {
-        onEnter: async () => {
-          const { useUIStore } = await import('@/stores/useUIStore')
-          const uiStore = useUIStore()
-          // Getreide Feed-Reduktion Szenario - globale Simulation
-          uiStore.selectedProduct = 'Cereals - Excluding Beer'
-          uiStore.selectedCountry = null // Global 
-          uiStore.selectedMetric = 'Feed'
-          uiStore.selectedYear = 2022
-        }
-      },
       dataHighlight: {
         label: 'Feed-Effizienz Szenario',
         value: '20% weniger verfüttern = mehr Menschen ernähren'
@@ -298,20 +210,9 @@ export const mainTour = {
         als gedacht</strong>, aber verwundbarer durch Klimawandel und Konflikte. Von COVID-Panik 
         bis Ukraine-Schock - die Daten erzählen Geschichten menschlicher Anpassungsfähigkeit.
       `,
-      route: '/',
+      route: '/?pr=Cereals%20-%20Excluding%20Beer&yr=2022&m=Production',
       target: '[data-tour="dashboard-overview"]',
       position: 'center',
-      actions: {
-        onEnter: async () => {
-          const { useUIStore } = await import('@/stores/useUIStore')
-          const uiStore = useUIStore()
-          // Zurück zur globalen Übersicht - Gesamtbild
-          uiStore.selectedProduct = 'Cereals - Excluding Beer'
-          uiStore.selectedCountry = null // Global
-          uiStore.selectedYear = 2022
-          uiStore.selectedMetric = 'Production'
-        }
-      },
       dataHighlight: {
         label: 'Datenbasierte Erkenntnisse',
         value: '2010-2022: Eine Geschichte der Resilienz'

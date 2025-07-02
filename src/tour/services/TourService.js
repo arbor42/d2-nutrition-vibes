@@ -111,11 +111,17 @@ class TourService {
       const success = this.store.startTour(tourId, options)
       if (!success) return false
       
-      // Wait for DOM update
+      // Warte auf DOM-Update, damit Store-Reaktivität greift
       await nextTick()
       
-      // Navigate to first step
-      await this.executeStep(this.store.currentStep)
+      // Route des ersten Schritts vorab aufrufen, damit Dashboard/Diagramm laden kann
+      const firstStep = this.store.currentStep
+      if (firstStep?.route) {
+        await this.navigateToRoute(firstStep.route)
+      }
+      
+      // Erst danach den Schritt ausführen (Tooltip & Highlight)
+      await this.executeStep(firstStep)
       
       console.log(`[TourService] Started tour '${tourId}'`)
       return true
@@ -197,9 +203,14 @@ class TourService {
     try {
       this.store.isLoading = true
       
-      // Navigate to required route if needed
-      if (step.route && this.router.currentRoute.value.path !== step.route) {
-        await this.navigateToRoute(step.route)
+      // Navigate to required route if needed (vergleich inklusive Query-Params)
+      if (step.route) {
+        const targetFullPath = this.router.resolve(step.route).fullPath
+        const currentFullPath = this.router.currentRoute.value.fullPath || this.router.currentRoute.value.path
+
+        if (targetFullPath !== currentFullPath) {
+          await this.navigateToRoute(step.route)
+        }
       }
       
       // Wait for element to be available with retries

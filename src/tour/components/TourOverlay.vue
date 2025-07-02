@@ -49,24 +49,17 @@
     :tour-title="tourStore.currentTour?.title"
     @step-click="handleStepClick"
   />
-  
-  <!-- Tour Debugger (Development only) -->
-  <TourDebugger v-if="isDevelopment" />
 </template>
 
 <script setup>
-import { inject, computed } from 'vue'
+import { inject } from 'vue'
 import { useTourStore } from '../stores/useTourStore'
 import TourSpotlight from './TourSpotlight.vue'
 import TourTooltip from './TourTooltip.vue'
 import TourProgressBar from './TourProgressBar.vue'
-import TourDebugger from './TourDebugger.vue'
 
 const tourStore = useTourStore()
 const tourService = inject('tourService')
-
-// Check if in development mode
-const isDevelopment = computed(() => import.meta.env.DEV)
 
 const handleNext = () => {
   tourService.nextStep()
@@ -83,8 +76,6 @@ const handleSkip = () => {
 const handleClose = () => {
   tourService.stopTour('user_closed')
 }
-
-
 
 const handleBackdropClick = (event) => {
   // Only close on backdrop click if click is actually on backdrop
